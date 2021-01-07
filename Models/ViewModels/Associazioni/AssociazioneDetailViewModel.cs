@@ -1,5 +1,3 @@
-using RegistroServizi.Models.Entities;
-
 namespace RegistroServizi.Models.ViewModels.Associazioni
 {
     public class AssociazioneDetailViewModel
@@ -11,19 +9,5 @@ namespace RegistroServizi.Models.ViewModels.Associazioni
         public string Cap { get; set; }
         public string Comune { get; set; }
         public string Provincia { get; set; }
-
-        public static AssociazioneDetailViewModel FromEntity(Associazione associazione)
-        {
-            return new AssociazioneDetailViewModel
-            {
-                Id = associazione.Id,
-                Denominazione = associazione.Denominazione,
-                Sigla = associazione.Sigla,
-                Indirizzo = associazione.Indirizzo,
-                Cap = associazione.Cap,
-                Comune = associazione.Comune,
-                Provincia = associazione.Provincia
-            };
-        }
     }
 }

@@ -1,0 +1,15 @@
+@{
+    var testo1 = "Registro Servizi 2.0 - Copyright ";
+    var testo2 = "Software sviluppato e distribuito gratuitamente sotto ";
+}
+
+@if (DateTime.Now.Year == 2021)
+{
+    <p>@testo1.ToString() &copy; 2021 by Angelo P. <br>
+    @testo2.ToString() <a asp-controller="Home" asp-action="Licenza">licenza MIT</a></p>
+}
+else
+{
+    <p>@testo1.ToString() &copy; 2021 - @DateTime.Now.Year.ToString() by Angelo P. <br>
+    @testo2.ToString() <a asp-controller="Home" asp-action="Licenza">licenza MIT</a></p>
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css">
+
+    <link rel="stylesheet" href="~/style.css">
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index"><img src="~/logo.svg" height="30" alt="Logo Registro Servizi"> Registro Servizi 2.0</a>
+            <button class="navbar-toggler" data-target="#navbar" data-toggle="collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Azioni</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a href="#" class="dropdown-item disabled">Nuova Missione</a>
+                            <a href="#" class="dropdown-item disabled">Elenco Servizi</a>
+                            <a href="#" class="dropdown-item disabled">Elenco Personale</a>
+                            <a href="#" class="dropdown-item disabled">Elenco Soci</a>
+                            <a href="#" class="dropdown-item disabled">Visualizza Mappa</a>
+                            <a href="#" class="dropdown-item disabled">Disponibilit&agrave; Equipaggi</a>
+                            <a href="#" class="dropdown-item disabled">Disponibilit&agrave; Mezzi</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opzioni</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a href="#" class="dropdown-item disabled">Squadre Feriali</a>
+                            <a href="#" class="dropdown-item disabled">Squadre Festivi</a>
+                            <a href="#" class="dropdown-item disabled">Ospedali</a>
+                            <a href="#" class="dropdown-item disabled">Colonnine</a>
+                            <a href="#" class="dropdown-item disabled">Autoparco</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Impostazioni</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a href="#" class="dropdown-item disabled">Associazione</a>
+                            <a href="#" class="dropdown-item disabled">Prezzi Servizi</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Amministrazione</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a href="#" class="dropdown-item disabled">Gestione Personale</a>
+                            <a href="#" class="dropdown-item disabled">Gestione Soci</a>
+                            <a href="#" class="dropdown-item disabled">Gestione Clienti</a>
+                            <a href="#" class="dropdown-item disabled">Gestione Modelli</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+    <div class="container">
+        <partial name="Layout/_MessagePartial"></partial>
+        @RenderBody()
+    </div>
+
+    <footer>
+        <partial name="Layout/_FooterPartial"></partial>
+    </footer>
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/popper/dist/umd/popper.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

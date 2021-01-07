@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RegistroServizi.Models.Options;
 using RegistroServizi.Models.Services.Application;
+using RegistroServizi.Models.Services.Application.Associazioni;
 using RegistroServizi.Models.Services.Infrastructure;
 
 namespace RegistroServizi
@@ -28,6 +29,9 @@ namespace RegistroServizi
             .AddRazorRuntimeCompilation()
             #endif
             ;
+
+            //Services - Area Admin
+            services.AddTransient<IAssociazioniService, EfCoreAssociazioniService>();
 
             //Services - Generics
             services.AddTransient<IApplicationPersister, ApplicationPersister>();

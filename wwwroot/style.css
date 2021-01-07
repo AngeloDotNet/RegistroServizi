@@ -48,3 +48,46 @@ h1 {
     font-size: 12px;
     font-weight: bold;
 }
+.titolo-tabella-bt {
+    font-size: 14px;
+    font-weight: bold;
+    color: #990000;
+}
+.testo-tabella-bt {
+    font-size: 14px;
+}
+.testo-bt {
+    font-size: 14px;
+}
+.colonna-mezzo {
+    background-color: #c0dcc0;
+}
+.colonna-scheda {
+    background-color: #a6caf0;
+}
+.field-validation-error {
+    color:red;
+}
+.validation-summary-errors ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1em;
+}
+.validation-summary-errors li {
+    color: darkred;
+    border-left: 3px solid red;
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: rgba(255, 0, 0, 0.05);
+    margin-bottom: 2px;
+}
+.labtitolo-tabella-bt {
+    font-size: 14px;
+    font-weight: bold;
+    color: #990000;
+}
+.labtesto-tabella-bt {
+    font-size: 14px;
+}

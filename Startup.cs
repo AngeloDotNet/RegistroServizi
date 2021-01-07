@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,6 +32,12 @@ namespace RegistroServizi
             //Services - Generics
             services.AddTransient<IApplicationPersister, ApplicationPersister>();
             services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
+
+            //Database
+            services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder => {
+                string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
+                optionsBuilder.UseSqlite(connectionString);
+            });
 
             //Options
             services.Configure<ApplicationOptions>(Configuration.GetSection("Applicazione"));

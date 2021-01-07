@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RegistroServizi.Models.Options;
+using RegistroServizi.Models.Services.Application;
 using RegistroServizi.Models.Services.Infrastructure;
 
 namespace RegistroServizi
@@ -27,8 +28,9 @@ namespace RegistroServizi
             #endif
             ;
 
-            //Services
+            //Services - Generics
             services.AddTransient<IApplicationPersister, ApplicationPersister>();
+            services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
 
             //Options
             services.Configure<ApplicationOptions>(Configuration.GetSection("Applicazione"));
@@ -36,7 +38,7 @@ namespace RegistroServizi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
-             if (env.IsEnvironment("Development"))
+            if (env.IsEnvironment("Development"))
             {
                 app.UseDeveloperExceptionPage();
 
@@ -46,12 +48,17 @@ namespace RegistroServizi
                     File.WriteAllText(filePath, DateTime.Now.ToString());
                 });
             }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
 
             app.UseStaticFiles();
             app.UseRouting();
 
             app.UseEndpoints(routeBuilder => {
                 routeBuilder.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                routeBuilder.MapFallbackToController("{*path}", "Index", "Error");
             });
 
         }

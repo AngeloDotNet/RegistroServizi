@@ -1,0 +1,29 @@
+@model AssociazioneListViewModel
+<div class="container spaces-top">
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">Associazione</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="card-text">
+                                    <div class="row">
+                                        <div class="col-md-4 titolo-tabella-bt">Nome Associazione</div>
+                                        <div class="col-md-2 titolo-tabella-bt">Sigla</div>
+                                        <div class="col-md-3 titolo-tabella-bt">Comune</div>
+                                        <div class="col-md-3"></div>
+                                    </div>
+                                    @foreach (AssociazioneViewModel associazione in Model.Associazione.Results)
+                                    {
+                                        <partial name="Associazioni/_AssociazioneLine" model="@associazione"></partial>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

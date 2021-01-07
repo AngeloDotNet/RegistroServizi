@@ -1,0 +1,10 @@
+@model AssociazioneViewModel
+<hr>
+<div class="row riga-height">
+  <div class="col-md-4 testo-tabella-bt">@Model.Denominazione</div>
+  <div class="col-md-2 testo-tabella-bt">@Model.Sigla</div>
+  <div class="col-md-3 testo-tabella-bt">@Model.Comune</div>
+  <div class="col-md-3 d-flex align-items-center">
+    <a class="btn btn-outline-primary ml-3" asp-controller="Associazioni" asp-action="Detail" asp-route-id="@Model.Id"><i class="fas fa-info"></i> Dettaglio</a>
+  </div>
+</div>

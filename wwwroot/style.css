@@ -1,0 +1,50 @@
+html, body {
+    min-height: 100vh;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+body>.container {
+    flex: 1;
+}
+body>footer {
+    background-color: #e3f2fd;
+}
+footer {
+    margin-top: 3em;
+    padding-top: 1em;
+    border-top: 1px solid #ccc;
+    padding-bottom: 2em;
+    text-align: center;
+    color: gray;
+}
+.jumbotron {
+    background-image: url('/images/hero.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.jumbotron h1 {
+    font-size: 3.5rem;
+}
+h1 {
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
+    font-weight: 200;
+}
+.navbar {  
+    background-color: #e3f2fd;
+}
+.spaces-top {
+    margin-top: 25px;
+}
+.card-height {
+    height: 100px;
+}
+.testo-tabella-dash {
+    font-size: 12px;
+}
+.titolo-tabella-dash {
+    font-size: 12px;
+    font-weight: bold;
+}

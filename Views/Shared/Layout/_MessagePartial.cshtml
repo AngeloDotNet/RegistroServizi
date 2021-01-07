@@ -1,0 +1,20 @@
+@if (TempData["ConfirmationMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissable mt-3" role="alert">
+            @TempData["ConfirmationMessage"]
+        </div>
+    }
+
+@if (TempData["WarningMessage"] != null)
+    {
+        <div class="alert alert-warning alert-dismissable mt-3" role="alert">
+            @TempData["WarningMessage"]
+        </div>
+    }
+
+@if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissable mt-3" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }

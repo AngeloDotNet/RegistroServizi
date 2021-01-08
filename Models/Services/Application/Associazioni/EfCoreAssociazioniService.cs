@@ -49,7 +49,7 @@ namespace RegistroServizi.Models.Services.Application.Associazioni
             IQueryable<AssociazioneEditInputModel> queryLinq = dbContext.Associazioni
                 .AsNoTracking()
                 .Where(associazione => associazione.Id == id)
-                .Select(associazione => AssociazioneEditInputModel.FromEntity(associazione));
+                .Select(associazione => associazione.ToAssociazioneEditInputModel());
 
             AssociazioneEditInputModel viewModel = await queryLinq.FirstOrDefaultAsync();
 

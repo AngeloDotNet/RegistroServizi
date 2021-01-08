@@ -1,5 +1,4 @@
 using System.Net;
-
 namespace RegistroServizi.Models.ValueTypes
 {
     public class ErrorViewData

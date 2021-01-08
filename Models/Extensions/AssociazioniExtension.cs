@@ -1,4 +1,5 @@
 using RegistroServizi.Models.Entities;
+using RegistroServizi.Models.InputModels.Associazioni;
 using RegistroServizi.Models.ViewModels.Associazioni;
 
 namespace RegistroServizi.Models.Extensions
@@ -22,6 +23,20 @@ namespace RegistroServizi.Models.Extensions
         public static AssociazioneDetailViewModel ToAssociazioneDetailViewModel(this Associazione associazione)
         {
             return new AssociazioneDetailViewModel
+            {
+                Id = associazione.Id,
+                Denominazione = associazione.Denominazione,
+                Sigla = associazione.Sigla,
+                Indirizzo = associazione.Indirizzo,
+                Cap = associazione.Cap,
+                Comune = associazione.Comune,
+                Provincia = associazione.Provincia
+            };
+        }
+
+        public static AssociazioneEditInputModel ToAssociazioneEditInputModel(this Associazione associazione)
+        {
+            return new AssociazioneEditInputModel
             {
                 Id = associazione.Id,
                 Denominazione = associazione.Denominazione,

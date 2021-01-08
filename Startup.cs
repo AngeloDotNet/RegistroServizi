@@ -9,8 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RegistroServizi.Models.Options;
 using RegistroServizi.Models.Services.Application;
+using RegistroServizi.Models.Services.Application.CostiServizi;
 using RegistroServizi.Models.Services.Application.Associazioni;
 using RegistroServizi.Models.Services.Infrastructure;
+using RegistroServizi.Customizations.ModelBinders;
 
 namespace RegistroServizi
 {
@@ -24,7 +26,11 @@ namespace RegistroServizi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+            services.AddMvc(options => 
+            {
+                options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
             #if DEBUG
             .AddRazorRuntimeCompilation()
             #endif
@@ -32,6 +38,7 @@ namespace RegistroServizi
 
             //Services - Area Admin
             services.AddTransient<IAssociazioniService, EfCoreAssociazioniService>();
+            services.AddTransient<ICostiServiziService, EfCoreCostiServiziService>();
 
             //Services - Generics
             services.AddTransient<IApplicationPersister, ApplicationPersister>();
@@ -45,6 +52,7 @@ namespace RegistroServizi
 
             //Options
             services.Configure<ApplicationOptions>(Configuration.GetSection("Applicazione"));
+            services.Configure<CostoServizioOptions>(Configuration.GetSection("CostoServizio"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)

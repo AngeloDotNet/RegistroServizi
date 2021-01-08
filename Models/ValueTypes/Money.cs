@@ -1,7 +1,6 @@
 using System;
 using RegistroServizi.Models.Enums;
 using RegistroServizi.Models.Exceptions.Infrastructure;
-
 namespace RegistroServizi.Models.ValueTypes
 {
     public class Money

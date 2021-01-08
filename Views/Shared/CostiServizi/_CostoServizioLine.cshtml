@@ -1,0 +1,11 @@
+@model CostoServizioViewModel
+<hr>
+<div class="row riga-height">
+    <div class="col-md-3 testo-tabella-bt">@Model.TipoServizio</div>
+    <div class="col-md-2 testo-tabella-bt">@Model.CostoFisso</div>
+    <div class="col-md-2 testo-tabella-bt">@Model.CostoKm</div>
+    <div class="col-md-2 testo-tabella-bt">@Model.SecondoTrasportato</div>
+    <div class="col-md-3 d-flex align-items-center">
+    <a class="btn btn-outline-primary ml-3" asp-controller="CostiServizi" asp-action="Detail" asp-route-id="@Model.Id"><i class="fas fa-info"></i> Dettaglio</a>
+  </div>
+</div>

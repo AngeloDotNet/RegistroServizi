@@ -1,6 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using RegistroServizi.Models.Entities;
-
 namespace RegistroServizi.Models.InputModels.Associazioni
 {
     public class AssociazioneEditInputModel
@@ -31,19 +29,5 @@ namespace RegistroServizi.Models.InputModels.Associazioni
         [Required(ErrorMessage = "La provincia è obbligatoria"),
          Display(Name = "Provincia")]
         public string Provincia { get; set; }
-
-        public static AssociazioneEditInputModel FromEntity(Associazione associazione)
-        {
-            return new AssociazioneEditInputModel
-            {
-                Id = associazione.Id,
-                Denominazione = associazione.Denominazione,
-                Sigla = associazione.Sigla,
-                Indirizzo = associazione.Indirizzo,
-                Cap = associazione.Cap,
-                Comune = associazione.Comune,
-                Provincia = associazione.Provincia
-            };
-        }
     }
 }

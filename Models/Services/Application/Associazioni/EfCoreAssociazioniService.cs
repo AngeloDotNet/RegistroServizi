@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegistroServizi.Models.Entities;
 using RegistroServizi.Models.Exceptions.Application;
+using RegistroServizi.Models.Extensions;
 using RegistroServizi.Models.InputModels.Associazioni;
 using RegistroServizi.Models.Services.Infrastructure;
 using RegistroServizi.Models.ViewModels;
@@ -30,7 +31,7 @@ namespace RegistroServizi.Models.Services.Application.Associazioni
                 .AsNoTracking();
 
             List<AssociazioneViewModel> associazioni = await queryLinq
-                .Select(associazione => AssociazioneViewModel.FromEntity(associazione))
+                .Select(associazione => associazione.ToAssociazioneViewModel())
                 .ToListAsync();
 
             int totalCount = await queryLinq.CountAsync();
@@ -80,7 +81,7 @@ namespace RegistroServizi.Models.Services.Application.Associazioni
 
             await dbContext.SaveChangesAsync();
 
-            return AssociazioneDetailViewModel.FromEntity(associazione);
+            return associazione.ToAssociazioneDetailViewModel();
         }
 
         public async Task<AssociazioneDetailViewModel> GetAssociazioneAsync(int id)
@@ -88,7 +89,7 @@ namespace RegistroServizi.Models.Services.Application.Associazioni
             IQueryable<AssociazioneDetailViewModel> queryLinq = dbContext.Associazioni
                 .AsNoTracking()
                 .Where(associazione => associazione.Id == id)
-                .Select(associazione => AssociazioneDetailViewModel.FromEntity(associazione));
+                .Select(associazione => associazione.ToAssociazioneDetailViewModel());
 
             AssociazioneDetailViewModel viewModel = await queryLinq.FirstOrDefaultAsync();
 

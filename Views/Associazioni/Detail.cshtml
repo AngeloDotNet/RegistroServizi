@@ -4,13 +4,13 @@
         <div class="card-header">Dettaglio associazione</div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Denominazione" class="labtitolo-tabella-bt"></label><br>
                             <label class="labtesto-tabella-bt">@Model.Denominazione</label>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Sigla" class="labtitolo-tabella-bt"></label><br>
                             <label class="labtesto-tabella-bt">@Model.Sigla</label>
@@ -19,19 +19,28 @@
                 </div>
                 <div class="row">&nbsp;</div>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label asp-for="Comune" class="labtitolo-tabella-bt"></label><br>
-                            <label class="labtesto-tabella-bt">@Model.Comune</label>
+                            <label asp-for="Indirizzo" class="labtitolo-tabella-bt"></label><br>
+                            <label class="labtesto-tabella-bt">@Model.Indirizzo</label>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Cap" class="labtitolo-tabella-bt"></label><br>
                             <label class="labtesto-tabella-bt">@Model.Cap</label>
                         </div>
                     </div>
-                    <div class="col-md-5">
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Comune" class="labtitolo-tabella-bt"></label><br>
+                            <label class="labtesto-tabella-bt">@Model.Comune</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Provincia" class="labtitolo-tabella-bt"></label><br>
                             <label class="labtesto-tabella-bt">@Model.Provincia</label>

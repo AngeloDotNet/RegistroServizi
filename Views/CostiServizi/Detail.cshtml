@@ -1,67 +1,63 @@
 @model CostoServizioDetailViewModel
-<div class="container spaces-top">
-    <div class="card">
-        <div class="card-header">Dettaglio prezzo del servizio </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="labtitolo-tabella-bt">Tipo servizio</label><br>
-                            <label class="labtesto-tabella-bt">@Model.TipoServizio</label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="labtitolo-tabella-bt">Costo fisso</label><br>
-                            <label class="labtesto-tabella-bt">@Model.CostoFisso</label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="labtitolo-tabella-bt">Costo al km</label><br>
-                            <label class="labtesto-tabella-bt">@Model.CostoKm</label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="labtitolo-tabella-bt">Secondo trasportato</label><br>
-                            <label class="labtesto-tabella-bt">@Model.SecondoTrasportato</label>
-                        </div>
+<div class="card">
+    <div class="card-header">Dettaglio prezzo del servizio </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="labtitolo-tabella-bt">Tipo servizio</label><br>
+                        <label class="labtesto-tabella-bt">@Model.TipoServizio</label>
                     </div>
                 </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="labtitolo-tabella-bt">Fermo macchina</label><br>
-                            <label class="labtesto-tabella-bt">@Model.FermoMacchina</label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="labtitolo-tabella-bt">Accompagnatore</label><br>
-                            <label class="labtesto-tabella-bt">@Model.Accompagnatore</label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="labtitolo-tabella-bt">Sconto soci</label><br>
-                            <label class="labtesto-tabella-bt">@Model.ScontoSoci</label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            &nbsp;
-                        </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="labtitolo-tabella-bt">Costo fisso</label><br>
+                        <label class="labtesto-tabella-bt">@Model.CostoFisso</label>
                     </div>
                 </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
-                    <div class="col-md-8"></div>
-                    <div class="col-md-4">
-                        <a class="btn btn-outline-secondary ml3" asp-action="Index"><i class="fas fa-reply"></i> Torna indietro</a>&nbsp;
-                        <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@Model.Id"><i class="fas fa-edit"></i> Modifica</a>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="labtitolo-tabella-bt">Costo al km</label><br>
+                        <label class="labtesto-tabella-bt">@Model.CostoKm</label>
                     </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="labtitolo-tabella-bt">Secondo trasportato</label><br>
+                        <label class="labtesto-tabella-bt">@Model.SecondoTrasportato</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="labtitolo-tabella-bt">Fermo macchina</label><br>
+                        <label class="labtesto-tabella-bt">@Model.FermoMacchina</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="labtitolo-tabella-bt">Accompagnatore</label><br>
+                        <label class="labtesto-tabella-bt">@Model.Accompagnatore</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="labtitolo-tabella-bt">Sconto soci</label><br>
+                        <label class="labtesto-tabella-bt">@Model.ScontoSoci</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">&nbsp;</div>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <a class="btn btn-outline-secondary ml3" asp-action="Index"><i class="fas fa-reply"></i> Torna indietro</a>&nbsp;
+                    <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@Model.Id"><i class="fas fa-edit"></i> Modifica</a>
                 </div>
             </div>
         </div>

@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using RegistroServizi.Customizations.ModelBinders;
 using RegistroServizi.Models.Options;
 
-namespace RegistroServizi.Models.InputModels.CostiServizi
+namespace RegistroServizi.Models.InputModels.Clienti
 {
-    [ModelBinder(BinderType = typeof(CostoServizioListInputModelBinder))]
-    public class CostoServizioListInputModel
+    [ModelBinder(BinderType = typeof(ClienteListInputModelBinder))]
+    public class ClienteListInputModel
     {
-        public CostoServizioListInputModel(string search, int page, string orderby, bool ascending, int limit, CostoServizioOrderOptions orderOptions)
+        public ClienteListInputModel(string search, int page, string orderby, bool ascending, int limit, ClienteOrderOptions orderOptions)
         {
             if (!orderOptions.Allow.Contains(orderby))
             {

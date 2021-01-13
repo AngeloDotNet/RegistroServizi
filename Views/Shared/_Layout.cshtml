@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/style.css">
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -59,7 +60,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a href="#" class="dropdown-item disabled">Gestione Personale</a>
                             <a href="#" class="dropdown-item disabled">Gestione Soci</a>
-                            <a href="#" class="dropdown-item disabled">Gestione Clienti</a>
+                            <a asp-controller="Clienti" asp-action="Index" class="dropdown-item">Gestione Clienti</a>
                             <a href="#" class="dropdown-item disabled">Gestione Modelli</a>
                         </div>
                     </li>
@@ -68,7 +69,8 @@
 
         </nav>
     </header>
-    <div class="container">
+    
+    <div class="container spaces-top">
         <partial name="Layout/_MessagePartial"></partial>
         @RenderBody()
     </div>

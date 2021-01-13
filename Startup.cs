@@ -13,6 +13,7 @@ using RegistroServizi.Models.Services.Application.CostiServizi;
 using RegistroServizi.Models.Services.Application.Associazioni;
 using RegistroServizi.Models.Services.Infrastructure;
 using RegistroServizi.Customizations.ModelBinders;
+using RegistroServizi.Models.Services.Application.Clienti;
 
 namespace RegistroServizi
 {
@@ -31,18 +32,22 @@ namespace RegistroServizi
                 options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
                 
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+            
             #if DEBUG
             .AddRazorRuntimeCompilation()
             #endif
             ;
 
-            //Services - Area Admin
-            services.AddTransient<IAssociazioniService, EfCoreAssociazioniService>();
-            services.AddTransient<ICostiServiziService, EfCoreCostiServiziService>();
-
             //Services - Generics
             services.AddTransient<IApplicationPersister, ApplicationPersister>();
             services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
+
+            //Services - Area Impostazioni
+            services.AddTransient<IAssociazioniService, EfCoreAssociazioniService>();
+            services.AddTransient<ICostiServiziService, EfCoreCostiServiziService>();
+
+            //Services - Area Amministrazione
+            services.AddTransient<IClientiService, EfCoreClientiService>();
 
             //Database
             services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder => {
@@ -50,9 +55,14 @@ namespace RegistroServizi
                 optionsBuilder.UseSqlite(connectionString);
             });
 
-            //Options
+            //Options - Generics
             services.Configure<ApplicationOptions>(Configuration.GetSection("Applicazione"));
+            
+            //Options - Area Impostazioni
             services.Configure<CostoServizioOptions>(Configuration.GetSection("CostoServizio"));
+            
+            //Options - Area Amministrazione
+            services.Configure<ClienteOptions>(Configuration.GetSection("Cliente"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)

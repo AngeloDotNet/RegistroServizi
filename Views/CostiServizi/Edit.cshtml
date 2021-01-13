@@ -1,100 +1,97 @@
 @model CostoServizioEditInputModel
-<div class="container spaces-top">
-    <form method="POST">
-        <input type="hidden" asp-for="@Model.Id">
-        <div class="card">
-            <div class="card-header">Modifica costo del servizio</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12" asp-validation-summary="All"></div>
+<form method="POST">
+    <input type="hidden" asp-for="@Model.Id">
+    <div class="card">
+        <div class="card-header">Modifica costo del servizio</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12" asp-validation-summary="All"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="TipoServizio" class="labtitolo-tabella-bt"></label><br>
+                            <input type="text" asp-for="TipoServizio" readonly class="form-control">
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label asp-for="TipoServizio" class="labtitolo-tabella-bt"></label><br>
-                                <input type="text" asp-for="TipoServizio" readonly class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label asp-for="CostoFisso" class="labtitolo-tabella-bt"></label><br>
-                                <div class="input-group">
-                                    <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="CostoFisso.Currency" class="form-control"></select>
-                                    <input type="number" step="any" asp-for="CostoFisso.Amount" class="form-control form-control-block">
-                                    <span asp-validation-for="CostoFisso"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label asp-for="CostoKm" class="labtitolo-tabella-bt"></label><br>
-                                <div class="input-group">
-                                    <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="CostoKm.Currency" class="form-control"></select>
-                                    <input type="number" step="any" asp-for="CostoKm.Amount" class="form-control form-control-block">
-                                    <span asp-validation-for="CostoKm"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label asp-for="SecondoTrasportato" class="labtitolo-tabella-bt"></label><br>
-                                <div class="input-group">
-                                    <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="SecondoTrasportato.Currency" class="form-control"></select>
-                                    <input type="number" step="any" asp-for="SecondoTrasportato.Amount" class="form-control form-control-block">
-                                    <span asp-validation-for="SecondoTrasportato"></span>
-                                </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="CostoFisso" class="labtitolo-tabella-bt"></label><br>
+                            <div class="input-group">
+                                <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="CostoFisso.Currency" class="form-control"></select>
+                                <input type="number" step="any" asp-for="CostoFisso.Amount" class="form-control form-control-block">
+                                <span asp-validation-for="CostoFisso"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="row">&nbsp;</div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label asp-for="FermoMacchina" class="labtitolo-tabella-bt"></label><br>
-                                <div class="input-group">
-                                    <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="FermoMacchina.Currency" class="form-control"></select>
-                                    <input type="number" step="any" asp-for="FermoMacchina.Amount" class="form-control form-control-block">
-                                    <span asp-validation-for="FermoMacchina"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label asp-for="Accompagnatore" class="labtitolo-tabella-bt"></label><br>
-                                <div class="input-group">
-                                    <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="Accompagnatore.Currency" class="form-control"></select>
-                                    <input type="number" step="any" asp-for="Accompagnatore.Amount" class="form-control form-control-block">
-                                    <span asp-validation-for="Accompagnatore"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label asp-for="ScontoSoci" class="labtitolo-tabella-bt"></label><br>
-                                <div class="input-group">
-                                    <input type="number" asp-for="ScontoSoci" class="form-control">
-                                    <span asp-validation-for="ScontoSoci"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                &nbsp;
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="CostoKm" class="labtitolo-tabella-bt"></label><br>
+                            <div class="input-group">
+                                <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="CostoKm.Currency" class="form-control"></select>
+                                <input type="number" step="any" asp-for="CostoKm.Amount" class="form-control form-control-block">
+                                <span asp-validation-for="CostoKm"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="row">&nbsp;</div>
-                    <div class="row">
-                        <div class="col-md-9"></div>
-                        <div class="col-md-3">
-                            <a class="btn btn-outline-secondary ml-3" asp-action="Detail" asp-route-id="@Model.Id"><i class="fas fa-reply"></i> Annulla</a>&nbsp;
-                            <button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i> Aggiorna</button>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="SecondoTrasportato" class="labtitolo-tabella-bt"></label><br>
+                            <div class="input-group">
+                                <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="SecondoTrasportato.Currency" class="form-control"></select>
+                                <input type="number" step="any" asp-for="SecondoTrasportato.Amount" class="form-control form-control-block">
+                                <span asp-validation-for="SecondoTrasportato"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="FermoMacchina" class="labtitolo-tabella-bt"></label><br>
+                            <div class="input-group">
+                                <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="FermoMacchina.Currency" class="form-control"></select>
+                                <input type="number" step="any" asp-for="FermoMacchina.Amount" class="form-control form-control-block">
+                                <span asp-validation-for="FermoMacchina"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="Accompagnatore" class="labtitolo-tabella-bt"></label><br>
+                            <div class="input-group">
+                                <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="Accompagnatore.Currency" class="form-control"></select>
+                                <input type="number" step="any" asp-for="Accompagnatore.Amount" class="form-control form-control-block">
+                                <span asp-validation-for="Accompagnatore"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="ScontoSoci" class="labtitolo-tabella-bt"></label><br>
+                            <div class="input-group">
+                                <input type="number" asp-for="ScontoSoci" class="form-control">
+                                <span asp-validation-for="ScontoSoci"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-3">
+                        <a class="btn btn-outline-secondary ml-3" asp-action="Detail" asp-route-id="@Model.Id"><i class="fas fa-reply"></i> Annulla</a>&nbsp;
+                        <button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i> Aggiorna</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
-</div>
+    </div>
+</form>
 @section Scripts
 {
     <partial name="_Validation"></partial>

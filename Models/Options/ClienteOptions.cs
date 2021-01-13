@@ -1,11 +1,11 @@
 namespace RegistroServizi.Models.Options
 {
-    public partial class CostoServizioOptions
+    public class ClienteOptions
     {
         public int PerPage { get; set; }
-        public CostoServizioOrderOptions Order { get; set; }
+        public ClienteOrderOptions Order { get; set; }
     }
-    public partial class CostoServizioOrderOptions
+    public partial class ClienteOrderOptions
     {
         public string By { get; set; }
         public bool Ascending { get; set; }

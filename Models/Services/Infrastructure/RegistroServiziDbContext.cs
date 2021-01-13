@@ -12,6 +12,7 @@ namespace RegistroServizi.Models.Services.Infrastructure
 
         public virtual DbSet<Associazione> Associazioni { get; set; }
         public virtual DbSet<Costo> Costi { get; set; }
+        public virtual DbSet<Cliente> Clienti { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -70,6 +71,12 @@ namespace RegistroServizi.Models.Services.Infrastructure
                            .HasColumnName("Accompagnatore_Amount")
                            .HasConversion<float>();
                 });
+            });
+        
+            modelBuilder.Entity<Cliente>(entity =>
+            {
+                entity.ToTable("Cliente");
+                entity.HasKey(cliente => cliente.Id);
             });
         }
     }

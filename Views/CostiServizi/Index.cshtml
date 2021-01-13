@@ -1,35 +1,33 @@
 @model CostoServizioListViewModel
-<div class="container spaces-top">
-    <div class="row">
-        <div class="col-md">
-            <div class="card">
-                <div class="card-header">Prezzi Servizi</div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm">
-                                <div class="card-text">
-                                    <div class="row">
-                                        <div class="col-md testo-bt">I costi dei servizi non deve essere modificato se non su richiesta dell'amministrazione.</div>
-                                    </div>
-                                    <div class="row">&nbsp;</div>
-                                    <div class="row">
-                                        <div class="col-md-3 titolo-tabella-bt">Servizio</div>
-                                        <div class="col-md-2 titolo-tabella-bt">Costo Fisso</div>
-                                        <div class="col-md-2 titolo-tabella-bt">Costo al km</div>
-                                        <div class="col-md-2 titolo-tabella-bt">2° Trasp.</div>
-                                        <div class="col-md-3"></div>
-                                    </div>
-                                    @foreach (CostoServizioViewModel costoservizio in Model.CostoServizio.Results)
-                                    {
-                                        <partial name="CostiServizi/_CostoServizioLine" model="@costoservizio"></partial>
-                                    }
-                                    <div class="row">&nbsp;</div>
-                                    <vc:pagination-bar model="@Model"></vc:pagination-bar>
-                                    <div class="row">&nbsp;</div>
-                                    <div class="row">
-                                        <div class="col-md testo-bt">Il rimborso degli altri servizi &egrave; deciso dalle convenzioni firmate o altri accordi dell'associazione verso terzi.
-                                            Il rimborso dei servizi di 118 e Guardia Medica &egrave; regolamentato dalla Regione di appartenenza.
-                                        </div>
+<div class="row">
+    <div class="col-md">
+        <div class="card">
+            <div class="card-header">Prezzi Servizi</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="card-text">
+                                <div class="row">
+                                    <div class="col-md testo-bt">I costi dei servizi non deve essere modificato se non su richiesta dell'amministrazione.</div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-md-3 titolo-tabella-bt">Servizio</div>
+                                    <div class="col-md-2 titolo-tabella-bt">Costo Fisso</div>
+                                    <div class="col-md-2 titolo-tabella-bt">Costo al km</div>
+                                    <div class="col-md-2 titolo-tabella-bt">2° Trasp.</div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                                @foreach (CostoServizioViewModel costoservizio in Model.CostoServizio.Results)
+                                {
+                                    <partial name="CostiServizi/_CostoServizioLine" model="@costoservizio"></partial>
+                                }
+                                <div class="row">&nbsp;</div>
+                                <vc:pagination-bar model="@Model"></vc:pagination-bar>
+                                <div class="row">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-md testo-bt">Il rimborso degli altri servizi &egrave; deciso dalle convenzioni firmate o altri accordi dell'associazione verso terzi.
+                                        Il rimborso dei servizi di 118 e Guardia Medica &egrave; regolamentato dalla Regione di appartenenza.
                                     </div>
                                 </div>
                             </div>

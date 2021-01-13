@@ -17,7 +17,6 @@ namespace RegistroServizi.Models.Services.Application
             return exception switch
             {
                 null => new ErrorViewData(
-                    //message: $"Pagina '{context.Request.Path}' non trovata",
                     message: "La pagina richiesta non esiste.",
                     statusCode: HttpStatusCode.NotFound,
                     viewName: "NotFound"),
@@ -31,6 +30,16 @@ namespace RegistroServizi.Models.Services.Application
                     message: $"Costo del servizio {exc.CostoServizioId} non trovato",
                     statusCode: HttpStatusCode.NotFound,
                     viewName: "CostoServizioNotFound"),
+
+                ClienteNotFoundException exc => new ErrorViewData(
+                    message: $"Cliente {exc.ClienteId} non trovato",
+                    statusCode: HttpStatusCode.NotFound,
+                    viewName: "ClienteNotFound"),
+                
+                RagioneSocialeUnavailableException exc => new ErrorViewData(
+                    message: $"La ragione sociale {exc.RagioneSociale} esiste già",
+                    statusCode: HttpStatusCode.NotFound,
+                    viewName: "RagioneSocialeUnavailable"),
 
                 InvalidAmountException exc => new ErrorViewData(
                     message: $"L'importo non può essere negativo",

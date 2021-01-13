@@ -1,0 +1,81 @@
+@model ClienteDetailViewModel
+<div class="card">
+        <div class="card-header">Dettaglio cliente</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="labtitolo-tabella-bt">Ragione Sociale</label><br>
+                                        <label class="labtesto-tabella-bt">@Model.RagioneSociale</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="labtitolo-tabella-bt">Indirizzo</label><br>
+                                        <label class="labtesto-tabella-bt">@Model.Indirizzo</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="labtitolo-tabella-bt">Comune</label><br>
+                                        <label class="labtesto-tabella-bt">@Model.Comune</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="labtitolo-tabella-bt">Cap</label><br>
+                                        <label class="labtesto-tabella-bt">@Model.Cap</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="labtitolo-tabella-bt">Provincia</label><br>
+                                        <label class="labtesto-tabella-bt">@Model.Provincia</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="labtitolo-tabella-bt">Telefono</label><br>
+                                        <label class="labtesto-tabella-bt">@Model.Telefono</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="labtitolo-tabella-bt">Fax</label><br>
+                                        <label class="labtesto-tabella-bt">@Model.Fax</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="labtitolo-tabella-bt">Codice Fiscale</label><br>
+                                        <label class="labtesto-tabella-bt">@Model.CodiceFiscale</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="labtitolo-tabella-bt">Partita Iva</label><br>
+                                        <label class="labtesto-tabella-bt">@Model.PartitaIva</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4">
+                                    <a class="btn btn-outline-secondary ml3" asp-action="Index"><i class="fas fa-reply"></i> Torna indietro</a>&nbsp;
+                                    <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@Model.Id"><i class="fas fa-edit"></i> Modifica</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

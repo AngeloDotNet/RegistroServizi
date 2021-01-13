@@ -5,7 +5,6 @@ namespace RegistroServizi.Models.Options
         public int PerPage { get; set; }
         public CostoServizioOrderOptions Order { get; set; }
     }
-
     public partial class CostoServizioOrderOptions
     {
         public string By { get; set; }

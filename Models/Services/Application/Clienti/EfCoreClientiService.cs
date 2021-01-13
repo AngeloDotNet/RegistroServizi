@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RegistroServizi.Models.Entities;
-using RegistroServizi.Models.Enums;
 using RegistroServizi.Models.Exceptions.Application;
 using RegistroServizi.Models.Extensions;
 using RegistroServizi.Models.InputModels.Clienti;
@@ -38,6 +37,7 @@ namespace RegistroServizi.Models.Services.Application.Clienti
             };
 
             IQueryable<Cliente> queryLinq = baseQuery
+                .Where(cliente => cliente.RagioneSociale.Contains(model.Search))
                 .AsNoTracking();
 
             List<ClienteViewModel> cliente = await queryLinq

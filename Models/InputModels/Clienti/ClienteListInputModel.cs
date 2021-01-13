@@ -25,6 +25,7 @@ namespace RegistroServizi.Models.InputModels.Clienti
 
             Offset = (Page - 1) * Limit;
         }
+        
         public string Search { get; }
         public int Page { get; }
         public string OrderBy { get; }

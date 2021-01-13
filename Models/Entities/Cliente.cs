@@ -1,5 +1,3 @@
-using RegistroServizi.Models.Enums;
-
 namespace RegistroServizi.Models.Entities
 {
     public partial class Cliente

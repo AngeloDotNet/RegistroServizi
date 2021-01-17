@@ -16,6 +16,7 @@ namespace RegistroServizi.Models.Services.Application
             
             return exception switch
             {
+                #region "NOT FOUND"
                 null => new ErrorViewData(
                     message: "La pagina richiesta non esiste.",
                     statusCode: HttpStatusCode.NotFound,
@@ -24,27 +25,42 @@ namespace RegistroServizi.Models.Services.Application
                 AssociazioneNotFoundException exc => new ErrorViewData(
                     message: $"Associazione {exc.AssociazioneId} non trovata",
                     statusCode: HttpStatusCode.NotFound,
-                    viewName: "AssociazioneNotFound"),
+                    viewName: "NotFound"),
                 
                 CostoServizioNotFoundException exc => new ErrorViewData(
                     message: $"Costo del servizio {exc.CostoServizioId} non trovato",
                     statusCode: HttpStatusCode.NotFound,
-                    viewName: "CostoServizioNotFound"),
+                    viewName: "NotFound"),
 
                 ClienteNotFoundException exc => new ErrorViewData(
                     message: $"Cliente {exc.ClienteId} non trovato",
                     statusCode: HttpStatusCode.NotFound,
-                    viewName: "ClienteNotFound"),
+                    viewName: "NotFound"),
                 
+                SocioNotFoundException exc => new ErrorViewData(
+                    message: $"Socio {exc.SocioId} non trovato",
+                    statusCode: HttpStatusCode.NotFound,
+                    viewName: "NotFound"),
+                #endregion
+                
+                #region "EXISTING DATA"
                 RagioneSocialeUnavailableException exc => new ErrorViewData(
                     message: $"La ragione sociale {exc.RagioneSociale} esiste già",
-                    statusCode: HttpStatusCode.NotFound,
-                    viewName: "RagioneSocialeUnavailable"),
+                    statusCode: HttpStatusCode.Conflict,
+                    viewName: "Unavailable"),
 
+                NominativoUnavailableException exc => new ErrorViewData(
+                    message: $"Il nominativo del socio {exc.Nominativo} esiste già",
+                    statusCode: HttpStatusCode.Conflict,
+                    viewName: "Unavailable"),
+                #endregion
+
+                #region "GENERIC ERROR"
                 InvalidAmountException exc => new ErrorViewData(
                     message: $"L'importo non può essere negativo",
                     statusCode: HttpStatusCode.InternalServerError,
-                    viewName: "InvalidAmount"),
+                    viewName: "Invalid"),
+                #endregion
 
                 _ => new ErrorViewData(message: "")
             };

@@ -1,0 +1,136 @@
+@model SocioCreateInputModel
+<form method="POST">
+    <input type="hidden" asp-for="Tessera" value="0">
+    <input type="hidden" asp-for="Zona" value="0">
+    <div class="card">
+        <div class="card-header">Creazione nuovo socio</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-12" asp-validation-summary="All"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md testo-bt">Qualora un dato <u>non fosse disponibile</u> indicare la dicitura N/A nella relativa casella.</div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Nominativo" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="Nominativo" class="form-control">
+                                        <span asp-validation-for="Nominativo"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Indirizzo" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="Indirizzo" class="form-control">
+                                        <span asp-validation-for="Indirizzo"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label asp-for="Comune" class="labtitolo-tabella-bt"></label>
+                                        <input type="text" asp-for="Comune" class="form-control">
+                                        <span asp-validation-for="Comune"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label asp-for="Cap" class="labtitolo-tabella-bt"></label>
+                                        <input type="text" asp-for="Cap" class="form-control">
+                                        <span asp-validation-for="Cap"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label asp-for="Provincia" class="labtitolo-tabella-bt"></label>
+                                        <input type="text" asp-for="Provincia" class="form-control">
+                                        <span asp-validation-for="Provincia"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="LuogoNascita" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="LuogoNascita" class="form-control">
+                                        <span asp-validation-for="LuogoNascita"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="DataNascita" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="date" asp-for="DataNascita" class="form-control">
+                                        <span asp-validation-for="DataNascita"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="CodiceFiscale" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="CodiceFiscale" class="form-control">
+                                        <span asp-validation-for="CodiceFiscale"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="Telefono" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="Telefono" class="form-control">
+                                        <span asp-validation-for="Telefono"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="Email" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="email" asp-for="Email" class="form-control">
+                                        <span asp-validation-for="Email"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="DataTesseramento" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="date" asp-for="DataTesseramento" class="form-control">
+                                        <span asp-validation-for="DataTesseramento"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="Professione" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="Professione" class="form-control">
+                                        <span asp-validation-for="Professione"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="TrattamentoDati" class="labtitolo-tabella-bt"></label><br>
+                                        <div class="input-group">
+                                            <select asp-items="@Html.GetEnumSelectList<Privacy>()" asp-for="TrattamentoDati" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-outline-secondary ml-3" asp-action="Index"><i class="fas fa-reply"></i> Annulla</a>&nbsp;
+                                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i> Salva</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts
+{
+    <partial name="_Validation"></partial>
+}

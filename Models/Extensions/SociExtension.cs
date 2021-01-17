@@ -49,8 +49,7 @@ namespace RegistroServizi.Models.Extensions
                 DataTesseramento = socio.DataTesseramento,
                 TrattamentoDati = socio.TrattamentoDati,
                 Professione = socio.Provincia,
-                Zona = socio.Zona
-                /*Zona = socio.Zona,
+                Zona = socio.Zona,
 
                 SociFamiliari = socio.SociFamiliari
                     .OrderBy(sociofamiliare => sociofamiliare.Id)
@@ -62,7 +61,30 @@ namespace RegistroServizi.Models.Extensions
                     .OrderBy(sociorinnovo => sociorinnovo.Id)
                     .ThenBy(sociorinnovo => sociorinnovo.Id)
                     .Select(sociorinnovo => sociorinnovo.ToSocioRinnovoViewModel())
-                    .ToList()*/
+                    .ToList()
+            };
+        }
+
+        public static SocioDetailViewModel ToSocioDetailSingleViewModel(this Socio socio)
+        {
+            return new SocioDetailViewModel
+            {
+                Id = socio.Id,
+                Tessera = socio.Tessera,
+                Nominativo = socio.Nominativo,
+                Indirizzo = socio.Indirizzo,
+                Cap = socio.Cap,
+                Comune = socio.Comune,
+                Provincia = socio.Provincia,
+                LuogoNascita = socio.LuogoNascita,
+                DataNascita = socio.DataNascita,
+                CodiceFiscale = socio.CodiceFiscale,
+                Telefono = socio.Telefono,
+                Email = socio.Email,
+                DataTesseramento = socio.DataTesseramento,
+                TrattamentoDati = socio.TrattamentoDati,
+                Professione = socio.Provincia,
+                Zona = socio.Zona
             };
         }
 

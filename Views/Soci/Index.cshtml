@@ -23,7 +23,8 @@
                                 </div>
                                 <div class="row">&nbsp;</div>
                                 <div class="row">
-                                    <div class="col-md-9 titolo-tabella-bt">Nominativo</div>
+                                    <div class="col-md-1 titolo-tabella-bt"><socio-order-link order-by="Tessera" Input="@Model.Input">Tessera</socio-order-link></div>
+                                    <div class="col-md-8 titolo-tabella-bt"><socio-order-link order-by="Nominativo" Input="@Model.Input">Nominativo</socio-order-link></div>
                                     <div class="col-md-3"></div>
                                 </div>
                                 @foreach (SocioViewModel socio in Model.Socio.Results)

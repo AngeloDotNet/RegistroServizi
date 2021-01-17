@@ -1,16 +1,14 @@
-@model SocioViewModel
+@model SocioFamiliareViewModel
 <hr>
 <div class="row">
-    <div class="col-md-1 testo-tabella-bt">@Model.Tessera</div>
-    <div class="col-md-8 testo-tabella-bt">@Model.Nominativo</div>
+    <div class="col-md-9 testo-tabella-bt">@Model.Familiare</div>
     <div class="col-md-3 d-flex align-items-center">
-      <a class="btn btn-outline-primary ml-3" asp-controller="Soci" asp-action="Detail" asp-route-id="@Model.Id"><i class="fas fa-info"></i> Dettaglio</a>&nbsp;
-      <button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#delete-modal"><i class="fas fa-trash-alt"></i> Elimina</button>
+        <a class="btn btn-outline-secondary ml-3" asp-controller="SociFamiliari" asp-action="Edit" asp-route-id="@Model.Id"><i class="fas fa-edit"></i> Modifica</a>&nbsp;
+        <button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#delete-modal"><i class="fas fa-trash-alt"></i> Elimina</button>
     </div>
 </div>
-<form method="post" asp-action="Delete" asp-route-id="@Model.Id">
+<form method="post" asp-controller="SociFamiliari" asp-action="Delete" asp-route-id="@Model.Id">
         <input type="hidden" asp-for="Id">
-        
         <div id="delete-modal" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="delete-modal-title" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -21,7 +19,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Si sta per eliminare il socio e tutti i suoi dati andranno persi. Confermi l'eliminazione?</p>
+                        <p>Si sta per eliminare il familiare di un socio e tutti i suoi dati andranno persi. Confermi l'eliminazione?</p>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button class="btn btn-light" type="button" data-dismiss="modal">Annulla</button>

@@ -7,6 +7,7 @@ namespace RegistroServizi.Models.InputModels.Soci
     public class SocioCreateInputModel
     {
         [Required(ErrorMessage = "Il numero della tessera è obbligatorio"),
+         Remote(action: nameof(SociController.IsTesseraAvailable), controller: "Soci", ErrorMessage = "La tessera indicata esiste già"),
          Display(Name = "Numero Tessera")]
         public string Tessera { get; set; }
         

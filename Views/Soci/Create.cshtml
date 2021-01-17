@@ -1,6 +1,5 @@
 @model SocioCreateInputModel
 <form method="POST">
-    <input type="hidden" asp-for="Tessera" value="0">
     <input type="hidden" asp-for="Zona" value="0">
     <div class="card">
         <div class="card-header">Creazione nuovo socio</div>
@@ -16,14 +15,21 @@
                             </div>
                             <div class="row">&nbsp;</div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label asp-for="Tessera" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="Tessera" class="form-control">
+                                        <span asp-validation-for="Tessera"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
                                     <div class="form-group">
                                         <label asp-for="Nominativo" class="labtitolo-tabella-bt"></label><br>
                                         <input type="text" asp-for="Nominativo" class="form-control">
                                         <span asp-validation-for="Nominativo"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="form-group">
                                         <label asp-for="Indirizzo" class="labtitolo-tabella-bt"></label><br>
                                         <input type="text" asp-for="Indirizzo" class="form-control">

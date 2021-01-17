@@ -40,10 +40,17 @@ namespace RegistroServizi.Controllers
             return Json(result);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> IsTesseraAvailable(string tessera, int id = 0)
+        {
+            bool result = await soci.IsTesseraAvailableAsync(tessera, id);
+            return Json(result);
+        }
+
+        public async Task<IActionResult> Create()
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
             var inputModel = new SocioCreateInputModel();
+            inputModel.Tessera = await soci.GetLastRecordAsync();
             return View(inputModel);
         }
 

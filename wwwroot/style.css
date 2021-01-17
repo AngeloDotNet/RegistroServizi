@@ -91,3 +91,6 @@ h1 {
 .labtesto-tabella-bt {
     font-size: 14px;
 }
+.dropdown-menu a:hover {
+    background-color: #E3F2FD;
+}

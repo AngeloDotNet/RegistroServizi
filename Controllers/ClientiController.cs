@@ -87,7 +87,7 @@ namespace RegistroServizi.Controllers
         {
             if (ModelState.IsValid)
             {
-                ClienteDetailViewModel course = await clienti.EditClienteAsync(inputModel);
+                ClienteDetailViewModel cliente = await clienti.EditClienteAsync(inputModel);
                 TempData["ConfirmationMessage"] = "I dati sono stati aggiornati con successo";
                 return RedirectToAction(nameof(Detail), new { id = inputModel.Id });
             }

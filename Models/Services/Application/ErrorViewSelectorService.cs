@@ -16,7 +16,6 @@ namespace RegistroServizi.Models.Services.Application
             
             return exception switch
             {
-                //Not Found
                 null => new ErrorViewData(
                     message: "La pagina richiesta non esiste.",
                     statusCode: HttpStatusCode.NotFound,
@@ -41,8 +40,7 @@ namespace RegistroServizi.Models.Services.Application
                     message: $"Socio {exc.SocioId} non trovato",
                     statusCode: HttpStatusCode.NotFound,
                     viewName: "NotFound"),
-                
-                //Unavailable
+
                 RagioneSocialeUnavailableException exc => new ErrorViewData(
                     message: $"La ragione sociale {exc.RagioneSociale} esiste già",
                     statusCode: HttpStatusCode.NotFound,
@@ -53,7 +51,16 @@ namespace RegistroServizi.Models.Services.Application
                     statusCode: HttpStatusCode.NotFound,
                     viewName: "Unavailable"),
 
-                //Invalid
+                RagioneSocialeUnavailableException exc => new ErrorViewData(
+                    message: $"La ragione sociale {exc.RagioneSociale} esiste già",
+                    statusCode: HttpStatusCode.Conflict,
+                    viewName: "Unavailable"),
+
+                NominativoUnavailableException exc => new ErrorViewData(
+                    message: $"Il nominativo del socio {exc.Nominativo} esiste già",
+                    statusCode: HttpStatusCode.Conflict,
+                    viewName: "Unavailable"),
+
                 InvalidAmountException exc => new ErrorViewData(
                     message: $"L'importo non può essere negativo",
                     statusCode: HttpStatusCode.InternalServerError,

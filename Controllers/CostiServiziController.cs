@@ -50,7 +50,7 @@ namespace RegistroServizi.Controllers
         {
             if (ModelState.IsValid)
             {
-                CostoServizioDetailViewModel course = await costiservizi.EditCostoServizioAsync(inputModel);
+                CostoServizioDetailViewModel costoservizio = await costiservizi.EditCostoServizioAsync(inputModel);
                 TempData["ConfirmationMessage"] = "I dati sono stati aggiornati con successo";
                 return RedirectToAction(nameof(Detail), new { id = inputModel.Id });
             }

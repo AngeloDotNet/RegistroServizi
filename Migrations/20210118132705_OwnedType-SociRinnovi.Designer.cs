@@ -174,8 +174,6 @@ namespace RegistroServizi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SocioId");
-
                     b.ToTable("SocioFamiliare");
                 });
 
@@ -195,8 +193,6 @@ namespace RegistroServizi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SocioId");
 
                     b.ToTable("SocioRinnovo");
                 });

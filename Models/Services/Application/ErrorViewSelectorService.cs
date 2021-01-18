@@ -43,16 +43,11 @@ namespace RegistroServizi.Models.Services.Application
 
                 RagioneSocialeUnavailableException exc => new ErrorViewData(
                     message: $"La ragione sociale {exc.RagioneSociale} esiste già",
-                    statusCode: HttpStatusCode.NotFound,
+                    statusCode: HttpStatusCode.Conflict,
                     viewName: "Unavailable"),
 
                 SocioUnavailableException exc => new ErrorViewData(
                     message: $"Il socio {exc.Nominativo} esiste già",
-                    statusCode: HttpStatusCode.NotFound,
-                    viewName: "Unavailable"),
-
-                RagioneSocialeUnavailableException exc => new ErrorViewData(
-                    message: $"La ragione sociale {exc.RagioneSociale} esiste già",
                     statusCode: HttpStatusCode.Conflict,
                     viewName: "Unavailable"),
 

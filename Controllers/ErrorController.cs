@@ -18,9 +18,9 @@ namespace RegistroServizi.Controllers
 
             ViewData["Title"] = applicationPersister.GetTitoloApp();
             ViewData["TitleMessage"] = errorViewData.Title;
-            Response.StatusCode = (int) errorViewData.StatusCode;
             ViewData["Message"] = errorViewData.Message;
-            
+
+            Response.StatusCode = (int) errorViewData.StatusCode;
             return View(errorViewData.ViewName);
         }
     }

@@ -14,6 +14,7 @@ using RegistroServizi.Models.Services.Application.Associazioni;
 using RegistroServizi.Models.Services.Infrastructure;
 using RegistroServizi.Customizations.ModelBinders;
 using RegistroServizi.Models.Services.Application.Clienti;
+using RegistroServizi.Models.Services.Application.Soci;
 
 namespace RegistroServizi
 {
@@ -48,6 +49,7 @@ namespace RegistroServizi
 
             //Services - Area Amministrazione
             services.AddTransient<IClientiService, EfCoreClientiService>();
+            services.AddTransient<ISociService, EfCoreSociService>();
 
             //Database
             services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder => {
@@ -63,6 +65,7 @@ namespace RegistroServizi
             
             //Options - Area Amministrazione
             services.Configure<ClienteOptions>(Configuration.GetSection("Cliente"));
+            services.Configure<SocioOptions>(Configuration.GetSection("Socio"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)

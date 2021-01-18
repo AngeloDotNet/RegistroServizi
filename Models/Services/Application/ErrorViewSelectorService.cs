@@ -16,7 +16,6 @@ namespace RegistroServizi.Models.Services.Application
             
             return exception switch
             {
-                #region "NOT FOUND"
                 null => new ErrorViewData(
                     message: "La pagina richiesta non esiste.",
                     statusCode: HttpStatusCode.NotFound,
@@ -36,14 +35,22 @@ namespace RegistroServizi.Models.Services.Application
                     message: $"Cliente {exc.ClienteId} non trovato",
                     statusCode: HttpStatusCode.NotFound,
                     viewName: "NotFound"),
-                
+
                 SocioNotFoundException exc => new ErrorViewData(
                     message: $"Socio {exc.SocioId} non trovato",
                     statusCode: HttpStatusCode.NotFound,
                     viewName: "NotFound"),
-                #endregion
-                
-                #region "EXISTING DATA"
+
+                RagioneSocialeUnavailableException exc => new ErrorViewData(
+                    message: $"La ragione sociale {exc.RagioneSociale} esiste già",
+                    statusCode: HttpStatusCode.NotFound,
+                    viewName: "Unavailable"),
+
+                SocioUnavailableException exc => new ErrorViewData(
+                    message: $"Il socio {exc.Nominativo} esiste già",
+                    statusCode: HttpStatusCode.NotFound,
+                    viewName: "Unavailable"),
+
                 RagioneSocialeUnavailableException exc => new ErrorViewData(
                     message: $"La ragione sociale {exc.RagioneSociale} esiste già",
                     statusCode: HttpStatusCode.Conflict,
@@ -53,14 +60,11 @@ namespace RegistroServizi.Models.Services.Application
                     message: $"Il nominativo del socio {exc.Nominativo} esiste già",
                     statusCode: HttpStatusCode.Conflict,
                     viewName: "Unavailable"),
-                #endregion
 
-                #region "GENERIC ERROR"
                 InvalidAmountException exc => new ErrorViewData(
                     message: $"L'importo non può essere negativo",
                     statusCode: HttpStatusCode.InternalServerError,
                     viewName: "Invalid"),
-                #endregion
 
                 _ => new ErrorViewData(message: "")
             };

@@ -1,0 +1,172 @@
+@model SocioDetailViewModel
+@using System.Globalization
+<div class="card">
+    <div class="card-header">Dettaglio socio</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="card-text">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Numero tessera</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.Tessera</label>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Nominativo</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.Nominativo</label>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Indirizzo</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.Indirizzo</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Comune</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.Comune</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Cap</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.Cap</label>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Provincia</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.Provincia</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Luogo di nascita</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.LuogoNascita</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Data di nascita</label><br>
+                                    <label class="labtesto-tabella-bt">@{
+                                        var cultureInfo = new CultureInfo("it-IT");
+                                        var dataNascita = DateTime.Parse(@Model.DataNascita, cultureInfo);
+
+                                        @dataNascita.ToString("dd/MM/yyyy");
+                                    }</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Codice Fiscale</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.CodiceFiscale</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Telefono</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.Telefono</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Email</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Data tesseramento</label><br>
+                                    <label class="labtesto-tabella-bt">@{
+                                        var dataTessera = DateTime.Parse(@Model.DataTesseramento, cultureInfo);
+
+                                        @dataTessera.ToString("dd/MM/yyyy");
+                                    }</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Professione</label><br>
+                                    <label class="labtesto-tabella-bt">@Model.Professione</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="labtitolo-tabella-bt">Trattamento dei dati</label><br>
+                                    <label class="labtesto-tabella-bt">@{
+                                        var trattamento = string.Empty;
+
+                                        if(@Model.TrattamentoDati == "0")
+                                        {
+                                            trattamento = "Autorizzato";
+                                        }
+                                        else
+                                        {
+                                            trattamento = "Non autorizzato";
+                                        }
+                                        @trattamento.ToString();
+                                    }</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <a class="btn btn-outline-secondary ml3" asp-action="Index"><i class="fas fa-reply"></i> Torna indietro</a>&nbsp;
+                                <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@Model.Id"><i class="fas fa-edit"></i> Modifica</a>
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <div class="col-md d-flex align-items-center">
+                                <a href="#collapse1" data-toggle="collapse">Soci Familiari (@Model.SociFamiliari.Count)</a>
+                            </div>
+                            <div id="collapse1" class="col-md-12 collapse">
+                                <div class="row">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-md-9 titolo-tabella-bt">Familiare</div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                                @foreach (SocioFamiliareViewModel sociofamiliare in Model.SociFamiliari)
+                                {
+                                    <partial name="Soci/_SocioFamiliareLine" model="@sociofamiliare"></partial>   
+                                }
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <div class="col-md d-flex align-items-center">
+                                <a href="#collapse2" data-toggle="collapse">Rinnovi (@Model.SociRinnovi.Count)</a>
+                            </div>
+                            <div id="collapse2" class="col-md-12 collapse">
+                                <div class="row">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-md-2 titolo-tabella-bt">Anno</div>
+                                    <div class="col-md-2 titolo-tabella-bt">Quota</div>
+                                    <div class="col-md-2 titolo-tabella-bt">Data rinnovo</div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                                @foreach (SocioRinnovoViewModel sociorinnovo in Model.SociRinnovi)
+                                {
+                                    <partial name="Soci/_SocioRinnovoLine" model="@sociorinnovo"></partial>   
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

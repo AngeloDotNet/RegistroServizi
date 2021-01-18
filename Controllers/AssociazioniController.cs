@@ -21,9 +21,7 @@ namespace RegistroServizi.Controllers
         public async Task<IActionResult> Index()
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
-            
             ListViewModel<AssociazioneViewModel> associazione = await associazioni.GetAssociazioniAsync();
-
             AssociazioneListViewModel viewModel = new AssociazioneListViewModel
             {
                 Associazione = associazione

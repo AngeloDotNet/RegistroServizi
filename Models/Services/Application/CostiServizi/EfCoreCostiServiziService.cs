@@ -31,8 +31,6 @@ namespace RegistroServizi.Models.Services.Application.CostiServizi
             {
                 ("TipoServizio", true) => baseQuery.OrderBy(costoservizio => costoservizio.TipoServizio),
                 ("TipoServizio", false) => baseQuery.OrderByDescending(costoservizio => costoservizio.TipoServizio),
-                ("CostoFisso", true) => baseQuery.OrderBy(costoservizio => costoservizio.CostoFisso),
-                ("CostoFisso", false) => baseQuery.OrderByDescending(costoservizio => costoservizio.CostoFisso),
                 ("Id", true) => baseQuery.OrderBy(costoservizio => costoservizio.Id),
                 ("Id", false) => baseQuery.OrderByDescending(costoservizio => costoservizio.Id),
                 _ => baseQuery

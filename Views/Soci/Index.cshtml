@@ -1,17 +1,17 @@
-@model ClienteListViewModel
+@model SocioListViewModel
 <div class="row">
     <div class="col-md">
         <div class="card">
-            <div class="card-header">Gestione Clienti</div>
+            <div class="card-header">Gestione Soci</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm">
                             <div class="card-text">
                                 <div class="row">
-                                    <div class="col-md-2"><a class="btn btn-outline-secondary ml-3" asp-controller="Clienti" asp-action="Create"><i class="fas fa-file-alt"></i> Nuovo</a></div>
+                                    <div class="col-md-2"><a class="btn btn-outline-secondary ml-3" asp-controller="Soci" asp-action="Create"><i class="fas fa-file-alt"></i> Nuovo</a></div>
                                     <div class="col-md-7"></div>
                                     <div class="col-md-3 d-flex align-items-center">
-                                        <form asp-controller="Clienti" asp-action="Index" method="get">
+                                        <form asp-controller="Soci" asp-action="Index" method="get">
                                             <div class="input-group">
                                                 <input type="text" name="search" class="form-control" placeholder="Cerca..." aria-label="Cerca..." aria-describedby="search-button" value="@Model.Input.Search">
                                                 <div class="input-group-append">
@@ -23,12 +23,13 @@
                                 </div>
                                 <div class="row">&nbsp;</div>
                                 <div class="row">
-                                    <div class="col-md-9 titolo-tabella-bt"><cliente-order-link order-by="RagioneSociale" Input="@Model.Input">Ragione Sociale</cliente-order-link></div>
+                                    <div class="col-md-1 titolo-tabella-bt"><socio-order-link order-by="Tessera" Input="@Model.Input">Tessera</socio-order-link></div>
+                                    <div class="col-md-8 titolo-tabella-bt"><socio-order-link order-by="Nominativo" Input="@Model.Input">Nominativo</socio-order-link></div>
                                     <div class="col-md-3"></div>
                                 </div>
-                                @foreach (ClienteViewModel cliente in Model.Cliente.Results)
+                                @foreach (SocioViewModel socio in Model.Socio.Results)
                                 {
-                                    <partial name="Clienti/_ClienteLine" model="@cliente"></partial>   
+                                    <partial name="Soci/_SocioLine" model="@socio"></partial>   
                                 }
                                 <div class="row">&nbsp;</div>
                                 <vc:pagination-bar model="@Model"></vc:pagination-bar>

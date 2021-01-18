@@ -10,12 +10,12 @@ namespace RegistroServizi.Models.InputModels.Soci
         public int Id { get; set; }
         
         [Required(ErrorMessage = "Il numero della tessera è obbligatorio"),
-         Remote(action: nameof(SociController.IsTesseraAvailable), controller: "Soci", ErrorMessage = "La tessera indicata esiste già"),
+         Remote(action: nameof(SociController.IsTesseraAvailable), controller: "Soci", ErrorMessage = "La tessera indicata esiste già", AdditionalFields = "Id"),
          Display(Name = "Numero Tessera")]
         public string Tessera { get; set; }
         
         [Required(ErrorMessage = "Il nominativo è obbligatorio"),
-         Remote(action: nameof(SociController.IsSocioAvailable), controller: "Soci", ErrorMessage = "Il nominativo indicato esiste già"),
+         Remote(action: nameof(SociController.IsSocioAvailable), controller: "Soci", ErrorMessage = "Il nominativo indicato esiste già", AdditionalFields = "Id"),
          Display(Name = "Nominativo")]
         public string Nominativo { get; set; }
 

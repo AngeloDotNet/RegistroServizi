@@ -11,7 +11,9 @@ namespace RegistroServizi.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
+
 #pragma warning disable 612, 618
+
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.5");
 
@@ -172,8 +174,6 @@ namespace RegistroServizi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SocioId");
-
                     b.ToTable("SocioFamiliare");
                 });
 
@@ -193,8 +193,6 @@ namespace RegistroServizi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SocioId");
 
                     b.ToTable("SocioRinnovo");
                 });
@@ -351,7 +349,9 @@ namespace RegistroServizi.Migrations
                                 .HasForeignKey("SocioRinnovoId");
                         });
                 });
+
 #pragma warning restore 612, 618
+
         }
     }
 }

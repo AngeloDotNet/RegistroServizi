@@ -148,14 +148,52 @@ namespace RegistroServizi.Models.Services.Application.Soci
             return !tesseraExists;
         }
 
-        public Task<SocioEditInputModel> GetSocioForEditingAsync(int id)
+        public async Task<SocioEditInputModel> GetSocioForEditingAsync(int id)
         {
-            throw new System.NotImplementedException();
+            IQueryable<SocioEditInputModel> queryLinq = dbContext.Soci
+                .AsNoTracking()
+                .Where(socio => socio.Id == id)
+                .Select(socio => socio.ToSocioEditInputModel());
+
+            SocioEditInputModel viewModel = await queryLinq.FirstOrDefaultAsync();
+
+            if (viewModel == null)
+            {
+                logger.LogWarning("Socio {id} non trovato", id);
+                throw new SocioNotFoundException(id);
+            }
+
+            return viewModel;
         }
 
-        public Task<SocioDetailViewModel> EditSocioAsync(SocioEditInputModel inputModel)
+        public async Task<SocioDetailViewModel> EditSocioAsync(SocioEditInputModel inputModel)
         {
-            throw new System.NotImplementedException();
+            Socio socio = await dbContext.Soci.FindAsync(inputModel.Id);
+
+            if (socio == null)
+            {
+                logger.LogWarning("Socio {id} non trovato", inputModel.Id);
+                throw new ClienteNotFoundException(inputModel.Id);
+            }
+
+            socio.ChangeTessera(inputModel.Tessera);
+            socio.ChangeNominativo(inputModel.Nominativo);
+            socio.ChangeIndirizzo(inputModel.Indirizzo);
+            socio.ChangeCap(inputModel.Cap);
+            socio.ChangeComune(inputModel.Comune);
+            socio.ChangeProvincia(inputModel.Provincia);
+            socio.ChangeLuogoNascita(inputModel.LuogoNascita);
+            socio.ChangeDataNascita(inputModel.DataNascita);
+            socio.ChangeCodiceFiscale(inputModel.CodiceFiscale);
+            socio.ChangeTelefono(inputModel.Telefono);
+            socio.ChangeEmail(inputModel.Email);
+            socio.ChangeDataTesseramento(inputModel.DataTesseramento);
+            socio.ChangeTrattamentoDati(inputModel.TrattamentoDati);
+            socio.ChangeProfessione(inputModel.Professione);
+            socio.ChangeZona(inputModel.Zona);
+
+            await dbContext.SaveChangesAsync();
+            return socio.ToSocioDetailSingleViewModel();
         }
     }
 }

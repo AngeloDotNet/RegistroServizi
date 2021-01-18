@@ -118,7 +118,7 @@ namespace RegistroServizi.Models.Services.Application.Soci
             return viewModel;
         }
 
-        public async Task<string> GetLastRecordAsync()
+        public async Task<string> GetNextIdAsync()
         {
             int lastId = 0;
             int newId = 0;

@@ -15,6 +15,6 @@ namespace RegistroServizi.Models.Services.Application.Soci
         Task DeleteSocioAsync(SocioDeleteInputModel inputModel);
         Task<bool> IsSocioAvailableAsync(string nominativo, int excludeId);
         Task<bool> IsTesseraAvailableAsync(string tessera, int excludeId);
-        Task<string> GetLastRecordAsync();
+        Task<string> GetNextIdAsync();
     }
 }

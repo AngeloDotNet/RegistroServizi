@@ -130,7 +130,8 @@
                         <div class="row">&nbsp;</div>
                         <div class="row">
                             <div class="col-md d-flex align-items-center">
-                                <a href="#collapse1" data-toggle="collapse">Soci Familiari (@Model.SociFamiliari.Count)</a>
+                                <a href="#collapse1" data-toggle="collapse">Soci Familiari (@Model.SociFamiliari.Count)</a>&nbsp;
+                                <a class="btn btn-outline-secondary btn-sm" asp-controller="SociFamiliari" asp-action="Create" asp-route-id="@Model.Id"><i class="fas fa-file-alt"></i> Nuovo</a>
                             </div>
                             <div id="collapse1" class="col-md-12 collapse">
                                 <div class="row">&nbsp;</div>

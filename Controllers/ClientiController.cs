@@ -22,9 +22,7 @@ namespace RegistroServizi.Controllers
         public async Task<IActionResult> Index(ClienteListInputModel input)
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
-            
             ListViewModel<ClienteViewModel> cliente = await clienti.GetClientiAsync(input);
-
             ClienteListViewModel viewModel = new ClienteListViewModel
             {
                 Cliente = cliente,

@@ -22,9 +22,7 @@ namespace RegistroServizi.Controllers
         public async Task<IActionResult> Index(SocioListInputModel input)
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
-            
             ListViewModel<SocioViewModel> socio = await soci.GetSociAsync(input);
-
             SocioListViewModel viewModel = new SocioListViewModel
             {
                 Socio = socio,
@@ -107,8 +105,8 @@ namespace RegistroServizi.Controllers
         public async Task<IActionResult> Delete(SocioDeleteInputModel inputModel)
         {
             await soci.DeleteSocioAsync(inputModel);
-            TempData["ConfirmationMessage"] = "Il socio è stata eliminato";
-            return RedirectToAction(nameof(SociController.Detail), "Soci", new { id = inputModel.Id });
+            TempData["ConfirmationMessage"] = "Il socio è stato eliminato";
+            return RedirectToAction(nameof(SociController.Index));
         }
     }
 }

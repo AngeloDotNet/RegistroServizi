@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,8 +22,6 @@ namespace RegistroServizi.Models.Services.Application.Soci
             this.logger = logger;
             this.dbContext = dbContext;
         }
-
-        #region "Soci"
 
         public async Task<ListViewModel<SocioViewModel>> GetSociAsync(SocioListInputModel model)
         {
@@ -101,11 +98,6 @@ namespace RegistroServizi.Models.Services.Application.Soci
             await dbContext.SaveChangesAsync();
         }
 
-        public Task<SocioDetailViewModel> EditSocioAsync(SocioEditInputModel inputModel)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<SocioDetailViewModel> GetSocioAsync(int id)
         {
             IQueryable<SocioDetailViewModel> queryLinq = dbContext.Soci
@@ -126,15 +118,20 @@ namespace RegistroServizi.Models.Services.Application.Soci
             return viewModel;
         }
 
-        public Task<SocioEditInputModel> GetSocioForEditingAsync(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<string> GetLastRecordAsync()
         {
-            int lastId = await dbContext.Soci.OrderByDescending(x => x.Id).Select(x => x.Id).FirstOrDefaultAsync();
-            int newId = lastId + 1;
+            int lastId = 0;
+            int newId = 0;
+
+            lastId = await dbContext.Soci
+                            .OrderByDescending(x => x.Id)
+                            .Select(x => x.Id)
+                            .FirstOrDefaultAsync();
+
+            logger.LogInformation("Ultimo ID Socio: {id}", lastId);
+
+            newId = lastId + 1;
+            logger.LogInformation("Nuovo ID Socio: {id}", newId);
 
             return newId.ToString();
         }
@@ -150,12 +147,15 @@ namespace RegistroServizi.Models.Services.Application.Soci
             bool tesseraExists = await dbContext.Soci.AnyAsync(socio => EF.Functions.Like(socio.Tessera, tessera) && socio.Id != id);
             return !tesseraExists;
         }
-        #endregion
 
-        #region "Soci Familiari"
-        #endregion
+        public Task<SocioEditInputModel> GetSocioForEditingAsync(int id)
+        {
+            throw new System.NotImplementedException();
+        }
 
-        #region "Soci Rinnovi"
-        #endregion
+        public Task<SocioDetailViewModel> EditSocioAsync(SocioEditInputModel inputModel)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

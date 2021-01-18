@@ -5,8 +5,7 @@ namespace RegistroServizi.Models.Services.Infrastructure
 {
     public partial class RegistroServiziDbContext : DbContext
     {
-        public RegistroServiziDbContext(DbContextOptions<RegistroServiziDbContext> options)
-            : base(options)
+        public RegistroServiziDbContext(DbContextOptions<RegistroServiziDbContext> options) : base(options)
         {
         }
 
@@ -88,12 +87,12 @@ namespace RegistroServizi.Models.Services.Infrastructure
                 entity.HasKey(socio => socio.Id);
 
                 entity.HasMany(socio => socio.SociFamiliari)
-                    .WithOne(sociofamiliare => sociofamiliare.Socio)
-                    .HasForeignKey(sociofamiliare => sociofamiliare.SocioId);
+                        .WithOne(sociofamiliare => sociofamiliare.Socio)
+                        .HasForeignKey(sociofamiliare => sociofamiliare.SocioId);
                 
                 entity.HasMany(socio => socio.SociRinnovi)
-                    .WithOne(sociorinnovo => sociorinnovo.Socio)
-                    .HasForeignKey(sociorinnovo => sociorinnovo.SocioId);
+                        .WithOne(sociorinnovo => sociorinnovo.Socio)
+                        .HasForeignKey(sociorinnovo => sociorinnovo.SocioId);
             });
 
             modelBuilder.Entity<SocioFamiliare>(entity =>
@@ -106,6 +105,15 @@ namespace RegistroServizi.Models.Services.Infrastructure
             {
                 entity.ToTable("SocioRinnovo");
                 entity.HasKey(sociorinnovo => sociorinnovo.Id);
+
+                entity.OwnsOne(sociorinnovo => sociorinnovo.Quota, builder => {
+                    builder.Property(money => money.Currency)
+                           .HasConversion<string>()
+                           .HasColumnName("Quota_Currency");
+                    builder.Property(money => money.Amount)
+                           .HasColumnName("Quota_Amount")
+                           .HasConversion<float>();
+                });
             });
         }
     }

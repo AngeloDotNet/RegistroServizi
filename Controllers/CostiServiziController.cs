@@ -21,9 +21,7 @@ namespace RegistroServizi.Controllers
         public async Task<IActionResult> Index(CostoServizioListInputModel input)
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
-            
             ListViewModel<CostoServizioViewModel> costoservizio = await costiservizi.GetCostiServiziAsync(input);
-
             CostoServizioListViewModel viewModel = new CostoServizioListViewModel
             {
                 CostoServizio = costoservizio,

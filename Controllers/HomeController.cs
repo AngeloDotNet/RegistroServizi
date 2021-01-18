@@ -10,6 +10,7 @@ namespace RegistroServizi.Controllers
         {
             this.applicationPersister = applicationPersister;
         }
+
         public IActionResult Index()
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();

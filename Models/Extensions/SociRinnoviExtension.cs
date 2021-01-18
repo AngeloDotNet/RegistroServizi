@@ -13,7 +13,7 @@ namespace RegistroServizi.Models.Extensions
                 SocioId = sociorinnovo.SocioId,
                 Anno = sociorinnovo.Anno,
                 Quota = sociorinnovo.Quota,
-                DataRinnovo =sociorinnovo.DataRinnovo
+                DataRinnovo = sociorinnovo.DataRinnovo
             };
         }
 
@@ -25,7 +25,7 @@ namespace RegistroServizi.Models.Extensions
                 SocioId = sociorinnovo.SocioId,
                 Anno = sociorinnovo.Anno,
                 Quota = sociorinnovo.Quota,
-                DataRinnovo =sociorinnovo.DataRinnovo
+                DataRinnovo = sociorinnovo.DataRinnovo
             };
         }
     }

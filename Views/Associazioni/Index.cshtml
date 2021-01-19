@@ -8,14 +8,24 @@
                         <div class="col-sm">
                             <div class="card-text">
                                 <div class="row">
-                                    <div class="col-md-4 titolo-tabella-bt">Nome Associazione</div>
+                                    <div class="col-md-3 titolo-tabella-bt">Nome Associazione</div>
                                     <div class="col-md-2 titolo-tabella-bt">Sigla</div>
+                                    <div class="col-md-3 titolo-tabella-bt">Indirizzo</div>
                                     <div class="col-md-3 titolo-tabella-bt">Comune</div>
-                                    <div class="col-md-3"></div>
+                                    <div class="col-md-1"></div>
                                 </div>
                                 @foreach (AssociazioneViewModel associazione in Model.Associazione.Results)
                                 {
-                                    <partial name="Associazioni/_AssociazioneLine" model="@associazione"></partial>
+                                    <hr>
+                                    <div class="row riga-height">
+                                    <div class="col-md-3 testo-tabella-bt">@associazione.Denominazione</div>
+                                    <div class="col-md-2 testo-tabella-bt">@associazione.Sigla</div>
+                                    <div class="col-md-3 testo-tabella-bt">@associazione.Indirizzo</div>
+                                    <div class="col-md-3 testo-tabella-bt">@associazione.Comune</div>
+                                    <div class="col-md-1 d-flex align-items-center">
+                                        <a class="btn btn-outline-primary" asp-controller="Associazioni" asp-action="Detail" asp-route-id="@associazione.Id"><i class="fas fa-info"></i></a>
+                                    </div>
+                                    </div>
                                 }
                             </div>
                         </div>

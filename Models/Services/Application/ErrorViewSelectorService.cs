@@ -40,19 +40,19 @@ namespace RegistroServizi.Models.Services.Application
                     message: $"Socio {exc.SocioId} non trovato",
                     statusCode: HttpStatusCode.NotFound,
                     viewName: "NotFound"),
+                
+                SocioFamiliareNotFoundException exc => new ErrorViewData(
+                    message: $"Socio familiare {exc.Id} non trovato",
+                    statusCode: HttpStatusCode.NotFound,
+                    viewName: "NotFound"),
 
                 RagioneSocialeUnavailableException exc => new ErrorViewData(
                     message: $"La ragione sociale {exc.RagioneSociale} esiste già",
-                    statusCode: HttpStatusCode.NotFound,
+                    statusCode: HttpStatusCode.Conflict,
                     viewName: "Unavailable"),
 
                 SocioUnavailableException exc => new ErrorViewData(
                     message: $"Il socio {exc.Nominativo} esiste già",
-                    statusCode: HttpStatusCode.NotFound,
-                    viewName: "Unavailable"),
-
-                RagioneSocialeUnavailableException exc => new ErrorViewData(
-                    message: $"La ragione sociale {exc.RagioneSociale} esiste già",
                     statusCode: HttpStatusCode.Conflict,
                     viewName: "Unavailable"),
 

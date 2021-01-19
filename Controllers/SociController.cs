@@ -48,7 +48,7 @@ namespace RegistroServizi.Controllers
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
             var inputModel = new SocioCreateInputModel();
-            inputModel.Tessera = await soci.GetLastRecordAsync();
+            inputModel.Tessera = await soci.GetNextIdAsync();
             return View(inputModel);
         }
 

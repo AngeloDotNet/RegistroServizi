@@ -118,7 +118,7 @@ namespace RegistroServizi.Models.Services.Application.Soci
             return viewModel;
         }
 
-        public async Task<string> GetLastRecordAsync()
+        public async Task<string> GetNextIdAsync()
         {
             int lastId = 0;
             int newId = 0;
@@ -173,7 +173,7 @@ namespace RegistroServizi.Models.Services.Application.Soci
             if (socio == null)
             {
                 logger.LogWarning("Socio {id} non trovato", inputModel.Id);
-                throw new ClienteNotFoundException(inputModel.Id);
+                throw new SocioNotFoundException(inputModel.Id);
             }
 
             socio.ChangeTessera(inputModel.Tessera);

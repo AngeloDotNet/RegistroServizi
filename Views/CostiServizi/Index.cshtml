@@ -16,11 +16,22 @@
                                     <div class="col-md-2 titolo-tabella-bt">Costo Fisso</div>
                                     <div class="col-md-2 titolo-tabella-bt">Costo al km</div>
                                     <div class="col-md-2 titolo-tabella-bt">2° Trasp.</div>
-                                    <div class="col-md-3"></div>
+                                    <div class="col-md-2 titolo-tabella-bt">Fermo macchina</div>
+                                    <div class="col-md-1"></div>
                                 </div>
                                 @foreach (CostoServizioViewModel costoservizio in Model.CostoServizio.Results)
                                 {
-                                    <partial name="CostiServizi/_CostoServizioLine" model="@costoservizio"></partial>
+                                    <hr>
+                                    <div class="row riga-height">
+                                        <div class="col-md-3 testo-tabella-bt">@costoservizio.TipoServizio</div>
+                                        <div class="col-md-2 testo-tabella-bt">@costoservizio.CostoFisso</div>
+                                        <div class="col-md-2 testo-tabella-bt">@costoservizio.CostoKm</div>
+                                        <div class="col-md-2 testo-tabella-bt">@costoservizio.SecondoTrasportato</div>
+                                        <div class="col-md-2 testo-tabella-bt">@costoservizio.FermoMacchina</div>
+                                        <div class="col-md-1 d-flex align-items-center">
+                                        <a class="btn btn-outline-primary" asp-controller="CostiServizi" asp-action="Detail" asp-route-id="@costoservizio.Id"><i class="fas fa-info"></i></a>
+                                    </div>
+                                    </div>
                                 }
                                 <div class="row">&nbsp;</div>
                                 <vc:pagination-bar model="@Model"></vc:pagination-bar>

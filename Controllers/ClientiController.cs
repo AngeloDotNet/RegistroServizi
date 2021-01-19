@@ -99,7 +99,7 @@ namespace RegistroServizi.Controllers
         {
             await clienti.DeleteClienteAsync(inputModel);
             TempData["ConfirmationMessage"] = "Il cliente è stata eliminato";
-            return RedirectToAction(nameof(ClientiController.Detail), "Clienti", new { id = inputModel.Id });
+            return RedirectToAction(nameof(ClientiController.Index));
         }
     }
 }

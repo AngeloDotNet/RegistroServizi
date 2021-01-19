@@ -8,12 +8,12 @@
                         <div class="col-sm">
                             <div class="card-text">
                                 <div class="row">
-                                    <div class="col-md-2"><a class="btn btn-outline-secondary ml-3" asp-controller="Soci" asp-action="Create"><i class="fas fa-file-alt"></i> Nuovo</a></div>
+                                    <div class="col-md-2"><a class="btn btn-outline-secondary ml-3" asp-controller="Soci" asp-action="Create"><i class="fas fa-file-alt"></i></a></div>
                                     <div class="col-md-7"></div>
                                     <div class="col-md-3 d-flex align-items-center">
                                         <form asp-controller="Soci" asp-action="Index" method="get">
                                             <div class="input-group">
-                                                <input type="text" name="search" class="form-control" placeholder="Cerca..." aria-label="Cerca..." aria-describedby="search-button" value="@Model.Input.Search">
+                                                <input type="text" name="search" class="form-control" placeholder="Cerca nominativo..." aria-label="Cerca..." aria-describedby="search-button" value="@Model.Input.Search">
                                                 <div class="input-group-append">
                                                     <button class="input-group-text" id="search-button"><i class="fas fa-search"></i></button>
                                                 </div>
@@ -24,12 +24,29 @@
                                 <div class="row">&nbsp;</div>
                                 <div class="row">
                                     <div class="col-md-1 titolo-tabella-bt"><socio-order-link order-by="Tessera" Input="@Model.Input">Tessera</socio-order-link></div>
-                                    <div class="col-md-8 titolo-tabella-bt"><socio-order-link order-by="Nominativo" Input="@Model.Input">Nominativo</socio-order-link></div>
-                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3 titolo-tabella-bt"><socio-order-link order-by="Nominativo" Input="@Model.Input">Nominativo</socio-order-link></div>
+                                    <div class="col-md-2 titolo-tabella-bt">Data di nascita</div>
+                                    <div class="col-md-3 titolo-tabella-bt">Indirizzo Email</div>
+                                    <div class="col-md-2 titolo-tabella-bt">Telefono</div>
+                                    <div class="col-md-1"></div>
                                 </div>
-                                @foreach (SocioViewModel socio in Model.Socio.Results)
+                                @foreach (var socio in Model.Socio.Results)
                                 {
-                                    <partial name="Soci/_SocioLine" model="@socio"></partial>   
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-1 testo-tabella-bt">@socio.Tessera</div>
+                                        <div class="col-md-3 testo-tabella-bt">@socio.Nominativo</div>
+                                        <div class="col-md-2 testo-tabella-bt">@{
+                                            var dataNascita = DateTime.Parse(@socio.DataNascita);
+
+                                            @dataNascita.ToString("dd/MM/yyyy");
+                                        }</div>
+                                        <div class="col-md-3 testo-tabella-bt">@socio.Email</div>
+                                        <div class="col-md-2 testo-tabella-bt">@socio.Telefono</div>
+                                        <div class="col-md-1 d-flex align-items-center">
+                                        <a class="btn btn-outline-primary" asp-controller="Soci" asp-action="Detail" asp-route-id="@socio.Id"><i class="fas fa-info"></i></a>
+                                        </div>
+                                    </div>   
                                 }
                                 <div class="row">&nbsp;</div>
                                 <vc:pagination-bar model="@Model"></vc:pagination-bar>

@@ -15,6 +15,9 @@ using RegistroServizi.Models.Services.Infrastructure;
 using RegistroServizi.Customizations.ModelBinders;
 using RegistroServizi.Models.Services.Application.Clienti;
 using RegistroServizi.Models.Services.Application.Soci;
+using RegistroServizi.Models.Services.Application.SociFamiliari;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 namespace RegistroServizi
 {
@@ -50,6 +53,7 @@ namespace RegistroServizi
             //Services - Area Amministrazione
             services.AddTransient<IClientiService, EfCoreClientiService>();
             services.AddTransient<ISociService, EfCoreSociService>();
+            services.AddTransient<ISociFamiliariService, EfCoreSociFamiliariService>();
 
             //Database
             services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder => {
@@ -85,7 +89,16 @@ namespace RegistroServizi
                 app.UseExceptionHandler("/Error");
             }
 
+            var appCulture = new CultureInfo("it-IT");
+
             app.UseStaticFiles();
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(appCulture),
+                SupportedCultures = new[] { appCulture }
+            });
+
             app.UseRouting();
 
             app.UseEndpoints(routeBuilder => {

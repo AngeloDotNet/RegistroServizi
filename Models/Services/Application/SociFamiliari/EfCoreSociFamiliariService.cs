@@ -1,5 +1,10 @@
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RegistroServizi.Models.Entities;
+using RegistroServizi.Models.Exceptions.Application;
+using RegistroServizi.Models.Extensions;
 using RegistroServizi.Models.InputModels.SociFamiliari;
 using RegistroServizi.Models.Services.Infrastructure;
 using RegistroServizi.Models.ViewModels.SociFamiliari;
@@ -16,29 +21,71 @@ namespace RegistroServizi.Models.Services.Application.SociFamiliari
             this.dbContext = dbContext;
         }
 
-        public Task<SocioFamiliareDetailViewModel> CreateSocioFamiliareAsync(SocioFamiliareCreateInputModel inputModel)
+        public async Task<SocioFamiliareDetailViewModel> CreateSocioFamiliareAsync(SocioFamiliareCreateInputModel inputModel)
         {
-            throw new System.NotImplementedException();
+            var socioFamiliare = new SocioFamiliare();
+
+            socioFamiliare.ChangeSocioId(inputModel.SocioId);
+            socioFamiliare.ChangeFamiliare(inputModel.Familiare);
+
+            dbContext.Add(socioFamiliare);
+            await dbContext.SaveChangesAsync();
+
+            return socioFamiliare.ToSocioFamiliareDetailViewModel();
         }
 
-        public Task DeleteSocioFamiliareAsync(SocioFamiliareDeleteInputModel inputModel)
+        public async Task DeleteSocioFamiliareAsync(SocioFamiliareDeleteInputModel inputModel)
         {
-            throw new System.NotImplementedException();
+            SocioFamiliare socioFamiliare = await dbContext.SociFamiliari.FindAsync(inputModel.Id);
+
+            if (socioFamiliare == null)
+            {
+                throw new SocioFamiliareNotFoundException(inputModel.Id);
+            }
+
+            dbContext.Remove(socioFamiliare);
+            await dbContext.SaveChangesAsync();
         }
 
-        public Task<SocioFamiliareDetailViewModel> EditSocioFamiliareAsync(SocioFamiliareEditInputModel inputModel)
+        public async Task<SocioFamiliareDetailViewModel> EditSocioFamiliareAsync(SocioFamiliareEditInputModel inputModel)
         {
-            throw new System.NotImplementedException();
+            SocioFamiliare socioFamiliare = await dbContext.SociFamiliari.FindAsync(inputModel.Id);
+
+            if (socioFamiliare == null)
+            {
+                logger.LogWarning("Socio familiare {id} non trovato", inputModel.Id);
+                throw new SocioFamiliareNotFoundException(inputModel.Id);
+            }
+
+            socioFamiliare.ChangeSocioId(inputModel.SocioId);
+            socioFamiliare.ChangeFamiliare(inputModel.Familiare);
+
+            await dbContext.SaveChangesAsync();
+            return socioFamiliare.ToSocioFamiliareDetailViewModel();
         }
 
-        public Task<SocioFamiliareEditInputModel> GetSocioFamiliareForEditingAsync(int id)
+        public async Task<SocioFamiliareEditInputModel> GetSocioFamiliareForEditingAsync(int id)
         {
-            throw new System.NotImplementedException();
+            IQueryable<SocioFamiliareEditInputModel> queryLinq = dbContext.SociFamiliari
+                .AsNoTracking()
+                .Where(socioFamiliare => socioFamiliare.Id == id)
+                .Select(socioFamiliare => socioFamiliare.ToSocioFamiliareEditInputModel());
+
+            SocioFamiliareEditInputModel viewModel = await queryLinq.FirstOrDefaultAsync();
+
+            if (viewModel == null)
+            {
+                logger.LogWarning("Socio familiare {id} non trovato", id);
+                throw new SocioFamiliareNotFoundException(id);
+            }
+
+            return viewModel;
         }
 
-        public Task<bool> IsSocioFamiliareAvailableAsync(string familiare, int excludeId)
+        public async Task<bool> IsSocioFamiliareAvailableAsync(string familiare, int id)
         {
-            throw new System.NotImplementedException();
+            bool socioFamiliareExists = await dbContext.SociFamiliari.AnyAsync(socio => EF.Functions.Like(socio.Familiare, familiare) && socio.Id != id);
+            return !socioFamiliareExists;
         }
     }
 }

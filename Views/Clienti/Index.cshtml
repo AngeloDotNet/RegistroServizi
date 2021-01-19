@@ -8,7 +8,7 @@
                         <div class="col-sm">
                             <div class="card-text">
                                 <div class="row">
-                                    <div class="col-md-2"><a class="btn btn-outline-secondary ml-3" asp-controller="Clienti" asp-action="Create"><i class="fas fa-file-alt"></i> Nuovo</a></div>
+                                    <div class="col-md-2"><a class="btn btn-outline-secondary ml-3" asp-controller="Clienti" asp-action="Create"><i class="fas fa-file-alt"></i></a></div>
                                     <div class="col-md-7"></div>
                                     <div class="col-md-3 d-flex align-items-center">
                                         <form asp-controller="Clienti" asp-action="Index" method="get">
@@ -23,12 +23,24 @@
                                 </div>
                                 <div class="row">&nbsp;</div>
                                 <div class="row">
-                                    <div class="col-md-9 titolo-tabella-bt"><cliente-order-link order-by="RagioneSociale" Input="@Model.Input">Ragione Sociale</cliente-order-link></div>
-                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3 titolo-tabella-bt"><cliente-order-link order-by="RagioneSociale" Input="@Model.Input">Ragione Sociale</cliente-order-link></div>
+                                    <div class="col-md-3 titolo-tabella-bt">Indirizzo</div>
+                                    <div class="col-md-3 titolo-tabella-bt">Comune</div>
+                                    <div class="col-md-2 titolo-tabella-bt">Telefono</div>
+                                    <div class="col-md-1"></div>
                                 </div>
                                 @foreach (ClienteViewModel cliente in Model.Cliente.Results)
                                 {
-                                    <partial name="Clienti/_ClienteLine" model="@cliente"></partial>   
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-3 testo-tabella-bt">@cliente.RagioneSociale</div>
+                                        <div class="col-md-3 testo-tabella-bt">@cliente.Indirizzo</div>
+                                        <div class="col-md-3 testo-tabella-bt">@cliente.Comune</div>
+                                        <div class="col-md-2 testo-tabella-bt">@cliente.Telefono</div>
+                                        <div class="col-md-1 d-flex align-items-center">
+                                            <a class="btn btn-outline-primary" asp-controller="Clienti" asp-action="Detail" asp-route-id="@cliente.Id"><i class="fas fa-info"></i></a>&nbsp;
+                                        </div>
+                                    </div>
                                 }
                                 <div class="row">&nbsp;</div>
                                 <vc:pagination-bar model="@Model"></vc:pagination-bar>

@@ -6,5 +6,6 @@ namespace RegistroServizi.Models.InputModels.SociFamiliari
     {
         [Required]
         public int Id { get; set; }
+        public int SocioId { get; set; }
     }
 }

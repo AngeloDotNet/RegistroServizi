@@ -1,0 +1,40 @@
+@model SocioFamiliareCreateInputModel
+<form method="POST">
+    <input type="hidden" asp-for="@Model.SocioId">
+    <div class="card">
+        <div class="card-header">Creazione nuovo socio familiare</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-12" asp-validation-summary="All"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="form-group">
+                                        <label asp-for="Familiare" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="Familiare" class="form-control">
+                                        <span asp-validation-for="Familiare"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-outline-secondary" asp-controller="Soci" asp-action="Detail" asp-route-id="@Model.SocioId"><i class="fas fa-reply"></i></a>&nbsp;
+                                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts
+{
+    <partial name="_Validation"></partial>
+}

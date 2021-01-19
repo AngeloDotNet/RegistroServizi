@@ -50,18 +50,16 @@ namespace RegistroServizi.Models.Extensions
                 TrattamentoDati = socio.TrattamentoDati,
                 Professione = socio.Provincia,
                 Zona = socio.Zona,
-
                 SociFamiliari = socio.SociFamiliari
-                    .OrderBy(sociofamiliare => sociofamiliare.Id)
-                    .ThenBy(sociofamiliare => sociofamiliare.Id)
-                    .Select(sociofamiliare => sociofamiliare.ToSocioFamiliareViewModel())
-                    .ToList(),
-                
+                                            .OrderBy(sociofamiliare => sociofamiliare.Id)
+                                            .ThenBy(sociofamiliare => sociofamiliare.Id)
+                                            .Select(sociofamiliare => sociofamiliare.ToSocioFamiliareViewModel())
+                                            .ToList(),
                 SociRinnovi = socio.SociRinnovi
-                    .OrderBy(sociorinnovo => sociorinnovo.Id)
-                    .ThenBy(sociorinnovo => sociorinnovo.Id)
-                    .Select(sociorinnovo => sociorinnovo.ToSocioRinnovoViewModel())
-                    .ToList()
+                                            .OrderBy(sociorinnovo => sociorinnovo.Id)
+                                            .ThenBy(sociorinnovo => sociorinnovo.Id)
+                                            .Select(sociorinnovo => sociorinnovo.ToSocioRinnovoViewModel())
+                                            .ToList()
             };
         }
 

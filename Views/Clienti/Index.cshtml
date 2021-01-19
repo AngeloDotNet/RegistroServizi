@@ -13,7 +13,7 @@
                                     <div class="col-md-3 d-flex align-items-center">
                                         <form asp-controller="Clienti" asp-action="Index" method="get">
                                             <div class="input-group">
-                                                <input type="text" name="search" class="form-control" placeholder="Cerca..." aria-label="Cerca..." aria-describedby="search-button" value="@Model.Input.Search">
+                                                <input type="text" name="search" class="form-control" placeholder="Cerca ragione sociale..." aria-label="Cerca..." aria-describedby="search-button" value="@Model.Input.Search">
                                                 <div class="input-group-append">
                                                     <button class="input-group-text" id="search-button"><i class="fas fa-search"></i></button>
                                                 </div>
@@ -38,7 +38,7 @@
                                         <div class="col-md-3 testo-tabella-bt">@cliente.Comune</div>
                                         <div class="col-md-2 testo-tabella-bt">@cliente.Telefono</div>
                                         <div class="col-md-1 d-flex align-items-center">
-                                            <a class="btn btn-outline-primary" asp-controller="Clienti" asp-action="Detail" asp-route-id="@cliente.Id"><i class="fas fa-info"></i></a>&nbsp;
+                                            <a class="btn btn-outline-primary" asp-controller="Clienti" asp-action="Detail" asp-route-id="@cliente.Id"><i class="fas fa-info"></i></a>
                                         </div>
                                     </div>
                                 }

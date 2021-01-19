@@ -35,12 +35,7 @@ namespace RegistroServizi
             {
                 options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
                 
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-            
-            #if DEBUG
-            .AddRazorRuntimeCompilation()
-            #endif
-            ;
+            });
 
             //Services - Generics
             services.AddTransient<IApplicationPersister, ApplicationPersister>();

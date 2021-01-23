@@ -21,6 +21,9 @@ namespace RegistroServizi.Models.Entities
             TrattamentoDati = "N/A";
             Professione = "N/A";
             Zona = "N/A";
+
+            SociFamiliari = new HashSet<SocioFamiliare>();
+            SociRinnovi = new HashSet<SocioRinnovo>();
         }
 
         public int Id { get; private set; }

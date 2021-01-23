@@ -82,7 +82,7 @@ namespace RegistroServizi.Models.Services.Application.Soci
             dbContext.Add(socio);
             await dbContext.SaveChangesAsync();
 
-            return socio.ToSocioDetailSingleViewModel();
+            return socio.ToSocioDetailViewModel();
         }
 
         public async Task DeleteSocioAsync(SocioDeleteInputModel inputModel)
@@ -193,7 +193,7 @@ namespace RegistroServizi.Models.Services.Application.Soci
             socio.ChangeZona(inputModel.Zona);
 
             await dbContext.SaveChangesAsync();
-            return socio.ToSocioDetailSingleViewModel();
+            return socio.ToSocioDetailViewModel();
         }
     }
 }

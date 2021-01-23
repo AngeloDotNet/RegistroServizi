@@ -15,6 +15,7 @@ namespace RegistroServizi.Models.Services.Infrastructure
         public virtual DbSet<Socio> Soci { get; set; }
         public virtual DbSet<SocioFamiliare> SociFamiliari { get; set; }
         public virtual DbSet<SocioRinnovo> SociRinnovi { get; set; }
+        public virtual DbSet<Ospedale> Ospedali { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -114,6 +115,12 @@ namespace RegistroServizi.Models.Services.Infrastructure
                            .HasColumnName("Quota_Amount")
                            .HasConversion<float>();
                 });
+            });
+
+            modelBuilder.Entity<Ospedale>(entity =>
+            {
+                entity.ToTable("Ospedale");
+                entity.HasKey(ospedale => ospedale.Id);
             });
         }
     }

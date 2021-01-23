@@ -63,29 +63,6 @@ namespace RegistroServizi.Models.Extensions
             };
         }
 
-        public static SocioDetailViewModel ToSocioDetailSingleViewModel(this Socio socio)
-        {
-            return new SocioDetailViewModel
-            {
-                Id = socio.Id,
-                Tessera = socio.Tessera,
-                Nominativo = socio.Nominativo,
-                Indirizzo = socio.Indirizzo,
-                Cap = socio.Cap,
-                Comune = socio.Comune,
-                Provincia = socio.Provincia,
-                LuogoNascita = socio.LuogoNascita,
-                DataNascita = socio.DataNascita,
-                CodiceFiscale = socio.CodiceFiscale,
-                Telefono = socio.Telefono,
-                Email = socio.Email,
-                DataTesseramento = socio.DataTesseramento,
-                TrattamentoDati = socio.TrattamentoDati,
-                Professione = socio.Provincia,
-                Zona = socio.Zona
-            };
-        }
-
         public static SocioEditInputModel ToSocioEditInputModel(this Socio socio)
         {
             return new SocioEditInputModel

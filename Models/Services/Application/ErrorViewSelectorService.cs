@@ -60,6 +60,11 @@ namespace RegistroServizi.Models.Services.Application
                     message: $"Il nominativo del socio {exc.Nominativo} esiste già",
                     statusCode: HttpStatusCode.Conflict,
                     viewName: "Unavailable"),
+                
+                OspedaleUnavailableException exc => new ErrorViewData(
+                    message: $"L'ospedale {exc.Clinica} esiste già",
+                    statusCode: HttpStatusCode.Conflict,
+                    viewName: "Unavailable"),
 
                 InvalidAmountException exc => new ErrorViewData(
                     message: $"L'importo non può essere negativo",

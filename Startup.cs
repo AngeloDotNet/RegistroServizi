@@ -18,6 +18,7 @@ using RegistroServizi.Models.Services.Application.Soci;
 using RegistroServizi.Models.Services.Application.SociFamiliari;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using RegistroServizi.Models.Services.Application.Ospedali;
 
 namespace RegistroServizi
 {
@@ -50,6 +51,9 @@ namespace RegistroServizi
             services.AddTransient<ISociService, EfCoreSociService>();
             services.AddTransient<ISociFamiliariService, EfCoreSociFamiliariService>();
 
+            //Services - Area Opzioni
+            services.AddTransient<IOspedaliService, EfCoreOspedaliService>();
+
             //Database
             services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder => {
                 string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
@@ -65,6 +69,9 @@ namespace RegistroServizi
             //Options - Area Amministrazione
             services.Configure<ClienteOptions>(Configuration.GetSection("Cliente"));
             services.Configure<SocioOptions>(Configuration.GetSection("Socio"));
+
+            //Options - Area Opzioni
+            services.Configure<OspedaleOptions>(Configuration.GetSection("Ospedale"));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)

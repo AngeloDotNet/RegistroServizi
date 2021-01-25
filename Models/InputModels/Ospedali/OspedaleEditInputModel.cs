@@ -9,8 +9,8 @@ namespace RegistroServizi.Models.InputModels.Ospedali
         [Required]
         public int Id { get; set; }   
 
-        [Required(ErrorMessage = "L'ospedale è obbligatoria"),
-         Remote(action: nameof(OspedaliController.IsOspedaleAvailable), controller: "Ospedali", ErrorMessage = "L'ospedale indicato esiste già"),
+        [Required(ErrorMessage = "L'ospedale è obbligatorio"),
+         Remote(action: nameof(OspedaliController.IsOspedaleAvailable), controller: "Ospedali", ErrorMessage = "L'ospedale indicato esiste già", AdditionalFields = "Id"),
          Display(Name = "Ospedale")]
         public string Clinica { get; set; }
 

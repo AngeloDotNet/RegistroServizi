@@ -6,7 +6,7 @@ namespace RegistroServizi.Models.InputModels.Ospedali
 {
     public class OspedaleCreateInputModel
     {
-        [Required(ErrorMessage = "L'ospedale è obbligatoria"),
+        [Required(ErrorMessage = "L'ospedale è obbligatorio"),
          Remote(action: nameof(OspedaliController.IsOspedaleAvailable), controller: "Ospedali", ErrorMessage = "L'ospedale indicato esiste già"),
          Display(Name = "Ospedale")]
         public string Clinica { get; set; }

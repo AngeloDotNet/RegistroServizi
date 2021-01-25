@@ -12,6 +12,7 @@ namespace RegistroServizi.Models.Extensions
             {
                 Id = ospedale.Id,
                 Clinica = ospedale.Clinica,
+                Comune = ospedale.Comune,
                 Latitudine = ospedale.Latitudine,
                 Longitudine = ospedale.Longitudine
             };
@@ -23,6 +24,7 @@ namespace RegistroServizi.Models.Extensions
             {
                 Id = ospedale.Id,
                 Clinica = ospedale.Clinica,
+                Comune = ospedale.Comune,
                 Latitudine = ospedale.Latitudine,
                 Longitudine = ospedale.Longitudine
             };
@@ -34,6 +36,7 @@ namespace RegistroServizi.Models.Extensions
             {
                 Id = ospedale.Id,
                 Clinica = ospedale.Clinica,
+                Comune = ospedale.Comune,
                 Latitudine = ospedale.Latitudine,
                 Longitudine = ospedale.Longitudine
             };

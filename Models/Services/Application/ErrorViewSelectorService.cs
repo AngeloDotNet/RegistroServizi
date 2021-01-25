@@ -46,6 +46,11 @@ namespace RegistroServizi.Models.Services.Application
                     statusCode: HttpStatusCode.NotFound,
                     viewName: "NotFound"),
 
+                OspedaleNotFoundException exc => new ErrorViewData(
+                    message: $"Ospedale {exc.OspedaleId} non trovato",
+                    statusCode: HttpStatusCode.NotFound,
+                    viewName: "NotFound"),
+
                 RagioneSocialeUnavailableException exc => new ErrorViewData(
                     message: $"La ragione sociale {exc.RagioneSociale} esiste già",
                     statusCode: HttpStatusCode.Conflict,

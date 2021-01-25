@@ -1,0 +1,49 @@
+@model OspedaleEditInputModel
+<form method="POST">
+    <input type="hidden" asp-for="@Model.Id">
+    <input type="hidden" asp-for="@Model.Latitudine">
+    <input type="hidden" asp-for="@Model.Longitudine">
+    <div class="card">
+        <div class="card-header">Modifica ospedale</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-12" asp-validation-summary="All"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Clinica" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="Clinica" class="form-control">
+                                        <span asp-validation-for="Clinica"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Comune" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="Comune" class="form-control">
+                                        <span asp-validation-for="Comune"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-outline-secondary" asp-action="Index"><i class="fas fa-reply"></i></a>&nbsp;
+                                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts
+{
+    <partial name="_Validation"></partial>
+}

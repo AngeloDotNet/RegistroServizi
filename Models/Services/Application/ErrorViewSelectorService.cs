@@ -46,6 +46,11 @@ namespace RegistroServizi.Models.Services.Application
                     statusCode: HttpStatusCode.NotFound,
                     viewName: "NotFound"),
 
+                OspedaleNotFoundException exc => new ErrorViewData(
+                    message: $"Ospedale {exc.OspedaleId} non trovato",
+                    statusCode: HttpStatusCode.NotFound,
+                    viewName: "NotFound"),
+
                 RagioneSocialeUnavailableException exc => new ErrorViewData(
                     message: $"La ragione sociale {exc.RagioneSociale} esiste già",
                     statusCode: HttpStatusCode.Conflict,
@@ -58,6 +63,11 @@ namespace RegistroServizi.Models.Services.Application
 
                 NominativoUnavailableException exc => new ErrorViewData(
                     message: $"Il nominativo del socio {exc.Nominativo} esiste già",
+                    statusCode: HttpStatusCode.Conflict,
+                    viewName: "Unavailable"),
+                
+                OspedaleUnavailableException exc => new ErrorViewData(
+                    message: $"L'ospedale {exc.Clinica} esiste già",
                     statusCode: HttpStatusCode.Conflict,
                     viewName: "Unavailable"),
 

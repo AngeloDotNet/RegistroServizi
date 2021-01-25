@@ -29,8 +29,10 @@ namespace RegistroServizi.Models.Services.Application.Ospedali
 
             baseQuery = (model.OrderBy, model.Ascending) switch
             {
-                ("Ospedale", true) => baseQuery.OrderBy(ospedale => ospedale.Clinica),
-                ("Ospedale", false) => baseQuery.OrderByDescending(ospedale => ospedale.Clinica),
+                ("Clinica", true) => baseQuery.OrderBy(ospedale => ospedale.Clinica),
+                ("Clinica", false) => baseQuery.OrderByDescending(ospedale => ospedale.Clinica),
+                ("Comune", true) => baseQuery.OrderBy(ospedale => ospedale.Comune),
+                ("Comune", false) => baseQuery.OrderByDescending(ospedale => ospedale.Comune),
                 ("Id", true) => baseQuery.OrderBy(ospedale => ospedale.Id),
                 ("Id", false) => baseQuery.OrderByDescending(ospedale => ospedale.Id),
                 _ => baseQuery

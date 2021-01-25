@@ -22,7 +22,7 @@ namespace RegistroServizi.Customizations.ModelBinders
             bool.TryParse(bindingContext.ValueProvider.GetValue("Ascending").FirstValue, out bool ascending);
 
             SocioOptions options = clienteOptions.CurrentValue;
-            var inputModel = new SocioListInputModel(search, page, orderBy, ascending, options.PerPage, options.Order);
+            SocioListInputModel inputModel = new(search, page, orderBy, ascending, options.PerPage, options.Order);
 
             bindingContext.Result = ModelBindingResult.Success(inputModel);
 

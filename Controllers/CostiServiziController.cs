@@ -22,7 +22,7 @@ namespace RegistroServizi.Controllers
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
             ListViewModel<CostoServizioViewModel> costoservizio = await costiservizi.GetCostiServiziAsync(input);
-            CostoServizioListViewModel viewModel = new CostoServizioListViewModel
+            CostoServizioListViewModel viewModel = new()
             {
                 CostoServizio = costoservizio,
                 Input = input

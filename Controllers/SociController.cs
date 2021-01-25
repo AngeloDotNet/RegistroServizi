@@ -23,7 +23,7 @@ namespace RegistroServizi.Controllers
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
             ListViewModel<SocioViewModel> socio = await soci.GetSociAsync(input);
-            SocioListViewModel viewModel = new SocioListViewModel
+            SocioListViewModel viewModel = new()
             {
                 Socio = socio,
                 Input = input
@@ -47,7 +47,7 @@ namespace RegistroServizi.Controllers
         public async Task<IActionResult> Create()
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
-            var inputModel = new SocioCreateInputModel();
+            SocioCreateInputModel inputModel = new();
             inputModel.Tessera = await soci.GetNextIdAsync();
             return View(inputModel);
         }

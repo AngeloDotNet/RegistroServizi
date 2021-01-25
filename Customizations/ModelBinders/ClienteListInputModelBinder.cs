@@ -22,7 +22,7 @@ namespace RegistroServizi.Customizations.ModelBinders
             bool.TryParse(bindingContext.ValueProvider.GetValue("Ascending").FirstValue, out bool ascending);
 
             ClienteOptions options = clienteOptions.CurrentValue;
-            var inputModel = new ClienteListInputModel(search, page, orderBy, ascending, options.PerPage, options.Order);
+            ClienteListInputModel inputModel = new(search, page, orderBy, ascending, options.PerPage, options.Order);
 
             bindingContext.Result = ModelBindingResult.Success(inputModel);
 

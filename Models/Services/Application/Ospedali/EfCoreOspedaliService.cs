@@ -50,7 +50,7 @@ namespace RegistroServizi.Models.Services.Application.Ospedali
 
             int totalCount = await queryLinq.CountAsync();
 
-            ListViewModel<OspedaleViewModel> result = new ListViewModel<OspedaleViewModel>
+            ListViewModel<OspedaleViewModel> result = new()
             {
                 Results = ospedale,
                 TotalCount = totalCount

@@ -23,7 +23,7 @@ namespace RegistroServizi.Controllers
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
             ListViewModel<ClienteViewModel> cliente = await clienti.GetClientiAsync(input);
-            ClienteListViewModel viewModel = new ClienteListViewModel
+            ClienteListViewModel viewModel = new()
             {
                 Cliente = cliente,
                 Input = input
@@ -35,7 +35,7 @@ namespace RegistroServizi.Controllers
         public IActionResult Create()
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
-            var inputModel = new ClienteCreateInputModel();
+            ClienteCreateInputModel inputModel = new();
             return View(inputModel);
         }
 

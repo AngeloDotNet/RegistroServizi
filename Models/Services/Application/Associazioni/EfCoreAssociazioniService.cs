@@ -36,7 +36,7 @@ namespace RegistroServizi.Models.Services.Application.Associazioni
 
             int totalCount = await queryLinq.CountAsync();
 
-            ListViewModel<AssociazioneViewModel> result = new ListViewModel<AssociazioneViewModel>
+            ListViewModel<AssociazioneViewModel> result = new()
             {
                 Results = associazioni
             };

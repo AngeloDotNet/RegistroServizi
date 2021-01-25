@@ -22,7 +22,7 @@ namespace RegistroServizi.Customizations.ModelBinders
             bool.TryParse(bindingContext.ValueProvider.GetValue("Ascending").FirstValue, out bool ascending);
 
             OspedaleOptions options = ospedaleOptions.CurrentValue;
-            var inputModel = new OspedaleListInputModel(search, page, orderBy, ascending, options.PerPage, options.Order);
+            OspedaleListInputModel inputModel = new(search, page, orderBy, ascending, options.PerPage, options.Order);
 
             bindingContext.Result = ModelBindingResult.Success(inputModel);
 

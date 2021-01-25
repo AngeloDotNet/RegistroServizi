@@ -48,7 +48,7 @@ namespace RegistroServizi.Models.Services.Application.Clienti
 
             int totalCount = await queryLinq.CountAsync();
 
-            ListViewModel<ClienteViewModel> result = new ListViewModel<ClienteViewModel>
+            ListViewModel<ClienteViewModel> result = new()
             {
                 Results = cliente,
                 TotalCount = totalCount

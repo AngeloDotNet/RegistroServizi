@@ -23,7 +23,7 @@ namespace RegistroServizi.Controllers
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
             ListViewModel<OspedaleViewModel> ospedale = await ospedali.GetOspedaliAsync(input);
-            OspedaleListViewModel viewModel = new OspedaleListViewModel
+            OspedaleListViewModel viewModel = new()
             {
                 Ospedale = ospedale,
                 Input = input
@@ -41,7 +41,7 @@ namespace RegistroServizi.Controllers
         public IActionResult Create()
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
-            var inputModel = new OspedaleCreateInputModel();
+            OspedaleCreateInputModel inputModel = new();
             return View(inputModel);
         }
 

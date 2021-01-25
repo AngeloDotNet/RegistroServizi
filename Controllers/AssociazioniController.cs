@@ -22,7 +22,7 @@ namespace RegistroServizi.Controllers
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
             ListViewModel<AssociazioneViewModel> associazione = await associazioni.GetAssociazioniAsync();
-            AssociazioneListViewModel viewModel = new AssociazioneListViewModel
+            AssociazioneListViewModel viewModel = new()
             {
                 Associazione = associazione
             };

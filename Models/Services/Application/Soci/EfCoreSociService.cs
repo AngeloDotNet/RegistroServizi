@@ -50,7 +50,7 @@ namespace RegistroServizi.Models.Services.Application.Soci
 
             int totalCount = await queryLinq.CountAsync();
 
-            ListViewModel<SocioViewModel> result = new ListViewModel<SocioViewModel>
+            ListViewModel<SocioViewModel> result = new()
             {
                 Results = socio,
                 TotalCount = totalCount

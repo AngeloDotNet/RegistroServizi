@@ -47,7 +47,7 @@ namespace RegistroServizi.Models.Services.Application.CostiServizi
 
             int totalCount = await queryLinq.CountAsync();
 
-            ListViewModel<CostoServizioViewModel> result = new ListViewModel<CostoServizioViewModel>
+            ListViewModel<CostoServizioViewModel> result = new()
             {
                 Results = costo,
                 TotalCount = totalCount

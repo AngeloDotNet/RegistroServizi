@@ -27,7 +27,7 @@ namespace RegistroServizi.Controllers
         public IActionResult Create(int id)
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
-            var inputModel = new SocioFamiliareCreateInputModel();
+            SocioFamiliareCreateInputModel inputModel = new();
             inputModel.SocioId = id;
             return View(inputModel);
         }

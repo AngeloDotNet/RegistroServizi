@@ -18,6 +18,7 @@ using RegistroServizi.Models.Services.Application.SociFamiliari;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using RegistroServizi.Models.Services.Application.Ospedali;
+using RegistroServizi.Models.Services.Application.SociRinnovi;
 
 namespace RegistroServizi
 {
@@ -34,7 +35,6 @@ namespace RegistroServizi
             services.AddMvc(options => 
             {
                 options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-                
             });
 
             //Services - Generics
@@ -49,6 +49,7 @@ namespace RegistroServizi
             services.AddTransient<IClientiService, EfCoreClientiService>();
             services.AddTransient<ISociService, EfCoreSociService>();
             services.AddTransient<ISociFamiliariService, EfCoreSociFamiliariService>();
+            services.AddTransient<ISociRinnoviService, EfCoreSociRinnoviService>();
 
             //Services - Area Opzioni
             services.AddTransient<IOspedaliService, EfCoreOspedaliService>();

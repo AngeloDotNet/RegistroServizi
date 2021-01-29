@@ -171,7 +171,10 @@
                                     <div class="row">
                                         <div class="col-md-2 testo-tabella-bt">@sociorinnovo.Anno</div>
                                         <div class="col-md-2 testo-tabella-bt">@sociorinnovo.Quota</div>
-                                        <div class="col-md-2 testo-tabella-bt">@sociorinnovo.DataRinnovo</div>
+                                        <div class="col-md-2 testo-tabella-bt">@{
+                                            var dataRinnovo = DateTime.Parse(@sociorinnovo.DataRinnovo);
+                                            @dataRinnovo.ToString("dd/MM/yyyy");
+                                        }</div>
                                         <div class="col-md-3"></div>
                                         <div class="col-md-3 d-flex align-items-center">
                                             <a class="btn btn-outline-secondary ml-3" asp-controller="SociRinnovi" asp-action="Edit" asp-route-id="@sociorinnovo.Id"><i class="fas fa-edit"></i></a>

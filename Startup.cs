@@ -91,7 +91,7 @@ namespace RegistroServizi
                 app.UseExceptionHandler("/Error");
             }
 
-            var appCulture = new CultureInfo("it-IT");
+            CultureInfo appCulture = new("it-IT");
 
             app.UseStaticFiles();
 

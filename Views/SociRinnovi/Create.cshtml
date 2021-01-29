@@ -1,0 +1,57 @@
+@model SocioRinnovoCreateInputModel
+<form method="POST">
+    <input type="hidden" asp-for="@Model.SocioId">
+    <div class="card">
+        <div class="card-header">Creazione nuovo rinnovo socio</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-12" asp-validation-summary="All"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Anno" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="Anno" class="form-control">
+                                        <span asp-validation-for="Anno"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Quota" class="labtitolo-tabella-bt"></label><br>
+                                        <div class="input-group">
+                                            <select asp-items="@Html.GetEnumSelectList<Currency>()" asp-for="Quota.Currency" class="form-control"></select>
+                                            <input type="number" step="any" asp-for="Quota.Amount" class="form-control form-control-block">
+                                            <span asp-validation-for="Quota"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="DataRinnovo" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="date" asp-for="DataRinnovo" class="form-control">
+                                        <span asp-validation-for="DataRinnovo"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-outline-secondary" asp-controller="Soci" asp-action="Detail" asp-route-id="@Model.SocioId"><i class="fas fa-reply"></i></a>&nbsp;
+                                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts
+{
+    <partial name="_Validation"></partial>
+}

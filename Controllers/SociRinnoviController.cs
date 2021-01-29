@@ -1,8 +1,11 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RegistroServizi.Models.Enums;
 using RegistroServizi.Models.InputModels.SociRinnovi;
 using RegistroServizi.Models.Services.Application.SociRinnovi;
 using RegistroServizi.Models.Services.Infrastructure;
+using RegistroServizi.Models.ValueTypes;
 using RegistroServizi.Models.ViewModels.SociRinnovi;
 
 namespace RegistroServizi.Controllers
@@ -20,8 +23,15 @@ namespace RegistroServizi.Controllers
         public IActionResult Create(int id)
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
+            
             SocioRinnovoCreateInputModel inputModel = new();
+            DateTime DataOggi = DateTime.Parse(DateTime.Now.ToShortDateString());
+            
             inputModel.SocioId = id;
+            inputModel.Anno = DataOggi.ToString("yyyy");
+            inputModel.Quota = new Money(Currency.EUR, 0);
+            inputModel.DataRinnovo = DataOggi.ToString("yyyy-MM-dd");
+
             return View(inputModel);
         }
 

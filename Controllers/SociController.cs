@@ -76,6 +76,17 @@ namespace RegistroServizi.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
+
+            bool StatusSocio = await soci.IsSocioRegolareAsync(id);
+            if (StatusSocio == true)
+            {
+                ViewData["StatoSocio"] = "In regola";
+            }
+            else
+            {
+                ViewData["StatoSocio"] = "Non in regola";
+            }
+
             SocioDetailViewModel viewModel = await soci.GetSocioAsync(id);
             return View(viewModel);
         }

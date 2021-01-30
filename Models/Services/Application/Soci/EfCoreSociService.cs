@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -134,6 +135,28 @@ namespace RegistroServizi.Models.Services.Application.Soci
             logger.LogInformation("Nuovo ID Socio: {id}", newId);
 
             return newId.ToString();
+        }
+
+        public async Task<bool> IsSocioRegolareAsync(int id)
+        {
+            string AnnoCorrente = DateTime.Now.Year.ToString();
+
+            IQueryable<SocioRinnovo> baseQuery = dbContext.SociRinnovi;
+
+            IQueryable<SocioRinnovo> queryLinq = baseQuery
+                .Where(SocioRinnovo => SocioRinnovo.SocioId == id && SocioRinnovo.Anno == AnnoCorrente)
+                .AsNoTracking();
+            
+            int TotalCount = await queryLinq.CountAsync();
+
+            if (TotalCount == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public async Task<bool> IsSocioAvailableAsync(string nominativo, int id)

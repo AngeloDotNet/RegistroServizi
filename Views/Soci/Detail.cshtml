@@ -9,7 +9,17 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="labtitolo-tabella-bt">Numero tessera</label><br>
-                                    <label class="labtesto-tabella-bt">@Model.Tessera</label>
+                                    <label class="labtesto-tabella-bt">@Model.Tessera (@if (ViewData["StatoSocio"].ToString() == "In regola")
+                                        {
+                                            var status = "In regola";
+                                            @status;
+                                        }
+                                        else
+                                        {
+                                            var status = "Non in regola";
+                                            @status;
+                                        })
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-md-5">

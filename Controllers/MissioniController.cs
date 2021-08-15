@@ -72,7 +72,19 @@ namespace RegistroServizi.Controllers
             return View(id);
         }
 
-        public async Task<IActionResult> TryAcquireLock(int id)
+        public async Task<IActionResult> CanEdit(int id)
+        {
+            if (await missioniService.CanEditMissioneAsync(id))
+            {
+                return StatusCode(204);
+            }
+            else
+            {
+                return StatusCode(400);
+            }
+        }
+
+        public async Task<IActionResult> RefreshEdit(int id)
         {
             try
             {

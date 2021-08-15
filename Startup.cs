@@ -20,6 +20,7 @@ using System.Globalization;
 using RegistroServizi.Models.Services.Application.Ospedali;
 using RegistroServizi.Models.Services.Application.SociRinnovi;
 using RegistroServizi.Models.Services.Application.Missioni;
+using Microsoft.AspNetCore.Http;
 
 namespace RegistroServizi
 {
@@ -39,6 +40,11 @@ namespace RegistroServizi
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            });
+            services.AddCookiePolicy(options =>
+            {
+                options.CheckConsentNeeded = (context) => false;
             });
 
             services.AddMvc(options =>

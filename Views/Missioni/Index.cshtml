@@ -1,3 +1,12 @@
 @model IList<MissioneViewModel>
-Lista
-<a asp-action="Create" class="btn btn-primary">Crea missione</a>
+<h1>Elenco missioni <a asp-action="Create" class="btn btn-primary btn-xs">Crea nuova missione</a></h1>
+
+@foreach (var missione in Model)
+{
+    <div class="row">
+        <div class="col-2">@missione.Id</div>
+        <div class="col-2">@missione.Data.ToString("dd/mm/yyyy")</div>
+        <div class="col-4">@missione.Titolo</div>
+        <div class="col-4"><a asp-action="Edit" asp-route-id="@missione.Id" class="btn btn-primary">Modifica</a></div>
+    </div>
+}

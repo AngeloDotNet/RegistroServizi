@@ -29,7 +29,8 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Azioni</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a href="#" class="dropdown-item disabled">Nuova Missione</a>
+                            <a asp-action="Index" asp-controller="Missioni" class="dropdown-item">Elenco missioni</a>
+                            <a asp-action="Create" asp-controller="Missioni" class="dropdown-item">Nuova missione</a>
                             <a href="#" class="dropdown-item disabled">Elenco Servizi</a>
                             <a href="#" class="dropdown-item disabled">Visualizza Mappa</a>
                             <a href="#" class="dropdown-item disabled">Disponibilit&agrave; Equipaggi</a>

@@ -13,7 +13,7 @@ namespace RegistroServizi.Models.Services.Application.Missioni
     public class InMemoryMissioniService : IMissioniService
     {
         private readonly IPessimisticLock pessimisticLock;
-        private ConcurrentBag<MissioneViewModel> missioni = new ConcurrentBag<MissioneViewModel>();
+        private static ConcurrentBag<MissioneViewModel> missioni = new ConcurrentBag<MissioneViewModel>();
 
         public InMemoryMissioniService(IPessimisticLock pessimisticLock)
         {
@@ -24,7 +24,7 @@ namespace RegistroServizi.Models.Services.Application.Missioni
         {
             var missione = new MissioneViewModel
             {
-                Id = Convert.ToInt32(DateTimeOffset.Now.ToUnixTimeSeconds()), // TODO: In questo esempio l'id viene generato in base alla data/ora attuale
+                Id = missioni.Count == 0 ? 1 : missioni.Max(missione => missione.Id) + 1, // TODO: In questo esempio l'id è un progressivo
                 Data = DateTime.UtcNow,
                 Tipologia = inputModel.Tipologia,
                 Titolo = string.Empty
@@ -53,6 +53,11 @@ namespace RegistroServizi.Models.Services.Application.Missioni
             return Task.FromResult<IList<MissioneViewModel>>(missioni.ToList());
         }
 
+        public Task<bool> CanEditMissioneAsync(int idMissione)
+        {
+            return pessimisticLock.CanLockMissioneAsync(idMissione);
+        }
+
         public Task RefreshEditingMissioneAsync(int idMissione)
         {
             return EnsureCanLockMissione(idMissione);
@@ -65,13 +70,13 @@ namespace RegistroServizi.Models.Services.Application.Missioni
             missione.Data = inputModel.Data;
             missione.Titolo = inputModel.Titolo;
             missione.Tipologia = inputModel.Tipologia;
-            await pessimisticLock.ReleaseLockForMissione(inputModel.Id);
+            await pessimisticLock.ReleaseLockForMissioneAsync(inputModel.Id);
             return missione;
         }
 
         private async Task EnsureCanLockMissione(int idMissione)
         {
-            if (!await pessimisticLock.TryAcquireLockForMissione(idMissione))
+            if (!await pessimisticLock.RefreshLockForMissioneAsync(idMissione))
             {
                 throw new PessimisticLockAcquireException();
             }

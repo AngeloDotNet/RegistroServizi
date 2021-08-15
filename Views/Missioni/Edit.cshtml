@@ -1,2 +1,33 @@
 @model MissioneEditInputModel
-@Html.EditorForModel();
+<form method="post">
+    <button type="submit">Salva</button>
+</form>
+<a id="lockLink" asp-action="RefreshEdit" asp-route-id="@Model.Id" style="visibility: hidden">Lock</a>
+<a id="indexLink" asp-action="WaitForEdit" asp-route-id="@Model.Id" style="visibility: hidden">Indice</a>
+
+@section Scripts
+{
+    <script>
+        const interval = setInterval(tryAcquireLock, 2000);
+        // Faccio polling per verificare se posso andare in modifica
+        function tryAcquireLock() {
+            const lockLink = $('#lockLink').attr('href');
+            $.ajax({
+                url: lockLink,
+                type: 'GET',
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                }
+            })
+            .done(function() {
+               // Ok, ho rinnovato il lock pessimistico
+            })
+            .fail(function() {
+               // Qualche altro utente ha acquisito il lock?? Questo non dovrebbe succedere.
+               console.error('Un altro utente sta modificando la missione');
+               window.location = $('#indexLink').attr('href');
+            });
+        }
+    </script>
+}

@@ -10,6 +10,7 @@ namespace RegistroServizi.Models.Services.Application.Missioni
         Task<MissioneViewModel> CreateMissioneAsync(MissioneCreateInputModel inputModel);
         Task<MissioneEditInputModel> GetMissioneForEditingAsync(int idMissione);
         Task<MissioneViewModel> EditMissionAsync(MissioneEditInputModel inputModel);
+        Task<bool> CanEditMissioneAsync(int idMissione);
         Task RefreshEditingMissioneAsync(int idMissione);
         Task<IList<MissioneViewModel>> GetMissioniAsync();
     }

@@ -1,2 +1,32 @@
 @model int
-Wait
+<h1>Modifica bloccata</h1>
+<p>La missione con ID @Model è attualmente in corso di modifica da parte di un altro utente. Attendi qui che l'utente completi le modifiche oppure <a asp-action="Index">Torna all'elenco</a></p>
+<div class="text-center"><img src="/images/loading.gif"></div>
+<a id="lockLink" asp-action="CanEdit" asp-route-id="@Model" style="visibility: hidden">Verifica</a>
+<a id="editLink" asp-action="Edit" asp-route-id="@Model" style="visibility: hidden">Modifica</a>
+@section Scripts
+{
+    <script>
+        const interval = setInterval(tryAcquireLock, 2000);
+        // Faccio polling per verificare se posso andare in modifica
+        function tryAcquireLock() {
+            const lockLink = $('#lockLink').attr('href');
+            $.ajax({
+                url: lockLink,
+                type: 'GET',
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                }
+            })
+            .done(function() {
+               // Ok, il lock pessimistico è stato rilasciato, vado in modifica
+               window.location.href = $('#editLink').attr('href');
+               clearInterval(interval);
+            })
+            .fail(function() {
+               // Ha restituito uno status code diverso da 2xx, quindi l'altro utente sta ancora modificando
+            });
+        }
+    </script>
+}

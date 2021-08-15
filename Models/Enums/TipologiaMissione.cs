@@ -4,13 +4,10 @@ namespace RegistroServizi.Models.Enums
 {
     public enum TipologiaMissione
     {
-        [Description("118")]
-        Centodiciotto,
+        Emergenza,
 
-        [Description("Dimissione")]
         Dimissione,
 
-        [Description("Dialisi")]
         Dialisi
     }
 }

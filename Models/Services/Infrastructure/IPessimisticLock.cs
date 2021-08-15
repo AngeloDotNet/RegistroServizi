@@ -4,7 +4,8 @@ namespace RegistroServizi.Models.Services.Infrastructure
 {
     public interface IPessimisticLock
     {
-        Task<bool> TryAcquireLockForMissione(int idMissione);
-        Task ReleaseLockForMissione(int idMissione);
+        Task<bool> CanLockMissioneAsync(int idMissione);
+        Task<bool> RefreshLockForMissioneAsync(int idMissione);
+        Task ReleaseLockForMissioneAsync(int idMissione);
     }
 }

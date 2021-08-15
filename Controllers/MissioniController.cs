@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RegistroServizi.Models.Services.Application.Missioni;
 using RegistroServizi.Models.Services.Infrastructure;
@@ -12,6 +13,11 @@ namespace RegistroServizi.Controllers
         {
             this.applicationPersister= applicationPersister;
             this.missioni = missioni;
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
         }
 
     }

@@ -52,7 +52,7 @@ namespace RegistroServizi.Models.Services.Application.Missioni
 
         public Task<IList<MissioneViewModel>> GetMissioniAsync()
         {
-            return Task.FromResult<IList<MissioneViewModel>>(missioni.ToList());
+            return Task.FromResult<IList<MissioneViewModel>>(missioni.OrderBy(missione => missione.Id).ToList());
         }
 
         public Task<bool> CanEditMissioneAsync(int idMissione)

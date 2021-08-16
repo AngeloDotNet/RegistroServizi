@@ -21,6 +21,7 @@ using RegistroServizi.Models.Services.Application.Ospedali;
 using RegistroServizi.Models.Services.Application.SociRinnovi;
 using RegistroServizi.Models.Services.Application.Missioni;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace RegistroServizi
 {
@@ -70,6 +71,10 @@ namespace RegistroServizi
 
             //Services - Area Opzioni
             services.AddTransient<IOspedaliService, EfCoreOspedaliService>();
+
+            //Services - ASP.NET Core Identity
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<RegistroServiziDbContext>();
 
             //Database
             services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder =>

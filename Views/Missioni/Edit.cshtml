@@ -19,9 +19,9 @@
 @section Scripts
 {
     <script>
-        const interval = setInterval(tryAcquireLock, 2000);
+        const interval = setInterval(refreshLock, 2000);
         // Faccio polling per verificare se posso andare in modifica
-        function tryAcquireLock() {
+        function refreshLock() {
             $.ajax({
                 url: '@Url.Action("RefreshEdit", "Missioni", new { id = Model.Id })',
                 type: 'GET',

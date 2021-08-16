@@ -20,7 +20,7 @@
 {
     <script>
         const interval = setInterval(refreshLock, 2000);
-        // Faccio polling per verificare se posso andare in modifica
+        // Faccio polling per rinnovare la scadenza del lock
         function refreshLock() {
             $.ajax({
                 url: '@Url.Action("RefreshEdit", "Missioni", new { id = Model.Id })',

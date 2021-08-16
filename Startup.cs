@@ -48,6 +48,7 @@ namespace RegistroServizi
                 options.CheckConsentNeeded = (context) => false;
             });
 
+            services.AddRazorPages();
             services.AddMvc(options =>
             {
                 options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
@@ -129,13 +130,15 @@ namespace RegistroServizi
 
             app.UseRouting();
 
-            app.UseSession();
-            app.UseEndpoints(routeBuilder =>
-            {
-                routeBuilder.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                routeBuilder.MapFallbackToController("{*path}", "Index", "Error");
-            });
+            app.UseAuthentication();
+            app.UseAuthorization();
 
+            app.UseSession();
+            app.UseEndpoints(routeBuilder => {
+                    routeBuilder.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                    routeBuilder.MapRazorPages();
+                    routeBuilder.MapFallbackToController("{*path}", "Index", "Error");
+            });
         }
     }
 }

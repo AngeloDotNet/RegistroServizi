@@ -74,12 +74,15 @@ namespace RegistroServizi
 
             //Services - ASP.NET Core Identity
             services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<RegistroServiziDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //Database
-            services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder =>
-            {
+            services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder => {
                 string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
+                optionsBuilder.UseSqlite(connectionString);
+            });
+            services.AddDbContextPool<ApplicationDbContext>(optionsBuilder => {
+                string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Application");
                 optionsBuilder.UseSqlite(connectionString);
             });
 

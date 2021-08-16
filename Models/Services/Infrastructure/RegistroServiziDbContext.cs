@@ -4,7 +4,7 @@ using RegistroServizi.Models.Entities;
 
 namespace RegistroServizi.Models.Services.Infrastructure
 {
-    public partial class RegistroServiziDbContext : IdentityDbContext
+    public partial class RegistroServiziDbContext : DbContext
     {
         public RegistroServiziDbContext(DbContextOptions<RegistroServiziDbContext> options) : base(options)
         {
@@ -20,8 +20,6 @@ namespace RegistroServizi.Models.Services.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-            
             modelBuilder.Entity<Associazione>(entity =>
             {
                 entity.ToTable("Associazione");

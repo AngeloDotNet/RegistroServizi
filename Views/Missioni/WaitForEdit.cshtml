@@ -1,0 +1,29 @@
+@model int
+<h1>Modifica bloccata</h1>
+<p>La missione con ID @Model è attualmente in corso di modifica da parte di un altro utente. Attendi qui che l'utente completi le modifiche oppure <a asp-action="Index">torna all'elenco</a>.</p>
+<div class="text-center mt-5"><img src="/images/loading.gif" width="150"></div>
+@section Scripts
+{
+    <script>
+        const interval = setInterval(tryAcquireLock, 2000);
+        // Faccio polling per verificare se posso andare in modifica
+        function tryAcquireLock() {
+            $.ajax({
+                url: '@Url.Action("CanEdit", "Missioni", new { id = Model })',
+                type: 'GET',
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                }
+            })
+            .done(function() {
+               // Ok, il lock pessimistico è stato rilasciato, vado in modifica
+               window.location.href = '@Url.Action("Edit", "Missioni", new { id = Model })';
+               clearInterval(interval);
+            })
+            .fail(function() {
+               // Ha restituito uno status code diverso da 2xx, quindi l'altro utente sta ancora modificando
+            });
+        }
+    </script>
+}

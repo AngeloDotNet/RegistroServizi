@@ -19,12 +19,14 @@ using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using RegistroServizi.Models.Services.Application.Ospedali;
 using RegistroServizi.Models.Services.Application.SociRinnovi;
+using RegistroServizi.Models.Services.Application.Missioni;
+using Microsoft.AspNetCore.Http;
 
 namespace RegistroServizi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) 
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -32,7 +34,20 @@ namespace RegistroServizi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => 
+            services.AddHttpContextAccessor();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            });
+            services.AddCookiePolicy(options =>
+            {
+                options.CheckConsentNeeded = (context) => false;
+            });
+
+            services.AddMvc(options =>
             {
                 options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
             });
@@ -50,22 +65,25 @@ namespace RegistroServizi
             services.AddTransient<ISociService, EfCoreSociService>();
             services.AddTransient<ISociFamiliariService, EfCoreSociFamiliariService>();
             services.AddTransient<ISociRinnoviService, EfCoreSociRinnoviService>();
+            services.AddTransient<IMissioniService, InMemoryMissioniService>();
+            services.AddScoped<IPessimisticLock, MemoryCachePessimisticLock>();
 
             //Services - Area Opzioni
             services.AddTransient<IOspedaliService, EfCoreOspedaliService>();
 
             //Database
-            services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder => {
+            services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder =>
+            {
                 string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
                 optionsBuilder.UseSqlite(connectionString);
             });
 
             //Options - Generics
             services.Configure<ApplicationOptions>(Configuration.GetSection("Applicazione"));
-            
+
             //Options - Area Impostazioni
             services.Configure<CostoServizioOptions>(Configuration.GetSection("CostoServizio"));
-            
+
             //Options - Area Amministrazione
             services.Configure<ClienteOptions>(Configuration.GetSection("Cliente"));
             services.Configure<SocioOptions>(Configuration.GetSection("Socio"));
@@ -103,7 +121,9 @@ namespace RegistroServizi
 
             app.UseRouting();
 
-            app.UseEndpoints(routeBuilder => {
+            app.UseSession();
+            app.UseEndpoints(routeBuilder =>
+            {
                 routeBuilder.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 routeBuilder.MapFallbackToController("{*path}", "Index", "Error");
             });

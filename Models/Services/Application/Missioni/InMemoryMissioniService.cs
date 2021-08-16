@@ -22,12 +22,14 @@ namespace RegistroServizi.Models.Services.Application.Missioni
         
         public Task<MissioneViewModel> CreateMissioneAsync(MissioneCreateInputModel inputModel)
         {
+            var data = DateTime.Today;
+            var id = missioni.Count == 0 ? 1 : missioni.Max(missione => missione.Id) + 1; // TODO: In questo esempio l'id è un progressivo
             var missione = new MissioneViewModel
             {
-                Id = missioni.Count == 0 ? 1 : missioni.Max(missione => missione.Id) + 1, // TODO: In questo esempio l'id è un progressivo
-                Data = DateTime.UtcNow,
+                Id = id,
+                Data = data,
                 Tipologia = inputModel.Tipologia,
-                Titolo = string.Empty
+                Titolo = $"Missione {id} del {data:dd/MM/yyyy}"
             };
 
             missioni.Add(missione);

@@ -1,7 +1,9 @@
 @model MissioneCreateInputModel
 <h1>Crea nuova missione</h1>
 <form method="post">
-    <label asp-for="Tipologia"></label>
-    <select asp-for="Tipologia" class="form-control" asp-items="@Html.GetEnumSelectList<TipologiaMissione>()"></select>
+    <div class="form-group">
+        <label asp-for="Tipologia"></label>
+        <select asp-for="Tipologia" class="form-control" asp-items="@Html.GetEnumSelectList<TipologiaMissione>()"></select>
+    </div>
     <button type="submit" class="btn btn-primary">Crea</button>
 </form>

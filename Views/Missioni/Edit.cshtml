@@ -1,9 +1,20 @@
 @model MissioneEditInputModel
 <form method="post">
-    <button type="submit">Salva</button>
+    <input type="hidden" asp-for="Id">
+    <div class="form-group">
+        <label asp-for="Titolo"></label>
+        <input type="text" class="form-control" asp-for="Titolo">
+    </div>
+    <div class="form-group">
+        <label asp-for="Data"></label>
+        <input type="date" class="form-control" asp-for="Data">
+    </div>
+    <div class="form-group">
+        <label asp-for="Tipologia"></label>
+        <select asp-for="Tipologia" class="form-control" asp-items="@Html.GetEnumSelectList<TipologiaMissione>()"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Salva</button>
 </form>
-<a id="lockLink" asp-action="RefreshEdit" asp-route-id="@Model.Id" style="visibility: hidden">Lock</a>
-<a id="indexLink" asp-action="WaitForEdit" asp-route-id="@Model.Id" style="visibility: hidden">Indice</a>
 
 @section Scripts
 {
@@ -11,9 +22,8 @@
         const interval = setInterval(tryAcquireLock, 2000);
         // Faccio polling per verificare se posso andare in modifica
         function tryAcquireLock() {
-            const lockLink = $('#lockLink').attr('href');
             $.ajax({
-                url: lockLink,
+                url: '@Url.Action("RefreshEdit", "Missioni", new { id = Model.Id })',
                 type: 'GET',
                 dataType: 'json',
                 xhrFields: {
@@ -26,7 +36,7 @@
             .fail(function() {
                // Qualche altro utente ha acquisito il lock?? Questo non dovrebbe succedere.
                console.error('Un altro utente sta modificando la missione');
-               window.location = $('#indexLink').attr('href');
+               window.location = '@Url.Action("WaitForEdit", "Missioni", new { id = Model.Id })';
             });
         }
     </script>

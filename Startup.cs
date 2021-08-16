@@ -74,7 +74,16 @@ namespace RegistroServizi
             services.AddTransient<IOspedaliService, EfCoreOspedaliService>();
 
             //Services - ASP.NET Core Identity
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<IdentityUser>(options => {
+
+                // Criteri di validazione della password
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequiredUniqueChars = 4;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //Database

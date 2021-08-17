@@ -23,6 +23,7 @@ using RegistroServizi.Models.Services.Application.Missioni;
 using Microsoft.AspNetCore.Http;
 using RegistroServizi.Models.Entities;
 using RegistroServizi.Customizations.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace RegistroServizi
 {
@@ -85,6 +86,9 @@ namespace RegistroServizi
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequiredUniqueChars = 4;
 
+                // Conferma dell'account
+                options.SignIn.RequireConfirmedAccount = true;
+
                 // Blocco dell'account
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.MaxFailedAccessAttempts = 5;
@@ -104,8 +108,12 @@ namespace RegistroServizi
                 optionsBuilder.UseSqlite(connectionString);
             });
 
+            services.AddSingleton<IEmailSender, MailKitEmailSender>();
+            services.AddSingleton<IEmailClient, MailKitEmailSender>();
+
             //Options - Generics
             services.Configure<ApplicationOptions>(Configuration.GetSection("Applicazione"));
+            services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
             services.Configure<UsersOptions>(Configuration.GetSection("Users"));
 
             //Options - Area Impostazioni

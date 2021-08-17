@@ -84,6 +84,11 @@ namespace RegistroServizi
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequiredUniqueChars = 4;
+
+                // Blocco dell'account
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 })
                 .AddClaimsPrincipalFactory<CustomClaimsPrincipalFactory>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();

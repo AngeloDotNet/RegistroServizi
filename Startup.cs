@@ -91,6 +91,7 @@ namespace RegistroServizi
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 })
                 .AddClaimsPrincipalFactory<CustomClaimsPrincipalFactory>()
+                .AddPasswordValidator<CommonPasswordValidator<ApplicationUser>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //Database

@@ -21,7 +21,7 @@ using RegistroServizi.Models.Services.Application.Ospedali;
 using RegistroServizi.Models.Services.Application.SociRinnovi;
 using RegistroServizi.Models.Services.Application.Missioni;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+using RegistroServizi.Models.Entities;
 
 namespace RegistroServizi
 {
@@ -74,7 +74,7 @@ namespace RegistroServizi
             services.AddTransient<IOspedaliService, EfCoreOspedaliService>();
 
             //Services - ASP.NET Core Identity
-            services.AddDefaultIdentity<IdentityUser>(options => {
+            services.AddDefaultIdentity<ApplicationUser>(options => {
 
                 // Criteri di validazione della password
                 options.Password.RequireDigit = true;

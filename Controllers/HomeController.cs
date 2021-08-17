@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RegistroServizi.Models.Services.Infrastructure;
 
@@ -11,12 +12,14 @@ namespace RegistroServizi.Controllers
             this.applicationPersister = applicationPersister;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Licenza()
         {
             ViewData["Title"] = applicationPersister.GetTitoloApp();

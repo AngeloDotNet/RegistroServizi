@@ -1,3 +1,6 @@
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +26,8 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
+                    @if (signInManager.IsSignedIn(User))
+                    {
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
                     </li>
@@ -63,6 +68,7 @@
                             <a href="#" class="dropdown-item disabled">Gestione Modelli</a>
                         </div>
                     </li>
+                    }
                 </ul>
                 <partial name="_LoginPartial"></partial>
             </div>

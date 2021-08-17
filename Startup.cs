@@ -161,8 +161,8 @@ namespace RegistroServizi
 
             app.UseSession();
             app.UseEndpoints(routeBuilder => {
-                    routeBuilder.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                    routeBuilder.MapRazorPages();
+                    routeBuilder.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}").RequireAuthorization();;
+                    routeBuilder.MapRazorPages().RequireAuthorization();;
                     routeBuilder.MapFallbackToController("{*path}", "Index", "Error");
             });
         }

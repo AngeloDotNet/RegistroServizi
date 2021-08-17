@@ -65,11 +65,13 @@ namespace RegistroServizi.Models.Services.Infrastructure
         {
             // TODO: Quando verrà implementato il login, restituisci l'id o il nome dell'utente loggato anziché l'id della sessione
             // return httpContextAccessor.HttpContext.User.Identity.Name;
+            return httpContextAccessor.HttpContext.User.Identity.Name;
             
             // Mantengo la sessione impostando una chiave qualsiasi
-            httpContextAccessor.HttpContext.Session.SetString("foo", "bar");
-            // A me in realtà interessa sapere l'id per riconoscere l'utente (IMPORTANTE: come detto, questa è una soluzione provvisoria, poi useremo l'id dell'utente loggato)
-            return httpContextAccessor.HttpContext.Session.Id;
+            //httpContextAccessor.HttpContext.Session.SetString("foo", "bar");
+            // A me in realtà interessa sapere l'id per riconoscere l'utente (IMPORTANTE: come detto, questa è una soluzione provvisoria, 
+            // poi useremo l'id dell'utente loggato)
+            //return httpContextAccessor.HttpContext.Session.Id;
         }
 
         private string GetKeyNameForMissione(int idMissione)

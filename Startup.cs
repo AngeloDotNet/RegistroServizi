@@ -21,6 +21,9 @@ using RegistroServizi.Models.Services.Application.Ospedali;
 using RegistroServizi.Models.Services.Application.SociRinnovi;
 using RegistroServizi.Models.Services.Application.Missioni;
 using Microsoft.AspNetCore.Http;
+using RegistroServizi.Models.Entities;
+using RegistroServizi.Customizations.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace RegistroServizi
 {
@@ -47,6 +50,7 @@ namespace RegistroServizi
                 options.CheckConsentNeeded = (context) => false;
             });
 
+            services.AddRazorPages();
             services.AddMvc(options =>
             {
                 options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
@@ -71,15 +75,46 @@ namespace RegistroServizi
             //Services - Area Opzioni
             services.AddTransient<IOspedaliService, EfCoreOspedaliService>();
 
+            //Services - ASP.NET Core Identity
+            services.AddDefaultIdentity<ApplicationUser>(options => {
+
+                // Criteri di validazione della password
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequiredUniqueChars = 4;
+
+                // Conferma dell'account
+                options.SignIn.RequireConfirmedAccount = true;
+
+                // Blocco dell'account
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                })
+                .AddClaimsPrincipalFactory<CustomClaimsPrincipalFactory>()
+                .AddPasswordValidator<CommonPasswordValidator<ApplicationUser>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             //Database
-            services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder =>
-            {
+            services.AddDbContextPool<RegistroServiziDbContext>(optionsBuilder => {
                 string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
                 optionsBuilder.UseSqlite(connectionString);
             });
+            services.AddDbContextPool<ApplicationDbContext>(optionsBuilder => {
+                string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Application");
+                optionsBuilder.UseSqlite(connectionString);
+            });
+
+            services.AddSingleton<IEmailSender, MailKitEmailSender>();
+            services.AddSingleton<IEmailClient, MailKitEmailSender>();
 
             //Options - Generics
             services.Configure<ApplicationOptions>(Configuration.GetSection("Applicazione"));
+            services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
+            services.Configure<UsersOptions>(Configuration.GetSection("Users"));
 
             //Options - Area Impostazioni
             services.Configure<CostoServizioOptions>(Configuration.GetSection("CostoServizio"));
@@ -121,13 +156,15 @@ namespace RegistroServizi
 
             app.UseRouting();
 
-            app.UseSession();
-            app.UseEndpoints(routeBuilder =>
-            {
-                routeBuilder.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                routeBuilder.MapFallbackToController("{*path}", "Index", "Error");
-            });
+            app.UseAuthentication();
+            app.UseAuthorization();
 
+            app.UseSession();
+            app.UseEndpoints(routeBuilder => {
+                    routeBuilder.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                    routeBuilder.MapRazorPages();
+                    routeBuilder.MapFallbackToController("{*path}", "Index", "Error");
+            });
         }
     }
 }

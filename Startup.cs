@@ -22,6 +22,7 @@ using RegistroServizi.Models.Services.Application.SociRinnovi;
 using RegistroServizi.Models.Services.Application.Missioni;
 using Microsoft.AspNetCore.Http;
 using RegistroServizi.Models.Entities;
+using RegistroServizi.Customizations.Identity;
 
 namespace RegistroServizi
 {
@@ -84,6 +85,7 @@ namespace RegistroServizi
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequiredUniqueChars = 4;
                 })
+                .AddClaimsPrincipalFactory<CustomClaimsPrincipalFactory>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //Database

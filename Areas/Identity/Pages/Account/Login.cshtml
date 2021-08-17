@@ -38,9 +38,6 @@
                     <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">Dimenticato la password?</a>
                     </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registrati come nuovo utente</a>
-                    </p>
                 </div>
             </form>
         </section>
@@ -54,8 +51,7 @@
                 {
                     <div>
                         <p>
-                            Non sono stati configurati servizi di autenticazione esterni.<br>Leggi <a href="https://go.microsoft.com/fwlink/?LinkID=532715">questo articolo</a>
-                            per i dettagli su come impostare questa applicazione ASP.NET Core per l'accesso con servizi di autenticazione esterni.
+                            Non sono stati configurati servizi di autenticazione esterni.<br>
                         </p>
                     </div>
                 }

@@ -100,6 +100,7 @@ namespace RegistroServizi
 
             //Options - Generics
             services.Configure<ApplicationOptions>(Configuration.GetSection("Applicazione"));
+            services.Configure<UsersOptions>(Configuration.GetSection("Users"));
 
             //Options - Area Impostazioni
             services.Configure<CostoServizioOptions>(Configuration.GetSection("CostoServizio"));

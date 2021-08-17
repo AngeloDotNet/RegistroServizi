@@ -3,17 +3,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RegistroServizi.Models.Entities;
 
 namespace RegistroServizi.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -28,31 +29,36 @@ namespace RegistroServizi.Areas.Identity.Pages.Account.Manage
         public InputModel Input { get; set; }
 
         public class InputModel
-        {
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-        }
+	    {
+	        [Phone(ErrorMessage = "Deve essere un numero di telefono valido")]
+	        [Display(Name = "Numero di telefono")]
+	        public string PhoneNumber { get; set; }
+	 
+	        [Display(Name = "Nome completo")]
+	        public string FullName { get; set; }
+	    }
 
-        private async Task LoadAsync(IdentityUser user)
-        {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
+        private async Task LoadAsync(ApplicationUser user)
+	    {
+	        var userName = await _userManager.GetUserNameAsync(user);
+	        var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+	 
             Username = userName;
-
-            Input = new InputModel
-            {
-                PhoneNumber = phoneNumber
+	 
+	        Input = new InputModel
+	        {
+	            PhoneNumber = phoneNumber,
+	            FullName = user.FullName
             };
-        }
+	    }
 
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Non è stato possibile trovare il profilo utente con ID '{_userManager.GetUserId(User)}'.");
             }
 
             await LoadAsync(user);
@@ -64,7 +70,7 @@ namespace RegistroServizi.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Non è stato possibile trovare il profilo utente con ID '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
@@ -73,19 +79,29 @@ namespace RegistroServizi.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
+            user.FullName = Input.FullName;
+
+            IdentityResult result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+	        {
+	            StatusMessage = "Si è verificato un errore imprevisto nell'impostare il nome completo.";
+	            return RedirectToPage();
+	        }
+
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "Si è verificato un errore imprevisto nell'impostare il numero di telefono.";
                     return RedirectToPage();
                 }
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Il tuo profilo è stato aggiornato";
             return RedirectToPage();
         }
     }

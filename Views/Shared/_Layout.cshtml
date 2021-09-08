@@ -1,6 +1,10 @@
+@inject IAuthorizationService authService
 @inject SignInManager<ApplicationUser> signInManager
-@inject UserManager<ApplicationUser> userManager
-
+@{
+    AuthorizationPolicy policy = new AuthorizationPolicyBuilder().RequireRole(nameof(Roles.Administrator)).Build();
+    AuthorizationResult authorizationResult = await authService.AuthorizeAsync(User, policy);
+    bool isAdmin = authorizationResult.Succeeded;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,6 +66,10 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Amministrazione</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @if (isAdmin)
+                            {
+                                <a asp-page="/Admin/Users" class="dropdown-item">Gestione Utenti</a>
+                            }
                             <a href="#" class="dropdown-item disabled">Gestione Personale</a>
                             <a asp-controller="Soci" asp-action="Index" class="dropdown-item">Gestione Soci</a>
                             <a asp-controller="Clienti" asp-action="Index" class="dropdown-item">Gestione Clienti</a>

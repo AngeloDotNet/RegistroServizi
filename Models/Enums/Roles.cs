@@ -5,15 +5,15 @@ namespace RegistroServizi.Models.Enums
     public enum Roles
     {
         [Display(Name = "Amministratore")]
-        amministratore,
+        Administrator,
 
         [Display(Name = "Gestione Personale")]
-        personale,
+        PersonalManagement,
 
         [Display(Name = "Elenco Servizi")]
-        servizi,
+        Services,
 
         [Display(Name = "Configurazione e Manutenzione")]
-        manutenzione
+        ConfigurationMaintenance
     }
 }

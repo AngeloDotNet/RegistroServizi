@@ -56,28 +56,26 @@ namespace RegistroServizi
                 options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
             });
 
-            //Services - Generics
+            //Services Transient
             services.AddTransient<IApplicationPersister, ApplicationPersister>();
-            services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
-
-            //Services - Area Impostazioni
             services.AddTransient<IAssociazioniService, EfCoreAssociazioniService>();
             services.AddTransient<ICostiServiziService, EfCoreCostiServiziService>();
-
-            //Services - Area Amministrazione
             services.AddTransient<IClientiService, EfCoreClientiService>();
             services.AddTransient<ISociService, EfCoreSociService>();
             services.AddTransient<ISociFamiliariService, EfCoreSociFamiliariService>();
             services.AddTransient<ISociRinnoviService, EfCoreSociRinnoviService>();
             services.AddTransient<IMissioniService, InMemoryMissioniService>();
-            services.AddScoped<IPessimisticLock, MemoryCachePessimisticLock>();
-
-            //Services - Area Opzioni
             services.AddTransient<IOspedaliService, EfCoreOspedaliService>();
 
-            //Services - ASP.NET Core Identity
-            services.AddDefaultIdentity<ApplicationUser>(options => {
+            //Services Singleton
+            services.AddSingleton<IErrorViewSelectorService, ErrorViewSelectorService>();
+            services.AddSingleton<IEmailSender, MailKitEmailSender>();
+            services.AddSingleton<IEmailClient, MailKitEmailSender>();
 
+            //Services Scoped
+            services.AddScoped<IPessimisticLock, MemoryCachePessimisticLock>();
+
+            services.AddDefaultIdentity<ApplicationUser>(options => {
                 // Criteri di validazione della password
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 8;
@@ -103,27 +101,19 @@ namespace RegistroServizi
                 string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Default");
                 optionsBuilder.UseSqlite(connectionString);
             });
+
             services.AddDbContextPool<ApplicationDbContext>(optionsBuilder => {
                 string connectionString = Configuration.GetSection("ConnectionStrings").GetValue<string>("Application");
                 optionsBuilder.UseSqlite(connectionString);
             });
 
-            services.AddSingleton<IEmailSender, MailKitEmailSender>();
-            services.AddSingleton<IEmailClient, MailKitEmailSender>();
-
-            //Options - Generics
+            //Options
             services.Configure<ApplicationOptions>(Configuration.GetSection("Applicazione"));
             services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
             services.Configure<UsersOptions>(Configuration.GetSection("Users"));
-
-            //Options - Area Impostazioni
             services.Configure<CostoServizioOptions>(Configuration.GetSection("CostoServizio"));
-
-            //Options - Area Amministrazione
             services.Configure<ClienteOptions>(Configuration.GetSection("Cliente"));
             services.Configure<SocioOptions>(Configuration.GetSection("Socio"));
-
-            //Options - Area Opzioni
             services.Configure<OspedaleOptions>(Configuration.GetSection("Ospedale"));
         }
 
@@ -147,7 +137,6 @@ namespace RegistroServizi
             CultureInfo appCulture = new("it-IT");
 
             app.UseStaticFiles();
-
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture(appCulture),

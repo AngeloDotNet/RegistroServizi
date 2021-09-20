@@ -29,6 +29,7 @@
   @foreach(SelectListItem item in Html.GetEnumSelectList<Roles>())
   {
     string activeClass = item.Value == ((int) Model.InRole).ToString() ? "active" : string.Empty;
+    
     <li class="nav-item">
         <a class="nav-link @activeClass" asp-route-inrole="@item.Value">@item.Text</a>
     </li>

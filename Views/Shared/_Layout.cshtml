@@ -1,3 +1,10 @@
+@inject IAuthorizationService authService
+@inject SignInManager<ApplicationUser> signInManager
+@{
+    AuthorizationPolicy policy = new AuthorizationPolicyBuilder().RequireRole(nameof(Roles.Administrator)).Build();
+    AuthorizationResult authorizationResult = await authService.AuthorizeAsync(User, policy);
+    bool isAdmin = authorizationResult.Succeeded;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +30,8 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
+                    @if (signInManager.IsSignedIn(User))
+                    {
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
                     </li>
@@ -57,12 +66,17 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Amministrazione</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @if (isAdmin)
+                            {
+                                <a asp-page="/Admin/Users" class="dropdown-item">Gestione Utenti</a>
+                            }
                             <a href="#" class="dropdown-item disabled">Gestione Personale</a>
                             <a asp-controller="Soci" asp-action="Index" class="dropdown-item">Gestione Soci</a>
                             <a asp-controller="Clienti" asp-action="Index" class="dropdown-item">Gestione Clienti</a>
                             <a href="#" class="dropdown-item disabled">Gestione Modelli</a>
                         </div>
                     </li>
+                    }
                 </ul>
                 <partial name="_LoginPartial"></partial>
             </div>

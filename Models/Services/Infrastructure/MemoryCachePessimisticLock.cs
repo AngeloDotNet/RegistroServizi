@@ -69,8 +69,8 @@ namespace RegistroServizi.Models.Services.Infrastructure
             
             // Mantengo la sessione impostando una chiave qualsiasi
             //httpContextAccessor.HttpContext.Session.SetString("foo", "bar");
-            // A me in realtà interessa sapere l'id per riconoscere l'utente (IMPORTANTE: come detto, questa è una soluzione provvisoria, 
-            // poi useremo l'id dell'utente loggato)
+            // A me in realtà interessa sapere l'id per riconoscere l'utente
+            // IMPORTANTE: come detto, questa è una soluzione provvisoria, poi useremo l'id dell'utente loggato
             //return httpContextAccessor.HttpContext.Session.Id;
         }
 

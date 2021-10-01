@@ -1,9 +1,9 @@
-using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using RegistroServizi.Models.Exceptions.Application;
 using RegistroServizi.Models.Services.Infrastructure;
 
 namespace RegistroServizi.Models.Services.Application
@@ -43,8 +43,7 @@ namespace RegistroServizi.Models.Services.Application
             }
             catch
             {
-                //TODO: Implementare errore customizzato
-                throw new Exception();
+                throw new SendException();
             }
         }
     }

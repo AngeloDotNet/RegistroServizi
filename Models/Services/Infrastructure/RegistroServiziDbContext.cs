@@ -17,6 +17,8 @@ namespace RegistroServizi.Models.Services.Infrastructure
         public virtual DbSet<SocioFamiliare> SociFamiliari { get; set; }
         public virtual DbSet<SocioRinnovo> SociRinnovi { get; set; }
         public virtual DbSet<Ospedale> Ospedali { get; set; }
+        public virtual DbSet<SquadraFeriale> SquadreFeriali { get; set; }
+        public virtual DbSet<SquadraFestivo> SquadreFestivi { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -122,6 +124,18 @@ namespace RegistroServizi.Models.Services.Infrastructure
             {
                 entity.ToTable("Ospedale");
                 entity.HasKey(ospedale => ospedale.Id);
+            });
+
+            modelBuilder.Entity<SquadraFeriale>(entity => 
+            {
+                entity.ToTable("SquadraFeriale");
+                entity.HasKey(squadraFeriale => squadraFeriale.Id);
+            });
+
+            modelBuilder.Entity<SquadraFestivo>(entity => 
+            {
+                entity.ToTable("SquadraFestivo");
+                entity.HasKey(squadraFestivo => squadraFestivo.Id);
             });
         }
     }

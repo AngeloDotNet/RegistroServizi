@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RegistroServizi.Models.InputModels.SquadreFestive
 {
-    public class SquadraFestivoInputModel
+    public class SquadraFestivoCreateInputModel
     {
         [Required(ErrorMessage = "Il nome della squadra feriale è obbligatorio"),
          Display(Name = "Nome Squadra")]

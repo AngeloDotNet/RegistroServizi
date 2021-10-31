@@ -21,7 +21,7 @@ namespace RegistroServizi.Models.Entities
             NomeSquadra = newNomeSquadra;
         }
 
-        public void ChangeTipoServizio(string newDescrizioneSquadra)
+        public void ChangeDescrizioneSquadra(string newDescrizioneSquadra)
         {
             if (string.IsNullOrWhiteSpace(newDescrizioneSquadra))
             {

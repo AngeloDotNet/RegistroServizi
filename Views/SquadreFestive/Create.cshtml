@@ -1,0 +1,50 @@
+@model SquadraFestivoCreateInputModel
+<form method="POST">
+    <div class="card">
+        <div class="card-header">Creazione nuova Squadra Festivo</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card-text">
+                            <div class="row">
+                                <div class="col-12" asp-validation-summary="All"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md testo-bt">Qualora un dato <u>non fosse disponibile</u> indicare la dicitura N/A nella relativa casella.</div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="NomeSquadra" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="NomeSquadra" class="form-control">
+                                        <span asp-validation-for="NomeSquadra"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="DescrizioneSquadra" class="labtitolo-tabella-bt"></label><br>
+                                        <input type="text" asp-for="DescrizioneSquadra" class="form-control">
+                                        <span asp-validation-for="DescrizioneSquadra"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-outline-secondary" asp-action="Index"><i class="fas fa-reply"></i></a>&nbsp;
+                                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts
+{
+    <partial name="_Validation"></partial>
+}

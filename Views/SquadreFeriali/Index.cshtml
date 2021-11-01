@@ -1,0 +1,52 @@
+@model SquadraFerialeListViewModel
+<div class="row">
+    <div class="col-md">
+        <div class="card">
+            <div class="card-header">Gestione Squadre Feriali</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="card-text">
+                                <div class="row">
+                                    <div class="col-md-2"><a class="btn btn-outline-secondary ml-3" asp-controller="SquadreFeriali" asp-action="Create"><i class="fas fa-file-alt"></i></a></div>
+                                    <div class="col-md-7"></div>
+                                    <div class="col-md-3 d-flex align-items-center">
+                                        <form asp-controller="SquadreFeriali" asp-action="Index" method="get">
+                                            <div class="input-group">
+                                                <input type="text" name="search" class="form-control" placeholder="Cerca squadra..." aria-label="Cerca..." aria-describedby="search-button" value="@Model.Input.Search">
+                                                <div class="input-group-append">
+                                                    <button class="input-group-text" id="search-button"><i class="fas fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row">
+                                    <div class="col-md-1 titolo-tabella-bt">Squadra</div>
+                                    <div class="col-md-3 titolo-tabella-bt">Descrizione</div>
+                                    <div class="col-md-7 titolo-tabella-bt"></div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                @foreach (var squadra in Model.SquadraFeriale.Results)
+                                {
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-1 testo-tabella-bt">@squadra.NomeSquadra</div>
+                                        <div class="col-md-3 testo-tabella-bt">@squadra.DescrizioneSquadra</div>
+                                        <div class="col-md-7 testo-tabella-bt"></div>
+                                        <div class="col-md-1 d-flex align-items-center">
+                                        <a class="btn btn-outline-primary" asp-controller="SquadreFeriali" asp-action="Detail" asp-route-id="@squadra.Id"><i class="fas fa-info"></i></a>
+                                        </div>
+                                    </div>   
+                                }
+                                <div class="row">&nbsp;</div>
+                                <vc:pagination-bar model="@Model"></vc:pagination-bar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

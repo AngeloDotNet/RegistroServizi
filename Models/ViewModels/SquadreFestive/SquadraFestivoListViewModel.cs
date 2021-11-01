@@ -4,11 +4,11 @@ namespace RegistroServizi.Models.ViewModels.SquadreFestive
 {
     public class SquadraFestivoListViewModel : IPaginationInfo
     {
-        public ListViewModel<SquadraFestivoViewModel> Socio { get; set; }
+        public ListViewModel<SquadraFestivoViewModel> SquadraFestivo { get; set; }
         public SquadraFestivoListInputModel Input { get; set; }
 
         int IPaginationInfo.CurrentPage => Input.Page;
-        int IPaginationInfo.TotalResults => Socio.TotalCount;
+        int IPaginationInfo.TotalResults => SquadraFestivo.TotalCount;
         int IPaginationInfo.ResultsPerPage => Input.Limit;
 
         string IPaginationInfo.Search => Input.Search;

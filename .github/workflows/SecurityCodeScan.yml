@@ -1,13 +1,9 @@
-# This workflow integrates SecurityCodeScan with GitHub's Code Scanning feature
-# SecurityCodeScan is a vulnerability patterns detector for C# and VB.NET
-
 name: SecurityCodeScan
 
 on:
   push:
     branches: [ master ]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ master ]
   schedule:
     - cron: '0 */6 * * *'

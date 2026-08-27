@@ -6,8 +6,7 @@ namespace RegistroServizi.Data;
 
 public static class DatabaseInitializer
 {
-    //public static async Task MigrateAsync(IServiceProvider services, bool seedDevelopmentData = false)
-    public static async Task MigrateAsync(IServiceProvider services)
+    public static async Task MigrateAsync(IServiceProvider services, bool seedDevData = false)
     {
         using var scope = services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<RegistroServiziDbContext>();
@@ -28,9 +27,9 @@ public static class DatabaseInitializer
                 logger.LogDebug("Database schema is up to date — no migrations needed.");
             }
 
-            //if (seedDevelopmentData)
+            //if (seedDevData)
             //{
-            //    await DevelopmentDataSeeder.SeedAsync(scope.ServiceProvider);
+            //    await DevDataSeeder.SeedAsync(scope.ServiceProvider);
             //}
         }
         catch (Exception ex)

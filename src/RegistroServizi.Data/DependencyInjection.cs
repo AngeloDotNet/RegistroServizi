@@ -10,10 +10,10 @@ namespace RegistroServizi.Data;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddRegistroServiziData(this IServiceCollection services, IConfiguration configuration, string connectionStringName = "DefaultConnection")
+    public static IServiceCollection AddRegistroServiziData(this IServiceCollection services, IConfiguration configuration, string sqlConnection = "sqlConnection")
     {
-        var connectionString = configuration.GetConnectionString(connectionStringName)
-            ?? throw new InvalidOperationException($"Connection string '{connectionStringName}' was not found.");
+        var connectionString = configuration.GetConnectionString(sqlConnection)
+            ?? throw new InvalidOperationException($"Connection string '{sqlConnection}' was not found.");
 
         services.AddDbContext<RegistroServiziDbContext>(options => options.UseSqlServer(connectionString, sqlOptions =>
         {

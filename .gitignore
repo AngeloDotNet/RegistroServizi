@@ -416,3 +416,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Local appsettings file for development
+/src/RegistroServizi.Web/appsettings.local.json

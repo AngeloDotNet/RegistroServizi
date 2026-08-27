@@ -1,3 +1,13 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src/RegistroServizi.Application/RegistroServizi.Application.csproj" Id="a9500c84-b6c3-4dce-a63b-e0419907586a" />
+  <Project Path="src/RegistroServizi.Data/RegistroServizi.Data.csproj" Id="d3ddf0ed-05d5-474f-b79f-c5a782636c1c" />
+  <Project Path="src/RegistroServizi.Domain/RegistroServizi.Domain.csproj" Id="be73ea6b-afce-4761-be78-d78d6bf2d190" />
   <Project Path="src/RegistroServizi.Web/RegistroServizi.Web.csproj" Id="56ece171-c7d4-4e4a-b4f1-9e3f2cd1c122" />
 </Solution>

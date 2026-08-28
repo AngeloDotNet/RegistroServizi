@@ -19,11 +19,29 @@
 @*         <MudAvatar Variant="Variant.Outlined" Class="user-avatar">@GetProfileInitials("Angelo Pirola")</MudAvatar>
         <MudText class="user-profile d-none d-sm-flex">Angelo Pirola</MudText> *@
 
-        <form action="Account/Logout" method="post" style="margin: 0px">
+@*         <form action="Account/Logout" method="post" style="margin: 0px">
             <AntiforgeryToken />
             <input type="hidden" name="ReturnUrl" value="Account/Login" />
-            @* <MudButton Href="Account/Logout" Color="Color.Inherit" StartIcon="@Icons.Material.Filled.Logout" Variant="Variant.Text">Log out</MudButton> *@
             <button type="submit" class="brainy-logout-btn" title="Log out">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                <span class="d-none d-sm-inline">Log out</span>
+            </button>
+        </form> *@
+        
+        <AuthorizeView>
+            <Authorized>
+                <a class="brainy-user brainy-user-link" href="/Account/Manage" aria-label="Manage account and export data">
+                    <MudAvatar Variant="Variant.Outlined" Class="user-avatar">@GetProfileInitials(context.User.Identity?.Name)</MudAvatar>
+                    <MudText class="user-profile d-none d-sm-flex">@context.User.Identity?.Name</MudText>
+                </a>
+                <form action="Account/Logout" method="post" style="margin: 0px">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="ReturnUrl" value="Account/Login" />
+                    <button type="submit" class="brainy-logout-btn" title="Log out">
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                             <polyline points="16 17 21 12 16 7" />
@@ -31,28 +49,6 @@
                         </svg>
                         <span class="d-none d-sm-inline">Log out</span>
                     </button>
-        </form>
-        
-        <AuthorizeView>
-            <Authorized>
-                <a class="brainy-user brainy-user-link" href="/Account/Manage" aria-label="Manage account and export data">
-                   @*  <span class="user-avatar">@GetInitials(context.User.Identity?.Name)</span> *@
-                    <MudAvatar Variant="Variant.Outlined" Class="user-avatar">@GetProfileInitials(context.User.Identity?.Name)</MudAvatar>
-                    @* <span class="user-email d-none d-sm-flex">@context.User.Identity?.Name</span> *@
-                    <MudText class="user-profile d-none d-sm-flex">@context.User.Identity?.Name</MudText>
-                </a>
-                <form action="Account/Logout" method="post" style="margin: 0px">
-                    <AntiforgeryToken />
-                    <input type="hidden" name="ReturnUrl" value="Account/Login" />
-                    <MudButton Href="Account/Logout" Color="Color.Inherit" StartIcon="@Icons.Material.Filled.Logout" Variant="Variant.Text">Log out</MudButton>
-                    @* <button type="submit" class="brainy-logout-btn" title="Log out">
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                            <polyline points="16 17 21 12 16 7" />
-                            <line x1="21" y1="12" x2="9" y2="12" />
-                        </svg>
-                        <span class="d-none d-sm-inline">Log out</span>
-                    </button> *@
                 </form>
             </Authorized>
             <NotAuthorized>

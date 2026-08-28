@@ -10,7 +10,7 @@ namespace RegistroServizi.Data;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddRegistroServiziData(this IServiceCollection services, IConfiguration configuration, string sqlConnection = "sqlConnection")
+    public static IServiceCollection AddRegistroServiziData(this IServiceCollection services, IConfiguration configuration, string sqlConnection = "SqlServerConnection")
     {
         var connectionString = configuration.GetConnectionString(sqlConnection)
             ?? throw new InvalidOperationException($"Connection string '{sqlConnection}' was not found.");
@@ -19,15 +19,19 @@ public static class DependencyInjection
         {
             sqlOptions.CommandTimeout(60);
             sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+
             sqlOptions.MigrationsAssembly(typeof(RegistroServiziDbContext).Assembly.FullName);
             sqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName);
+
             sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
             sqlOptions.UseCompatibilityLevel(160);
         })
         .LogTo(Console.WriteLine, LogLevel.Information)
         .EnableDetailedErrors(false)
+
         .EnableSensitiveDataLogging(false)
         .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
+
         .UseExceptionProcessor()
         .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 

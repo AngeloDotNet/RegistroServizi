@@ -18,7 +18,7 @@
         
         <AuthorizeView>
             <Authorized>
-                <a class="brainy-user brainy-user-link" href="/Account/Manage" aria-label="Manage account and export data">
+                <a class="brainy-user brainy-user-link" href="/Account/Manage" aria-label="Gestione account">
                     <MudAvatar Variant="Variant.Outlined" Class="user-avatar">@GetProfileInitials(context.User.Identity?.Name)</MudAvatar>
                     <MudText class="user-profile d-none d-sm-flex">@context.User.Identity?.Name</MudText>
                 </a>

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
-using RegistroServizi.Web.Data;
+using RegistroServizi.Data.Identity;
 
 namespace RegistroServizi.Web.Components.Account;
 

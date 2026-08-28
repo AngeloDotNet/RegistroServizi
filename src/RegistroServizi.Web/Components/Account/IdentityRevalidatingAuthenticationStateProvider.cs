@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using RegistroServizi.Web.Data;
+using RegistroServizi.Data.Identity;
 
 namespace RegistroServizi.Web.Components.Account;
 // This is a server-side AuthenticationStateProvider that revalidates the security stamp for the connected user

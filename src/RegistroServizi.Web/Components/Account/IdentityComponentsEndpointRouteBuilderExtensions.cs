@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using RegistroServizi.Data.Identity;
 using RegistroServizi.Web.Components.Account.Pages;
 using RegistroServizi.Web.Components.Account.Pages.Manage;
-using RegistroServizi.Web.Data;
 
 namespace Microsoft.AspNetCore.Routing;
 

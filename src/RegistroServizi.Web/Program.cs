@@ -34,15 +34,8 @@ public class Program
 
         builder.Services.AddCascadingAuthenticationState();
         builder.Services.AddScoped<IdentityRedirectManager>();
+
         builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
-
-        //builder.Services.AddAuthentication(options =>
-        //    {
-        //        options.DefaultScheme = IdentityConstants.ApplicationScheme;
-        //        options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-        //    })
-        //    .AddIdentityCookies();
-
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultScheme = IdentityConstants.ApplicationScheme;
@@ -56,64 +49,33 @@ public class Program
             options.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
         });
 
-        //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-        //builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
         builder.Services.AddRegistroServiziData(builder.Configuration);
 
-        //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-        //builder.Services.AddIdentityCore<ApplicationUser>(options =>
-        //    {
-        //        options.SignIn.RequireConfirmedAccount = true;
-        //        options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
-        //    })
-        //    .AddEntityFrameworkStores<ApplicationDbContext>()
-        //    .AddSignInManager()
-        //    .AddDefaultTokenProviders();
+        var identityConfig = builder.Configuration.GetSection("Identity");
         builder.Services.AddIdentityCore<ApplicationUser>(options =>
         {
-            //options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue("Identity:RequireConfirmedAccount", false);
-            options.SignIn.RequireConfirmedAccount = true;
+            options.SignIn.RequireConfirmedAccount = identityConfig.GetValue("RequireConfirmedAccount", false);
 
-            options.Lockout.AllowedForNewUsers = true;
-            options.Lockout.MaxFailedAccessAttempts = 5;
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
-            options.Password.RequiredLength = 10;
+            options.Lockout.AllowedForNewUsers = identityConfig.GetValue("AllowedForNewUsers", true);
+            options.Lockout.MaxFailedAccessAttempts = identityConfig.GetValue("MaxFailedAccessAttempts", 5);
+            options.Lockout.DefaultLockoutTimeSpan = identityConfig.GetValue("DefaultLockoutTimeSpan", TimeSpan.FromMinutes(15));
+
+            options.Password.RequiredLength = identityConfig.GetValue("Password:RequiredLength", 10);
             options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
         })
-            .AddEntityFrameworkStores<RegistroServiziDbContext>()
-            .AddSignInManager()
-            .AddDefaultTokenProviders();
+        .AddEntityFrameworkStores<RegistroServiziDbContext>()
+        .AddSignInManager()
+        .AddDefaultTokenProviders();
 
         builder.Services.AddRegistroServiziApplication();
-
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
         var app = builder.Build();
 
-        //using var scope = app.Services.CreateScope();
-        //var dbContext = scope.ServiceProvider.GetRequiredService<RegistroServiziDbContext>();
-        //dbContext.Database.Migrate();
-
         if (builder.Configuration.GetValue("Database:ApplyMigrationsOnStartup", true))
         {
-            //await DatabaseInitializer.MigrateAsync(app.Services, app.Environment.IsDevelopment());
-            await DatabaseInitializer.MigrateAsync(app.Services);
+            await DatabaseInitializer.MigrateAsync(app.Services, false);
         }
-
-        // Configure the HTTP request pipeline.
-        //if (app.Environment.IsDevelopment())
-        //{
-        //    app.UseMigrationsEndPoint();
-        //}
-        //else
-        //{
-        //    app.UseExceptionHandler("/Error");
-        //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-        //    app.UseHsts();
-        //}
-
-        //app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
-        //app.UseHttpsRedirection();
 
         app.UseForwardedHeaders();
 
@@ -135,7 +97,6 @@ public class Program
 
         // Add additional endpoints required by the Identity /Account Razor components.
         app.MapAdditionalIdentityEndpoints();
-
         app.Run();
     }
 }

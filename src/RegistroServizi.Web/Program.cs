@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using RegistroServizi.Application;
 using RegistroServizi.Data;
@@ -17,7 +18,8 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Configuration.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
-        builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+        builder.Services.AddRazorComponents()
+            .AddInteractiveServerComponents();
 
         builder.Services.AddMudServices();
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -63,23 +65,58 @@ public class Program
             options.Password.RequiredLength = identityConfig.GetValue("Password:RequiredLength", 10);
             options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
         })
+        .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<RegistroServiziDbContext>()
         .AddSignInManager()
         .AddDefaultTokenProviders();
+        //.AddEntityFrameworkStores<RegistroServiziDbContext>()
+        //.AddSignInManager()
+        //.AddDefaultTokenProviders();
 
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
         var app = builder.Build();
 
-        if (builder.Configuration.GetValue("Database:ApplyMigrationsOnStartup", true))
+        //if (builder.Configuration.GetValue("Database:ApplyMigrationsOnStartup", true))
+        //{
+        //    await DatabaseInitializer.MigrateAsync(app.Services, false);
+        //}
+
+        // Apply pending migrations automatically on startup
+        using (var scope = app.Services.CreateScope())
         {
-            await DatabaseInitializer.MigrateAsync(app.Services, false);
+            var dbContext = scope.ServiceProvider.GetRequiredService<RegistroServiziDbContext>();
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+            try
+            {
+                // Apply any pending migrations
+                await dbContext.Database.MigrateAsync();
+                logger.LogInformation("Database migrations applied successfully.");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while migrating the database.");
+                throw;
+            }
         }
 
         app.UseForwardedHeaders();
 
-        if (!app.Environment.IsDevelopment())
+        //if (!app.Environment.IsDevelopment())
+        //{
+        //    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+        //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        //    app.UseHsts();
+        //}
+
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseMigrationsEndPoint();
+        }
+        else
         {
             app.UseExceptionHandler("/Error", createScopeForErrors: true);
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -89,9 +126,10 @@ public class Program
         app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
         app.UseHttpsRedirection();
 
+        app.UseRouting();
         app.UseAntiforgery();
-        app.MapStaticAssets();
 
+        app.MapStaticAssets();
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode();
 

@@ -21,6 +21,9 @@ public class Program
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
+        builder.Services.AddControllers();
+        builder.Services.AddAuthorization();
+
         builder.Services.AddMudServices();
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
         {
@@ -123,17 +126,35 @@ public class Program
             app.UseHsts();
         }
 
+        //app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
+        //app.UseHttpsRedirection();
+
+        //app.UseRouting();
+        //app.UseAntiforgery();
+
+        //app.MapStaticAssets();
+        //app.MapRazorComponents<App>()
+        //    .AddInteractiveServerRenderMode();
+
+        //// Add additional endpoints required by the Identity /Account Razor components.
+        //app.MapAdditionalIdentityEndpoints();
+        //app.Run();
+
         app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
         app.UseHttpsRedirection();
 
         app.UseRouting();
+        app.UseAuthentication();
+
+        app.UseAuthorization();
         app.UseAntiforgery();
 
+        app.MapControllers();
         app.MapStaticAssets();
+
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode();
 
-        // Add additional endpoints required by the Identity /Account Razor components.
         app.MapAdditionalIdentityEndpoints();
         app.Run();
     }

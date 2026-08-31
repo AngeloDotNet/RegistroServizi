@@ -47,10 +47,6 @@
     <MudNavLink Href="/gestione-modelli" Icon="@Icons.Material.Filled.Notes">Gestione Modelli</MudNavLink>
     <MudNavLink Href="/disponibilita-mezzi" Icon="@Icons.Material.Filled.Alarm">Disponibilità Mezzi</MudNavLink> *@
 
-    @*<MudDivider Class="my-2" />
-    <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">Admin</MudText>
-    <MudNavLink Href="/admin/identity" Icon="@Icons.Material.Filled.AdminPanelSettings">Amministrazione</MudNavLink>*@
-
     <AuthorizeView Roles="@nameof(Role.Admin)">
         <Authorized>
             <MudDivider Class="my-2" />

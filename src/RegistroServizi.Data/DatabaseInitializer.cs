@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using RegistroServizi.Domain.Enums;
 
 namespace RegistroServizi.Data;
 
@@ -27,6 +29,8 @@ public static class DatabaseInitializer
                 logger.LogDebug("Database schema is up to date — no migrations needed.");
             }
 
+            await SeedRolesAsync(scope.ServiceProvider, logger);
+
             //if (seedDevData)
             //{
             //    await DevDataSeeder.SeedAsync(scope.ServiceProvider);
@@ -36,6 +40,33 @@ public static class DatabaseInitializer
         {
             logger.LogError(ex, "An error occurred while applying database migrations.");
             throw;
+        }
+    }
+
+    //private static readonly string[] defaultRoles = { "Admin", "Manager", "Operator" }; // Manager: gestione volontari / soci, Operator: gestione servizi
+    private static readonly string[] defaultRoles = { nameof(Role.Admin), nameof(Role.Manager), nameof(Role.Operator) }; // Manager: gestione volontari / soci, Operator: gestione servizi
+
+    private static async Task SeedRolesAsync(IServiceProvider services, ILogger logger)
+    {
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+        foreach (var roleName in defaultRoles)
+        {
+            if (await roleManager.RoleExistsAsync(roleName))
+            {
+                continue;
+            }
+
+            var result = await roleManager.CreateAsync(new IdentityRole(roleName));
+
+            if (result.Succeeded)
+            {
+                logger.LogInformation("Seeded role '{RoleName}'.", roleName);
+                continue;
+            }
+
+            var errors = string.Join("; ", result.Errors.Select(error => error.Description));
+            throw new InvalidOperationException($"Unable to seed role '{roleName}': {errors}");
         }
     }
 }

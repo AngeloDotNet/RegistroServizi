@@ -21,10 +21,6 @@
         
         <AuthorizeView>
             <Authorized>
-                @* <a class="brainy-user brainy-user-link" href="/Account/Manage" aria-label="Gestione account">
-                    <MudAvatar Variant="Variant.Outlined" Class="user-avatar">@GetProfileInitials(context.User.Identity?.Name)</MudAvatar>
-                    <MudText class="user-profile d-none d-sm-flex">@context.User.Identity?.Name</MudText>
-                </a> *@
                 <MudAvatar Variant="Variant.Outlined" Class="user-avatar">@GetProfileInitials(context.User.Identity?.Name)</MudAvatar>
                 <MudText class="user-profile d-none d-sm-flex">@context.User.Identity?.Name</MudText>
                 <form action="Account/Logout" method="post" style="margin: 0px">

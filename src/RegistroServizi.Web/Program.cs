@@ -72,9 +72,6 @@ public class Program
         .AddEntityFrameworkStores<RegistroServiziDbContext>()
         .AddSignInManager()
         .AddDefaultTokenProviders();
-        //.AddEntityFrameworkStores<RegistroServiziDbContext>()
-        //.AddSignInManager()
-        //.AddDefaultTokenProviders();
 
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();

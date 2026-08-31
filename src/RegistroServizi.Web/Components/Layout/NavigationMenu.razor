@@ -1,9 +1,35 @@
 ﻿@implements IDisposable
 
 <MudNavMenu>
-    <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">Data: @CurrentDateTime.ToString("dd/MM/yyyy HH:mm:ss")</MudText>
+    <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">Registro Servizi</MudText>
+
+    <MudDivider Class="my-2" />
+    <MudText Typo="Typo.subtitle1" Class="px-4 py-2 mud-text-secondary">@CurrentDateTime.ToString("dd/MM/yyyy HH:mm:ss")</MudText>
+    <AuthorizeView>
+        <Authorized>
+            <MudNavGroup Title="Nuova Missione" Icon="@Icons.Material.Filled.MedicalServices" Expanded="false">
+                <MudNavLink Href="/missione-118" Icon="@Icons.Material.Filled.Emergency">118</MudNavLink>
+                <MudNavLink Href="/centro-mobile-rianimazione" Icon="@Icons.Material.Filled.EmergencyShare">C.M.R.</MudNavLink>
+                <MudNavLink Href="/guardia-medica" Icon="@Icons.Material.Filled.MedicalInformation">Guardia Medica</MudNavLink>
+                <MudNavLink Href="/stazionamento" Icon="@Icons.Material.Filled.TransferWithinAStation">Stazionamento</MudNavLink>
+                <MudNavLink Href="/trasporto-auto" Icon="@Icons.Material.Filled.DirectionsCar">Trasporto Auto</MudNavLink>
+                <MudNavLink Href="/trasporto-ambulanza" Icon="@Icons.Material.Filled.DirectionsBus">Trasporto Ambulanza</MudNavLink>
+                <MudNavLink Href="/trasporto-disabili" Icon="@Icons.Material.Filled.BusAlert">Trasporto Disabili</MudNavLink>
+            </MudNavGroup>
+
+            <MudNavLink Href="/elenco-personale" Icon="@Icons.Material.Filled.People">Elenco Personale</MudNavLink>
+            <MudNavLink Href="/elenco-servizi" Icon="@Icons.Material.Filled.Bookmarks">Elenco Servizi</MudNavLink>
+            <MudNavLink Href="/gestione-personale" Icon="@Icons.Material.Filled.CardTravel">Gestione Personale</MudNavLink>
+            @* <MudNavLink Href="/maps" Icon="@Icons.Material.Filled.Map">Visualizza Mappa</MudNavLink> *@
+            <MudNavLink Href="/elenco-soci" Icon="@Icons.Material.Filled.FolderShared">Elenco Soci</MudNavLink>
+            <MudNavLink Href="/gestione-modelli" Icon="@Icons.Material.Filled.Notes">Gestione Modelli</MudNavLink>
+            <MudNavLink Href="/disponibilita-mezzi" Icon="@Icons.Material.Filled.Alarm">Disponibilità Mezzi</MudNavLink>
+        </Authorized>
+    </AuthorizeView>
+
+    @* <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">Data: @CurrentDateTime.ToString("dd/MM/yyyy HH:mm:ss")</MudText> *@
     @* <MudNavLink Href="/nuova-missione" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.MedicalServices">Nuova Missione</MudNavLink> *@
-    <MudNavGroup Title="Nuova Missione" Icon="@Icons.Material.Filled.MedicalServices" Expanded="false">
+    @* <MudNavGroup Title="Nuova Missione" Icon="@Icons.Material.Filled.MedicalServices" Expanded="false">
         <MudNavLink Href="/missione-118" Icon="@Icons.Material.Filled.Emergency">118</MudNavLink>
         <MudNavLink Href="/centro-mobile-rianimazione" Icon="@Icons.Material.Filled.EmergencyShare">C.M.R.</MudNavLink>
         <MudNavLink Href="/guardia-medica" Icon="@Icons.Material.Filled.MedicalInformation">Guardia Medica</MudNavLink>
@@ -11,15 +37,30 @@
         <MudNavLink Href="/trasporto-auto" Icon="@Icons.Material.Filled.DirectionsCar">Trasporto Auto</MudNavLink>
         <MudNavLink Href="/trasporto-ambulanza" Icon="@Icons.Material.Filled.DirectionsBus">Trasporto Ambulanza</MudNavLink>
         <MudNavLink Href="/trasporto-disabili" Icon="@Icons.Material.Filled.BusAlert">Trasporto Disabili</MudNavLink>
-
     </MudNavGroup>
+
     <MudNavLink Href="/elenco-personale" Icon="@Icons.Material.Filled.People">Elenco Personale</MudNavLink>
     <MudNavLink Href="/elenco-servizi" Icon="@Icons.Material.Filled.Bookmarks">Elenco Servizi</MudNavLink>
     <MudNavLink Href="/gestione-personale" Icon="@Icons.Material.Filled.CardTravel">Gestione Personale</MudNavLink>
-    @* <MudNavLink Href="/maps" Icon="@Icons.Material.Filled.Map">Visualizza Mappa</MudNavLink> *@
+    <MudNavLink Href="/maps" Icon="@Icons.Material.Filled.Map">Visualizza Mappa</MudNavLink>
     <MudNavLink Href="/elenco-soci" Icon="@Icons.Material.Filled.FolderShared">Elenco Soci</MudNavLink>
     <MudNavLink Href="/gestione-modelli" Icon="@Icons.Material.Filled.Notes">Gestione Modelli</MudNavLink>
-    <MudNavLink Href="/disponibilita-mezzi" Icon="@Icons.Material.Filled.Alarm">Disponibilità Mezzi</MudNavLink>
+    <MudNavLink Href="/disponibilita-mezzi" Icon="@Icons.Material.Filled.Alarm">Disponibilità Mezzi</MudNavLink> *@
+
+    @*<MudDivider Class="my-2" />
+    <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">Admin</MudText>
+    <MudNavLink Href="/admin/identity" Icon="@Icons.Material.Filled.AdminPanelSettings">Amministrazione</MudNavLink>*@
+
+    <AuthorizeView Roles="@nameof(Role.Admin)">
+        <Authorized>
+            <MudDivider Class="my-2" />
+            <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">Admin</MudText>
+            <MudNavLink Href="/admin/identity" Icon="@Icons.Material.Filled.AdminPanelSettings">Amministrazione</MudNavLink>
+        </Authorized>
+    </AuthorizeView>
+
+    <MudDivider Class="my-2" />
+    <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">This software is distributed under the MIT License.</MudText>
 </MudNavMenu>
 
 @code {

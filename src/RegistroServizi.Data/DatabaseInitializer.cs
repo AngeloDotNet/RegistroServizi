@@ -30,11 +30,6 @@ public static class DatabaseInitializer
             }
 
             await SeedRolesAsync(scope.ServiceProvider, logger);
-
-            //if (seedDevData)
-            //{
-            //    await DevDataSeeder.SeedAsync(scope.ServiceProvider);
-            //}
         }
         catch (Exception ex)
         {
@@ -43,7 +38,6 @@ public static class DatabaseInitializer
         }
     }
 
-    //private static readonly string[] defaultRoles = { "Admin", "Manager", "Operator" }; // Manager: gestione volontari / soci, Operator: gestione servizi
     private static readonly string[] defaultRoles = { nameof(Role.Admin), nameof(Role.Manager), nameof(Role.Operator) }; // Manager: gestione volontari / soci, Operator: gestione servizi
 
     private static async Task SeedRolesAsync(IServiceProvider services, ILogger logger)

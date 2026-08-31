@@ -78,11 +78,6 @@ public class Program
 
         var app = builder.Build();
 
-        //if (builder.Configuration.GetValue("Database:ApplyMigrationsOnStartup", true))
-        //{
-        //    await DatabaseInitializer.MigrateAsync(app.Services, false);
-        //}
-
         // Apply pending migrations automatically on startup
         using (var scope = app.Services.CreateScope())
         {

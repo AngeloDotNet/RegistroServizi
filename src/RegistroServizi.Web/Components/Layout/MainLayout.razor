@@ -8,24 +8,29 @@
 
 <MudLayout>
     <MudAppBar Elevation="0">
-        <AuthorizeView>
-            <Authorized>
+        @* <AuthorizeView>
+            <Authorized> *@
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" aria-label="Nascondi menu" OnClick="ToggleDrawer" />
-            </Authorized>
-        </AuthorizeView>
-        <MudText Typo="Typo.h6">Registro Servizi</MudText>
+        @*     </Authorized>
+        </AuthorizeView> *@
+        @* <MudText Typo="Typo.h6"><a href="/">Registro Servizi</a></MudText> *@
+        <MudText Typo="Typo.h6">
+            <a class="app-title" href="/">Registro Servizi</a>
+        </MudText>
         <MudSpacer />
         
         <AuthorizeView>
             <Authorized>
-                <a class="brainy-user brainy-user-link" href="/Account/Manage" aria-label="Gestione account">
+                @* <a class="brainy-user brainy-user-link" href="/Account/Manage" aria-label="Gestione account">
                     <MudAvatar Variant="Variant.Outlined" Class="user-avatar">@GetProfileInitials(context.User.Identity?.Name)</MudAvatar>
                     <MudText class="user-profile d-none d-sm-flex">@context.User.Identity?.Name</MudText>
-                </a>
+                </a> *@
+                <MudAvatar Variant="Variant.Outlined" Class="user-avatar">@GetProfileInitials(context.User.Identity?.Name)</MudAvatar>
+                <MudText class="user-profile d-none d-sm-flex">@context.User.Identity?.Name</MudText>
                 <form action="Account/Logout" method="post" style="margin: 0px">
                     <AntiforgeryToken />
                     <input type="hidden" name="ReturnUrl" value="Account/Login" />
-                    <button type="submit" class="brainy-logout-btn" title="Log out">
+                    <button type="submit" class="btn-logout" title="Log out">
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                             <polyline points="16 17 21 12 16 7" />
@@ -42,13 +47,13 @@
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/AngeloDotNet/RegistroServizi" Target="_blank" />
     </MudAppBar>
 
-    <AuthorizeView>
-        <Authorized>
+@*     <AuthorizeView>
+        <Authorized> *@
             <MudDrawer @bind-Open="@_open" Elevation="0" ClipMode="DrawerClipMode.Always">
                 <NavigationMenu />
             </MudDrawer>
-        </Authorized>
-    </AuthorizeView>
+@*         </Authorized>
+    </AuthorizeView> *@
 
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large" Class="py-8">

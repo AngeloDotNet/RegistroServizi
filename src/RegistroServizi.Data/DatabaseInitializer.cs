@@ -8,26 +8,40 @@ namespace RegistroServizi.Data;
 
 public static class DatabaseInitializer
 {
-    public static async Task MigrateAsync(IServiceProvider services, bool seedDevData = false)
+    public static async Task MigrateAsync(IServiceProvider services)
     {
         using var scope = services.CreateScope();
-        var db = scope.ServiceProvider.GetRequiredService<RegistroServiziDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<RegistroServiziDbContext>();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<RegistroServiziDbContext>>();
 
         try
         {
-            var pending = await db.Database.GetPendingMigrationsAsync();
+            var pendingMigrations = (await dbContext.Database.GetPendingMigrationsAsync()).ToList();
 
-            if (pending.Any())
+            if (pendingMigrations.Count > 0)
             {
-                logger.LogInformation("Applying {Count} pending migration(s)…", pending.Count());
-                await db.Database.MigrateAsync();
+                var pendingCounter = pendingMigrations.Count;
+                logger.LogInformation("Applying {PendingCounter} pending migrations...", pendingCounter);
+                await dbContext.Database.MigrateAsync();
                 logger.LogInformation("Database migrations applied successfully.");
             }
             else
             {
-                logger.LogDebug("Database schema is up to date — no migrations needed.");
+                logger.LogInformation("No pending migrations found.");
             }
+
+            //var pending = await db.Database.GetPendingMigrationsAsync();
+
+            //if (pending.Any())
+            //{
+            //    logger.LogInformation("Applying {Count} pending migration(s)…", pending.Count());
+            //    await db.Database.MigrateAsync();
+            //    logger.LogInformation("Database migrations applied successfully.");
+            //}
+            //else
+            //{
+            //    logger.LogDebug("Database schema is up to date — no migrations needed.");
+            //}
 
             await SeedRolesAsync(scope.ServiceProvider, logger);
         }

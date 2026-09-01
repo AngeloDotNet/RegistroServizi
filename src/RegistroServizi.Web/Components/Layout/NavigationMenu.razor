@@ -1,10 +1,10 @@
 ﻿@implements IDisposable
 
 <MudNavMenu>
-    <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">Registro Servizi</MudText>
-
+    @* <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">Registro Servizi</MudText>
     <MudDivider Class="my-2" />
-    <MudText Typo="Typo.subtitle1" Class="px-4 py-2 mud-text-secondary">@CurrentDateTime.ToString("dd/MM/yyyy HH:mm:ss")</MudText>
+    <MudText Typo="Typo.subtitle1" Class="px-4 py-2 mud-text-secondary">@CurrentDateTime.ToString("dd/MM/yyyy HH:mm:ss")</MudText> *@
+
     <AuthorizeView>
         <Authorized>
             <MudNavGroup Title="Nuova Missione" Icon="@Icons.Material.Filled.MedicalServices" Expanded="false">
@@ -54,6 +54,9 @@
             <MudNavLink Href="/admin/identity" Icon="@Icons.Material.Filled.AdminPanelSettings">Amministrazione</MudNavLink>
         </Authorized>
     </AuthorizeView>
+
+    <MudDivider Class="my-2" />
+    <MudText Typo="Typo.subtitle1" Class="px-4 py-2 mud-text-secondary">@CurrentDateTime.ToString("dd/MM/yyyy HH:mm:ss")</MudText>
 
     <MudDivider Class="my-2" />
     <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">This software is distributed under the MIT License.</MudText>

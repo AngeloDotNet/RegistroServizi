@@ -77,39 +77,6 @@ public class Program
 
         var app = builder.Build();
 
-        // Apply pending migrations automatically on startup
-        //using (var scope = app.Services.CreateScope())
-        //{
-        //    var dbContext = scope.ServiceProvider.GetRequiredService<RegistroServiziDbContext>();
-        //    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-        //    try
-        //    {
-        //        var pendingMigrations = (await dbContext.Database.GetPendingMigrationsAsync()).ToList();
-
-        //        if (pendingMigrations.Count > 0)
-        //        {
-        //            var pendingCounter = pendingMigrations.Count;
-        //            logger.LogInformation("Applying {PendingCounter} pending migrations...", pendingCounter);
-        //            await dbContext.Database.MigrateAsync();
-        //            logger.LogInformation("Database migrations applied successfully.");
-        //        }
-        //        else
-        //        {
-        //            logger.LogInformation("No pending migrations found.");
-        //        }
-
-        //        //// Apply any pending migrations
-        //        //await dbContext.Database.MigrateAsync();
-        //        //logger.LogInformation("Database migrations applied successfully.");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logger.LogError(ex, "An error occurred while migrating the database.");
-        //        throw;
-        //    }
-        //}
-
         await DatabaseInitializer.MigrateAsync(app.Services);
         app.UseForwardedHeaders();
 

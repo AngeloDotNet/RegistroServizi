@@ -92,10 +92,6 @@ public class Program
             app.UseHsts();
         }
 
-        //// Add additional endpoints required by the Identity /Account Razor components.
-        //app.MapAdditionalIdentityEndpoints();
-        //app.Run();
-
         app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
         app.UseHttpsRedirection();
 

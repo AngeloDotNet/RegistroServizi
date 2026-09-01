@@ -30,19 +30,6 @@ public static class DatabaseInitializer
                 logger.LogInformation("No pending migrations found.");
             }
 
-            //var pending = await db.Database.GetPendingMigrationsAsync();
-
-            //if (pending.Any())
-            //{
-            //    logger.LogInformation("Applying {Count} pending migration(s)…", pending.Count());
-            //    await db.Database.MigrateAsync();
-            //    logger.LogInformation("Database migrations applied successfully.");
-            //}
-            //else
-            //{
-            //    logger.LogDebug("Database schema is up to date — no migrations needed.");
-            //}
-
             await SeedRolesAsync(scope.ServiceProvider, logger);
         }
         catch (Exception ex)

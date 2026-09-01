@@ -92,9 +92,6 @@ public class Program
             app.UseHsts();
         }
 
-        //app.UseRouting();
-        //app.UseAntiforgery();
-
         //app.MapStaticAssets();
         //app.MapRazorComponents<App>()
         //    .AddInteractiveServerRenderMode();

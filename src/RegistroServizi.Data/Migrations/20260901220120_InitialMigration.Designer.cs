@@ -12,8 +12,8 @@ using RegistroServizi.Data;
 namespace RegistroServizi.Data.Migrations
 {
     [DbContext(typeof(RegistroServiziDbContext))]
-    [Migration("20260825110948_InitMigration")]
-    partial class InitMigration
+    [Migration("20260901220120_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

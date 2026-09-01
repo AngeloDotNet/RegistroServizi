@@ -11,7 +11,7 @@ using RegistroServizi.Data;
 namespace RegistroServizi.Data.Migrations
 {
     [DbContext(typeof(RegistroServiziDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class RegistroServiziDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

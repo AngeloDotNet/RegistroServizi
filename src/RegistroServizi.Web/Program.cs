@@ -1,12 +1,4 @@
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Identity;
-using MudBlazor.Services;
-using RegistroServizi.Application;
-using RegistroServizi.Data;
-using RegistroServizi.Data.Identity;
-using RegistroServizi.Web.Components;
-using RegistroServizi.Web.Components.Account;
+using RegistroServizi.Application.Options;
 
 namespace RegistroServizi.Web;
 
@@ -76,6 +68,8 @@ public class Program
 
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+        builder.Services.Configure<ApplicationOptions>(builder.Configuration.GetSection("Application"));
 
         var app = builder.Build();
 

@@ -35,19 +35,6 @@
     color: var(--mb-text-secondary);
 }
 
-/*a.app-title,
-a.app-title:link,
-a.app-title:visited,
-a.app-title:hover,
-a.app-title:focus,
-a.app-title:active {
-    color: #000000 !important;
-    text-decoration: none !important;
-    cursor: pointer;
-    outline: none;
-    box-shadow: none;
-}*/
-
 .user-avatar {
     display: grid;
     place-items: center;

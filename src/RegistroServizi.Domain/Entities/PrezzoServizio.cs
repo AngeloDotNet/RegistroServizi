@@ -1,6 +1,4 @@
-﻿using RegistroServizi.Domain.Enums;
-
-namespace RegistroServizi.Domain.Entities;
+﻿namespace RegistroServizi.Domain.Entities;
 
 public class PrezzoServizio : BaseEntity
 {

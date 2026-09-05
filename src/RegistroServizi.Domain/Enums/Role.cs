@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace RegistroServizi.Domain.Enums;
+﻿namespace RegistroServizi.Domain.Enums;
 
 public enum Role
 {

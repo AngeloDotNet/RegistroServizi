@@ -11,12 +11,6 @@
             <MudNavLink Href="/centro-mobile-rianimazione" Icon="@Icons.Material.Filled.EmergencyShare">C.M.R.</MudNavLink>
             <MudNavLink Href="/guardia-medica" Icon="@Icons.Material.Filled.MedicalInformation">Guardia Medica</MudNavLink>
             <MudNavLink Href="/stazionamento" Icon="@Icons.Material.Filled.TransferWithinAStation">Stazionamento</MudNavLink>
-            @* <MudNavGroup Title="Trasporti" Icon="@Icons.Material.Filled.DirectionsCar" Expanded="true">
-                <MudNavLink Href="/trasporto-auto" Icon="@Icons.Material.Filled.DirectionsCar">Trasporto Auto</MudNavLink>
-                <MudNavLink Href="/trasporto-ambulanza" Icon="@Icons.Material.Filled.DirectionsBus">Trasporto Ambulanza</MudNavLink>
-                <MudNavLink Href="/trasporto-disabili" Icon="@Icons.Material.Filled.CarCrash">Trasporto Disabili</MudNavLink>
-                <MudNavLink Href="/trasporto-speciale" Icon="@Icons.Material.Filled.ElectricCar">Trasporto Speciale</MudNavLink>
-            </MudNavGroup> *@
             <MudNavLink Href="/trasporto-auto" Icon="@Icons.Material.Filled.DirectionsCar">Trasporto Auto</MudNavLink>
             <MudNavLink Href="/trasporto-ambulanza" Icon="@Icons.Material.Filled.DirectionsBus">Trasporto Ambulanza</MudNavLink>
             <MudNavLink Href="/trasporto-disabili" Icon="@Icons.Material.Filled.CarCrash">Trasporto Disabili</MudNavLink>
@@ -36,56 +30,26 @@
         <MudNavLink Href="/elenco-soci" Icon="@Icons.Material.Filled.FolderShared">Elenco Soci</MudNavLink>
         <MudNavLink Href="/gestione-modelli" Icon="@Icons.Material.Filled.Notes">Gestione Modelli</MudNavLink>
         <MudNavLink Href="/disponibilita-mezzi" Icon="@Icons.Material.Filled.Alarm">Disponibilità Mezzi</MudNavLink>
-        @*<MudNavLink Href="/amministrazione" Icon="@Icons.Material.Filled.AdminPanelSettings">Amministrazione</MudNavLink>*@
         <MudNavGroup Title="Amministrazione" Icon="@Icons.Material.Filled.AdminPanelSettings" Expanded="false">
             <AuthorizeView>
                 <Authorized>
                     <MudNavLink Href="/account/manage/changepassword" Icon="@Icons.Material.Filled.Password">Cambio Password</MudNavLink>
                 </Authorized>
             </AuthorizeView>
-            @* <MudNavLink Href="/account/manage/changepassword" Icon="@Icons.Material.Filled.Password">Cambio Password</MudNavLink> *@
             <AuthorizeView Roles="@nameof(Role.Admin)">
                 <Authorized>
                     <MudNavLink Href="/gestione-database" Icon="@Icons.Material.Filled.BackupTable" Disabled>Gestione Database</MudNavLink>
                 </Authorized>
             </AuthorizeView>
-            @* <MudNavLink Href="/missione-118" Icon="@Icons.Material.Filled.BackupTable">Gestione Database</MudNavLink> *@
             <MudNavLink Href="/gestione-clienti" Icon="@Icons.Material.Filled.Groups2">Gestione Clienti</MudNavLink>
             @* <MudNavLink Href="/missione-118" Icon="@Icons.Material.Filled.Anchor">Opzioni</MudNavLink> *@
             <MudNavLink Href="/impostazioni/dashboard" Icon="@Icons.Material.Filled.AccountTree">Impostazioni</MudNavLink>
         </MudNavGroup>
         <MudNavLink Href="/help" Icon="@Icons.Material.Filled.Help" Disabled>Help</MudNavLink>
     </MudNavMenu>
-
-    @* <MudNavLink Href="/nuova-missione" Icon="@Icons.Material.Filled.MedicalServices">Nuova Missione</MudNavLink>
-    <MudNavLink Href="/elenco-personale" Icon="@Icons.Material.Filled.People">Elenco Personale</MudNavLink>
-    <MudNavLink Href="/elenco-servizi" Icon="@Icons.Material.Filled.Bookmarks">Elenco Servizi</MudNavLink> *@ @* La modifica richiede il ruolo Operator *@
-    @* <AuthorizeView Roles="@nameof(Role.Manager)">
-        <Authorized>
-            <MudNavLink Href="/gestione-personale" Icon="@Icons.Material.Filled.CardTravel">Gestione Personale</MudNavLink>
-        </Authorized>
-    </AuthorizeView> *@
-    @*<MudNavLink Href="/maps" Icon="@Icons.Material.Filled.Map">Visualizza Mappa</MudNavLink>*@
-    @* <MudNavLink Href="/elenco-soci" Icon="@Icons.Material.Filled.FolderShared">Elenco Soci</MudNavLink>
-    <MudNavLink Href="/gestione-modelli" Icon="@Icons.Material.Filled.Notes">Gestione Modelli</MudNavLink>
-    <MudNavLink Href="/disponibilita-mezzi" Icon="@Icons.Material.Filled.Alarm">Disponibilità Mezzi</MudNavLink> *@
-
-    @* <AuthorizeView>
-        <Authorized>
-            <MudDivider Class="my-2" />
-            <MudText Typo="Typo.subtitle2" Class="px-4 py-2 mud-text-secondary">Amministrazione</MudText>
-            <MudNavLink Href="/account/manage" Icon="@Icons.Material.Filled.ManageAccounts">Gestione Profilo</MudNavLink>
-            <MudNavLink Href="/admin/identity" Icon="@Icons.Material.Filled.Business">Gestione Database</MudNavLink>
-        </Authorized>
-    </AuthorizeView> *@
-    @*<MudNavLink Href="/" Icon="@Icons.Material.Filled.FolderSpecial">Gestione Clienti</MudNavLink>
-    <MudNavLink Href="/" Icon="@Icons.Material.Filled.FolderCopy">Opzioni</MudNavLink>
-    <MudNavLink Href="/" Icon="@Icons.Material.Filled.ManageAccounts">Impostazioni</MudNavLink>*@
 </MudNavMenu>
 
 @code {
-    // private string appName = "Registro Servizi";
     private string appName => applicationOptions.Value.Name;
-    // private string version = "1.0.0";
     private string version => applicationOptions.Value.Version;
 }

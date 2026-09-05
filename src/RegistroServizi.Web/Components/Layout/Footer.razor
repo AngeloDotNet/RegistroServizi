@@ -1,11 +1,17 @@
-﻿<footer class="app-footer">
+﻿@* @inject IOptions<VersionOptions> versionOptions *@
+
+<footer class="app-footer">
     <div class="app-footer-content">
         <p </p>
-        <p>Registro Servizi &copy; @DateTime.Now.Year by Angelo Pirola. All rights reserved.</p>
-        <p>This software is distributed under the MIT License. Version @version</p>
+        @* <p>&copy; @yearLicense Registro Servizi. All rights reserved. Version @version</p> *@
+        <p>&copy; @yearLicense Registro Servizi. All rights reserved.</p>
+        <p>Software developed free by Angelo Pirola and distributed under MIT License.</p>
     </div>
 </footer>
 
 @code {
-    private string version = "1.0";
+    private const int LicenseStartYear = 2026;
+    // private string version = "1.0.0";
+    // private string version => versionOptions.Value.Version;
+    private string yearLicense => DateTime.Now.Year == LicenseStartYear ? LicenseStartYear.ToString() : $"{LicenseStartYear} - {DateTime.Now.Year}";
 }

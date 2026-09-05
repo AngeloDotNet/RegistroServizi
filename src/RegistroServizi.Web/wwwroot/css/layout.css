@@ -1,7 +1,6 @@
 ﻿:root {
     --mb-text-primary: #1A202C;
     --mb-text-secondary: #718096;
-    --mb-text-muted: #A0AEC0;
 }
 
 .mud-appbar {
@@ -92,77 +91,24 @@ a.app-title:active {
     display: block;
 }
 
-/*.user-avatar,
-.user-profile {
-    margin-right: 10px;
-}
-
-.user-avatar {
-    display: grid;
-    place-items: center;
-    width: 2.1rem;
-    height: 2.1rem;
-    border-radius: 50%;
-    background: var(--clay-soft);
-    border: 1px solid var(--clay-ring);
-    color: var(--clay);
-    font-size: 0.92rem;
-    flex: 0 0 auto;
-}
-
-.user-profile {
-    font-size: 0.88rem;
-    color: var(--appbar-text-soft);
-    max-width: 18ch;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.btn-logout {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 0.85rem;
+.drawer .mud-navmenu .mud-nav-link {
     font-family: var(--font-body);
-    font-size: 0.86rem;
-    font-weight: 600;
-    color: var(--appbar-text-soft);
-    background: var(--appbar-chip-bg);
-    border: 1px solid var(--appbar-line);
-    border-radius: 9px;
-    cursor: pointer;
-    transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
-    will-change: background, color, border-color;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .btn-logout {
-        transition: none;
-    }
-}
-
-.btn-logout svg {
-    display: block;
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
-}*/
-
-/*.drawer .mud-navmenu .mud-nav-link {
-    font-family: var(--font-body);*/
-    /*font-weight: 500;*/
-    /*font-size: 12px;
-    border-radius: 9px;
+    font-size: 0.75rem;
+    border-radius: 0.5625rem;
     margin: 0.1rem 0.5rem;
     color: var(--ink-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.5rem;
+    text-decoration: none;
+    transition: background-color .15s ease, color .15s ease;
 }
 
 .drawer .mud-navmenu .mud-nav-link.active {
     background: var(--clay-soft);
-    color: var(--clay-deep);*/
-    /*font-weight: 600;*/
-/*}
+    color: var(--clay-deep);
+}
 
 .drawer .mud-navmenu .mud-nav-link:hover:not(.active) {
     background: rgba(33, 29, 23, 0.04);
@@ -180,51 +126,7 @@ a.app-title:active {
     font-size: 1rem;
     font-weight: 500;
     color: var(--mb-text-secondary);
-}*/
-
-.drawer .mud-navmenu .mud-nav-link {
-    font-family: var(--font-body);
-    /*font-weight: 500;*/
-    font-size: 0.75rem;
-    border-radius: 0.5625rem;
-    margin: 0.1rem 0.5rem;
-    color: var(--ink-soft);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.375rem 0.5rem;
-    text-decoration: none;
-    transition: background-color .15s ease, color .15s ease;
 }
-
-    .drawer .mud-navmenu .mud-nav-link.active {
-        background: var(--clay-soft);
-        color: var(--clay-deep);
-        /*font-weight: 600;*/
-    }
-
-    .drawer .mud-navmenu .mud-nav-link:hover:not(.active) {
-        background: rgba(33, 29, 23, 0.04);
-        color: var(--ink);
-    }
-
-.section-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--mb-text-primary);
-    margin-bottom: 0.5rem;
-}
-
-.section-subtitle {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--mb-text-secondary);
-}
-
-/*.mudpaper-icon.prezziservizi {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-}*/
 
 .mudpaper-icon.prezziservizi {
     background-color: #667eea;
@@ -232,19 +134,6 @@ a.app-title:active {
     background-repeat: no-repeat;
     color: #fff;
 }
-
-/*.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.mudpaper-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-}*/
 
 .section-header {
     display: flex;
@@ -260,27 +149,6 @@ a.app-title:active {
     gap: var(--mud-grid-gap);
     grid-auto-rows: minmax(min-content, max-content);
 }
-
-/*@media (max-width: 1200px) {
-    .mudpaper-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 768px) {
-    .mudpaper-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.mudpaper-grid .mud-paper {
-    transition: all 0.2s ease-in-out;
-}
-
-.mudpaper-grid .mud-paper:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.12) !important;
-}*/
 
 @media (max-width: 1200px) {
     .mudpaper-grid {

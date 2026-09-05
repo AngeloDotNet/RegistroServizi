@@ -11,10 +11,7 @@
 
 <MudLayout>
     <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" aria-label="Nascondi menu" OnClick="ToggleDrawer" />
-        <MudText Typo="Typo.h6">
-            <a class="app-title" href="/">Registro Servizi</a>
-        </MudText>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" aria-label="Nascondi menu" OnClick="@ToggleDrawer" />
         <MudSpacer />
         
         <AuthorizeView Context="auth">
@@ -36,7 +33,7 @@
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/AngeloDotNet/RegistroServizi" Target="_blank" />
     </MudAppBar>
 
-    <MudDrawer @bind-Open="@_open" Elevation="0" ClipMode="DrawerClipMode.Always">
+    <MudDrawer @bind-Open="@_drawerOpen" Elevation="0" ClipMode="DrawerClipMode.Always" Class="drawer">
         <NavigationMenu />
     </MudDrawer>
 
@@ -50,7 +47,7 @@
 
 @code {
     private string? currentUrl;
-    private bool _open = true;
+    private bool _drawerOpen = false;
 
     protected override void OnInitialized()
     {
@@ -71,7 +68,7 @@
 
     private void ToggleDrawer()
     {
-        _open = !_open;
+        _drawerOpen = !_drawerOpen;
     }
 
     protected override async Task OnInitializedAsync()

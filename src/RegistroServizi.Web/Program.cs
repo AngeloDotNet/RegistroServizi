@@ -20,8 +20,6 @@ public class Program
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
-        //builder.Services.AddControllers();
-        //builder.Services.AddAuthorization();
         builder.Services.AddMudServices();
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
         {
@@ -40,21 +38,10 @@ public class Program
             options.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
         });
 
-        //builder.Services.AddSingleton(TimeProvider.System);
-        //builder.Services.AddSingleton<ClientTimeProvider>();
-        //builder.Services.AddSingleton<ITimeZoneService, TimeZoneService>();
-
-        //builder.Services.AddAntiforgery(options =>
-        //{
-        //    options.Cookie.SecurePolicy = builder.Environment.IsDevelopment()
-        //        ? CookieSecurePolicy.SameAsRequest
-        //        : CookieSecurePolicy.Always;
-        //});
-
         builder.Services.AddCascadingAuthenticationState();
         builder.Services.AddScoped<IdentityRedirectManager>();
-        builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
+        builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultScheme = IdentityConstants.ApplicationScheme;
@@ -65,9 +52,7 @@ public class Program
         {
             options.Cookie.HttpOnly = true;
             options.Cookie.SameSite = SameSiteMode.Lax;
-            options.Cookie.SecurePolicy = builder.Environment.IsDevelopment()
-                ? CookieSecurePolicy.SameAsRequest
-                : CookieSecurePolicy.Always;
+            options.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
         });
 
         builder.Services.AddRegistroServiziData(builder.Configuration);
@@ -92,10 +77,6 @@ public class Program
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-        //builder.Services.AddSingleton(TimeProvider.System);
-        //builder.Services.AddSingleton<ClientTimeProvider>();
-        //builder.Services.AddSingleton<ITimeZoneService, TimeZoneService>();
-
         var app = builder.Build();
 
         await DatabaseInitializer.MigrateAsync(app.Services);
@@ -116,12 +97,10 @@ public class Program
         app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
         app.UseHttpsRedirection();
 
-        //app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseAntiforgery();
-        //app.MapControllers();
         app.MapStaticAssets();
 
         app.MapRazorComponents<App>()

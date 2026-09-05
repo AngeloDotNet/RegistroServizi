@@ -1,5 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@implements IDisposable
+@inherits LayoutComponentBase
+
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
 
 <MudThemeProvider />
 <MudPopoverProvider />
@@ -8,21 +11,17 @@
 
 <MudLayout>
     <MudAppBar Elevation="0">
-        @* <AuthorizeView>
-            <Authorized> *@
-                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" aria-label="Nascondi menu" OnClick="ToggleDrawer" />
-        @*     </Authorized>
-        </AuthorizeView> *@
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" aria-label="Nascondi menu" OnClick="ToggleDrawer" />
         <MudText Typo="Typo.h6">
             <a class="app-title" href="/">Registro Servizi</a>
         </MudText>
         <MudSpacer />
         
-        <AuthorizeView>
+        <AuthorizeView Context="auth">
             <Authorized>
-                <MudAvatar Variant="Variant.Outlined" Class="user-avatar">@GetProfileInitials(context.User.Identity?.Name)</MudAvatar>
-                <MudText class="user-profile d-none d-sm-flex">@context.User.Identity?.Name</MudText>
-                <form action="Account/Logout" method="post" style="margin: 0px">
+                <MudAvatar Variant="Variant.Outlined" Class="user-avatar">@GetProfileInitials(auth.User.Identity?.Name)</MudAvatar>
+                <MudText class="user-profile d-none d-sm-flex">@auth.User.Identity?.Name</MudText>
+                @* <form action="Account/Logout" method="post" style="margin: 0px">
                     <AntiforgeryToken />
                     <input type="hidden" name="ReturnUrl" value="Account/Login" />
                     <button type="submit" class="btn-logout" title="Log out">
@@ -33,40 +32,64 @@
                         </svg>
                         <span class="d-none d-sm-inline">Log out</span>
                     </button>
+                </form> *@
+                <form action="Account/Logout" method="post" style="margin:0">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                    <MudButton ButtonType="ButtonType.Submit"
+                               Variant="Variant.Text"
+                               Color="Color.Inherit"
+                               Class="btn-logout"
+                               Title="Log out"
+                               StartIcon="@Icons.Material.Filled.Logout">
+                        <span class="d-none d-sm-inline">Log out</span>
+                    </MudButton>
                 </form>
             </Authorized>
             <NotAuthorized>
-                <MudButton Href="Account/Login" Color="Color.Inherit" StartIcon="@Icons.Material.Filled.Login" Variant="Variant.Text">Log in</MudButton>
+                <MudButton Href="/Account/Login" Color="Color.Inherit" StartIcon="@Icons.Material.Filled.Login" Variant="Variant.Text">Log in</MudButton>
             </NotAuthorized>
         </AuthorizeView>
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/AngeloDotNet/RegistroServizi" Target="_blank" />
     </MudAppBar>
 
-@*     <AuthorizeView>
-        <Authorized> *@
-            <MudDrawer @bind-Open="@_open" Elevation="0" ClipMode="DrawerClipMode.Always">
-                <NavigationMenu />
-            </MudDrawer>
-@*         </Authorized>
-    </AuthorizeView> *@
+    <MudDrawer @bind-Open="@_open" Elevation="0" ClipMode="DrawerClipMode.Always">
+        <NavigationMenu />
+    </MudDrawer>
 
-    <MudMainContent>
+    <MudMainContent Style="min-height: calc(100vh - 120px);">
         <MudContainer MaxWidth="MaxWidth.Large" Class="py-8">
             @Body
         </MudContainer>
     </MudMainContent>
+    <Footer />
 </MudLayout>
 
 @code {
+    private string? currentUrl;
     private bool _open = true;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
 
     private void ToggleDrawer()
     {
         _open = !_open;
     }
-
-    // protected override void OnInitialized()
-    // { }
 
     protected override async Task OnInitializedAsync()
     {

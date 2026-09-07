@@ -1,8 +1,7 @@
-﻿@implements IDisposable
-@inherits LayoutComponentBase
-
+﻿@inherits LayoutComponentBase
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
+@implements IDisposable
 
 <MudThemeProvider />
 <MudPopoverProvider />
@@ -21,7 +20,7 @@
                 <form action="Account/Logout" method="post" style="margin:0">
                     <AntiforgeryToken />
                     <input type="hidden" name="ReturnUrl" value="@currentUrl" />
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Inherit" Class="btn-logout" Title="Log out" StartIcon="@Icons.Material.Filled.Logout">
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Inherit" Class="btn-logout" title="Log out" StartIcon="@Icons.Material.Filled.Logout">
                         <span class="d-none d-sm-inline">Log out</span>
                     </MudButton>
                 </form>
@@ -47,11 +46,11 @@
 
 @code {
     private string? currentUrl;
-    private bool _drawerOpen = false;
+    private bool _drawerOpen = true;
 
     protected override void OnInitialized()
     {
-        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        //currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
     }
 

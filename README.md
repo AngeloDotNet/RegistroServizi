@@ -5,14 +5,18 @@
 ![MudBlazor](https://img.shields.io/badge/UI-MudBlazor-594AE2?style=flat-square)
 ![Bootstrap](https://img.shields.io/badge/UI-Bootstrap-594AE2?style=flat-square)
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-EF%20Core-512BD4?style=flat-square&logo=microsoftsqlserver&logoColor=white)
+![MIT](https://img.shields.io/badge/License-MIT-35D120?style=flat-square)
 
-[Overview](#overview) • [Tech stack](#tech-stack)
+[Overview](#overview) • [Tech stack](#tech-stack) • [License](#license) • [Give a star](#give-a-star) • [Inspired by](#inspired-by)
 
 ## Overview
 
 RegistroServizi is a SaaS application designed for public first aid services (P.A.) and voluntary associations.
 
-It is inspired by an application of the same name, developed in Delphi by Luca Memini.
+<!-- It is inspired by an application of the same name, developed in Delphi by Luca Memini. -->
+
+> [!NOTE]
+> RegistroServizi is under active development.
 
 ## Tech stack
 
@@ -21,3 +25,18 @@ It is inspired by an application of the same name, developed in Delphi by Luca M
 - ASP.NET Core Identity
 - MudBlazor / Bootstrap
 - GitHub Actions for CI/CD and release automation
+- Docker for containerization and deployment
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Give a star
+
+If you find this project useful or interesting, please consider giving it a star on GitHub. Your support is greatly appreciated!
+
+## Inspired by
+
+The original RegistroServizi application, developed in Delphi by <a href="https://shorturl.at/S3yxp">Luca Memini</a>, served as the inspiration for this project.
+
+The goal was to modernize the application using contemporary technologies while maintaining its core functionalities and user experience.

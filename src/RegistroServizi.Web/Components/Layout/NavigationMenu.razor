@@ -1,55 +1,99 @@
-﻿@inject IOptions<ApplicationOptions> applicationOptions
+﻿@rendermode InteractiveServer
+@* @inject IOptions<ApplicationOptions> applicationOptions *@
+@inject IApplicazioneService applicazioneService
 
 <MudNavMenu>
-    <MudNavMenu>
-        <MudText Typo="Typo.h6" Class="px-4">@appName</MudText>
-        <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Version @version</MudText>
-        <MudDivider Class="my-2" />
-        <MudNavLink Href="/">Dashboard</MudNavLink>
-        <MudNavGroup Title="Nuova Missione" Icon="@Icons.Material.Filled.MedicalServices" Expanded="false">
-            <MudNavLink Href="/missione-118" Icon="@Icons.Material.Filled.Emergency">118</MudNavLink>
-            <MudNavLink Href="/centro-mobile-rianimazione" Icon="@Icons.Material.Filled.EmergencyShare">C.M.R.</MudNavLink>
-            <MudNavLink Href="/guardia-medica" Icon="@Icons.Material.Filled.MedicalInformation">Guardia Medica</MudNavLink>
-            <MudNavLink Href="/stazionamento" Icon="@Icons.Material.Filled.TransferWithinAStation">Stazionamento</MudNavLink>
-            <MudNavLink Href="/trasporto-auto" Icon="@Icons.Material.Filled.DirectionsCar">Trasporto Auto</MudNavLink>
-            <MudNavLink Href="/trasporto-ambulanza" Icon="@Icons.Material.Filled.DirectionsBus">Trasporto Ambulanza</MudNavLink>
-            <MudNavLink Href="/trasporto-disabili" Icon="@Icons.Material.Filled.CarCrash">Trasporto Disabili</MudNavLink>
-            <MudNavLink Href="/trasporto-speciale" Icon="@Icons.Material.Filled.ElectricCar">Trasporto Speciale</MudNavLink>
-        </MudNavGroup>
-        @* <MudNavLink Href="/servers">Servers</MudNavLink>
-        <MudNavLink Href="/billing" Disabled="true">Billing</MudNavLink>
-        <MudNavLink Href="/about">About</MudNavLink> *@
-        <MudNavLink Href="/elenco-personale" Icon="@Icons.Material.Filled.People">Personale e Rubrica</MudNavLink>
-        <MudNavLink Href="/elenco-servizi" Icon="@Icons.Material.Filled.Bookmarks">Elenco Servizi</MudNavLink> @* La modifica richiede il ruolo Operator *@
-        <AuthorizeView Roles="@nameof(Role.Manager)">
+    <MudText Typo="Typo.h6" Class="px-4">@appName</MudText>
+    <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Version @version</MudText>
+    <MudDivider Class="my-2" />
+    <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" Match="NavLinkMatch.All">Dashboard</MudNavLink>
+    <MudNavGroup Title="Nuova Missione" Icon="@Icons.Material.Filled.MedicalServices" Expanded="false">
+        <MudNavLink Href="/missione-118" Icon="@Icons.Material.Filled.Emergency" Disabled>118</MudNavLink>
+        @* <MudNavLink Href="/centro-mobile-rianimazione" Icon="@Icons.Material.Filled.EmergencyShare">C.M.R.</MudNavLink> *@
+        @* <MudNavLink Href="/guardia-medica" Icon="@Icons.Material.Filled.MedicalInformation">Guardia Medica</MudNavLink> *@
+        <MudNavLink Href="/stazionamento" Icon="@Icons.Material.Filled.TransferWithinAStation" Disabled>Stazionamento</MudNavLink>
+        <MudNavLink Href="/trasporto-auto" Icon="@Icons.Material.Filled.DirectionsCar" Disabled>Trasporto Auto</MudNavLink>
+        <MudNavLink Href="/trasporto-ambulanza" Icon="@Icons.Material.Filled.DirectionsBus" Disabled>Trasporto Ambulanza</MudNavLink>
+        <MudNavLink Href="/trasporto-disabili" Icon="@Icons.Material.Filled.CarCrash" Disabled>Trasporto Disabili</MudNavLink>
+        <MudNavLink Href="/trasporto-speciale" Icon="@Icons.Material.Filled.ElectricCar" Disabled>Trasporto Speciale</MudNavLink>
+    </MudNavGroup>
+    <MudNavLink Href="/elenco-personale" Icon="@Icons.Material.Filled.People" Disabled>Personale e Rubrica</MudNavLink>
+    <MudNavLink Href="/elenco-servizi" Icon="@Icons.Material.Filled.Bookmarks" Disabled>Elenco Servizi</MudNavLink> @* La modifica richiede il ruolo Operator *@
+    <AuthorizeView Roles="@nameof(Role.Manager)">
+        <Authorized>
+            <MudNavLink Href="/gestione-personale" Icon="@Icons.Material.Filled.CardTravel" Disabled>Gestione Personale</MudNavLink> @* Richiede il ruolo Manager *@
+        </Authorized>
+    </AuthorizeView>
+    @* <MudNavLink Href="/maps" Icon="@Icons.Material.Filled.Map">Visualizza Mappa</MudNavLink> *@
+    <MudNavLink Href="/elenco-soci" Icon="@Icons.Material.Filled.FolderShared" Disabled>Elenco Soci</MudNavLink>
+    <MudNavLink Href="/gestione-modelli" Icon="@Icons.Material.Filled.Notes" Disabled>Gestione Modelli</MudNavLink>
+    <MudNavLink Href="/disponibilita-mezzi" Icon="@Icons.Material.Filled.Alarm" Disabled>Disponibilità Mezzi</MudNavLink>
+    <MudNavGroup Title="Amministrazione" Icon="@Icons.Material.Filled.AdminPanelSettings" Expanded="false">
+        <AuthorizeView>
             <Authorized>
-                <MudNavLink Href="/gestione-personale" Icon="@Icons.Material.Filled.CardTravel">Gestione Personale</MudNavLink> @* Richiede il ruolo Manager *@
+                @* <MudNavLink Href="/account/manage/changepassword" Icon="@Icons.Material.Filled.Password" Match="NavLinkMatch.Prefix">Cambio Password</MudNavLink> *@
+                <MudNavLink Href="/Account/Manage" Icon="@Icons.Material.Filled.AccountCircle">Gestione Profilo</MudNavLink>
             </Authorized>
         </AuthorizeView>
-        <MudNavLink Href="/maps" Icon="@Icons.Material.Filled.Map" Disabled>Visualizza Mappa</MudNavLink>
-        <MudNavLink Href="/elenco-soci" Icon="@Icons.Material.Filled.FolderShared">Elenco Soci</MudNavLink>
-        <MudNavLink Href="/gestione-modelli" Icon="@Icons.Material.Filled.Notes">Gestione Modelli</MudNavLink>
-        <MudNavLink Href="/disponibilita-mezzi" Icon="@Icons.Material.Filled.Alarm">Disponibilità Mezzi</MudNavLink>
-        <MudNavGroup Title="Amministrazione" Icon="@Icons.Material.Filled.AdminPanelSettings" Expanded="false">
-            <AuthorizeView>
-                <Authorized>
-                    <MudNavLink Href="/account/manage/changepassword" Icon="@Icons.Material.Filled.Password">Cambio Password</MudNavLink>
-                </Authorized>
-            </AuthorizeView>
-            <AuthorizeView Roles="@nameof(Role.Admin)">
-                <Authorized>
-                    <MudNavLink Href="/gestione-database" Icon="@Icons.Material.Filled.BackupTable" Disabled>Gestione Database</MudNavLink>
-                </Authorized>
-            </AuthorizeView>
-            <MudNavLink Href="/gestione-clienti" Icon="@Icons.Material.Filled.Groups2">Gestione Clienti</MudNavLink>
-            @* <MudNavLink Href="/missione-118" Icon="@Icons.Material.Filled.Anchor">Opzioni</MudNavLink> *@
-            <MudNavLink Href="/impostazioni/dashboard" Icon="@Icons.Material.Filled.AccountTree">Impostazioni</MudNavLink>
-        </MudNavGroup>
-        <MudNavLink Href="/help" Icon="@Icons.Material.Filled.Help" Disabled>Help</MudNavLink>
-    </MudNavMenu>
+        <AuthorizeView Roles="@nameof(Role.Admin)">
+            <Authorized>
+                <MudNavLink Href="/gestione-database" Icon="@Icons.Material.Filled.BackupTable" Disabled>Gestione Database</MudNavLink>
+            </Authorized>
+        </AuthorizeView>
+        <MudNavLink Href="/gestione-clienti" Icon="@Icons.Material.Filled.Groups2" Disabled>Gestione Clienti</MudNavLink>
+        @* <MudNavLink Href="/admin/identity" Icon="@Icons.Material.Filled.Anchor">Opzioni</MudNavLink> *@
+        <MudNavLink Href="/opzioni/dashboard" Icon="@Icons.Material.Filled.Anchor">Opzioni</MudNavLink>
+        @*<AuthorizeView Roles="@nameof(Role.Manager)">
+            <Authorized>
+                <MudNavLink Href="/impostazioni/dashboard" Icon="@Icons.Material.Filled.AccountTree">Impostazioni</MudNavLink>
+            </Authorized>
+        </AuthorizeView>*@
+        <MudNavLink Href="/impostazioni/dashboard" Icon="@Icons.Material.Filled.AccountTree">Impostazioni</MudNavLink>
+    </MudNavGroup>
+    <MudNavLink Href="/help" Icon="@Icons.Material.Filled.Help" Disabled>Help</MudNavLink>
 </MudNavMenu>
 
 @code {
-    private string appName => applicationOptions.Value.Name;
-    private string version => applicationOptions.Value.Version;
+    // private string appName => applicationOptions.Value.Name;
+    // private string version => applicationOptions.Value.Version;
+    private string appName = string.Empty;
+    private string version = string.Empty;
+
+    private bool _loaded;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || _loaded)
+        {
+            return;
+        }
+
+        _loaded = true;
+
+        var applicazioni = await applicazioneService.GetAllApplicazioniAsync();
+
+        if (applicazioni.Any())
+        {
+            var applicazione = applicazioni.First();
+
+            appName = applicazione.NomeApplicazione;
+            version = applicazione.Versione;
+            StateHasChanged();
+        }
+    }
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     var applicazioni = await applicazioneService.GetAllApplicazioniAsync();
+
+    //     if (applicazioni != null && applicazioni.Any())
+    //     {
+    //         var applicazione = applicazioni.First();
+
+    //         // applicationOptions.Value.Name = applicazione.NomeApplicazione;
+    //         // applicationOptions.Value.Version = applicazione.Versione;
+    //         appName = applicazione.NomeApplicazione;
+    //         version = applicazione.Versione;
+    //     }
+    // }
 }

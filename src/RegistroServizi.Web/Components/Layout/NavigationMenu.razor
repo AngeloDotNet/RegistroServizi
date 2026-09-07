@@ -1,5 +1,4 @@
 ﻿@rendermode InteractiveServer
-@* @inject IOptions<ApplicationOptions> applicationOptions *@
 @inject IApplicazioneService applicazioneService
 
 <MudNavMenu>
@@ -31,7 +30,6 @@
     <MudNavGroup Title="Amministrazione" Icon="@Icons.Material.Filled.AdminPanelSettings" Expanded="false">
         <AuthorizeView>
             <Authorized>
-                @* <MudNavLink Href="/account/manage/changepassword" Icon="@Icons.Material.Filled.Password" Match="NavLinkMatch.Prefix">Cambio Password</MudNavLink> *@
                 <MudNavLink Href="/Account/Manage" Icon="@Icons.Material.Filled.AccountCircle">Gestione Profilo</MudNavLink>
             </Authorized>
         </AuthorizeView>
@@ -41,21 +39,12 @@
             </Authorized>
         </AuthorizeView>
         <MudNavLink Href="/gestione-clienti" Icon="@Icons.Material.Filled.Groups2" Disabled>Gestione Clienti</MudNavLink>
-        @* <MudNavLink Href="/admin/identity" Icon="@Icons.Material.Filled.Anchor">Opzioni</MudNavLink> *@
         <MudNavLink Href="/opzioni/dashboard" Icon="@Icons.Material.Filled.Anchor">Opzioni</MudNavLink>
-        @*<AuthorizeView Roles="@nameof(Role.Manager)">
-            <Authorized>
-                <MudNavLink Href="/impostazioni/dashboard" Icon="@Icons.Material.Filled.AccountTree">Impostazioni</MudNavLink>
-            </Authorized>
-        </AuthorizeView>*@
-        <MudNavLink Href="/impostazioni/dashboard" Icon="@Icons.Material.Filled.AccountTree">Impostazioni</MudNavLink>
     </MudNavGroup>
     <MudNavLink Href="/help" Icon="@Icons.Material.Filled.Help" Disabled>Help</MudNavLink>
 </MudNavMenu>
 
 @code {
-    // private string appName => applicationOptions.Value.Name;
-    // private string version => applicationOptions.Value.Version;
     private string appName = string.Empty;
     private string version = string.Empty;
 
@@ -81,19 +70,4 @@
             StateHasChanged();
         }
     }
-
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     var applicazioni = await applicazioneService.GetAllApplicazioniAsync();
-
-    //     if (applicazioni != null && applicazioni.Any())
-    //     {
-    //         var applicazione = applicazioni.First();
-
-    //         // applicationOptions.Value.Name = applicazione.NomeApplicazione;
-    //         // applicationOptions.Value.Version = applicazione.Versione;
-    //         appName = applicazione.NomeApplicazione;
-    //         version = applicazione.Versione;
-    //     }
-    // }
 }

@@ -1,6 +1,10 @@
 ﻿:root {
     --mb-text-primary: #1A202C;
     --mb-text-secondary: #718096;
+    --mb-bg-primary: #F7FAFC;
+    --mb-bg-secondary: #FFFFFF;
+    --mb-border: #E2E8F0;
+    --mb-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 .mud-appbar {
@@ -119,7 +123,22 @@
     background-color: #667eea;
     background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     background-repeat: no-repeat;
-    color: #fff;
+    color: #ffffff;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.mudpaper.pa-4 {
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 4px solid var(--mud-palette-primary);
 }
 
 .section-header {
@@ -129,19 +148,33 @@
     margin-bottom: 1.5rem;
 }
 
-.mudpaper-grid {
+/*.mudpaper-grid {
     --mud-grid-gap: 1rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: var(--mud-grid-gap);
     grid-auto-rows: minmax(min-content, max-content);
+}*/
+
+.mudpaper-grid {
+    --mud-grid-gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--mud-grid-gap);
+    grid-auto-rows: minmax(min-content, max-content);
 }
 
-@media (max-width: 1200px) {
-    .mudpaper-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    @media (max-width: 1200px) {
+        .mudpaper-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
     }
-}
+
+    /*@media (max-width: 768px) {
+        .mudpaper-grid {
+            grid-template-columns: 1fr;
+        }
+    }*/
 
 @media (max-width: 768px) {
     .mudpaper-grid {

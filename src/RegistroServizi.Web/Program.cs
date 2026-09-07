@@ -67,8 +67,6 @@ public class Program
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-        //builder.Services.Configure<ApplicationOptions>(builder.Configuration.GetSection("Application"));
-
         var app = builder.Build();
 
         await DatabaseInitializer.MigrateAsync(app.Services);

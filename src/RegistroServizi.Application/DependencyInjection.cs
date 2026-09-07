@@ -1,19 +1,29 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using RegistroServizi.Application.Interfaces;
-using RegistroServizi.Application.Services;
+﻿namespace RegistroServizi.Application;
 
-namespace RegistroServizi.Application;
-
+/// <summary>
+/// Extension methods for registering application services in the dependency injection container.
+/// </summary>
 public static class DependencyInjection
 {
-    public static IServiceCollection AddRegistroServiziApplication(this IServiceCollection services)
+    extension(IServiceCollection services)
     {
-        services.AddSingleton(TimeProvider.System);
-        services.AddSingleton<ClientTimeProvider>();
-        services.AddSingleton<ITimeZoneService, TimeZoneService>();
+        /// <summary>
+        /// Registers application services and validators in the dependency injection container.
+        /// </summary>
+        /// <param name="services">The IServiceCollection to add the services to.</param>
+        /// <returns>The updated IServiceCollection.</returns>
+        public IServiceCollection AddRegistroServiziApplication()
+        {
+            services.AddScoped<IApplicazioneService, ApplicazioneService>();
+            services.AddScoped<IPrezzoServizioService, PrezzoServizioService>();
 
-        //services.AddValidatorsFromAssemblyContaining<TValidator>();
+            services.AddSingleton(TimeProvider.System);
+            services.AddSingleton<ClientTimeProvider>();
+            services.AddSingleton<ITimeZoneService, TimeZoneService>();
 
-        return services;
+            services.AddValidatorsFromAssemblyContaining<CreatePrezzoServizioValidator>();
+
+            return services;
+        }
     }
 }

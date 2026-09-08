@@ -19,32 +19,12 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
             ?? throw new KeyNotFoundException($"Prezzo servizio con id {id} non trovato.");
 
-        //if (prezzoServizio is null)
-        //{
-        //    throw new NotFoundException($"Prezzo servizio con id {id} non trovato.");
-        //}
-
         return prezzoServizio;
     }
 
-    //public async Task<DetailPrezzoServizioDto> GetPrezzoServizioDetailAsync(Guid id, CancellationToken cancellationToken = default)
-    //{
-    //    var prezzoServizio = await PrezzoServizioQuery()
-    //        .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDetailDto(prezzoServizio))
-    //        .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
-    //        ?? throw new KeyNotFoundException($"Prezzo servizio con id {id} non trovato.");
-
-    //    //if (prezzoServizio is null)
-    //    //{
-    //    //    throw new NotFoundException($"Prezzo servizio con id {id} non trovato.");
-    //    //}
-
-    //    return prezzoServizio;
-    //}
-
     public async Task<PrezzoServizioDto> CreatePrezzoServizioAsync(CreatePrezzoServizioDto createDto, CancellationToken cancellationToken = default)
     {
-        // La validazione qui non è necessaria perché sono già stati validati i dati in ingresso.
+        //TODO: Validazione dei dati in ingresso (createDto) se necessario.
 
         var prezzoServizio = new PrezzoServizio
         {
@@ -66,17 +46,12 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
 
     public async Task<PrezzoServizioDto> UpdatePrezzoServizioAsync(UpdatePrezzoServizioDto updateDto, CancellationToken cancellationToken = default)
     {
-        // La validazione qui non è necessaria perché sono già stati validati i dati in ingresso.
+        //TODO: Validazione dei dati in ingresso (updateDto) se necessario.
 
         var prezzoServizio = await dbContext.PrezziServizi
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
             ?? throw new KeyNotFoundException($"Prezzo servizio con id {updateDto.Id} non trovato.");
-
-        //if (prezzoServizio is null)
-        //{
-        //    throw new NotFoundException($"Prezzo servizio con id {id} non trovato.");
-        //}
 
         prezzoServizio.TipologiaServizio = updateDto.TipologiaServizio;
         prezzoServizio.CostoFisso = updateDto.CostoFisso;

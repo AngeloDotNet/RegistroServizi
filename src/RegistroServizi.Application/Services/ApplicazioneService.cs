@@ -19,33 +19,12 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
             ?? throw new KeyNotFoundException($"Applicazione con id {id} non trovato.");
 
-        //if (applicazione is null)
-
-        //{
-        //    throw new NotFoundException($"Applicazione con id {id} non trovato.");
-        //}
-
         return applicazione;
     }
 
-    //public async Task<DetailApplicazioneDto> GetApplicazioneDetailAsync(Guid id, CancellationToken cancellationToken = default)
-    //{
-    //    var applicazione = await ApplicazioneQuery()
-    //        .Select(applicazione => ApplicazioneHelper.MapApplicazioneToDetailDto(applicazione))
-    //        .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
-    //        ?? throw new KeyNotFoundException($"Applicazione con id {id} non trovato.");
-
-    //    //if (applicazione is null)
-    //    //{
-    //    //    throw new NotFoundException($"Applicazione con id {id} non trovato.");
-    //    //}
-
-    //    return applicazione;
-    //}
-
     public async Task<ApplicazioneDto> CreateApplicazioneAsync(CreateApplicazioneDto createDto, CancellationToken cancellationToken = default)
     {
-        // La validazione qui non è necessaria perché sono già stati validati i dati in ingresso.
+        //TODO: Validazione dei dati in ingresso (createDto) se necessario.
 
         var applicazione = new Applicazione
         {
@@ -62,21 +41,16 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
 
     public async Task<ApplicazioneDto> UpdateApplicazioneAsync(UpdateApplicazioneDto updateDto, CancellationToken cancellationToken = default)
     {
-        // La validazione qui non è necessaria perché sono già stati validati i dati in ingresso.
+        //TODO: Validazione dei dati in ingresso (updateDto) se necessario.
 
         var applicazione = await ApplicazioneQuery()
             .FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
             ?? throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato.");
 
-        //if (applicazione is null)
-        //{
-        //    throw new NotFoundException($"Applicazione con id {id} non trovato.");
-        //}
-
         applicazione.NomeApplicazione = updateDto.NomeApplicazione;
         applicazione.Versione = updateDto.Versione;
 
-        //dbContext.Applicazioni.Update(applicazione);
+        dbContext.Applicazioni.Update(applicazione);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return ApplicazioneHelper.MapApplicazioneToDto(applicazione);

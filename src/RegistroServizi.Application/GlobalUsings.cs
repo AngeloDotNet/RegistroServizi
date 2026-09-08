@@ -1,5 +1,4 @@
-﻿global using FluentValidation;
-global using Microsoft.AspNetCore.Http;
+﻿global using Microsoft.AspNetCore.Http;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using RegistroServizi.Application.DTOs.Applicazione;
@@ -8,6 +7,5 @@ global using RegistroServizi.Application.Helpers;
 global using RegistroServizi.Application.Interfaces.Persistence;
 global using RegistroServizi.Application.Interfaces.Services;
 global using RegistroServizi.Application.Services;
-global using RegistroServizi.Application.Validators.PrezzoServizio;
 global using RegistroServizi.Domain.Entities;
 global using RegistroServizi.Domain.Enums;

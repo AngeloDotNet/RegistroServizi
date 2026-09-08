@@ -21,8 +21,6 @@ public static class DependencyInjection
             services.AddSingleton<ClientTimeProvider>();
             services.AddSingleton<ITimeZoneService, TimeZoneService>();
 
-            //services.AddValidatorsFromAssemblyContaining<CreatePrezzoServizioValidator>();
-
             return services;
         }
     }

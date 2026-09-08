@@ -6,4 +6,4 @@
 /// <param name="Id"></param>
 /// <param name="NomeApplicazione"></param>
 /// <param name="Versione"></param>
-public record class DetailApplicazioneDto(Guid Id, string NomeApplicazione, string Versione);
+//public record class DetailApplicazioneDto(Guid Id, string NomeApplicazione, string Versione);

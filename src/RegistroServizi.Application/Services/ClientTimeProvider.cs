@@ -1,6 +1,4 @@
-﻿using RegistroServizi.Application.Interfaces;
-
-namespace RegistroServizi.Application.Services;
+﻿namespace RegistroServizi.Application.Services;
 
 public class ClientTimeProvider(ITimeZoneService timeZoneService) : TimeProvider
 {

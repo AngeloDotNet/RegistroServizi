@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using RegistroServizi.Application.Interfaces;
-
-namespace RegistroServizi.Application.Services;
+﻿namespace RegistroServizi.Application.Services;
 
 public class TimeZoneService(IHttpContextAccessor httpContextAccessor) : ITimeZoneService
 {

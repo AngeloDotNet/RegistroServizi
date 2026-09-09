@@ -1,6 +1,4 @@
-﻿@* @rendermode InteractiveServer
-@inject IApplicazioneService applicazioneService *@
-@rendermode InteractiveServer
+﻿@rendermode InteractiveServer
 @inject IDbContextFactory<RegistroServiziDbContext> DbContextFactory
 
 <MudNavMenu>
@@ -49,31 +47,6 @@
 </MudNavMenu>
 
 @code {
-    // private string appName = string.Empty;
-    // private string version = string.Empty;
-
-    // private bool _loaded;
-
-    // protected override async Task OnAfterRenderAsync(bool firstRender)
-    // {
-    //     if (!firstRender || _loaded)
-    //     {
-    //         return;
-    //     }
-
-    //     _loaded = true;
-
-    //     var applicazioni = await applicazioneService.GetAllApplicazioniAsync();
-
-    //     if (applicazioni.Any())
-    //     {
-    //         var applicazione = applicazioni.First();
-
-    //         appName = applicazione.NomeApplicazione;
-    //         version = applicazione.Versione;
-    //         StateHasChanged();
-    //     }
-    // }
     private string appName = string.Empty;
     private string version = string.Empty;
 

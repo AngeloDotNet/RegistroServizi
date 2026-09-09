@@ -12,8 +12,8 @@ using RegistroServizi.Data;
 namespace RegistroServizi.Data.Migrations
 {
     [DbContext(typeof(RegistroServiziDbContext))]
-    [Migration("20260901220120_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20260908151437_FixTableTipologiaServizio")]
+    partial class FixTableTipologiaServizio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -245,6 +245,117 @@ namespace RegistroServizi.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("RegistroServizi.Domain.Entities.Applicazione", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NomeApplicazione")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Versione")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NomeApplicazione");
+
+                    b.ToTable("Applicazioni", (string)null);
+                });
+
+            modelBuilder.Entity("RegistroServizi.Domain.Entities.Personalizzazione", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NomeAssociazione")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("SiglaAssociazione")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NomeAssociazione");
+
+                    b.ToTable("Personalizzazioni", (string)null);
+                });
+
+            modelBuilder.Entity("RegistroServizi.Domain.Entities.PrezzoServizio", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("Accompagnatore")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CostoFisso")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("CostoKm")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("FermoMacchina")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<int?>("ScontoSocio")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<decimal>("SecondoTrasportato")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<Guid>("TipologiaServizioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TipologiaServizioId");
+
+                    b.ToTable("PrezziServizi", (string)null);
+                });
+
+            modelBuilder.Entity("RegistroServizi.Domain.Entities.TipologiaServizio", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TipoServizio")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipologieServizi", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -345,6 +456,22 @@ namespace RegistroServizi.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("RegistroServizi.Domain.Entities.PrezzoServizio", b =>
+                {
+                    b.HasOne("RegistroServizi.Domain.Entities.TipologiaServizio", "TipologiaServizio")
+                        .WithMany("PrezziServizi")
+                        .HasForeignKey("TipologiaServizioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TipologiaServizio");
+                });
+
+            modelBuilder.Entity("RegistroServizi.Domain.Entities.TipologiaServizio", b =>
+                {
+                    b.Navigation("PrezziServizi");
                 });
 #pragma warning restore 612, 618
         }

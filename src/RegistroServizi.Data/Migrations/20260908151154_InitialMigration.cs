@@ -12,6 +12,19 @@ namespace RegistroServizi.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Applicazioni",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NomeApplicazione = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Versione = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Applicazioni", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -48,6 +61,31 @@ namespace RegistroServizi.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Personalizzazioni",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NomeAssociazione = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    SiglaAssociazione = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Personalizzazioni", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TipologieServizio",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TipoServizio = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipologieServizio", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,6 +213,35 @@ namespace RegistroServizi.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PrezziServizi",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TipologiaServizioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CostoFisso = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    CostoKm = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    SecondoTrasportato = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    FermoMacchina = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false, defaultValue: 0m),
+                    Accompagnatore = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: true),
+                    ScontoSocio = table.Column<int>(type: "int", nullable: true, defaultValue: 0)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrezziServizi", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PrezziServizi_TipologieServizio_TipologiaServizioId",
+                        column: x => x.TipologiaServizioId,
+                        principalTable: "TipologieServizio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Applicazioni_NomeApplicazione",
+                table: "Applicazioni",
+                column: "NomeApplicazione");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -218,11 +285,24 @@ namespace RegistroServizi.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Personalizzazioni_NomeAssociazione",
+                table: "Personalizzazioni",
+                column: "NomeAssociazione");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PrezziServizi_TipologiaServizioId",
+                table: "PrezziServizi",
+                column: "TipologiaServizioId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Applicazioni");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -242,10 +322,19 @@ namespace RegistroServizi.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Personalizzazioni");
+
+            migrationBuilder.DropTable(
+                name: "PrezziServizi");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "TipologieServizio");
         }
     }
 }

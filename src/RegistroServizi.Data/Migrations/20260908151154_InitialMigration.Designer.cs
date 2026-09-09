@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegistroServizi.Data;
 
@@ -11,9 +12,11 @@ using RegistroServizi.Data;
 namespace RegistroServizi.Data.Migrations
 {
     [DbContext(typeof(RegistroServiziDbContext))]
-    partial class RegistroServiziDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260908151154_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -345,12 +348,11 @@ namespace RegistroServizi.Data.Migrations
 
                     b.Property<string>("TipoServizio")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipologieServizi", (string)null);
+                    b.ToTable("TipologieServizio");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

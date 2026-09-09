@@ -1,0 +1,78 @@
+﻿@page "/impostazioni/dashboard"
+@inject NavigationManager navigationManager
+
+<PageTitle>Impostazioni · Registro Servizi</PageTitle>
+
+<div class="section-header">
+    <div>
+        <h1 class="section-title">Impostazioni</h1>
+        @*<p class="section-subtitle"></p>*@
+    </div>
+</div>
+
+<div class="mudpaper-grid mb-4">
+    @* <MudPaper Elevation="2" Class="pa-4" Style="border-radius: 12px; cursor: pointer; transition: all 0.2s ease; border-left: 4px solid var(--mud-palette-primary);" @onclick="() => ViewPersonalizzazione()"> *@
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewApplicazione()">
+        <div class="d-flex gap-3">
+            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
+            <div class="mudpaper-icon prezziservizi"><MudIcon Icon="@Icons.Material.Filled.TouchApp" Size="MudBlazor.Size.Medium" /></div>
+            <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary); margin-bottom: 6px;">Applicazione</div>
+                        <div style="font-size: 0.75rem; color: var(--mb-text-muted);">Gestione della configurazione di base dell'applicazione</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MudPaper>
+
+    @* <MudPaper Elevation="2" Class="pa-4" Style="border-radius: 12px; cursor: pointer; transition: all 0.2s ease; border-left: 4px solid var(--mud-palette-primary);" @onclick="() => ViewPersonalizzazione()"> *@
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewPersonalizzazione()">
+        <div class="d-flex gap-3">
+            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
+            <div class="mudpaper-icon prezziservizi"><MudIcon Icon="@Icons.Material.Filled.SettingsApplications" Size="MudBlazor.Size.Medium" /></div>
+            <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary); margin-bottom: 6px;">Generale</div>
+                        <div style="font-size: 0.75rem; color: var(--mb-text-muted);">Gestione del nome e della sigla dell'associazione</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MudPaper>
+
+    @* <MudPaper Elevation="2" Class="pa-4" Style="border-radius: 12px; cursor: pointer; transition: all 0.2s ease; border-left: 4px solid var(--mud-palette-primary);" @onclick="() => ViewPrezziServizi()"> *@
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewPrezziServizi()">
+        <div class="d-flex gap-3">
+            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
+            <div class="mudpaper-icon prezziservizi"><MudIcon Icon="@Icons.Material.Filled.AttachMoney" Size="MudBlazor.Size.Medium" /></div>
+            <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary); margin-bottom: 6px;">Prezzi Servizi</div>
+                        <div style="font-size: 0.75rem; color: var(--mb-text-muted);">Gestione dei prezzi di ogni singolo servizio</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MudPaper>
+</div>
+
+@code {
+    /// <summary>
+    /// Navigates to the Personalizzazione page.
+    /// </summary>
+    private void ViewPersonalizzazione() => navigationManager.NavigateTo("/Personalizzazione");
+
+    /// <summary>
+    /// Navigates to the Prezzi Servizi page.
+    /// </summary>
+    private void ViewPrezziServizi() => navigationManager.NavigateTo("/prezzi-servizi/dashboard");
+
+    /// <summary>
+    /// Navigates to the Applicazione dashboard page.
+    /// </summary>
+    private void ViewApplicazione() => navigationManager.NavigateTo("/applicazione/dashboard");
+}

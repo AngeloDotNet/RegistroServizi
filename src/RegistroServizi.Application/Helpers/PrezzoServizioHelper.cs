@@ -10,10 +10,23 @@ public static class PrezzoServizioHelper
     /// </summary>
     /// <param name="prezzoServizio"></param>
     /// <returns></returns>
-    public static PrezzoServizioDto MapPrezzoServizioToDto(PrezzoServizio prezzoServizio) => new PrezzoServizioDto
+    //public static PrezzoServizioDto MapPrezzoServizioToDto(PrezzoServizio prezzoServizio) => new PrezzoServizioDto
+    //{
+    //    Id = prezzoServizio.Id,
+    //    TipologiaServizioId = prezzoServizio.TipologiaServizioId,
+    //    TipologiaServizio = prezzoServizio.TipologiaServizio,
+    //    CostoFisso = prezzoServizio.CostoFisso,
+    //    CostoKm = prezzoServizio.CostoKm,
+    //    SecondoTrasportato = prezzoServizio.SecondoTrasportato,
+    //    FermoMacchina = prezzoServizio.FermoMacchina,
+    //    Accompagnatore = prezzoServizio.Accompagnatore,
+    //    ScontoSocio = prezzoServizio.ScontoSocio
+    //};
+    public static PrezzoServizioDto MapPrezzoServizioToDto(PrezzoServizio prezzoServizio) => new()
     {
         Id = prezzoServizio.Id,
-        TipologiaServizio = prezzoServizio.TipologiaServizio,
+        TipologiaServizioId = prezzoServizio.TipologiaServizioId,
+        TipoServizio = prezzoServizio.TipologiaServizio?.TipoServizio ?? string.Empty,
         CostoFisso = prezzoServizio.CostoFisso,
         CostoKm = prezzoServizio.CostoKm,
         SecondoTrasportato = prezzoServizio.SecondoTrasportato,

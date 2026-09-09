@@ -11,9 +11,18 @@
 /// <param name="FermoMacchina"></param>
 /// <param name="Accompagnatore"></param>
 /// <param name="ScontoSocio"></param>
+//public record class UpdatePrezzoServizioDto(
+//    Guid Id,
+//    TipologiaServizio TipologiaServizio,
+//    decimal CostoFisso,
+//    decimal CostoKm,
+//    decimal SecondoTrasportato,
+//    decimal FermoMacchina,
+//    decimal? Accompagnatore,
+//    int? ScontoSocio);
 public record class UpdatePrezzoServizioDto(
     Guid Id,
-    TipologiaServizio TipologiaServizio,
+    Guid TipologiaServizioId,
     decimal CostoFisso,
     decimal CostoKm,
     decimal SecondoTrasportato,

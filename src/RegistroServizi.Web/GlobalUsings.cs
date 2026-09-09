@@ -1,8 +1,10 @@
-﻿global using Microsoft.AspNetCore.Components.Authorization;
+﻿global using Microsoft.AspNetCore.Components;
+global using Microsoft.AspNetCore.Components.Authorization;
 global using Microsoft.AspNetCore.HttpOverrides;
 global using Microsoft.AspNetCore.Identity;
-global using MudBlazor.Services;
 global using RegistroServizi.Application;
+global using RegistroServizi.Application.DTOs.PrezzoServizio;
+global using RegistroServizi.Application.Interfaces.Services;
 global using RegistroServizi.Data;
 global using RegistroServizi.Data.Identity;
 global using RegistroServizi.Web.Components;

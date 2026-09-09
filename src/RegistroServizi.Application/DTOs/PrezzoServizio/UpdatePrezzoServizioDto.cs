@@ -1,25 +1,16 @@
 ﻿namespace RegistroServizi.Application.DTOs.PrezzoServizio;
 
 /// <summary>
-/// Data Transfer Object (DTO) for updating an existing PrezzoServizio.
+/// DTO per l'aggiornamento di un prezzo servizio
 /// </summary>
-/// <param name="Id"></param>
-/// <param name="TipologiaServizio"></param>
-/// <param name="CostoFisso"></param>
-/// <param name="CostoKm"></param>
-/// <param name="SecondoTrasportato"></param>
-/// <param name="FermoMacchina"></param>
-/// <param name="Accompagnatore"></param>
-/// <param name="ScontoSocio"></param>
-//public record class UpdatePrezzoServizioDto(
-//    Guid Id,
-//    TipologiaServizio TipologiaServizio,
-//    decimal CostoFisso,
-//    decimal CostoKm,
-//    decimal SecondoTrasportato,
-//    decimal FermoMacchina,
-//    decimal? Accompagnatore,
-//    int? ScontoSocio);
+/// <param name="Id">Identificativo del prezzo servizio</param>
+/// <param name="TipologiaServizioId">Identificativo della tipologia di servizio</param>
+/// <param name="CostoFisso">Costo fisso del servizio</param>
+/// <param name="CostoKm">Costo per chilometro del servizio</param>
+/// <param name="SecondoTrasportato">Costo per secondo trasportato del servizio</param>
+/// <param name="FermoMacchina">Costo per fermo macchina del servizio</param>
+/// <param name="Accompagnatore">Costo per accompagnatore del servizio</param>
+/// <param name="ScontoSocio">Sconto per i soci del servizio</param>
 public record class UpdatePrezzoServizioDto(
     Guid Id,
     Guid TipologiaServizioId,

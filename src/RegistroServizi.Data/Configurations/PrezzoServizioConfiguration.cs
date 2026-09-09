@@ -8,11 +8,10 @@ public class PrezzoServizioConfiguration : IEntityTypeConfiguration<PrezzoServiz
 
         builder.HasKey(p => p.Id);
 
-        builder.HasIndex(p => p.TipologiaServizio);
-
-        builder.Property(p => p.TipologiaServizio)
-            .HasConversion<string>()
-            .HasMaxLength(200);
+        builder.HasOne(p => p.TipologiaServizio)
+            .WithMany(p => p.PrezziServizi)
+            .HasForeignKey(p => p.TipologiaServizioId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(p => p.CostoFisso)
             .IsRequired()

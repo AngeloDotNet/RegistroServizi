@@ -1,0 +1,169 @@
+﻿@page "/prezzi-servizi/dashboard"
+@attribute [Authorize(Roles = nameof(Role.Manager))]
+
+<PageTitle>Prezzi Servizi · Registro Servizi</PageTitle>
+
+<div class="section-header">
+    <div>
+        <h1 class="section-title">Prezzi Servizi</h1>
+        <p class="section-subtitle">Gestione dei prezzi per ogni singola tipologia di servizio.</p>
+    </div>
+</div>
+
+<MudPaper Class="pa-4 mb-4">
+        @if (isLoading)
+        {
+            <MudProgressLinear Indeterminate="true" />
+        }
+        else
+        {
+            <MudDataGrid @ref="dataGrid" T="PrezzoServizioDto" Items="@elements" ReadOnly="false" EditMode="DataGridEditMode.Inline" EditTrigger="DataGridEditTrigger.Manual" SortMode="SortMode.None"
+                StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChangesAsync" Bordered="true" Dense="true" Hover="true">
+                <Columns>
+                    <PropertyColumn Property="x => x.Id" Title="Id" Editable="false" Hidden="true" />
+                    <PropertyColumn Property="x => x.TipologiaServizioId" Title="Tipologia Servizio" Editable="false" Hidden="true" />
+
+                    <TemplateColumn Title="Tipo di Servizio">
+                        <CellTemplate Context="context">
+                            @context.Item.TipoServizio
+                        </CellTemplate>
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="Costo Fisso">
+                        <CellTemplate Context="context">
+                            <div class="text-center w-100">
+                                @($"{context.Item.CostoFisso:N2} €")
+                            </div>
+                        </CellTemplate>
+                        <EditTemplate>
+                            <MudNumericField T="decimal"
+                                @bind-Value="context.Item.CostoFisso"
+                                @bind-Value:after="() => ValidateCostoFisso(context.Item.CostoFisso, context.Item)"
+                                Label="Costo Fisso"
+                                Variant="Variant.Outlined"
+                                Step="0.1m"
+                                Immediate="true"
+                                Adornment="Adornment.End"
+                                AdornmentText="€"
+                                Format="N2" />
+                        </EditTemplate>
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="Costo al Km">
+                        <CellTemplate Context="context">
+                            <div class="text-center w-100">
+                                @($"{context.Item.CostoKm:N2} €")
+                            </div>
+                        </CellTemplate>
+                        <EditTemplate>
+                            <MudNumericField T="decimal"
+                                @bind-Value="context.Item.CostoKm"
+                                @bind-Value:after="() => ValidateCostoKm(context.Item.CostoKm, context.Item)"
+                                Label="Costo al Km"
+                                Variant="Variant.Outlined"
+                                Step="0.1m"
+                                Immediate="true"
+                                Adornment="Adornment.End"
+                                AdornmentText="€"
+                                Format="N2" />
+                        </EditTemplate>
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="Secondo Trasportato">
+                        <CellTemplate Context="context">
+                            <div class="text-center w-100">
+                                @($"{context.Item.SecondoTrasportato:N2} €")
+                            </div>
+                        </CellTemplate>
+                        <EditTemplate>
+                            <MudNumericField T="decimal"
+                                @bind-Value="context.Item.SecondoTrasportato"
+                                @bind-Value:after="() => ValidateSecondoTrasportato(context.Item.SecondoTrasportato, context.Item)"
+                                Label="Secondo Trasportato"
+                                Variant="Variant.Outlined"
+                                Step="0.1m"
+                                Immediate="true"
+                                Adornment="Adornment.End"
+                                AdornmentText="€"
+                                Format="N2" />
+                        </EditTemplate>
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="Fermo Macchina">
+                        <CellTemplate Context="context">
+                            <div class="text-center w-100">
+                                @($"{context.Item.FermoMacchina:N2} €")
+                            </div>
+                        </CellTemplate>
+                        <EditTemplate>
+                            <MudNumericField T="decimal"
+                                @bind-Value="context.Item.FermoMacchina"
+                                @bind-Value:after="() => ValidateFermoMacchina(context.Item.FermoMacchina, context.Item)"
+                                Label="Fermo Macchina"
+                                Variant="Variant.Outlined"
+                                Step="0.1m"
+                                Immediate="true"
+                                Adornment="Adornment.End"
+                                AdornmentText="€"
+                                Format="N2" />
+                        </EditTemplate>
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="Accompagnatore">
+                        <CellTemplate Context="context">
+                            <div class="text-center w-100">
+                                @($"{context.Item.Accompagnatore:N2} €")
+                            </div>
+                        </CellTemplate>
+                        <EditTemplate>
+                            <MudNumericField T="decimal?"
+                                @bind-Value="context.Item.Accompagnatore"
+                                @bind-Value:after="() => ValidateAccompagnatore(context.Item.Accompagnatore, context.Item)"
+                                Label="Accompagnatore"
+                                Variant="Variant.Outlined"
+                                Step="0.1m"
+                                Immediate="true"
+                                Adornment="Adornment.End"
+                                AdornmentText="€"
+                                Format="N2" />
+                        </EditTemplate>
+                    </TemplateColumn>
+
+                    <TemplateColumn Title="Sconto Socio">
+                        <CellTemplate Context="context">
+                            <div class="text-center w-100">
+                                @(context.Item.ScontoSocio.HasValue ? $"{context.Item.ScontoSocio.Value:N0} %" : "-")
+                            </div>
+                        </CellTemplate>
+                        <EditTemplate>
+                            <MudNumericField T="int?"
+                                @bind-Value="context.Item.ScontoSocio"
+                                @bind-Value:after="() => ValidateScontoSocio(context.Item.ScontoSocio, context.Item)"
+                                Label="Sconto Socio"
+                                Variant="Variant.Outlined"
+                                Step="1"
+                                Immediate="true"
+                                Adornment="Adornment.End"
+                                AdornmentText="%"
+                                Format="N0" />
+                        </EditTemplate>
+                    </TemplateColumn>
+
+                    <TemplateColumn CellClass="d-flex justify-end">
+                        <CellTemplate>
+                            @if (context.IsEditing)
+                            {
+                                <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Check" Color="Color.Success" aria-label="Save changes" OnClick="@context.Actions.CommitEditingItemAsync" />
+                                <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Close" Color="Color.Error" aria-label="Cancel editing" OnClick="@context.Actions.CancelEditingItemAsync" />
+                            }
+                            else
+                            {
+                                <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Disabled="@isEditing" aria-label="Edit row" OnClick="@context.Actions.StartEditingItemAsync" />
+                                @* <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="@_isEditing" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" /> *@
+                            }
+                        </CellTemplate>
+                    </TemplateColumn>
+                </Columns>
+            </MudDataGrid>
+        }
+</MudPaper>

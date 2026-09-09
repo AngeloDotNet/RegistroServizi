@@ -5,6 +5,7 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     public async Task<IReadOnlyList<PrezzoServizioDto>> GetAllPrezziServiziAsync(CancellationToken cancellationToken = default)
     {
         var prezziServizi = await PrezzoServizioQuery()
+            .Include(x => x.TipologiaServizio)
             .OrderBy(x => x.Id)
             .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
             .ToListAsync(cancellationToken);
@@ -15,6 +16,7 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     public async Task<PrezzoServizioDto> GetByIdPrezzoServizioAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var prezzoServizio = await PrezzoServizioQuery()
+            .Include(x => x.TipologiaServizio)
             .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
             ?? throw new KeyNotFoundException($"Prezzo servizio con id {id} non trovato.");
@@ -48,12 +50,19 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     {
         //TODO: Validazione dei dati in ingresso (updateDto) se necessario.
 
+        var local = dbContext.PrezziServizi.Local.FirstOrDefault(x => x.Id == updateDto.Id);
+
+        if (local is not null)
+        {
+            dbContext.Entry(local).State = EntityState.Detached;
+        }
+
         var prezzoServizio = await dbContext.PrezziServizi
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
             ?? throw new KeyNotFoundException($"Prezzo servizio con id {updateDto.Id} non trovato.");
 
-        prezzoServizio.TipologiaServizio = updateDto.TipologiaServizio;
+        prezzoServizio.TipologiaServizioId = updateDto.TipologiaServizioId;
         prezzoServizio.CostoFisso = updateDto.CostoFisso;
         prezzoServizio.CostoKm = updateDto.CostoKm;
         prezzoServizio.SecondoTrasportato = updateDto.SecondoTrasportato;
@@ -61,7 +70,9 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
         prezzoServizio.Accompagnatore = updateDto.Accompagnatore;
         prezzoServizio.ScontoSocio = updateDto.ScontoSocio;
 
-        dbContext.PrezziServizi.Update(prezzoServizio);
+        dbContext.PrezziServizi.Attach(prezzoServizio);
+        dbContext.Entry(prezzoServizio).State = EntityState.Modified;
+
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio);

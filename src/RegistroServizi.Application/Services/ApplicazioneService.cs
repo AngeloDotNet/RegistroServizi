@@ -64,18 +64,6 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
-
-        //var applicazione = await ApplicazioneQuery()
-        //    .FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
-        //    ?? throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato.");
-
-        //applicazione.NomeApplicazione = updateDto.NomeApplicazione;
-        //applicazione.Versione = updateDto.Versione;
-
-        //dbContext.Applicazioni.Update(applicazione);
-        //await dbContext.SaveChangesAsync(cancellationToken);
-
-        //return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
     }
 
     private IQueryable<Applicazione> ApplicazioneQuery() => dbContext.Applicazioni.AsNoTracking();

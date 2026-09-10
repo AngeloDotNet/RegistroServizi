@@ -1,4 +1,4 @@
-﻿@page "/prezzi-servizi/dashboard"
+﻿@page "/Prezzi-Servizi"
 @attribute [Authorize(Roles = nameof(Role.Manager))]
 
 <PageTitle>Prezzi Servizi · Registro Servizi</PageTitle>
@@ -11,10 +11,6 @@
 </div>
 
 <MudPaper Class="pa-4 mb-4">
-        @* @if (isLoading)
-        {
-            <MudProgressLinear Indeterminate="true" />
-        } *@
         @if (isLoading)
         {
             <MudProgressLinear Indeterminate="true" />
@@ -22,7 +18,6 @@
         else if (elements.Count == 0)
         {
             <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                @* Nessun prezzo servizio disponibile al momento. *@
                 Nessun tipo di servizio e relativo prezzo disponibile al momento.
             </MudAlert>
         }
@@ -64,10 +59,12 @@
                                 Label="Costo Fisso"
                                 Variant="Variant.Outlined"
                                 Step="0.1m"
-                                Immediate="true"
                                 Adornment="Adornment.End"
                                 AdornmentText="€"
-                                Format="N2" />
+                                Format="N2"
+                                Required="true"
+                                RequiredError="Il costo fisso è obbligatorio."
+                                Immediate="true" />
                         </EditTemplate>
                     </TemplateColumn>
 
@@ -84,10 +81,12 @@
                                 Label="Costo al Km"
                                 Variant="Variant.Outlined"
                                 Step="0.1m"
-                                Immediate="true"
                                 Adornment="Adornment.End"
                                 AdornmentText="€"
-                                Format="N2" />
+                                Format="N2"
+                                Required="true"
+                                RequiredError="Il costo al km è obbligatorio."
+                                Immediate="true" />
                         </EditTemplate>
                     </TemplateColumn>
 
@@ -104,10 +103,12 @@
                                 Label="Secondo Trasportato"
                                 Variant="Variant.Outlined"
                                 Step="0.1m"
-                                Immediate="true"
                                 Adornment="Adornment.End"
                                 AdornmentText="€"
-                                Format="N2" />
+                                Format="N2"
+                                Required="true"
+                                RequiredError="Il costo per il secondo trasportato è obbligatorio."
+                                Immediate="true" />
                         </EditTemplate>
                     </TemplateColumn>
 
@@ -124,10 +125,12 @@
                                 Label="Fermo Macchina"
                                 Variant="Variant.Outlined"
                                 Step="0.1m"
-                                Immediate="true"
                                 Adornment="Adornment.End"
                                 AdornmentText="€"
-                                Format="N2" />
+                                Format="N2"
+                                Required="true"
+                                RequiredError="Il costo per il fermo macchina è obbligatorio."
+                                Immediate="true" />
                         </EditTemplate>
                     </TemplateColumn>
 
@@ -186,11 +189,6 @@
                         </CellTemplate>
                     </TemplateColumn>
                 </Columns>
-                @* <NoRecordsContent>
-                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                        Nessun prezzo servizio disponibile.
-                    </MudAlert>
-                </NoRecordsContent> *@
             </MudDataGrid>
         }
 </MudPaper>

@@ -16,6 +16,4 @@ public static class ApplicazioneHelper
         NomeApplicazione = applicazione.NomeApplicazione,
         Versione = applicazione.Versione
     };
-
-    //public static ApplicazioneDto MapApplicazioneToDto(Applicazione applicazione) => new ApplicazioneDto(applicazione.Id, applicazione.NomeApplicazione, applicazione.Versione);
 }

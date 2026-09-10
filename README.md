@@ -18,6 +18,17 @@ RegistroServizi is a SaaS application designed for public first aid services (P.
 > [!NOTE]
 > RegistroServizi is under active development.
 
+<!--
+## Architecture
+
+| Project | Responsibility |
+| --- | --- |
+| `RegistroServizi.Domain` | Contains the core business logic and domain entities for the application. |
+| `RegistroServizi.Application` | Contains application services, DTOs, and business logic that orchestrates domain entities. |
+| `RegistroServizi.Data` | Handles data access and database interactions using Entity Framework Core. |
+| `RegistroServizi.Web` | Contains the Blazor Server application, UI components, and pages. |
+-->
+
 ## Tech stack
 
 - .NET 10 / ASP.NET Core / Blazor Server
@@ -26,6 +37,29 @@ RegistroServizi is a SaaS application designed for public first aid services (P.
 - MudBlazor / Bootstrap
 - GitHub Actions for CI/CD and release automation
 - Docker for containerization and deployment
+
+<!--
+### Database Migrations
+
+Create a migration from the repository root:
+
+```bash
+dotnet ef migrations add <MigrationName> --project RegistroServizi.Data --startup-project RegistroServizi.Web
+```
+
+Apply migrations manually:
+
+```bash
+dotnet ef database update --project RegistroServizi.Data --startup-project RegistroServizi.Web
+```
+
+## Documentation
+
+- [.NET documentation](https://learn.microsoft.com/dotnet/)
+- [Blazor documentation](https://learn.microsoft.com/aspnet/core/blazor/)
+- [MudBlazor documentation](https://mudblazor.com/)
+- [Entity Framework Core documentation](https://learn.microsoft.com/ef/core/)
+-->
 
 ## License
 

@@ -43,27 +43,38 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
     {
         //TODO: Validazione dei dati in ingresso (updateDto) se necessario.
 
-        var local = dbContext.Applicazioni.Local.FirstOrDefault(x => x.Id == updateDto.Id);
-
-        if (local is not null)
-        {
-            dbContext.Entry(local).State = EntityState.Detached;
-        }
-
-        var applicazione = await dbContext.Applicazioni
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
+        var applicazione = await dbContext.Applicazioni.FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
             ?? throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato.");
 
         applicazione.NomeApplicazione = updateDto.NomeApplicazione;
         applicazione.Versione = updateDto.Versione;
 
-        dbContext.Applicazioni.Attach(applicazione);
-        dbContext.Entry(applicazione).State = EntityState.Modified;
-
+        dbContext.Applicazioni.Update(applicazione);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
+
+        //var local = dbContext.Applicazioni.Local.FirstOrDefault(x => x.Id == updateDto.Id);
+
+        //if (local is not null)
+        //{
+        //    dbContext.Entry(local).State = EntityState.Detached;
+        //}
+
+        //var applicazione = await dbContext.Applicazioni
+        //    .AsNoTracking()
+        //    .FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
+        //    ?? throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato.");
+
+        //applicazione.NomeApplicazione = updateDto.NomeApplicazione;
+        //applicazione.Versione = updateDto.Versione;
+
+        //dbContext.Applicazioni.Attach(applicazione);
+        //dbContext.Entry(applicazione).State = EntityState.Modified;
+
+        //await dbContext.SaveChangesAsync(cancellationToken);
+
+        //return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
     }
 
     private IQueryable<Applicazione> ApplicazioneQuery() => dbContext.Applicazioni.AsNoTracking();

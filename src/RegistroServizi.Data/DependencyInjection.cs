@@ -1,40 +1,62 @@
-﻿using EntityFramework.Exceptions.SqlServer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
-namespace RegistroServizi.Data;
+﻿namespace RegistroServizi.Data;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddRegistroServiziData(this IServiceCollection services, IConfiguration configuration, string sqlConnection = "SqlServerConnection")
+    extension(IServiceCollection services)
     {
-        var connectionString = configuration.GetConnectionString(sqlConnection)
-            ?? throw new InvalidOperationException($"Connection string '{sqlConnection}' was not found.");
-
-        services.AddDbContext<RegistroServiziDbContext>(options => options.UseSqlServer(connectionString, sqlOptions =>
+        /// <summary>
+        /// Add RegistroServizi.Data services to the specified IServiceCollection.
+        /// </summary>
+        /// <param name="configuration">The application configuration.</param>
+        /// <param name="sqlConnection">The name of the SQL connection string.</param>
+        /// <returns>The updated IServiceCollection.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the connection string is not found.</exception>
+        public IServiceCollection AddRegistroServiziData(IConfiguration configuration, string sqlConnection = "SqlServerConnection")
         {
-            sqlOptions.CommandTimeout(60);
-            sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+            var connectionString = configuration.GetConnectionString(sqlConnection) ?? throw new InvalidOperationException($"Connection string '{sqlConnection}' was not found.");
 
-            sqlOptions.MigrationsAssembly(typeof(RegistroServiziDbContext).Assembly.FullName);
-            sqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName);
+            services.AddDbContext<RegistroServiziDbContext>(options => options.UseSqlServer(connectionString, sqlOptions =>
+            {
+                //sqlOptions.CommandTimeout(60);
+                //sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                sqlOptions.EnableRetryOnFailure();
 
-            sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
-            sqlOptions.UseCompatibilityLevel(160);
-        })
-        .LogTo(Console.WriteLine, LogLevel.Information)
-        .EnableDetailedErrors(false)
+                sqlOptions.MigrationsAssembly(typeof(RegistroServiziDbContext).Assembly.FullName);
+                sqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName);
 
-        .EnableSensitiveDataLogging(false)
-        .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
+                sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                sqlOptions.UseCompatibilityLevel(160);
+            })
+            .LogTo(Console.WriteLine, LogLevel.Information)
+            .EnableDetailedErrors(false)
+            .EnableSensitiveDataLogging(false)
+            .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
+            //.UseExceptionProcessor()
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
-        .UseExceptionProcessor()
-        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+            services.AddDbContextFactory<RegistroServiziDbContext>(options => options.UseSqlServer(connectionString, sqlOptions =>
+            {
+                //sqlOptions.CommandTimeout(60);
+                //sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                sqlOptions.EnableRetryOnFailure();
 
-        return services;
+                sqlOptions.MigrationsAssembly(typeof(RegistroServiziDbContext).Assembly.FullName);
+                sqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName);
+
+                sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                sqlOptions.UseCompatibilityLevel(160);
+            })
+            .LogTo(Console.WriteLine, LogLevel.Information)
+            .EnableDetailedErrors(false)
+            .EnableSensitiveDataLogging(false)
+            .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
+            //.UseExceptionProcessor()
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Scoped);
+
+            //services.AddTransient<IRegistroServiziDbContext>(provider => provider.GetRequiredService<IDbContextFactory<RegistroServiziDbContext>>().CreateDbContext());
+            services.AddScoped<IRegistroServiziDbContext>(provider => provider.GetRequiredService<IDbContextFactory<RegistroServiziDbContext>>().CreateDbContext());
+
+            return services;
+        }
     }
 }

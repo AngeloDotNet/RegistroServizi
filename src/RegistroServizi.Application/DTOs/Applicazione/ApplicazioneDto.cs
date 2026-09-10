@@ -1,7 +1,5 @@
 ﻿namespace RegistroServizi.Application.DTOs.Applicazione;
 
-//public record class ApplicazioneDto(Guid Id, string NomeApplicazione, string Versione);
-
 /// <summary>
 /// DTO per la visualizzazione di un'applicazione
 /// </summary>

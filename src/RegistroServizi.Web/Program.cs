@@ -15,12 +15,12 @@ public class Program
 
         builder.Services.AddMudServices(config =>
         {
-            config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopRight; //default: BottomLeft
+            config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopRight;    //default: BottomLeft
             config.SnackbarConfiguration.RequireInteraction = false;
             config.SnackbarConfiguration.PreventDuplicates = false;
             config.SnackbarConfiguration.NewestOnTop = false;
-            config.SnackbarConfiguration.ShowCloseIcon = false; //default: true
-            config.SnackbarConfiguration.VisibleStateDuration = 5000; //default: 10000
+            config.SnackbarConfiguration.ShowCloseIcon = false;                                 //default: true
+            config.SnackbarConfiguration.VisibleStateDuration = 5000;                           //default: 10000
             config.SnackbarConfiguration.HideTransitionDuration = 500;
             config.SnackbarConfiguration.ShowTransitionDuration = 500;
             config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
@@ -51,7 +51,9 @@ public class Program
         {
             options.DefaultScheme = IdentityConstants.ApplicationScheme;
             options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-        }).AddIdentityCookies();
+        })
+        //.AddIdentityCookies()
+        ;
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
@@ -63,7 +65,8 @@ public class Program
         builder.Services.AddRegistroServiziData(builder.Configuration);
 
         var identityConfig = builder.Configuration.GetSection("Identity");
-        builder.Services.AddIdentityCore<ApplicationUser>(options =>
+        //builder.Services.AddIdentityCore<ApplicationUser>(options =>
+        builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
             options.SignIn.RequireConfirmedAccount = identityConfig.GetValue("RequireConfirmedAccount", false);
 
@@ -74,7 +77,7 @@ public class Program
             options.Password.RequiredLength = identityConfig.GetValue("Password:RequiredLength", 10);
             options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
         })
-        .AddRoles<IdentityRole>()
+        //.AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<RegistroServiziDbContext>()
         .AddSignInManager()
         .AddDefaultTokenProviders();

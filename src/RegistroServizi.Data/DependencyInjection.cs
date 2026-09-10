@@ -31,7 +31,6 @@ public static class DependencyInjection
             .EnableDetailedErrors(false)
             .EnableSensitiveDataLogging(false)
             .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
-            //.UseExceptionProcessor()
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
             services.AddDbContextFactory<RegistroServiziDbContext>(options => options.UseSqlServer(connectionString, sqlOptions =>
@@ -50,10 +49,8 @@ public static class DependencyInjection
             .EnableDetailedErrors(false)
             .EnableSensitiveDataLogging(false)
             .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
-            //.UseExceptionProcessor()
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Scoped);
 
-            //services.AddTransient<IRegistroServiziDbContext>(provider => provider.GetRequiredService<IDbContextFactory<RegistroServiziDbContext>>().CreateDbContext());
             services.AddScoped<IRegistroServiziDbContext>(provider => provider.GetRequiredService<IDbContextFactory<RegistroServiziDbContext>>().CreateDbContext());
 
             return services;

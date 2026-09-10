@@ -2,7 +2,6 @@
 
 public class PrezzoServizio : BaseEntity
 {
-    //public TipologiaServizio TipologiaServizio { get; set; }
     public Guid TipologiaServizioId { get; set; }
     public decimal CostoFisso { get; set; }
     public decimal CostoKm { get; set; }

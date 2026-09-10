@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-
-namespace RegistroServizi.Application.Interfaces.Persistence;
+﻿namespace RegistroServizi.Application.Interfaces.Persistence;
 
 /// <summary>
 /// Represents the database context for the RegistroServizi application.
@@ -20,7 +18,7 @@ public interface IRegistroServiziDbContext
     /// <typeparam name="TEntity"></typeparam>
     /// <param name="entity"></param>
     /// <returns></returns>
-    EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
+    //EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 
     /// <summary>
     /// Saves all changes made in this context to the database asynchronously.

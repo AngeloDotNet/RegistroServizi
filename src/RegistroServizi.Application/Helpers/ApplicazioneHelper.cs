@@ -10,5 +10,12 @@ public static class ApplicazioneHelper
     /// </summary>
     /// <param name="applicazione"></param>
     /// <returns></returns>
-    public static ApplicazioneDto MapApplicazioneToDto(Applicazione applicazione) => new ApplicazioneDto(applicazione.Id, applicazione.NomeApplicazione, applicazione.Versione);
+    public static ApplicazioneDto MapApplicazioneToDto(Applicazione applicazione) => new ApplicazioneDto
+    {
+        Id = applicazione.Id,
+        NomeApplicazione = applicazione.NomeApplicazione,
+        Versione = applicazione.Versione
+    };
+
+    //public static ApplicazioneDto MapApplicazioneToDto(Applicazione applicazione) => new ApplicazioneDto(applicazione.Id, applicazione.NomeApplicazione, applicazione.Versione);
 }

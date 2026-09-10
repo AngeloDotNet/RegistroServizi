@@ -48,16 +48,7 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     {
         //TODO: Validazione dei dati in ingresso (updateDto) se necessario.
 
-        var local = dbContext.PrezziServizi.Local.FirstOrDefault(x => x.Id == updateDto.Id);
-
-        if (local is not null)
-        {
-            dbContext.Entry(local).State = EntityState.Detached;
-        }
-
-        var prezzoServizio = await dbContext.PrezziServizi
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
+        var prezzoServizio = await dbContext.PrezziServizi.FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
             ?? throw new KeyNotFoundException($"Prezzo servizio con id {updateDto.Id} non trovato.");
 
         prezzoServizio.TipologiaServizioId = updateDto.TipologiaServizioId;
@@ -68,12 +59,37 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
         prezzoServizio.Accompagnatore = updateDto.Accompagnatore;
         prezzoServizio.ScontoSocio = updateDto.ScontoSocio;
 
-        dbContext.PrezziServizi.Attach(prezzoServizio);
-        dbContext.Entry(prezzoServizio).State = EntityState.Modified;
-
+        dbContext.PrezziServizi.Update(prezzoServizio);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio);
+
+        //var local = dbContext.PrezziServizi.Local.FirstOrDefault(x => x.Id == updateDto.Id);
+
+        //if (local is not null)
+        //{
+        //    dbContext.Entry(local).State = EntityState.Detached;
+        //}
+
+        //var prezzoServizio = await dbContext.PrezziServizi
+        //    .AsNoTracking()
+        //    .FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
+        //    ?? throw new KeyNotFoundException($"Prezzo servizio con id {updateDto.Id} non trovato.");
+
+        //prezzoServizio.TipologiaServizioId = updateDto.TipologiaServizioId;
+        //prezzoServizio.CostoFisso = updateDto.CostoFisso;
+        //prezzoServizio.CostoKm = updateDto.CostoKm;
+        //prezzoServizio.SecondoTrasportato = updateDto.SecondoTrasportato;
+        //prezzoServizio.FermoMacchina = updateDto.FermoMacchina;
+        //prezzoServizio.Accompagnatore = updateDto.Accompagnatore;
+        //prezzoServizio.ScontoSocio = updateDto.ScontoSocio;
+
+        //dbContext.PrezziServizi.Attach(prezzoServizio);
+        //dbContext.Entry(prezzoServizio).State = EntityState.Modified;
+
+        //await dbContext.SaveChangesAsync(cancellationToken);
+
+        //return PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio);
     }
 
     private IQueryable<PrezzoServizio> PrezzoServizioQuery()

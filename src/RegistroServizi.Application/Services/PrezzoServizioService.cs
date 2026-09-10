@@ -5,17 +5,9 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     public async Task<IReadOnlyList<PrezzoServizioDto>> GetAllPrezziServiziAsync(CancellationToken cancellationToken = default)
     {
         var prezziServizi = await PrezzoServizioQuery()
-            //.Include(x => x.TipologiaServizio)
             .OrderBy(x => x.Id)
             .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
-            .ToListAsync(cancellationToken)
-            //?? throw new KeyNotFoundException("Nessun prezzo servizio trovato.")
-            ;
-
-        //if (prezziServizi.Count == 0)
-        //{
-        //    throw new KeyNotFoundException("Nessun tipo di servizio e relativo prezzo trovato.");
-        //}
+            .ToListAsync(cancellationToken);
 
         return prezziServizi;
     }
@@ -23,10 +15,8 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     public async Task<PrezzoServizioDto> GetByIdPrezzoServizioAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var prezzoServizio = await PrezzoServizioQuery()
-            //.Include(x => x.TipologiaServizio)
             .Where(x => x.Id == id)
             .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
-            //.FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
             .FirstOrDefaultAsync(cancellationToken) ?? throw new KeyNotFoundException($"Prezzo servizio con id {id} non trovato.");
 
         return prezzoServizio;

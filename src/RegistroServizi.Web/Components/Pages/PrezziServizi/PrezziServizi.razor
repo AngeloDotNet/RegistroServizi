@@ -11,14 +11,36 @@
 </div>
 
 <MudPaper Class="pa-4 mb-4">
+        @* @if (isLoading)
+        {
+            <MudProgressLinear Indeterminate="true" />
+        } *@
         @if (isLoading)
         {
             <MudProgressLinear Indeterminate="true" />
         }
+        else if (elements.Count == 0)
+        {
+            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                @* Nessun prezzo servizio disponibile al momento. *@
+                Nessun tipo di servizio e relativo prezzo disponibile al momento.
+            </MudAlert>
+        }
         else
         {
-            <MudDataGrid @ref="dataGrid" T="PrezzoServizioDto" Items="@elements" ReadOnly="false" EditMode="DataGridEditMode.Inline" EditTrigger="DataGridEditTrigger.Manual" SortMode="SortMode.None"
-                StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChangesAsync" Bordered="true" Dense="true" Hover="true">
+            <MudDataGrid @ref="dataGrid"
+                    T="PrezzoServizioDto"
+                    Items="@elements"
+                    ReadOnly="false"
+                    EditMode="DataGridEditMode.Inline"
+                    EditTrigger="DataGridEditTrigger.Manual"
+                    SortMode="SortMode.None"
+                    StartedEditingItem="@StartedEditingItem"
+                    CanceledEditingItem="@CanceledEditingItem"
+                    CommittedItemChanges="@CommittedItemChangesAsync"
+                    Bordered="true"
+                    Dense="true"
+                    Hover="true">
                 <Columns>
                     <PropertyColumn Property="x => x.Id" Title="Id" Editable="false" Hidden="true" />
                     <PropertyColumn Property="x => x.TipologiaServizioId" Title="Tipologia Servizio" Editable="false" Hidden="true" />
@@ -164,6 +186,11 @@
                         </CellTemplate>
                     </TemplateColumn>
                 </Columns>
+                @* <NoRecordsContent>
+                    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+                        Nessun prezzo servizio disponibile.
+                    </MudAlert>
+                </NoRecordsContent> *@
             </MudDataGrid>
         }
 </MudPaper>

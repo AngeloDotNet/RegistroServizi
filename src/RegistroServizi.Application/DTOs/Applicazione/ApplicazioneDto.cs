@@ -1,9 +1,13 @@
 ﻿namespace RegistroServizi.Application.DTOs.Applicazione;
 
+//public record class ApplicazioneDto(Guid Id, string NomeApplicazione, string Versione);
+
 /// <summary>
-/// Data Transfer Object (DTO) representing an application.
+/// DTO per la visualizzazione di un'applicazione
 /// </summary>
-/// <param name="Id"></param>
-/// <param name="NomeApplicazione"></param>
-/// <param name="Versione"></param>
-public record class ApplicazioneDto(Guid Id, string NomeApplicazione, string Versione);
+public class ApplicazioneDto
+{
+    public Guid Id { get; set; }
+    public string NomeApplicazione { get; set; } = string.Empty;
+    public string Versione { get; set; } = string.Empty;
+}

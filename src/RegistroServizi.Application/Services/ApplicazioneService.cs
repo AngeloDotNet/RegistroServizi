@@ -22,22 +22,22 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
         return applicazione;
     }
 
-    public async Task<ApplicazioneDto> CreateApplicazioneAsync(CreateApplicazioneDto createDto, CancellationToken cancellationToken = default)
-    {
-        //TODO: Validazione dei dati in ingresso (createDto) se necessario.
+    //public async Task<ApplicazioneDto> CreateApplicazioneAsync(CreateApplicazioneDto createDto, CancellationToken cancellationToken = default)
+    //{
+    //    //TODO: Validazione dei dati in ingresso (createDto) se necessario.
 
-        var applicazione = new Applicazione
-        {
-            Id = Guid.NewGuid(),
-            NomeApplicazione = createDto.NomeApplicazione,
-            Versione = createDto.Versione
-        };
+    //    var applicazione = new Applicazione
+    //    {
+    //        Id = Guid.NewGuid(),
+    //        NomeApplicazione = createDto.NomeApplicazione,
+    //        Versione = createDto.Versione
+    //    };
 
-        dbContext.Applicazioni.Add(applicazione);
-        await dbContext.SaveChangesAsync(cancellationToken);
+    //    dbContext.Applicazioni.Add(applicazione);
+    //    await dbContext.SaveChangesAsync(cancellationToken);
 
-        return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
-    }
+    //    return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
+    //}
 
     public async Task<ApplicazioneDto> UpdateApplicazioneAsync(UpdateApplicazioneDto updateDto, CancellationToken cancellationToken = default)
     {

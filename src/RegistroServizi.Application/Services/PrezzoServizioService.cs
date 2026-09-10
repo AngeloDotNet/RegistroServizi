@@ -5,10 +5,17 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     public async Task<IReadOnlyList<PrezzoServizioDto>> GetAllPrezziServiziAsync(CancellationToken cancellationToken = default)
     {
         var prezziServizi = await PrezzoServizioQuery()
-            .Include(x => x.TipologiaServizio)
+            //.Include(x => x.TipologiaServizio)
             .OrderBy(x => x.Id)
             .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken)
+            //?? throw new KeyNotFoundException("Nessun prezzo servizio trovato.")
+            ;
+
+        //if (prezziServizi.Count == 0)
+        //{
+        //    throw new KeyNotFoundException("Nessun tipo di servizio e relativo prezzo trovato.");
+        //}
 
         return prezziServizi;
     }
@@ -16,35 +23,36 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     public async Task<PrezzoServizioDto> GetByIdPrezzoServizioAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var prezzoServizio = await PrezzoServizioQuery()
-            .Include(x => x.TipologiaServizio)
+            //.Include(x => x.TipologiaServizio)
+            .Where(x => x.Id == id)
             .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
-            ?? throw new KeyNotFoundException($"Prezzo servizio con id {id} non trovato.");
+            //.FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
+            .FirstOrDefaultAsync(cancellationToken) ?? throw new KeyNotFoundException($"Prezzo servizio con id {id} non trovato.");
 
         return prezzoServizio;
     }
 
-    public async Task<PrezzoServizioDto> CreatePrezzoServizioAsync(CreatePrezzoServizioDto createDto, CancellationToken cancellationToken = default)
-    {
-        //TODO: Validazione dei dati in ingresso (createDto) se necessario.
+    //public async Task<PrezzoServizioDto> CreatePrezzoServizioAsync(CreatePrezzoServizioDto createDto, CancellationToken cancellationToken = default)
+    //{
+    //    //TODO: Validazione dei dati in ingresso (createDto) se necessario.
 
-        var prezzoServizio = new PrezzoServizio
-        {
-            Id = Guid.NewGuid(),
-            TipologiaServizio = createDto.TipologiaServizio,
-            CostoFisso = createDto.CostoFisso,
-            CostoKm = createDto.CostoKm,
-            SecondoTrasportato = createDto.SecondoTrasportato,
-            FermoMacchina = createDto.FermoMacchina,
-            Accompagnatore = createDto.Accompagnatore,
-            ScontoSocio = createDto.ScontoSocio
-        };
+    //    var prezzoServizio = new PrezzoServizio
+    //    {
+    //        Id = Guid.NewGuid(),
+    //        TipologiaServizio = createDto.TipologiaServizio,
+    //        CostoFisso = createDto.CostoFisso,
+    //        CostoKm = createDto.CostoKm,
+    //        SecondoTrasportato = createDto.SecondoTrasportato,
+    //        FermoMacchina = createDto.FermoMacchina,
+    //        Accompagnatore = createDto.Accompagnatore,
+    //        ScontoSocio = createDto.ScontoSocio
+    //    };
 
-        dbContext.PrezziServizi.Add(prezzoServizio);
-        await dbContext.SaveChangesAsync(cancellationToken);
+    //    dbContext.PrezziServizi.Add(prezzoServizio);
+    //    await dbContext.SaveChangesAsync(cancellationToken);
 
-        return PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio);
-    }
+    //    return PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio);
+    //}
 
     public async Task<PrezzoServizioDto> UpdatePrezzoServizioAsync(UpdatePrezzoServizioDto updateDto, CancellationToken cancellationToken = default)
     {
@@ -78,5 +86,8 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
         return PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio);
     }
 
-    private IQueryable<PrezzoServizio> PrezzoServizioQuery() => dbContext.PrezziServizi.AsNoTracking();
+    private IQueryable<PrezzoServizio> PrezzoServizioQuery()
+        => dbContext.PrezziServizi
+            .AsNoTracking()
+            .Include(x => x.TipologiaServizio);
 }

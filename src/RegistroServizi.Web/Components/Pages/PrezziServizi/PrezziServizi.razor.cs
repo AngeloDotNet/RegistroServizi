@@ -21,11 +21,7 @@ public partial class PrezziServizi
             var prezziServizi = await PrezzoServizioService.GetAllPrezziServiziAsync();
             elements = prezziServizi.ToList();
         }
-        //catch (KeyNotFoundException ex)
-        //{
-        //    Logger.LogWarning(ex, "Nessun prezzo servizio trovato.");
-        //    Snackbar.Add("Nessun prezzo servizio trovato.", Severity.Warning);
-        //}
+
         catch (Exception)
         {
             Snackbar.Add("Errore durante il caricamento dei prezzi.", Severity.Error);
@@ -167,5 +163,4 @@ public partial class PrezziServizi
     }
 
     #endregion
-
 }

@@ -21,7 +21,6 @@ public partial class PrezziServizi
             var prezziServizi = await PrezzoServizioService.GetAllPrezziServiziAsync();
             elements = prezziServizi.ToList();
         }
-
         catch (Exception)
         {
             Snackbar.Add("Errore durante il caricamento dei prezzi.", Severity.Error);

@@ -1,0 +1,110 @@
+﻿@page "/Applicazione"
+@attribute [Authorize(Roles = nameof(Role.Admin))]
+
+<PageTitle>Applicazione · Registro Servizi</PageTitle>
+
+<div class="section-header">
+    <div>
+        <h1 class="section-title">Applicazione</h1>
+        <p class="section-subtitle">Gestione della configurazione di base dell'applicazione.</p>
+    </div>
+</div>
+
+<MudPaper Class="pa-4 mb-4">
+@if (isLoading)
+    {
+        <MudProgressLinear Indeterminate="true" />
+    }
+    else if (elements.Count == 0)
+    {
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+            Nessuna applicazione disponibile al momento.
+        </MudAlert>
+    }
+    else
+    {
+        <MudDataGrid @ref="dataGrid"
+                T="ApplicazioneDto"
+                Items="@elements"
+                ReadOnly="false"
+                EditMode="DataGridEditMode.Inline"
+                EditTrigger="DataGridEditTrigger.Manual"
+                SortMode="SortMode.None"
+                StartedEditingItem="@StartedEditingItem"
+                CanceledEditingItem="@CanceledEditingItem"
+                CommittedItemChanges="@CommittedItemChangesAsync"
+                Bordered="true"
+                Dense="true"
+                Hover="true">
+
+            <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" Editable="false" Hidden="true" />
+
+                <TemplateColumn Title="Nome Applicazione">
+                    <CellTemplate Context="context">
+                        @context.Item.NomeApplicazione
+                    </CellTemplate>
+                    <EditTemplate>
+                        <MudTextField T="string"
+                            @bind-Value="context.Item.NomeApplicazione"
+                            @bind-Value:after="() => ValidateNomeApplicazione(context.Item.NomeApplicazione)"
+                            Label="Nome Applicazione"
+                            Variant="Variant.Outlined"
+                            Required="true"
+                            RequiredError="Il nome dell'applicazione è obbligatorio."
+                            Immediate="true" />
+                    </EditTemplate>
+                </TemplateColumn>
+
+                <TemplateColumn Title="Versione">
+                    <CellTemplate Context="context">
+                        @context.Item.Versione
+                    </CellTemplate>
+                    <EditTemplate>
+                        <MudTextField T="string"
+                            @bind-Value="context.Item.Versione"
+                            @bind-Value:after="() => ValidateVersione(context.Item.Versione)"
+                            Label="Versione"
+                            Variant="Variant.Outlined"
+                            Required="true"
+                            RequiredError="La versione dell'applicazione è obbligatoria."
+                            Immediate="true"
+                            HelperText="Formato: x.y.z" />
+                    </EditTemplate>
+                </TemplateColumn>
+
+                <TemplateColumn Title="Fuso Orario">
+                    <CellTemplate Context="context">
+                        @context.Item.TimeZone
+                    </CellTemplate>
+                    <EditTemplate>
+                        <MudTextField T="string"
+                            @bind-Value="context.Item.TimeZone"
+                            @bind-Value:after="() => ValidateTimeZone(context.Item.TimeZone)"
+                            Label="Fuso Orario"
+                            Variant="Variant.Outlined"
+                            Required="true"
+                            RequiredError="Il fuso orario è obbligatorio."
+                            Immediate="true"
+                            HelperText="Esempio: Europe/Rome" />
+                    </EditTemplate>
+                </TemplateColumn>
+                
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        @if (context.IsEditing)
+                        {
+                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Check" Color="Color.Success" aria-label="Save changes" OnClick="@context.Actions.CommitEditingItemAsync" />
+                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Close" Color="Color.Error" aria-label="Cancel editing" OnClick="@context.Actions.CancelEditingItemAsync" />
+                        }
+                        else
+                        {
+                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Disabled="@isEditing" aria-label="Edit row" OnClick="@context.Actions.StartEditingItemAsync" />
+                            @* <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="@_isEditing" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" /> *@
+                        }
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+        </MudDataGrid>
+    }
+</MudPaper>

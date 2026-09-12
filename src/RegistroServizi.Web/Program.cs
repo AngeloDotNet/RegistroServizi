@@ -51,9 +51,7 @@ public class Program
         {
             options.DefaultScheme = IdentityConstants.ApplicationScheme;
             options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-        })
-        //.AddIdentityCookies()
-        ;
+        });
 
         builder.Services.ConfigureApplicationCookie(options =>
         {
@@ -65,7 +63,6 @@ public class Program
         builder.Services.AddRegistroServiziData(builder.Configuration);
 
         var identityConfig = builder.Configuration.GetSection("Identity");
-        //builder.Services.AddIdentityCore<ApplicationUser>(options =>
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
             options.SignIn.RequireConfirmedAccount = identityConfig.GetValue("RequireConfirmedAccount", false);
@@ -77,13 +74,17 @@ public class Program
             options.Password.RequiredLength = identityConfig.GetValue("Password:RequiredLength", 10);
             options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
         })
-        //.AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<RegistroServiziDbContext>()
         .AddSignInManager()
         .AddDefaultTokenProviders();
 
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+        builder.Services.AddOptions<AdminUserOptions>()
+            .Bind(builder.Configuration.GetSection("AdminUserOptions"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
         var app = builder.Build();
 

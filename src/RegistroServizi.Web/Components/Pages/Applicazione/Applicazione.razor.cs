@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 using MudBlazor;
-using RegistroServizi.Application.DTOs.Applicazione;
 
 namespace RegistroServizi.Web.Components.Pages.Applicazione;
 
@@ -23,11 +22,6 @@ public partial class Applicazione
             var applicazione = await ApplicazioneService.GetAllApplicazioniAsync();
             elements = applicazione.ToList();
         }
-        //catch (KeyNotFoundException ex)
-        //{
-        //    Logger.LogWarning(ex, "Nessun prezzo servizio trovato.");
-        //    Snackbar.Add("Nessun prezzo servizio trovato.", Severity.Warning);
-        //}
         catch (Exception)
         {
             Snackbar.Add("Errore durante il caricamento delle applicazioni.", Severity.Error);
@@ -77,7 +71,6 @@ public partial class Applicazione
         }
     }
 
-    //private void ValidateNomeApplicazione(string value, ApplicazioneDto item)
     private void ValidateNomeApplicazione(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -88,14 +81,8 @@ public partial class Applicazione
 
     private static readonly Regex versionRegex = new(@"^\d+(\.\d+)*$", RegexOptions.Compiled);
 
-    //private void ValidateVersione(string value, ApplicazioneDto item)
     private void ValidateVersione(string value)
     {
-        //if (string.IsNullOrWhiteSpace(value))
-        //{
-        //    Snackbar.Add("La versione dell'applicazione non può essere vuota.", Severity.Warning);
-        //}
-
         if (string.IsNullOrWhiteSpace(value))
         {
             Snackbar.Add("La versione dell'applicazione non può essere vuota.", Severity.Warning);
@@ -122,12 +109,6 @@ public partial class Applicazione
         {
             return false;
         }
-
-        //var checks = new (string Value, string Message)[]
-        //{
-        //    (item.NomeApplicazione, "Il nome dell'applicazione non può essere vuoto."),
-        //    (item.Versione, "La versione dell'applicazione non può essere vuota.")
-        //};
 
         if (string.IsNullOrWhiteSpace(item.NomeApplicazione))
         {

@@ -1,0 +1,140 @@
+﻿@page "/opzioni/dashboard"
+@inject NavigationManager navigationManager
+
+<PageTitle>Opzioni · Registro Servizi</PageTitle>
+
+<div class="section-header">
+    <div>
+        <h1 class="section-title">Opzioni</h1>
+        @*<p class="section-subtitle"></p>*@
+    </div>
+</div>
+
+<div class="mudpaper-grid mb-4">
+    @* <MudPaper Elevation="2" Class="pa-4" Style="border-radius: 12px; cursor: pointer; transition: all 0.2s ease; border-left: 4px solid var(--mud-palette-primary);" @onclick="() => ViewPersonalizzazione()"> *@
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+        <div class="d-flex gap-3">
+            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
+            <div class="mudpaper-icon prezziservizi">
+                <MudIcon Icon="@Icons.Material.Filled.LocalHospital" Size="MudBlazor.Size.Medium" />
+            </div>
+            <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary); margin-bottom: 6px;">Ospedali</div>
+                        <div style="font-size: 0.75rem; color: var(--mb-text-muted);">Gestione degli ospedali</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MudPaper>
+
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+        <div class="d-flex gap-3">
+            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
+            <div class="mudpaper-icon prezziservizi">
+                <MudIcon Icon="@Icons.Material.Filled.LocalParking" Size="MudBlazor.Size.Medium" />
+            </div>
+            <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary); margin-bottom: 6px;">Colonnine</div>
+                        <div style="font-size: 0.75rem; color: var(--mb-text-muted);">Gestione delle colonnine</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MudPaper>
+
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+        <div class="d-flex gap-3">
+            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
+            <div class="mudpaper-icon prezziservizi">
+                <MudIcon Icon="@Icons.Material.Filled.ZoomInMap" Size="MudBlazor.Size.Medium" />
+            </div>
+            <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary); margin-bottom: 6px;">Ortelio</div>
+                        <div style="font-size: 0.75rem; color: var(--mb-text-muted);">Gestione delle coordinate ortelio</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MudPaper>
+
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+        <div class="d-flex gap-3">
+            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
+            <div class="mudpaper-icon prezziservizi">
+                <MudIcon Icon="@Icons.Material.Filled.DirectionsCar" Size="MudBlazor.Size.Medium" />
+            </div>
+            <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary); margin-bottom: 6px;">Autoparco</div>
+                        <div style="font-size: 0.75rem; color: var(--mb-text-muted);">Gestione base dell'autoparco dei mezzi dell'associazione</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MudPaper>
+
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+        <div class="d-flex gap-3">
+            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
+            <div class="mudpaper-icon prezziservizi">
+                <MudIcon Icon="@Icons.Material.Filled.LocationOn" Size="MudBlazor.Size.Medium" />
+            </div>
+            <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary); margin-bottom: 6px;">Mappe</div>
+                        <div style="font-size: 0.75rem; color: var(--mb-text-muted);">Gestione dell'indirizzo dell'associazione e del motore di ricerca delle mappe.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MudPaper>
+
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+        <div class="d-flex gap-3">
+            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
+            <div class="mudpaper-icon prezziservizi">
+                <MudIcon Icon="@Icons.Material.Filled.People" Size="MudBlazor.Size.Medium" />
+            </div>
+            <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary); margin-bottom: 6px;">Squadre Feriali</div>
+                        <div style="font-size: 0.75rem; color: var(--mb-text-muted);">Gestione degli equipaggi nelle squadre feriali</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MudPaper>
+
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+        <div class="d-flex gap-3">
+            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
+            <div class="mudpaper-icon prezziservizi">
+                <MudIcon Icon="@Icons.Material.Filled.PeopleAlt" Size="MudBlazor.Size.Medium" />
+            </div>
+            <div class="flex-grow-1" style="min-width: 0;">
+                <div class="d-flex justify-space-between align-start mb-2">
+                    <div class="flex-grow-1" style="min-width: 0;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary); margin-bottom: 6px;">Squadre Festive</div>
+                        <div style="font-size: 0.75rem; color: var(--mb-text-muted);">Gestione degli equipaggi nelle squadre festive</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </MudPaper>
+</div>
+
+@code {
+    /// <summary>
+    /// Navigates to the Dashboard page.
+    /// </summary>
+    private void ViewDashboard() => navigationManager.NavigateTo("/");
+}

@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Domain.Entities;
+﻿using RegistroServizi.Domain.Common;
+
+namespace RegistroServizi.Domain.Entities;
 
 public class TipologiaServizio : BaseEntity
 {

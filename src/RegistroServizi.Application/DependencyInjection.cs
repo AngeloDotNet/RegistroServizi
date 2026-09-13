@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Application;
+﻿using RegistroServizi.Application.Services.Common;
+
+namespace RegistroServizi.Application;
 
 /// <summary>
 /// Extension methods for registering application services in the dependency injection container.
@@ -8,12 +10,18 @@ public static class DependencyInjection
     extension(IServiceCollection services)
     {
         /// <summary>
-        /// Registers application services and validators in the dependency injection container.
+        /// Registers application services in the dependency injection container based on the specified cache provider.
         /// </summary>
-        /// <param name="services">The IServiceCollection to add the services to.</param>
-        /// <returns>The updated IServiceCollection.</returns>
-        public IServiceCollection AddRegistroServiziApplication()
+        /// <param name="cacheProvider"></param>
+        /// <returns></returns>
+        public IServiceCollection AddRegistroServiziApplication(string cacheProvider)
         {
+            if (cacheProvider.Equals("Memory", StringComparison.OrdinalIgnoreCase))
+            {
+                services.AddMemoryCache();
+                services.AddSingleton<IMemoryCacheService, MemoryCacheService>();
+            }
+
             services.AddScoped<IApplicazioneService, ApplicazioneService>();
             services.AddScoped<IPrezzoServizioService, PrezzoServizioService>();
 

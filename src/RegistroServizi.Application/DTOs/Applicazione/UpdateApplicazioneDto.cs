@@ -6,4 +6,5 @@
 /// <param name="Id"></param>
 /// <param name="NomeApplicazione"></param>
 /// <param name="Versione"></param>
-public record class UpdateApplicazioneDto(Guid Id, string NomeApplicazione, string Versione);
+/// <param name="TimeZone"></param>
+public record class UpdateApplicazioneDto(Guid Id, string NomeApplicazione, string Versione, string TimeZone);

@@ -5,4 +5,5 @@
 /// </summary>
 /// <param name="NomeApplicazione"></param>
 /// <param name="Versione"></param>
-public record class CreateApplicazioneDto(string NomeApplicazione, string Versione);
+/// <param name="TimeZone"></param>
+public record class CreateApplicazioneDto(string NomeApplicazione, string Versione, string TimeZone);

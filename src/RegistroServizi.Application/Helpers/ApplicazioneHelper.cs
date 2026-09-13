@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Application.Helpers;
+﻿using System.Text.RegularExpressions;
+
+namespace RegistroServizi.Application.Helpers;
 
 /// <summary>
 /// Helper class for mapping Applicazione entities to their corresponding DTOs.
@@ -14,6 +16,12 @@ public static class ApplicazioneHelper
     {
         Id = applicazione.Id,
         NomeApplicazione = applicazione.NomeApplicazione,
-        Versione = applicazione.Versione
+        Versione = applicazione.Versione,
+        TimeZone = applicazione.TimeZone
     };
+
+    /// <summary>
+    /// Validates the version string format.
+    /// </summary>
+    public static readonly Regex VersionRegex = new(@"^\d+(\.\d+)*$", RegexOptions.Compiled);
 }

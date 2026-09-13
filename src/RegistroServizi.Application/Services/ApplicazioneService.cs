@@ -1,15 +1,26 @@
 ﻿namespace RegistroServizi.Application.Services;
 
-public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplicazioneService
+public class ApplicazioneService(IRegistroServiziDbContext dbContext, IMemoryCacheService memoryCache) : IApplicazioneService
 {
+    private readonly string cacheKey = MemoryCacheHelper.CacheKeyApplicazione;
+
     public async Task<IReadOnlyList<ApplicazioneDto>> GetAllApplicazioniAsync(CancellationToken cancellationToken = default)
     {
-        var applicazioni = await ApplicazioneQuery()
+        var cacheData = await memoryCache.GetAsync<IReadOnlyList<ApplicazioneDto>>(cacheKey);
+
+        if (cacheData is not null)
+        {
+            return cacheData;
+        }
+
+        var result = await ApplicazioneQuery()
             .OrderBy(x => x.Id)
             .Select(applicazione => ApplicazioneHelper.MapApplicazioneToDto(applicazione))
             .ToListAsync(cancellationToken);
 
-        return applicazioni;
+        await memoryCache.SetAsync(cacheKey, result, MemoryCacheHelper.DefaultExpiration);
+
+        return result;
     }
 
     public async Task<ApplicazioneDto> GetByIdApplicazioneAsync(Guid id, CancellationToken cancellationToken = default)
@@ -41,16 +52,37 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
 
     public async Task<ApplicazioneDto> UpdateApplicazioneAsync(UpdateApplicazioneDto updateDto, CancellationToken cancellationToken = default)
     {
-        //TODO: Validazione dei dati in ingresso (updateDto) se necessario.
+        if (updateDto.Id == Guid.Empty)
+        {
+            throw new ArgumentException("Il campo Id non può essere vuoto.", nameof(updateDto.Id));
+        }
+
+        if (string.IsNullOrWhiteSpace(updateDto.NomeApplicazione))
+        {
+            throw new ArgumentNullException(nameof(updateDto.NomeApplicazione), "Il campo NomeApplicazione non può essere nullo o vuoto.");
+        }
+
+        if (string.IsNullOrWhiteSpace(updateDto.Versione) || !ApplicazioneHelper.VersionRegex.IsMatch(updateDto.Versione))
+        {
+            throw new ArgumentException("Il campo Versione non può essere nullo o avere un formato non valido. Usa ad esempio 1.0.0.", nameof(updateDto.Versione));
+        }
+
+        if (string.IsNullOrWhiteSpace(updateDto.TimeZone))
+        {
+            throw new ArgumentNullException(nameof(updateDto.TimeZone), "Il campo TimeZone non può essere nullo o vuoto.");
+        }
 
         var applicazione = await dbContext.Applicazioni.FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
             ?? throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato.");
 
         applicazione.NomeApplicazione = updateDto.NomeApplicazione;
         applicazione.Versione = updateDto.Versione;
+        applicazione.TimeZone = updateDto.TimeZone;
 
         dbContext.Applicazioni.Update(applicazione);
         await dbContext.SaveChangesAsync(cancellationToken);
+
+        await memoryCache.RemoveAsync(cacheKey);
 
         return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
 

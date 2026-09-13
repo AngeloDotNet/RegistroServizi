@@ -1,13 +1,25 @@
 ﻿namespace RegistroServizi.Application.Services;
 
-public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezzoServizioService
+public class PrezzoServizioService(IRegistroServiziDbContext dbContext, IMemoryCacheService memoryCache) : IPrezzoServizioService
 {
+    private readonly string cacheKey = MemoryCacheHelper.CacheKeyPrezzoServizio;
+
     public async Task<IReadOnlyList<PrezzoServizioDto>> GetAllPrezziServiziAsync(CancellationToken cancellationToken = default)
     {
+        var cacheData = await memoryCache.GetAsync<IReadOnlyList<PrezzoServizioDto>>(cacheKey);
+
+        if (cacheData is not null)
+        {
+            return cacheData;
+        }
+
         var prezziServizi = await PrezzoServizioQuery()
-            .OrderBy(x => x.Id)
+            //.OrderBy(x => x.Id)
+            .OrderBy(x => x.TipologiaServizio.TipoServizio)
             .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
             .ToListAsync(cancellationToken);
+
+        await memoryCache.SetAsync(cacheKey, prezziServizi, MemoryCacheHelper.DefaultExpiration);
 
         return prezziServizi;
     }
@@ -46,7 +58,12 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
 
     public async Task<PrezzoServizioDto> UpdatePrezzoServizioAsync(UpdatePrezzoServizioDto updateDto, CancellationToken cancellationToken = default)
     {
-        //TODO: Validazione dei dati in ingresso (updateDto) se necessario.
+        if (updateDto.Id == Guid.Empty)
+        {
+            throw new ArgumentException("Il campo Id non può essere vuoto.", nameof(updateDto.Id));
+        }
+
+        //TODO: Aggiungere eventuali altre validazioni dei campi in ingresso (updateDto) se necessario.
 
         var prezzoServizio = await dbContext.PrezziServizi.FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
             ?? throw new KeyNotFoundException($"Prezzo servizio con id {updateDto.Id} non trovato.");
@@ -61,6 +78,8 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
 
         dbContext.PrezziServizi.Update(prezzoServizio);
         await dbContext.SaveChangesAsync(cancellationToken);
+
+        await memoryCache.RemoveAsync(cacheKey);
 
         return PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio);
 

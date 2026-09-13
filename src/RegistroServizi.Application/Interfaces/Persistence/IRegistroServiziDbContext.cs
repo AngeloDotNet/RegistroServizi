@@ -10,6 +10,7 @@ public interface IRegistroServiziDbContext
     DbSet<PrezzoServizio> PrezziServizi { get; }
     DbSet<Applicazione> Applicazioni { get; }
     DbSet<Personalizzazione> Personalizzazioni { get; }
+    DbSet<StatoBolla> StatiBolla { get; }
 
     /// <summary>
     /// Returns an EntityEntry for the given entity.

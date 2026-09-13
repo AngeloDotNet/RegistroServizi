@@ -17,5 +17,9 @@ public class ApplicazioneConfiguration : IEntityTypeConfiguration<Applicazione>
         builder.Property(a => a.Versione)
             .IsRequired()
             .HasMaxLength(15);
+
+        builder.Property(a => a.TimeZone)
+            .IsRequired()
+            .HasMaxLength(50);
     }
 }

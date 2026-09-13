@@ -52,6 +52,10 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext, IMemoryCac
 
     public async Task<ApplicazioneDto> UpdateApplicazioneAsync(UpdateApplicazioneDto updateDto, CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(updateDto);
+
+        cancellationToken.ThrowIfCancellationRequested();
+
         if (updateDto.Id == Guid.Empty)
         {
             throw new ArgumentException("Il campo Id non può essere vuoto.", nameof(updateDto.Id));
@@ -72,6 +76,7 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext, IMemoryCac
             throw new ArgumentNullException(nameof(updateDto.TimeZone), "Il campo TimeZone non può essere nullo o vuoto.");
         }
 
+        //var applicazione = await dbContext.Applicazioni.FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken).ConfigureAwait(false)
         var applicazione = await dbContext.Applicazioni.FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
             ?? throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato.");
 
@@ -79,34 +84,25 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext, IMemoryCac
         applicazione.Versione = updateDto.Versione;
         applicazione.TimeZone = updateDto.TimeZone;
 
-        dbContext.Applicazioni.Update(applicazione);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        try
+        {
+            //await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            var correlationId = Guid.NewGuid().ToString("D");
+            throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato. CorrelationId: {correlationId}", ex);
+        }
+        catch (DbUpdateException ex)
+        {
+            var correlationId = Guid.NewGuid().ToString("D");
+            throw new InvalidOperationException($"Errore durante l'aggiornamento dell'applicazione. CorrelationId: {correlationId}", ex);
+        }
 
-        await memoryCache.RemoveAsync(cacheKey);
+        await memoryCache.RemoveAsync(cacheKey).ConfigureAwait(false);
 
         return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
-
-        //var local = dbContext.Applicazioni.Local.FirstOrDefault(x => x.Id == updateDto.Id);
-
-        //if (local is not null)
-        //{
-        //    dbContext.Entry(local).State = EntityState.Detached;
-        //}
-
-        //var applicazione = await dbContext.Applicazioni
-        //    .AsNoTracking()
-        //    .FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
-        //    ?? throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato.");
-
-        //applicazione.NomeApplicazione = updateDto.NomeApplicazione;
-        //applicazione.Versione = updateDto.Versione;
-
-        //dbContext.Applicazioni.Attach(applicazione);
-        //dbContext.Entry(applicazione).State = EntityState.Modified;
-
-        //await dbContext.SaveChangesAsync(cancellationToken);
-
-        //return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
     }
 
     private IQueryable<Applicazione> ApplicazioneQuery() => dbContext.Applicazioni.AsNoTracking();

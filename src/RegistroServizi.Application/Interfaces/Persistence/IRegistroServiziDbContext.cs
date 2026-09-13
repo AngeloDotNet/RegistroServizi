@@ -13,15 +13,6 @@ public interface IRegistroServiziDbContext
     DbSet<StatoBolla> StatiBolla { get; }
 
     /// <summary>
-    /// Returns an EntityEntry for the given entity.
-    /// This method is used to get information about the entity's state and to perform operations on it.
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <param name="entity"></param>
-    /// <returns></returns>
-    //EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
-
-    /// <summary>
     /// Saves all changes made in this context to the database asynchronously.
     /// This method will automatically detect changes made to the tracked entities and generate the appropriate SQL commands to persist those changes to the database.
     /// </summary>

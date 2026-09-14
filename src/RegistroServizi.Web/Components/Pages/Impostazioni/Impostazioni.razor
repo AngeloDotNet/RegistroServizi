@@ -1,4 +1,4 @@
-﻿@page "/impostazioni/dashboard"
+﻿@page "/impostazioni"
 @inject NavigationManager navigationManager
 
 <PageTitle>Impostazioni · Registro Servizi</PageTitle>
@@ -25,7 +25,7 @@
         </div>
     </MudPaper>
 
-    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewPersonalizzazione()">
+    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewPersonalizzazione()">
         <div class="d-flex gap-3">
             <div class="mudpaper-icon prezziservizi"><MudIcon Icon="@Icons.Material.Filled.SettingsApplications" Size="MudBlazor.Size.Medium" /></div>
             <div class="flex-grow-1" style="min-width: 0;">
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-    </MudPaper>
+    </MudPaper> *@
 
     <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewPrezziServizi()">
         <div class="d-flex gap-3">
@@ -58,15 +58,15 @@
     /// <summary>
     /// Navigates to the Personalizzazione page.
     /// </summary>
-    private void ViewPersonalizzazione() => navigationManager.NavigateTo("/Personalizzazione");
+    private void ViewPersonalizzazione() => navigationManager.NavigateTo("/personalizzazione");
 
     /// <summary>
     /// Navigates to the Prezzi Servizi page.
     /// </summary>
-    private void ViewPrezziServizi() => navigationManager.NavigateTo("/Prezzi-Servizi");
+    private void ViewPrezziServizi() => navigationManager.NavigateTo("/prezzi-servizi");
 
     /// <summary>
     /// Navigates to the Applicazione dashboard page.
     /// </summary>
-    private void ViewApplicazione() => navigationManager.NavigateTo("/Applicazione");
+    private void ViewApplicazione() => navigationManager.NavigateTo("/applicazione");
 }

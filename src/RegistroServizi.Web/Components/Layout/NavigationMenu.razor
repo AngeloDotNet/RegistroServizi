@@ -40,8 +40,8 @@
             </Authorized>
         </AuthorizeView>
         <MudNavLink Href="/gestione-clienti" Icon="@Icons.Material.Filled.Groups2" Disabled>Gestione Clienti</MudNavLink>
-        <MudNavLink Href="/opzioni/dashboard" Icon="@Icons.Material.Filled.Anchor">Opzioni</MudNavLink>
-        <MudNavLink Href="/impostazioni/dashboard" Icon="@Icons.Material.Filled.AccountTree">Impostazioni</MudNavLink>
+        <MudNavLink Href="/opzioni" Icon="@Icons.Material.Filled.Anchor">Opzioni</MudNavLink>
+        <MudNavLink Href="/impostazioni" Icon="@Icons.Material.Filled.AccountTree">Impostazioni</MudNavLink>
     </MudNavGroup>
     <MudNavLink Href="/help" Icon="@Icons.Material.Filled.Help" Disabled>Help</MudNavLink>
 </MudNavMenu>
@@ -65,7 +65,7 @@
 
         var applicazione = await dbContext.Applicazioni
             .OrderBy(x => x.Id)
-            .Select(x => new { x.NomeApplicazione, x.Versione })
+            .Select(x => ApplicazioneHelper.MapApplicazioneToDto(x))
             .FirstOrDefaultAsync();
 
         if (applicazione is not null)

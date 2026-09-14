@@ -1,5 +1,4 @@
 ﻿using MudBlazor;
-using RegistroServizi.Application.Helpers;
 
 namespace RegistroServizi.Web.Components.Pages.Applicazione;
 
@@ -78,8 +77,6 @@ public partial class Applicazione
             Snackbar.Add("Il nome dell'applicazione non può essere vuoto.", Severity.Warning);
         }
     }
-
-    //private static readonly Regex versionRegex = new(@"^\d+(\.\d+)*$", RegexOptions.Compiled);
 
     private void ValidateVersione(string value)
     {

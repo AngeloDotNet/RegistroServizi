@@ -78,15 +78,6 @@
                         @context.Item.TimeZone
                     </CellTemplate>
                     <EditTemplate>
-                        @* <MudTextField T="string"
-                            @bind-Value="context.Item.TimeZone"
-                            @bind-Value:after="() => ValidateTimeZone(context.Item.TimeZone)"
-                            Label="Fuso Orario"
-                            Variant="Variant.Outlined"
-                            Required="true"
-                            RequiredError="Il fuso orario è obbligatorio."
-                            Immediate="true"
-                            HelperText="Esempio: Europe/Rome" /> *@
                         <MudSelect T="string"
                             @bind-Value="context.Item.TimeZone"
                             @bind-Value:after="() => ValidateTimeZone(context.Item.TimeZone)"

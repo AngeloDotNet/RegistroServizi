@@ -1,4 +1,4 @@
-﻿@page "/opzioni/dashboard"
+﻿@page "/opzioni"
 @inject NavigationManager navigationManager
 
 <PageTitle>Opzioni · Registro Servizi</PageTitle>
@@ -6,15 +6,13 @@
 <div class="section-header">
     <div>
         <h1 class="section-title">Opzioni</h1>
-        @*<p class="section-subtitle"></p>*@
+        <p class="section-subtitle">Gestione delle opzioni disponibili</p>
     </div>
 </div>
 
 <div class="mudpaper-grid mb-4">
-    @* <MudPaper Elevation="2" Class="pa-4" Style="border-radius: 12px; cursor: pointer; transition: all 0.2s ease; border-left: 4px solid var(--mud-palette-primary);" @onclick="() => ViewPersonalizzazione()"> *@
-    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">
-            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.LocalHospital" Size="MudBlazor.Size.Medium" />
             </div>
@@ -27,11 +25,10 @@
                 </div>
             </div>
         </div>
-    </MudPaper>
+    </MudPaper> *@
 
-    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">
-            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.LocalParking" Size="MudBlazor.Size.Medium" />
             </div>
@@ -44,11 +41,10 @@
                 </div>
             </div>
         </div>
-    </MudPaper>
+    </MudPaper> *@
 
-    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">
-            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.ZoomInMap" Size="MudBlazor.Size.Medium" />
             </div>
@@ -61,11 +57,10 @@
                 </div>
             </div>
         </div>
-    </MudPaper>
+    </MudPaper> *@
 
-    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">
-            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.DirectionsCar" Size="MudBlazor.Size.Medium" />
             </div>
@@ -78,11 +73,10 @@
                 </div>
             </div>
         </div>
-    </MudPaper>
+    </MudPaper> *@
 
-    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">
-            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.LocationOn" Size="MudBlazor.Size.Medium" />
             </div>
@@ -95,11 +89,10 @@
                 </div>
             </div>
         </div>
-    </MudPaper>
+    </MudPaper> *@
 
-    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">
-            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.People" Size="MudBlazor.Size.Medium" />
             </div>
@@ -112,11 +105,10 @@
                 </div>
             </div>
         </div>
-    </MudPaper>
+    </MudPaper> *@
 
-    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">
-            @* <div class="mudpaper-icon prezziservizi" style="width: 48px; height: 48px; min-width: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"> *@
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.PeopleAlt" Size="MudBlazor.Size.Medium" />
             </div>
@@ -129,7 +121,7 @@
                 </div>
             </div>
         </div>
-    </MudPaper>
+    </MudPaper> *@
 </div>
 
 @code {

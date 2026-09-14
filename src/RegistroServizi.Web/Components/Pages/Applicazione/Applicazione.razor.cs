@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using MudBlazor;
+﻿using MudBlazor;
+using RegistroServizi.Application.Helpers;
 
 namespace RegistroServizi.Web.Components.Pages.Applicazione;
 
@@ -79,7 +79,7 @@ public partial class Applicazione
         }
     }
 
-    private static readonly Regex versionRegex = new(@"^\d+(\.\d+)*$", RegexOptions.Compiled);
+    //private static readonly Regex versionRegex = new(@"^\d+(\.\d+)*$", RegexOptions.Compiled);
 
     private void ValidateVersione(string value)
     {
@@ -89,7 +89,7 @@ public partial class Applicazione
             return;
         }
 
-        if (!versionRegex.IsMatch(value))
+        if (!ApplicazioneHelper.VersionRegex.IsMatch(value))
         {
             Snackbar.Add("Formato versione non valido. Usa ad esempio 1.0.0.", Severity.Warning);
         }
@@ -116,7 +116,7 @@ public partial class Applicazione
             return false;
         }
 
-        if (string.IsNullOrWhiteSpace(item.Versione) || !versionRegex.IsMatch(item.Versione))
+        if (string.IsNullOrWhiteSpace(item.Versione) || !ApplicazioneHelper.VersionRegex.IsMatch(item.Versione))
         {
             Snackbar.Add("La versione dell'applicazione non è valida. Usa ad esempio 1.0.0.", Severity.Warning);
             return false;

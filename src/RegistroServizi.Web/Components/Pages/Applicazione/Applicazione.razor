@@ -1,4 +1,4 @@
-﻿@page "/Applicazione"
+﻿@page "/applicazione"
 @attribute [Authorize(Roles = nameof(Role.Admin))]
 
 <PageTitle>Applicazione · Registro Servizi</PageTitle>
@@ -78,7 +78,7 @@
                         @context.Item.TimeZone
                     </CellTemplate>
                     <EditTemplate>
-                        <MudTextField T="string"
+                        @* <MudTextField T="string"
                             @bind-Value="context.Item.TimeZone"
                             @bind-Value:after="() => ValidateTimeZone(context.Item.TimeZone)"
                             Label="Fuso Orario"
@@ -86,7 +86,17 @@
                             Required="true"
                             RequiredError="Il fuso orario è obbligatorio."
                             Immediate="true"
-                            HelperText="Esempio: Europe/Rome" />
+                            HelperText="Esempio: Europe/Rome" /> *@
+                        <MudSelect T="string"
+                            @bind-Value="context.Item.TimeZone"
+                            @bind-Value:after="() => ValidateTimeZone(context.Item.TimeZone)"
+                            Label="Fuso Orario"
+                            Variant="Variant.Outlined"
+                            Required="true"
+                            RequiredError="Il fuso orario è obbligatorio."
+                            Immediate="true"
+                            HelperText="Esempio: Europe/Rome"
+                            />
                     </EditTemplate>
                 </TemplateColumn>
                 

@@ -1,36 +1,37 @@
 ﻿namespace RegistroServizi.Application.Services;
 
-public class ApplicazioneService(IRegistroServiziDbContext dbContext, IMemoryCacheService memoryCache) : IApplicazioneService
+public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplicazioneService
 {
-    private readonly string cacheKey = MemoryCacheHelper.CacheKeyApplicazione;
-
+    /// <summary>
+    /// Recupera tutte le applicazioni presenti nel database.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<IReadOnlyList<ApplicazioneDto>> GetAllApplicazioniAsync(CancellationToken cancellationToken = default)
     {
-        var cacheData = await memoryCache.GetAsync<IReadOnlyList<ApplicazioneDto>>(cacheKey);
-
-        if (cacheData is not null)
-        {
-            return cacheData;
-        }
-
         var result = await ApplicazioneQuery()
             .OrderBy(x => x.Id)
             .Select(applicazione => ApplicazioneHelper.MapApplicazioneToDto(applicazione))
             .ToListAsync(cancellationToken);
 
-        await memoryCache.SetAsync(cacheKey, result, MemoryCacheHelper.DefaultExpiration);
-
         return result;
     }
 
+    /// <summary>
+    /// Recupera un'applicazione specifica in base all'ID fornito.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="KeyNotFoundException"></exception>
     public async Task<ApplicazioneDto> GetByIdApplicazioneAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var applicazione = await ApplicazioneQuery()
+        var result = await ApplicazioneQuery()
             .Select(applicazione => ApplicazioneHelper.MapApplicazioneToDto(applicazione))
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
             ?? throw new KeyNotFoundException($"Applicazione con id {id} non trovato.");
 
-        return applicazione;
+        return result;
     }
 
     //public async Task<ApplicazioneDto> CreateApplicazioneAsync(CreateApplicazioneDto createDto, CancellationToken cancellationToken = default)
@@ -50,6 +51,16 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext, IMemoryCac
     //    return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
     //}
 
+    /// <summary>
+    /// Aggiorna un'applicazione esistente nel database.
+    /// </summary>
+    /// <param name="updateDto"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Il DTO dell'applicazione aggiornata.</returns>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="KeyNotFoundException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
     public async Task<ApplicazioneDto> UpdateApplicazioneAsync(UpdateApplicazioneDto updateDto, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(updateDto);
@@ -76,18 +87,19 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext, IMemoryCac
             throw new ArgumentNullException(nameof(updateDto.TimeZone), "Il campo TimeZone non può essere nullo o vuoto.");
         }
 
-        //var applicazione = await dbContext.Applicazioni.FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken).ConfigureAwait(false)
-        var applicazione = await dbContext.Applicazioni.FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
+        var entity = await dbContext.Applicazioni.FindAsync([updateDto.Id], cancellationToken).ConfigureAwait(false)
             ?? throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato.");
 
-        applicazione.NomeApplicazione = updateDto.NomeApplicazione;
-        applicazione.Versione = updateDto.Versione;
-        applicazione.TimeZone = updateDto.TimeZone;
+        entity.NomeApplicazione = updateDto.NomeApplicazione;
+        entity.Versione = updateDto.Versione;
+        entity.TimeZone = updateDto.TimeZone;
+
+        dbContext.Applicazioni.Update(entity);
 
         try
         {
-            //await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            dbContext.Entry(entity).State = EntityState.Detached;
         }
         catch (DbUpdateConcurrencyException ex)
         {
@@ -100,9 +112,7 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext, IMemoryCac
             throw new InvalidOperationException($"Errore durante l'aggiornamento dell'applicazione. CorrelationId: {correlationId}", ex);
         }
 
-        await memoryCache.RemoveAsync(cacheKey).ConfigureAwait(false);
-
-        return ApplicazioneHelper.MapApplicazioneToDto(applicazione);
+        return ApplicazioneHelper.MapApplicazioneToDto(entity);
     }
 
     private IQueryable<Applicazione> ApplicazioneQuery() => dbContext.Applicazioni.AsNoTracking();

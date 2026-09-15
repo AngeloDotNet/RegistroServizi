@@ -1,36 +1,37 @@
 ﻿namespace RegistroServizi.Application.Services;
 
-public class PrezzoServizioService(IRegistroServiziDbContext dbContext, IMemoryCacheService memoryCache) : IPrezzoServizioService
+public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezzoServizioService
 {
-    private readonly string cacheKey = MemoryCacheHelper.CacheKeyPrezzoServizio;
-
+    /// <summary>
+    /// Recupera tutti i prezzi dei servizi presenti nel database.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<IReadOnlyList<PrezzoServizioDto>> GetAllPrezziServiziAsync(CancellationToken cancellationToken = default)
     {
-        var cacheData = await memoryCache.GetAsync<IReadOnlyList<PrezzoServizioDto>>(cacheKey);
-
-        if (cacheData is not null)
-        {
-            return cacheData;
-        }
-
-        var prezziServizi = await PrezzoServizioQuery()
+        var result = await PrezzoServizioQuery()
             .OrderBy(x => x.TipologiaServizio.TipoServizio)
             .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
             .ToListAsync(cancellationToken);
 
-        await memoryCache.SetAsync(cacheKey, prezziServizi, MemoryCacheHelper.DefaultExpiration);
-
-        return prezziServizi;
+        return result;
     }
 
+    /// <summary>
+    /// Recupera un prezzo di servizio specifico in base all'ID fornito.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="KeyNotFoundException"></exception>
     public async Task<PrezzoServizioDto> GetByIdPrezzoServizioAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var prezzoServizio = await PrezzoServizioQuery()
+        var result = await PrezzoServizioQuery()
             .Where(x => x.Id == id)
             .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
             .FirstOrDefaultAsync(cancellationToken) ?? throw new KeyNotFoundException($"Prezzo servizio con id {id} non trovato.");
 
-        return prezzoServizio;
+        return result;
     }
 
     //public async Task<PrezzoServizioDto> CreatePrezzoServizioAsync(CreatePrezzoServizioDto createDto, CancellationToken cancellationToken = default)
@@ -55,6 +56,15 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext, IMemoryC
     //    return PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio);
     //}
 
+    /// <summary>
+    /// Aggiorna un prezzo di servizio esistente nel database.
+    /// </summary>
+    /// <param name="updateDto">Oggetto contenente i dati aggiornati del prezzo del servizio.</param>
+    /// <param name="cancellationToken">Token per la cancellazione dell'operazione asincrona.</param>
+    /// <returns>Il DTO del prezzo del servizio aggiornato.</returns>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="KeyNotFoundException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
     public async Task<PrezzoServizioDto> UpdatePrezzoServizioAsync(UpdatePrezzoServizioDto updateDto, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(updateDto);
@@ -66,29 +76,61 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext, IMemoryC
             throw new ArgumentException("Il campo Id non può essere vuoto.", nameof(updateDto.Id));
         }
 
-        //TODO: Aggiungere eventuali altre validazioni dei campi in ingresso (updateDto) se necessario.
+        if (updateDto.TipologiaServizioId == Guid.Empty)
+        {
+            throw new ArgumentException("Il campo TipologiaServizioId non può essere vuoto.", nameof(updateDto.TipologiaServizioId));
+        }
 
-        var prezzoServizio = await dbContext.PrezziServizi.FirstOrDefaultAsync(x => x.Id == updateDto.Id, cancellationToken)
+        var numericChecks = new (decimal Value, string DisplayName, string ParamName)[]
+        {
+            (updateDto.CostoFisso, "CostoFisso", nameof(updateDto.CostoFisso)),
+            (updateDto.CostoKm, "CostoKm", nameof(updateDto.CostoKm)),
+            (updateDto.SecondoTrasportato, "SecondoTrasportato", nameof(updateDto.SecondoTrasportato)),
+            (updateDto.FermoMacchina, "FermoMacchina", nameof(updateDto.FermoMacchina))
+            //(updateDto.Accompagnatore, "Accompagnatore", nameof(updateDto.Accompagnatore)),
+            //(updateDto.ScontoSocio, "ScontoSocio", nameof(updateDto.ScontoSocio))
+        };
+
+        foreach (var (value, displayName, paramName) in numericChecks)
+        {
+            if (value < 0)
+            {
+                throw new ArgumentException($"Il campo {displayName} non può essere negativo.", paramName);
+            }
+        }
+
+        var entity = await dbContext.PrezziServizi.FindAsync([updateDto.Id], cancellationToken).ConfigureAwait(false)
             ?? throw new KeyNotFoundException($"Prezzo servizio con id {updateDto.Id} non trovato.");
 
-        prezzoServizio.TipologiaServizioId = updateDto.TipologiaServizioId;
-        prezzoServizio.CostoFisso = updateDto.CostoFisso;
-        prezzoServizio.CostoKm = updateDto.CostoKm;
-        prezzoServizio.SecondoTrasportato = updateDto.SecondoTrasportato;
-        prezzoServizio.FermoMacchina = updateDto.FermoMacchina;
-        prezzoServizio.Accompagnatore = updateDto.Accompagnatore;
-        prezzoServizio.ScontoSocio = updateDto.ScontoSocio;
+        entity.TipologiaServizioId = updateDto.TipologiaServizioId;
+        entity.CostoFisso = updateDto.CostoFisso;
+        entity.CostoKm = updateDto.CostoKm;
+        entity.SecondoTrasportato = updateDto.SecondoTrasportato;
+        entity.FermoMacchina = updateDto.FermoMacchina;
+        entity.Accompagnatore = updateDto.Accompagnatore;
+        entity.ScontoSocio = updateDto.ScontoSocio;
 
-        dbContext.PrezziServizi.Update(prezzoServizio);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        dbContext.PrezziServizi.Update(entity);
 
-        await memoryCache.RemoveAsync(cacheKey);
+        try
+        {
+            await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            dbContext.Entry(entity).State = EntityState.Detached;
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            var correlationId = Guid.NewGuid().ToString("D");
+            throw new KeyNotFoundException($"Prezzo servizio con id {updateDto.Id} non trovato. CorrelationId: {correlationId}", ex);
+        }
+        catch (DbUpdateException ex)
+        {
+            var correlationId = Guid.NewGuid().ToString("D");
+            throw new InvalidOperationException($"Errore durante l'aggiornamento del prezzo servizio. CorrelationId: {correlationId}", ex);
+        }
 
-        return PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio);
+        return PrezzoServizioHelper.MapPrezzoServizioToDto(entity);
     }
 
     private IQueryable<PrezzoServizio> PrezzoServizioQuery()
-        => dbContext.PrezziServizi
-            .AsNoTracking()
-            .Include(x => x.TipologiaServizio);
+        => dbContext.PrezziServizi.AsNoTracking().Include(x => x.TipologiaServizio);
 }

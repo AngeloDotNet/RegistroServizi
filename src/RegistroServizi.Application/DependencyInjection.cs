@@ -1,6 +1,4 @@
-﻿using RegistroServizi.Application.Services.Common;
-
-namespace RegistroServizi.Application;
+﻿namespace RegistroServizi.Application;
 
 /// <summary>
 /// Extension methods for registering application services in the dependency injection container.
@@ -10,24 +8,15 @@ public static class DependencyInjection
     extension(IServiceCollection services)
     {
         /// <summary>
-        /// Registers application services in the dependency injection container based on the specified cache provider.
+        /// Registers application services in the dependency injection container.
         /// </summary>
-        /// <param name="cacheProvider"></param>
         /// <returns></returns>
-        public IServiceCollection AddRegistroServiziApplication(string cacheProvider)
+        public IServiceCollection AddRegistroServiziApplication()
         {
-            if (cacheProvider.Equals("Memory", StringComparison.OrdinalIgnoreCase))
-            {
-                services.AddMemoryCache();
-                services.AddSingleton<IMemoryCacheService, MemoryCacheService>();
-            }
-
             services.AddScoped<IApplicazioneService, ApplicazioneService>();
             services.AddScoped<IPrezzoServizioService, PrezzoServizioService>();
 
             services.AddSingleton(TimeProvider.System);
-            services.AddSingleton<ClientTimeProvider>();
-            services.AddSingleton<ITimeZoneService, TimeZoneService>();
 
             return services;
         }

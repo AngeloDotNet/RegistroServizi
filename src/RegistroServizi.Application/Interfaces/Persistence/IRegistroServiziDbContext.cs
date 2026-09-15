@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Application.Interfaces.Persistence;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+
+namespace RegistroServizi.Application.Interfaces.Persistence;
 
 /// <summary>
 /// Represents the database context for the RegistroServizi application.
@@ -11,6 +13,7 @@ public interface IRegistroServiziDbContext
     DbSet<Applicazione> Applicazioni { get; }
     DbSet<Personalizzazione> Personalizzazioni { get; }
     DbSet<StatoBolla> StatiBolla { get; }
+    DbSet<TitoloStudio> TitoliStudio { get; }
 
     /// <summary>
     /// Saves all changes made in this context to the database asynchronously.
@@ -19,4 +22,12 @@ public interface IRegistroServiziDbContext
     /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
     /// <returns>A task that represents the asynchronous save operation. The task result contains the number of state entries written to the database.</returns>
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets an EntityEntry for the given entity. This method provides access to change tracking information and operations for the specified entity.
+    /// </summary>
+    /// <typeparam name="TEntity">The type of the entity.</typeparam>
+    /// <param name="entity">The entity for which to get the EntityEntry.</param>
+    /// <returns>An EntityEntry for the specified entity.</returns>
+    EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
 }

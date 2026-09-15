@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace RegistroServizi.Application.Options;
+﻿namespace RegistroServizi.Application.Options;
 
 public class AdminUserOptions
 {

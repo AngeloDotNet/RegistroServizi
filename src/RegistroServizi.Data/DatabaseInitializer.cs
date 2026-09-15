@@ -41,6 +41,9 @@ public static class DatabaseInitializer
 
             // Seed data for StatiBolla
             await SeedDataStatiBollaAsync(scope.ServiceProvider, logger);
+
+            // Seed data for TitoliStudio
+            await SeedDataTitoliStudioAsync(scope.ServiceProvider, logger);
         }
         catch (Exception ex)
         {
@@ -343,6 +346,34 @@ public static class DatabaseInitializer
         };
 
         await dbContext.StatiBolla.AddRangeAsync(statiBolla);
+        await dbContext.SaveChangesAsync();
+    }
+
+    private static async Task SeedDataTitoliStudioAsync(IServiceProvider services, ILogger logger)
+    {
+        var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
+
+        if (await dbContext.TitoliStudio.AnyAsync())
+        {
+            logger.LogInformation("Titoli Studio data already exists. Skipping seeding.");
+            return;
+        }
+
+        var titoliStudio = new List<TitoloStudio>
+        {
+            new TitoloStudio { Id = Guid.NewGuid(), Descrizione = "Nessuno" },
+            new TitoloStudio { Id = Guid.NewGuid(), Descrizione = "Licenza Elementare" },
+            new TitoloStudio { Id = Guid.NewGuid(), Descrizione = "Licenza Media" },
+            new TitoloStudio { Id = Guid.NewGuid(), Descrizione = "Qualifica Professionale" },
+            new TitoloStudio { Id = Guid.NewGuid(), Descrizione = "Diploma" },
+            new TitoloStudio { Id = Guid.NewGuid(), Descrizione = "Laurea" },
+            new TitoloStudio { Id = Guid.NewGuid(), Descrizione = "Diploma di Laurea" },
+            new TitoloStudio { Id = Guid.NewGuid(), Descrizione = "Dottorato" },
+            new TitoloStudio { Id = Guid.NewGuid(), Descrizione = "Dottorato di Ricerca" },
+            new TitoloStudio { Id = Guid.NewGuid(), Descrizione = "Master" }
+        };
+
+        await dbContext.TitoliStudio.AddRangeAsync(titoliStudio);
         await dbContext.SaveChangesAsync();
     }
 }

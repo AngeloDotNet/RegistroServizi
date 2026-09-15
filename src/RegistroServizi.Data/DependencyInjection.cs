@@ -48,50 +48,5 @@ public static class DependencyInjection
 
             return services;
         }
-
-        //public IServiceCollection AddRegistroServiziData(IConfiguration configuration, string sqlConnection = "SqlServerConnection")
-        //{
-        //    var connectionString = configuration.GetConnectionString(sqlConnection) ?? throw new InvalidOperationException($"Connection string '{sqlConnection}' was not found.");
-
-        //    services.AddDbContext<RegistroServiziDbContext>(options => options.UseSqlServer(connectionString, sqlOptions =>
-        //    {
-        //        //sqlOptions.CommandTimeout(60);
-        //        //sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-        //        sqlOptions.EnableRetryOnFailure();
-
-        //        sqlOptions.MigrationsAssembly(typeof(RegistroServiziDbContext).Assembly.FullName);
-        //        sqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName);
-
-        //        sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
-        //        sqlOptions.UseCompatibilityLevel(160);
-        //    })
-        //    .LogTo(Console.WriteLine, LogLevel.Information)
-        //    .EnableDetailedErrors(false)
-        //    .EnableSensitiveDataLogging(false)
-        //    .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
-        //    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
-
-        //    services.AddDbContextFactory<RegistroServiziDbContext>(options => options.UseSqlServer(connectionString, sqlOptions =>
-        //    {
-        //        //sqlOptions.CommandTimeout(60);
-        //        //sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-        //        sqlOptions.EnableRetryOnFailure();
-
-        //        sqlOptions.MigrationsAssembly(typeof(RegistroServiziDbContext).Assembly.FullName);
-        //        sqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName);
-
-        //        sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
-        //        sqlOptions.UseCompatibilityLevel(160);
-        //    })
-        //    .LogTo(Console.WriteLine, LogLevel.Information)
-        //    .EnableDetailedErrors(false)
-        //    .EnableSensitiveDataLogging(false)
-        //    .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning))
-        //    .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking), ServiceLifetime.Scoped);
-
-        //    services.AddScoped<IRegistroServiziDbContext>(provider => provider.GetRequiredService<IDbContextFactory<RegistroServiziDbContext>>().CreateDbContext());
-
-        //    return services;
-        //}
     }
 }

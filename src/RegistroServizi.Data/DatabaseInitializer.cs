@@ -126,7 +126,6 @@ public static class DatabaseInitializer
 
         var applicazione = new Applicazione
         {
-            //Id = Guid.Parse("b5e6d4a8-a0e4-4f1a-a295-2cf1f53cd1c3"),
             Id = Guid.NewGuid(),
             NomeApplicazione = "Registro Servizi",
             Versione = "1.0.0"
@@ -149,16 +148,6 @@ public static class DatabaseInitializer
 
         var tipologieServizio = new List<TipologiaServizio>
         {
-            //new TipologiaServizio { Id = Guid.Parse("a86ed006-70ba-4465-90fd-f549ab470343"), TipoServizio = "118" },
-            //new TipologiaServizio { Id = Guid.Parse("918ae96a-6f8b-4fdc-89ea-fab93759046c"), TipoServizio = "Automedica" },
-            //new TipologiaServizio { Id = Guid.Parse("381e7054-5e58-4a52-9b77-807e1946a89f"), TipoServizio = "CMR" },
-            //new TipologiaServizio { Id = Guid.Parse("a6bff4fd-04a6-43f2-956e-6a2b3fc13228"), TipoServizio = "Guardia Medica" },
-            //new TipologiaServizio { Id = Guid.Parse("96bcc2d1-a283-4856-8af0-9cd1c8172569"), TipoServizio = "Stazionamento" },
-            //new TipologiaServizio { Id = Guid.Parse("205b3142-5f80-4dfb-8239-66b29b7c5328"), TipoServizio = "Trasporto" },
-            //new TipologiaServizio { Id = Guid.Parse("5c85a7b8-0bac-45a5-b726-e65ae536d23a"), TipoServizio = "Trasporto Ambulanza" },
-            //new TipologiaServizio { Id = Guid.Parse("f598d2ea-f744-4f60-8d98-bf90093cfd4b"), TipoServizio = "Trasporto Disabili" },
-            //new TipologiaServizio { Id = Guid.Parse("03b5e62a-0850-4721-8f00-49c190f573e2"), TipoServizio = "Trasporto Speciale" }
-
             new TipologiaServizio { Id = Guid.NewGuid(), TipoServizio = "118" },
             new TipologiaServizio { Id = Guid.NewGuid(), TipoServizio = "Automedica" },
             new TipologiaServizio { Id = Guid.NewGuid(), TipoServizio = "CMR" },
@@ -177,13 +166,6 @@ public static class DatabaseInitializer
     private static async Task SeedDataPrezziServiziAsync(IServiceProvider services, ILogger logger)
     {
         var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
-        //var existingPrezziServizi = await dbContext.PrezziServizi.FirstOrDefaultAsync();
-
-        //if (existingPrezziServizi != null)
-        //{
-        //    logger.LogInformation("Prezzi Servizi data already exists. Skipping seeding.");
-        //    return;
-        //}
 
         if (await dbContext.PrezziServizi.AnyAsync())
         {
@@ -215,110 +197,6 @@ public static class DatabaseInitializer
             dbContext.PrezziServizi.Add(prezzoServizio);
         }
 
-        //var prezziServizi = new List<PrezzoServizio>
-        //{
-        //    new PrezzoServizio
-        //    {
-        //        //TipologiaServizioId = Guid.Parse("a86ed006-70ba-4465-90fd-f549ab470343"),
-        //        TipologiaServizioId = Guid.NewGuid(),
-        //        CostoFisso = 0.0m,
-        //        CostoKm = 0.0m,
-        //        SecondoTrasportato = 0.0m,
-        //        FermoMacchina = 0.0m,
-        //        Accompagnatore = 0.0m,
-        //        ScontoSocio = 0
-        //    },
-        //    new PrezzoServizio
-        //    {
-        //        //TipologiaServizioId = Guid.Parse("918ae96a-6f8b-4fdc-89ea-fab93759046c"),
-        //        TipologiaServizioId = Guid.NewGuid(),
-        //        CostoFisso = 0.0m,
-        //        CostoKm = 0.0m,
-        //        SecondoTrasportato = 0.0m,
-        //        FermoMacchina = 0.0m,
-        //        Accompagnatore = 0.0m,
-        //        ScontoSocio = 0
-        //    },
-        //    new PrezzoServizio
-        //    {
-        //        //TipologiaServizioId = Guid.Parse("381e7054-5e58-4a52-9b77-807e1946a89f"),
-        //        TipologiaServizioId = Guid.NewGuid(),
-        //        CostoFisso = 0.0m,
-        //        CostoKm = 0.0m,
-        //        SecondoTrasportato = 0.0m,
-        //        FermoMacchina = 0.0m,
-        //        Accompagnatore = 0.0m,
-        //        ScontoSocio = 0
-        //    },
-        //    new PrezzoServizio
-        //    {
-        //        //TipologiaServizioId = Guid.Parse("a6bff4fd-04a6-43f2-956e-6a2b3fc13228"),
-        //        TipologiaServizioId = Guid.NewGuid(),
-        //        CostoFisso = 0.0m,
-        //        CostoKm = 0.0m,
-        //        SecondoTrasportato = 0.0m,
-        //        FermoMacchina = 0.0m,
-        //        Accompagnatore = 0.0m,
-        //        ScontoSocio = 0
-        //    },
-        //    new PrezzoServizio
-        //    {
-        //        //TipologiaServizioId = Guid.Parse("96bcc2d1-a283-4856-8af0-9cd1c8172569"),
-        //        TipologiaServizioId = Guid.NewGuid(),
-        //        CostoFisso = 0.0m,
-        //        CostoKm = 0.0m,
-        //        SecondoTrasportato = 0.0m,
-        //        FermoMacchina = 0.0m,
-        //        Accompagnatore = 0.0m,
-        //        ScontoSocio = 0
-        //    },
-        //    new PrezzoServizio
-        //    {
-        //        //TipologiaServizioId = Guid.Parse("205b3142-5f80-4dfb-8239-66b29b7c5328"),
-        //        TipologiaServizioId = Guid.NewGuid(),
-        //        CostoFisso = 0.0m,
-        //        CostoKm = 0.0m,
-        //        SecondoTrasportato = 0.0m,
-        //        FermoMacchina = 0.0m,
-        //        Accompagnatore = 0.0m,
-        //        ScontoSocio = 0
-        //    },
-        //    new PrezzoServizio
-        //    {
-        //        //TipologiaServizioId = Guid.Parse("5c85a7b8-0bac-45a5-b726-e65ae536d23a"),
-        //        TipologiaServizioId = Guid.NewGuid(),
-        //        CostoFisso = 0.0m,
-        //        CostoKm = 0.0m,
-        //        SecondoTrasportato = 0.0m,
-        //        FermoMacchina = 0.0m,
-        //        Accompagnatore = 0.0m,
-        //        ScontoSocio = 0
-        //    },
-        //    new PrezzoServizio
-        //    {
-        //        //TipologiaServizioId = Guid.Parse("f598d2ea-f744-4f60-8d98-bf90093cfd4b"),
-        //        TipologiaServizioId = Guid.NewGuid(),
-        //        CostoFisso = 0.0m,
-        //        CostoKm = 0.0m,
-        //        SecondoTrasportato = 0.0m,
-        //        FermoMacchina = 0.0m,
-        //        Accompagnatore = 0.0m,
-        //        ScontoSocio = 0
-        //    },
-        //    new PrezzoServizio
-        //    {
-        //        //TipologiaServizioId = Guid.Parse("03b5e62a-0850-4721-8f00-49c190f573e2"),
-        //        TipologiaServizioId = Guid.NewGuid(),
-        //        CostoFisso = 0.0m,
-        //        CostoKm = 0.0m,
-        //        SecondoTrasportato = 0.0m,
-        //        FermoMacchina = 0.0m,
-        //        Accompagnatore = 0.0m,
-        //        ScontoSocio = 0
-        //    }
-        //};
-
-        //dbContext.PrezziServizi.AddRange(prezziServizi);
         await dbContext.SaveChangesAsync();
     }
 

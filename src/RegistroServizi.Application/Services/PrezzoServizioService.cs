@@ -87,8 +87,6 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
             (updateDto.CostoKm, "CostoKm", nameof(updateDto.CostoKm)),
             (updateDto.SecondoTrasportato, "SecondoTrasportato", nameof(updateDto.SecondoTrasportato)),
             (updateDto.FermoMacchina, "FermoMacchina", nameof(updateDto.FermoMacchina))
-            //(updateDto.Accompagnatore, "Accompagnatore", nameof(updateDto.Accompagnatore)),
-            //(updateDto.ScontoSocio, "ScontoSocio", nameof(updateDto.ScontoSocio))
         };
 
         foreach (var (value, displayName, paramName) in numericChecks)

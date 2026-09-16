@@ -53,7 +53,6 @@ public partial class Applicazione
         try
         {
             await ApplicazioneService.UpdateApplicazioneAsync(updatedItem);
-
             isEditing = false;
 
             Snackbar.Add("L'applicazione è stata aggiornata con successo.", Severity.Success);

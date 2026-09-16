@@ -1,6 +1,4 @@
-﻿using RegistroServizi.Domain.Common;
-
-namespace RegistroServizi.Domain.Entities;
+﻿namespace RegistroServizi.Domain.Entities;
 
 public class TitoloStudio : BaseEntity
 {

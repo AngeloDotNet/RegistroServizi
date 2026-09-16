@@ -1,2 +1,2 @@
 ﻿global using System.ComponentModel.DataAnnotations;
-global using RegistroServizi.Domain.Enums;
+global using RegistroServizi.Domain.Common;

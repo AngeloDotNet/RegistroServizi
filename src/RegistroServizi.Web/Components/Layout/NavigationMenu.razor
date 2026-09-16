@@ -65,7 +65,7 @@
 
         var applicazione = await dbContext.Applicazioni
             .OrderBy(x => x.Id)
-            .Select(x => ApplicazioneHelper.MapApplicazioneToDto(x))
+            .Select(x => new { x.NomeApplicazione, x.Versione })
             .FirstOrDefaultAsync();
 
         if (applicazione is not null)

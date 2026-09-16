@@ -1,12 +1,35 @@
-﻿<footer class="app-footer">
+﻿@rendermode InteractiveServer
+@inject IDbContextFactory<RegistroServiziDbContext> DbContextFactory
+
+<footer class="app-footer">
     <div class="app-footer-content">
         <p </p>
-        <p>&copy; @yearLicense Registro Servizi. All rights reserved.</p>
-        <p>Software developed free by Angelo Pirola and distributed under MIT License.</p>
+        @* <p>&copy; @yearLicense Registro Servizi. All rights reserved.</p>
+        <p>&copy; @yearLicense @appName. All rights reserved.</p> *@
+        <p>&copy; @yearLicense @appName. Tutti i diritti riservati.</p>
+        @* <p>Software developed free by Angelo Pirola and distributed under MIT License.</p> *@
+        <p>Software sviluppato gratuitamente da Angelo Pirola e distribuito con licenza MIT.</p>
     </div>
 </footer>
 
 @code {
     private const int LicenseStartYear = 2026;
+
     private string yearLicense => DateTime.Now.Year == LicenseStartYear ? LicenseStartYear.ToString() : $"{LicenseStartYear} - {DateTime.Now.Year}";
+    private string appName = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await using var dbContext = await DbContextFactory.CreateDbContextAsync();
+
+        var applicazione = await dbContext.Applicazioni
+            .OrderBy(x => x.Id)
+            .Select(x => new { x.NomeApplicazione })
+            .FirstOrDefaultAsync();
+
+        if (applicazione is not null)
+        {
+            appName = applicazione.NomeApplicazione;
+        }
+    }
 }

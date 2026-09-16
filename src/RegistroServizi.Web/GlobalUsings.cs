@@ -2,9 +2,11 @@
 global using Microsoft.AspNetCore.Components.Authorization;
 global using Microsoft.AspNetCore.HttpOverrides;
 global using Microsoft.AspNetCore.Identity;
+global using Microsoft.EntityFrameworkCore;
 global using RegistroServizi.Application;
 global using RegistroServizi.Application.DTOs.Applicazione;
 global using RegistroServizi.Application.DTOs.PrezzoServizio;
+global using RegistroServizi.Application.Helpers;
 global using RegistroServizi.Application.Interfaces.Services;
 global using RegistroServizi.Application.Options;
 global using RegistroServizi.Data;

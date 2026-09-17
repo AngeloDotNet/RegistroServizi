@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Application.Services;
+﻿using RegistroServizi.Application.Mapping;
+
+namespace RegistroServizi.Application.Services;
 
 public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplicazioneService
 {
@@ -11,7 +13,7 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
     {
         var result = await ApplicazioneQuery()
             .OrderBy(x => x.Id)
-            .Select(applicazione => ApplicazioneHelper.MapApplicazioneToDto(applicazione))
+            .Select(applicazione => ApplicazioneMapper.MapApplicazioneToDto(applicazione))
             .ToListAsync(cancellationToken);
 
         return result;
@@ -27,7 +29,7 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
     public async Task<ApplicazioneDto> GetByIdApplicazioneAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var result = await ApplicazioneQuery()
-            .Select(applicazione => ApplicazioneHelper.MapApplicazioneToDto(applicazione))
+            .Select(applicazione => ApplicazioneMapper.MapApplicazioneToDto(applicazione))
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
             ?? throw new KeyNotFoundException($"Applicazione con id {id} non trovato.");
 
@@ -77,7 +79,7 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
             throw new ArgumentNullException(nameof(updateDto.NomeApplicazione), "Il campo NomeApplicazione non può essere nullo o vuoto.");
         }
 
-        if (string.IsNullOrWhiteSpace(updateDto.Versione) || !ApplicazioneHelper.VersionRegex.IsMatch(updateDto.Versione))
+        if (string.IsNullOrWhiteSpace(updateDto.Versione) || !ApplicazioneMapper.VersionRegex.IsMatch(updateDto.Versione))
         {
             throw new ArgumentException("Il campo Versione non può essere nullo o avere un formato non valido. Usa ad esempio 1.0.0.", nameof(updateDto.Versione));
         }
@@ -90,9 +92,10 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
         var entity = await dbContext.Applicazioni.FindAsync([updateDto.Id], cancellationToken).ConfigureAwait(false)
             ?? throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato.");
 
-        entity.NomeApplicazione = updateDto.NomeApplicazione;
-        entity.Versione = updateDto.Versione;
-        entity.TimeZone = updateDto.TimeZone;
+        entity = ApplicazioneMapper.MapApplicazioneToEntityUpdate(updateDto);
+        //entity.NomeApplicazione = updateDto.NomeApplicazione;
+        //entity.Versione = updateDto.Versione;
+        //entity.TimeZone = updateDto.TimeZone;
 
         dbContext.Applicazioni.Update(entity);
 
@@ -112,7 +115,7 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
             throw new InvalidOperationException($"Errore durante l'aggiornamento dell'applicazione. CorrelationId: {correlationId}", ex);
         }
 
-        return ApplicazioneHelper.MapApplicazioneToDto(entity);
+        return ApplicazioneMapper.MapApplicazioneToDto(entity);
     }
 
     private IQueryable<Applicazione> ApplicazioneQuery() => dbContext.Applicazioni.AsNoTracking();

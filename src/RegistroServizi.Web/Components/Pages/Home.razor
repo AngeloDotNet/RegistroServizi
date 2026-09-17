@@ -75,25 +75,4 @@
             cacheLock.Release();
         }
     }
-
-//    private TimeZoneInfo? timeZone;
-//
-//    protected override async Task OnInitializedAsync()
-//    {
-//        timeZone = await GetTimeZoneAsync();
-//    }
-//
-//    public Task<TimeZoneInfo> GetTimeZoneAsync(CancellationToken cancellationToken = default)
-//    {
-//        //TODO: Implementare la logica per ottenere il fuso orario da un servizio esterno che lo legga dal database in modo da poterlo aggiornare senza dover ricompilare l'applicazione.
-//        // Per ora, restituisce sempre "Europe/Rome".
-//        var result = TimeZoneInfo.FindSystemTimeZoneById("Europe/Rome");
-//
-//        if (result is null)
-//        {
-//            result = TimeZoneInfo.Utc;
-//        }
-//
-//        return Task.FromResult(result);
-//    }
 }

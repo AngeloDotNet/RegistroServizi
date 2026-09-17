@@ -82,15 +82,18 @@ public class Program
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-        builder.Services.AddOptions<AdminUserOptions>()
-            .Bind(builder.Configuration.GetSection("AdminUserOptions"))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
+        //builder.Services.AddOptions<AdminUserOptions>()
+        //    .Bind(builder.Configuration.GetSection("AdminUserOptions"))
+        //    .ValidateDataAnnotations()
+        //    .ValidateOnStart();
 
-        builder.Services.AddOptions<ApplicationOptions>()
-            .Bind(builder.Configuration.GetSection("ApplicationOptions"))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
+        //builder.Services.AddOptions<ApplicationOptions>()
+        //    .Bind(builder.Configuration.GetSection("ApplicationOptions"))
+        //    .ValidateDataAnnotations()
+        //    .ValidateOnStart();
+
+        DependencyInjection.ConfigureAndValidate<AdminUserOptions>("AdminUserOptions");
+        DependencyInjection.ConfigureAndValidate<ApplicationOptions>("ApplicationOptions");
 
         var app = builder.Build();
 

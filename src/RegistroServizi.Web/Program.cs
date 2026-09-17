@@ -87,6 +87,11 @@ public class Program
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
+        builder.Services.AddOptions<ApplicationOptions>()
+            .Bind(builder.Configuration.GetSection("ApplicationOptions"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
         var app = builder.Build();
 
         await DatabaseInitializer.MigrateAsync(app.Services);

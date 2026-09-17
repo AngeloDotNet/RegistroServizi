@@ -1,10 +1,11 @@
 ﻿global using System.ComponentModel.DataAnnotations;
+global using System.Text.RegularExpressions;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using RegistroServizi.Application.DTOs.Applicazione;
 global using RegistroServizi.Application.DTOs.PrezzoServizio;
-global using RegistroServizi.Application.Helpers;
 global using RegistroServizi.Application.Interfaces.Persistence;
 global using RegistroServizi.Application.Interfaces.Services;
+global using RegistroServizi.Application.Mapping;
 global using RegistroServizi.Application.Services;
 global using RegistroServizi.Domain.Entities;

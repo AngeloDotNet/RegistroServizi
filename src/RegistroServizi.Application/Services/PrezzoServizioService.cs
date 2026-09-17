@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Application.Services;
+﻿using RegistroServizi.Application.Mapping;
+
+namespace RegistroServizi.Application.Services;
 
 public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezzoServizioService
 {
@@ -11,7 +13,7 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     {
         var result = await PrezzoServizioQuery()
             .OrderBy(x => x.TipologiaServizio.TipoServizio)
-            .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
+            .Select(prezzoServizio => PrezzoServizioMapper.MapPrezzoServizioToDto(prezzoServizio))
             .ToListAsync(cancellationToken);
 
         return result;
@@ -28,7 +30,7 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     {
         var result = await PrezzoServizioQuery()
             .Where(x => x.Id == id)
-            .Select(prezzoServizio => PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio))
+            .Select(prezzoServizio => PrezzoServizioMapper.MapPrezzoServizioToDto(prezzoServizio))
             .FirstOrDefaultAsync(cancellationToken) ?? throw new KeyNotFoundException($"Prezzo servizio con id {id} non trovato.");
 
         return result;
@@ -100,13 +102,14 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
         var entity = await dbContext.PrezziServizi.FindAsync([updateDto.Id], cancellationToken).ConfigureAwait(false)
             ?? throw new KeyNotFoundException($"Prezzo servizio con id {updateDto.Id} non trovato.");
 
-        entity.TipologiaServizioId = updateDto.TipologiaServizioId;
-        entity.CostoFisso = updateDto.CostoFisso;
-        entity.CostoKm = updateDto.CostoKm;
-        entity.SecondoTrasportato = updateDto.SecondoTrasportato;
-        entity.FermoMacchina = updateDto.FermoMacchina;
-        entity.Accompagnatore = updateDto.Accompagnatore;
-        entity.ScontoSocio = updateDto.ScontoSocio;
+        entity = PrezzoServizioMapper.MapPrezzoServizioToEntityUpdate(updateDto);
+        //entity.TipologiaServizioId = updateDto.TipologiaServizioId;
+        //entity.CostoFisso = updateDto.CostoFisso;
+        //entity.CostoKm = updateDto.CostoKm;
+        //entity.SecondoTrasportato = updateDto.SecondoTrasportato;
+        //entity.FermoMacchina = updateDto.FermoMacchina;
+        //entity.Accompagnatore = updateDto.Accompagnatore;
+        //entity.ScontoSocio = updateDto.ScontoSocio;
 
         dbContext.PrezziServizi.Update(entity);
 
@@ -126,9 +129,13 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
             throw new InvalidOperationException($"Errore durante l'aggiornamento del prezzo servizio. CorrelationId: {correlationId}", ex);
         }
 
-        return PrezzoServizioHelper.MapPrezzoServizioToDto(entity);
+        return PrezzoServizioMapper.MapPrezzoServizioToDto(entity);
     }
 
     private IQueryable<PrezzoServizio> PrezzoServizioQuery()
-        => dbContext.PrezziServizi.AsNoTracking().Include(x => x.TipologiaServizio);
+        => dbContext.PrezziServizi
+            .AsNoTracking()
+            .IncludeTipoServizioDetails();
+
+    //=> dbContext.PrezziServizi.AsNoTracking().Include(x => x.TipologiaServizio);
 }

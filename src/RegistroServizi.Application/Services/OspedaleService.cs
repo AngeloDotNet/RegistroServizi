@@ -57,57 +57,12 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        //void ValidateNotNullOrWhiteSpace(string? value, string message, string paramName)
-        //{
-        //    if (string.IsNullOrWhiteSpace(value))
-        //    {
-        //        throw new ArgumentException(message, paramName);
-        //    }
-        //}
-
         DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.NomeOspedale, "Il nome dell'ospedale non può essere vuoto.", nameof(createDto.NomeOspedale));
         DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Strada, "La strada dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Strada));
         DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Citta, "La città dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Citta));
         DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Provincia, "La provincia dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Provincia));
 
-        //if (createDto.Indirizzo.Cap == null || createDto.Indirizzo.Cap <= 0)
-        //if (createDto.Indirizzo.Cap <= 0)
-        //{
-        //    //throw new ArgumentException("Il CAP dell'indirizzo non può essere vuoto o negativo.", nameof(createDto.Indirizzo.Cap));
-        //    //throw new ArgumentException("Il CAP dell'indirizzo deve essere maggiore di zero.", nameof(createDto.Indirizzo.Cap));
-        //    throw new ArgumentOutOfRangeException(nameof(createDto.Indirizzo.Cap), createDto.Indirizzo.Cap, "Il CAP dell'indirizzo non può essere negativo.");
-        //}
         DependencyInjection.ValidateIntegerGreaterOrEqualThanZero(createDto.Indirizzo.Cap, "Il CAP dell'indirizzo non può essere negativo.", nameof(createDto.Indirizzo.Cap));
-
-        //ArgumentNullException.ThrowIfNull(createDto);
-        //cancellationToken.ThrowIfCancellationRequested();
-
-        //if (string.IsNullOrWhiteSpace(createDto.NomeOspedale))
-        //{
-        //    throw new ArgumentException("Il nome dell'ospedale non può essere vuoto.", nameof(createDto.NomeOspedale));
-        //}
-
-        //if (string.IsNullOrWhiteSpace(createDto.Indirizzo.Strada))
-        //{
-        //    throw new ArgumentException("La strada dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Strada));
-        //}
-
-        //if (string.IsNullOrWhiteSpace(createDto.Indirizzo.Citta))
-        //{
-        //    throw new ArgumentException("La città dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Citta));
-        //}
-
-        //if (string.IsNullOrWhiteSpace(createDto.Indirizzo.Provincia))
-        //{
-        //    throw new ArgumentException("La provincia dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Provincia));
-        //}
-
-        ////if (createDto.Indirizzo.Cap == null || createDto.Indirizzo.Cap <= 0)
-        //if (createDto.Indirizzo.Cap <= 0)
-        //{
-        //    //throw new ArgumentException("Il CAP dell'indirizzo non può essere vuoto o negativo.", nameof(createDto.Indirizzo.Cap));
-        //    throw new ArgumentException("Il CAP dell'indirizzo non può essere negativo.", nameof(createDto.Indirizzo.Cap));
-        //}
 
         var entity = OspedaleMapper.MapOspedaleToEntityCreate(createDto);
         dbContext.Ospedali.Add(entity);
@@ -122,16 +77,6 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
             var correlationId = Guid.NewGuid().ToString("D");
             throw new InvalidOperationException($"Errore durante la creazione dell'ospedale. CorrelationId: {correlationId}", ex);
         }
-        //catch (DbUpdateConcurrencyException ex)
-        //{
-        //    var correlationId = Guid.NewGuid().ToString("D");
-        //    throw new KeyNotFoundException($"Ospedale con id {createDto.Id} non trovato. CorrelationId: {correlationId}", ex);
-        //}
-        //catch (DbUpdateException ex)
-        //{
-        //    var correlationId = Guid.NewGuid().ToString("D");
-        //    throw new InvalidOperationException($"Errore durante l'aggiornamento dell'ospedale. CorrelationId: {correlationId}", ex);
-        //}
 
         return OspedaleMapper.MapOspedaleToDto(entity);
     }
@@ -153,68 +98,13 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        //if (updateDto.Id == Guid.Empty)
-        //{
-        //    throw new ArgumentException("Il campo Id non può essere vuoto.", nameof(updateDto.Id));
-        //}
-
-        //static void ThrowIfNullOrWhiteSpace(string value, string paramName, string message)
-        //{
-        //    if (string.IsNullOrWhiteSpace(value))
-        //    {
-        //        throw new ArgumentException(message, paramName);
-        //    }
-        //}
-
         DependencyInjection.ValidateGuidNotEmpty(updateDto.Id, "Il campo Id non può essere vuoto.", nameof(updateDto.Id));
         DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.NomeOspedale, "Il nome dell'ospedale non può essere vuoto.", nameof(updateDto.NomeOspedale));
         DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Strada, "La strada dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Strada));
         DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Citta, "La città dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Citta));
         DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Provincia, "La provincia dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Provincia));
-        //ThrowIfNullOrWhiteSpace(updateDto.NomeOspedale, nameof(updateDto.NomeOspedale), "Il campo NomeOspedale non può essere nullo o vuoto.");
-        //ThrowIfNullOrWhiteSpace(updateDto.Indirizzo.Strada, nameof(updateDto.Indirizzo.Strada), "La strada dell'indirizzo non può essere vuota.");
-        //ThrowIfNullOrWhiteSpace(updateDto.Indirizzo.Citta, nameof(updateDto.Indirizzo.Citta), "La città dell'indirizzo non può essere vuota.");
-        //ThrowIfNullOrWhiteSpace(updateDto.Indirizzo.Provincia, nameof(updateDto.Indirizzo.Provincia), "La provincia dell'indirizzo non può essere vuota.");
 
-        //if (updateDto.Indirizzo.Cap == null || updateDto.Indirizzo.Cap <= 0)
-        //if (updateDto.Indirizzo.Cap <= 0)
-        //{
-        //    //throw new ArgumentException("Il CAP dell'indirizzo non può essere vuoto o negativo.", nameof(updateDto.Indirizzo.Cap));
-        //    throw new ArgumentOutOfRangeException(nameof(updateDto.Indirizzo.Cap), updateDto.Indirizzo.Cap, "Il CAP dell'indirizzo non può essere negativo.");
-        //}
         DependencyInjection.ValidateIntegerGreaterOrEqualThanZero(updateDto.Indirizzo.Cap, "Il CAP dell'indirizzo non può essere negativo.", nameof(updateDto.Indirizzo.Cap));
-
-        //if (updateDto.Id == Guid.Empty)
-        //{
-        //    throw new ArgumentException("Il campo Id non può essere vuoto.", nameof(updateDto.Id));
-        //}
-
-        //if (string.IsNullOrWhiteSpace(updateDto.NomeOspedale))
-        //{
-        //    throw new ArgumentNullException(nameof(updateDto.NomeOspedale), "Il campo NomeOspedale non può essere nullo o vuoto.");
-        //}
-
-        //if (string.IsNullOrWhiteSpace(updateDto.Indirizzo.Strada))
-        //{
-        //    throw new ArgumentException("La strada dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Strada));
-        //}
-
-        //if (string.IsNullOrWhiteSpace(updateDto.Indirizzo.Citta))
-        //{
-        //    throw new ArgumentException("La città dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Citta));
-        //}
-
-        //if (string.IsNullOrWhiteSpace(updateDto.Indirizzo.Provincia))
-        //{
-        //    throw new ArgumentException("La provincia dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Provincia));
-        //}
-
-        ////if (updateDto.Indirizzo.Cap == null || updateDto.Indirizzo.Cap <= 0)
-        //if (updateDto.Indirizzo.Cap <= 0)
-        //{
-        //    //throw new ArgumentException("Il CAP dell'indirizzo non può essere vuoto o negativo.", nameof(updateDto.Indirizzo.Cap));
-        //    throw new ArgumentException("Il CAP dell'indirizzo non può essere negativo.", nameof(updateDto.Indirizzo.Cap));
-        //}
 
         var entity = await dbContext.Ospedali.FindAsync([updateDto.Id], cancellationToken).ConfigureAwait(false)
             ?? throw new KeyNotFoundException($"Ospedale con id {updateDto.Id} non trovato.");
@@ -252,10 +142,6 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     /// <exception cref="InvalidOperationException"></exception>
     public async Task DeleteOspedaleAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        //if (id == Guid.Empty)
-        //{
-        //    throw new ArgumentException("Il campo Id non può essere vuoto.", nameof(id));
-        //}
         DependencyInjection.ValidateGuidNotEmpty(id, "Il campo Id non può essere vuoto.", nameof(id));
 
         var entity = await dbContext.Ospedali.FindAsync([id], cancellationToken).ConfigureAwait(false)
@@ -268,11 +154,11 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
             await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
             //dbContext.Entry(entity).State = EntityState.Detached;
         }
-        catch (DbUpdateConcurrencyException ex)
-        {
-            var correlationId = Guid.NewGuid().ToString("D");
-            throw new KeyNotFoundException($"Ospedale con id {id} non trovato. CorrelationId: {correlationId}", ex);
-        }
+        //catch (DbUpdateConcurrencyException ex)
+        //{
+        //    var correlationId = Guid.NewGuid().ToString("D");
+        //    throw new KeyNotFoundException($"Ospedale con id {id} non trovato. CorrelationId: {correlationId}", ex);
+        //}
         catch (DbUpdateException ex)
         {
             var correlationId = Guid.NewGuid().ToString("D");

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegistroServizi.Data;
 
@@ -12,9 +13,11 @@ using RegistroServizi.Data;
 namespace RegistroServizi.Data.Migrations
 {
     [DbContext(typeof(RegistroServiziDbContext))]
-    partial class RegistroServiziDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260917091030_AddEntityOspedale")]
+    partial class AddEntityOspedale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -286,25 +289,19 @@ namespace RegistroServizi.Data.Migrations
                         {
                             b1.IsRequired();
 
-                            b1.Property<double?>("Latitudine")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("float")
-                                .HasDefaultValue(0.0);
+                            b1.Property<double>("Latitudine")
+                                .HasColumnType("float");
 
-                            b1.Property<double?>("Longitudine")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("float")
-                                .HasDefaultValue(0.0);
+                            b1.Property<double>("Longitudine")
+                                .HasColumnType("float");
                         });
 
                     b.ComplexProperty(typeof(Dictionary<string, object>), "Indirizzo", "RegistroServizi.Domain.Entities.Ospedale.Indirizzo#Indirizzo", b1 =>
                         {
                             b1.IsRequired();
 
-                            b1.Property<int?>("Cap")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasDefaultValue(0);
+                            b1.Property<int>("Cap")
+                                .HasColumnType("int");
 
                             b1.Property<string>("Citta")
                                 .IsRequired()

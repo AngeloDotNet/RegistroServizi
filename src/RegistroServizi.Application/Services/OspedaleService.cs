@@ -152,13 +152,7 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
         try
         {
             await dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            //dbContext.Entry(entity).State = EntityState.Detached;
         }
-        //catch (DbUpdateConcurrencyException ex)
-        //{
-        //    var correlationId = Guid.NewGuid().ToString("D");
-        //    throw new KeyNotFoundException($"Ospedale con id {id} non trovato. CorrelationId: {correlationId}", ex);
-        //}
         catch (DbUpdateException ex)
         {
             var correlationId = Guid.NewGuid().ToString("D");

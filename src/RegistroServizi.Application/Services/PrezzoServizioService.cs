@@ -1,4 +1,4 @@
-﻿using RegistroServizi.Application.Mapping;
+﻿using RegistroServizi.Application.Services.Common;
 
 namespace RegistroServizi.Application.Services;
 
@@ -11,6 +11,8 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     /// <returns></returns>
     public async Task<IReadOnlyList<PrezzoServizioDto>> GetAllPrezziServiziAsync(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var result = await PrezzoServizioQuery()
             .OrderBy(x => x.TipologiaServizio.TipoServizio)
             .Select(prezzoServizio => PrezzoServizioMapper.MapPrezzoServizioToDto(prezzoServizio))
@@ -28,6 +30,8 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     /// <exception cref="KeyNotFoundException"></exception>
     public async Task<PrezzoServizioDto> GetByIdPrezzoServizioAsync(Guid id, CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var result = await PrezzoServizioQuery()
             .Where(x => x.Id == id)
             .Select(prezzoServizio => PrezzoServizioMapper.MapPrezzoServizioToDto(prezzoServizio))
@@ -103,14 +107,6 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
             ?? throw new KeyNotFoundException($"Prezzo servizio con id {updateDto.Id} non trovato.");
 
         entity = PrezzoServizioMapper.MapPrezzoServizioToEntityUpdate(updateDto);
-        //entity.TipologiaServizioId = updateDto.TipologiaServizioId;
-        //entity.CostoFisso = updateDto.CostoFisso;
-        //entity.CostoKm = updateDto.CostoKm;
-        //entity.SecondoTrasportato = updateDto.SecondoTrasportato;
-        //entity.FermoMacchina = updateDto.FermoMacchina;
-        //entity.Accompagnatore = updateDto.Accompagnatore;
-        //entity.ScontoSocio = updateDto.ScontoSocio;
-
         dbContext.PrezziServizi.Update(entity);
 
         try

@@ -1,6 +1,4 @@
-﻿using RegistroServizi.Application.Mapping;
-
-namespace RegistroServizi.Application.Services;
+﻿namespace RegistroServizi.Application.Services;
 
 public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplicazioneService
 {
@@ -11,6 +9,8 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
     /// <returns></returns>
     public async Task<IReadOnlyList<ApplicazioneDto>> GetAllApplicazioniAsync(CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var result = await ApplicazioneQuery()
             .OrderBy(x => x.Id)
             .Select(applicazione => ApplicazioneMapper.MapApplicazioneToDto(applicazione))
@@ -28,6 +28,8 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
     /// <exception cref="KeyNotFoundException"></exception>
     public async Task<ApplicazioneDto> GetByIdApplicazioneAsync(Guid id, CancellationToken cancellationToken = default)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         var result = await ApplicazioneQuery()
             .Select(applicazione => ApplicazioneMapper.MapApplicazioneToDto(applicazione))
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
@@ -93,10 +95,6 @@ public class ApplicazioneService(IRegistroServiziDbContext dbContext) : IApplica
             ?? throw new KeyNotFoundException($"Applicazione con id {updateDto.Id} non trovato.");
 
         entity = ApplicazioneMapper.MapApplicazioneToEntityUpdate(updateDto);
-        //entity.NomeApplicazione = updateDto.NomeApplicazione;
-        //entity.Versione = updateDto.Versione;
-        //entity.TimeZone = updateDto.TimeZone;
-
         dbContext.Applicazioni.Update(entity);
 
         try

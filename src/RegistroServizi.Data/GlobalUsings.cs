@@ -11,5 +11,6 @@ global using Microsoft.Extensions.Options;
 global using RegistroServizi.Application.Interfaces.Persistence;
 global using RegistroServizi.Application.Options;
 global using RegistroServizi.Data.Identity;
+global using RegistroServizi.Domain.Common;
 global using RegistroServizi.Domain.Entities;
 global using RegistroServizi.Domain.Enums;

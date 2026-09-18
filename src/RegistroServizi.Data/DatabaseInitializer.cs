@@ -44,6 +44,9 @@ public static class DatabaseInitializer
 
             // Seed data for TitoliStudio
             await SeedDataTitoliStudioAsync(scope.ServiceProvider, logger);
+
+            // Seed data for Ospedali
+            await SeedDataOspedaliAsync(scope.ServiceProvider, logger);
         }
         catch (Exception ex)
         {
@@ -252,6 +255,30 @@ public static class DatabaseInitializer
         };
 
         await dbContext.TitoliStudio.AddRangeAsync(titoliStudio);
+        await dbContext.SaveChangesAsync();
+    }
+
+    private static async Task SeedDataOspedaliAsync(IServiceProvider services, ILogger logger)
+    {
+        var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
+
+        if (await dbContext.Ospedali.AnyAsync())
+        {
+            logger.LogInformation("Ospedali data already exists. Skipping seeding.");
+            return;
+        }
+
+        var ospedali = new List<Ospedale>
+        {
+            new Ospedale {
+                Id = Guid.NewGuid(),
+                NomeOspedale = "H. Galmarini",
+                Indirizzo = new Indirizzo("Via Angelo Zanaboni 1", "Tradate", "VA", 21049),
+                Coordinate = new Coordinate(45.722205, 8.900592)
+            }
+        };
+
+        await dbContext.Ospedali.AddRangeAsync(ospedali);
         await dbContext.SaveChangesAsync();
     }
 }

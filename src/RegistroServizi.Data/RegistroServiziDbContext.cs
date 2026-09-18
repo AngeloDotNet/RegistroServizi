@@ -9,9 +9,9 @@ public class RegistroServiziDbContext(DbContextOptions<RegistroServiziDbContext>
     public virtual DbSet<TipologiaServizio> TipologieServizio => Set<TipologiaServizio>();
     public virtual DbSet<PrezzoServizio> PrezziServizi => Set<PrezzoServizio>();
     public virtual DbSet<Applicazione> Applicazioni => Set<Applicazione>();
-    public virtual DbSet<Personalizzazione> Personalizzazioni => Set<Personalizzazione>();
     public virtual DbSet<StatoBolla> StatiBolla => Set<StatoBolla>();
     public virtual DbSet<TitoloStudio> TitoliStudio => Set<TitoloStudio>();
+    public virtual DbSet<Ospedale> Ospedali => Set<Ospedale>();
 
     /// <summary>
     /// Override the OnModelCreating method to apply entity configurations from the assembly containing the RegistroServiziDbContext class.

@@ -13,10 +13,6 @@ public static class DependencyInjection
         /// <returns></returns>
         public IServiceCollection AddRegistroServiziApplication()
         {
-            //services.AddScoped<IApplicazioneService, ApplicazioneService>();
-            //services.AddScoped<IPrezzoServizioService, PrezzoServizioService>();
-            //services.AddScoped<IOspedaleService, OspedaleService>();
-
             services.Scan(scan => scan
                 .FromAssemblyOf<ApplicazioneService>()
                 .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Service")))

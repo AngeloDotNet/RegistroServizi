@@ -11,9 +11,9 @@ public interface IRegistroServiziDbContext
     DbSet<TipologiaServizio> TipologieServizio { get; }
     DbSet<PrezzoServizio> PrezziServizi { get; }
     DbSet<Applicazione> Applicazioni { get; }
-    DbSet<Personalizzazione> Personalizzazioni { get; }
     DbSet<StatoBolla> StatiBolla { get; }
     DbSet<TitoloStudio> TitoliStudio { get; }
+    DbSet<Ospedale> Ospedali { get; }
 
     /// <summary>
     /// Saves all changes made in this context to the database asynchronously.

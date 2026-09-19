@@ -10,7 +10,6 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Configuration.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
-
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
@@ -61,17 +60,15 @@ public class Program
             options.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
         });
 
-        builder.Services.AddRegistroServiziData(builder.Configuration);
-
         var identityConfig = builder.Configuration.GetSection("Identity");
+
+        builder.Services.AddRegistroServiziData(builder.Configuration);
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
             options.SignIn.RequireConfirmedAccount = identityConfig.GetValue("RequireConfirmedAccount", false);
-
             options.Lockout.AllowedForNewUsers = identityConfig.GetValue("AllowedForNewUsers", true);
             options.Lockout.MaxFailedAccessAttempts = identityConfig.GetValue("MaxFailedAccessAttempts", 5);
             options.Lockout.DefaultLockoutTimeSpan = identityConfig.GetValue("DefaultLockoutTimeSpan", TimeSpan.FromMinutes(15));
-
             options.Password.RequiredLength = identityConfig.GetValue("Password:RequiredLength", 10);
             options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
         })
@@ -82,18 +79,8 @@ public class Program
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-        //builder.Services.AddOptions<AdminUserOptions>()
-        //    .Bind(builder.Configuration.GetSection("AdminUserOptions"))
-        //    .ValidateDataAnnotations()
-        //    .ValidateOnStart();
-
-        //builder.Services.AddOptions<ApplicationOptions>()
-        //    .Bind(builder.Configuration.GetSection("ApplicationOptions"))
-        //    .ValidateDataAnnotations()
-        //    .ValidateOnStart();
-
-        DependencyInjection.ConfigureAndValidate<AdminUserOptions>("AdminUserOptions");
-        DependencyInjection.ConfigureAndValidate<ApplicationOptions>("ApplicationOptions");
+        builder.Services.ConfigureAndValidate<AdminUserOptions>(builder.Configuration, nameof(AdminUserOptions));
+        builder.Services.ConfigureAndValidate<AssociazioneOptions>(builder.Configuration, nameof(AssociazioneOptions));
 
         var app = builder.Build();
 

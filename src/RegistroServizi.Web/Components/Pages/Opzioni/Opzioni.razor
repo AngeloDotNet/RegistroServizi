@@ -1,4 +1,5 @@
 ﻿@page "/opzioni"
+@rendermode InteractiveServer
 @inject NavigationManager navigationManager
 
 <PageTitle>Opzioni · Registro Servizi</PageTitle>
@@ -11,7 +12,7 @@
 </div>
 
 <div class="mudpaper-grid mb-4">
-    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.LocalHospital" Size="MudBlazor.Size.Medium" />
@@ -25,7 +26,7 @@
                 </div>
             </div>
         </div>
-    </MudPaper> *@
+    </MudPaper>
 
     @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">

@@ -1,16 +1,22 @@
 ﻿namespace RegistroServizi.Application.Services;
 
 /// <summary>
-/// Servizio per la gestione degli ospedali.
+/// Provides create, read, update, and delete operations for Ospedale entities using the supplied database context.
 /// </summary>
-/// <param name="dbContext"></param>
+/// <remarks>Uses Entity Framework Core via the provided context; methods honor CancellationToken, perform input
+/// validation, map entities to DTOs, and detach tracked entities after persistence. Throws ArgumentException,
+/// ArgumentNullException, KeyNotFoundException, and InvalidOperationException for validation and persistence
+/// errors.</remarks>
+/// <param name="dbContext">The database context used to query and persist Ospedale entities.</param>
 public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleService
 {
     /// <summary>
-    /// Recupera tutti gli ospedali presenti nel database.
+    /// Gets all hospitals as OspedaleDto instances ordered by Id.
     /// </summary>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <remarks>Executes the query asynchronously against the data source and maps entities to OspedaleDto.
+    /// The operation may throw OperationCanceledException if cancellation is requested.</remarks>
+    /// <param name="cancellationToken">Cancellation token to observe while awaiting the asynchronous operation.</param>
+    /// <returns>A read-only list of OspedaleDto containing all hospitals ordered by Id.</returns>
     public async Task<IReadOnlyList<OspedaleDto>> GetAllOspedaliAsync(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -24,12 +30,14 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     }
 
     /// <summary>
-    /// Recupera un ospedale specifico in base all'ID fornito.
+    /// Retrieves an OspedaleDto with the specified identifier.
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="KeyNotFoundException"></exception>
+    /// <remarks>Supports cancellation via the provided token; may throw OperationCanceledException if
+    /// canceled.</remarks>
+    /// <param name="id">The identifier of the Ospedale to retrieve.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to cancel the operation.</param>
+    /// <returns>A task whose result is the OspedaleDto with the specified identifier.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when no Ospedale with the specified identifier exists.</exception>
     public async Task<OspedaleDto> GetByIdOspedaleAsync(Guid id, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -42,14 +50,14 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     }
 
     /// <summary>
-    /// Crea un nuovo ospedale nel database.
+    /// Creates a new Ospedale from the provided CreateOspedaleDto and persists it to the database asynchronously.
     /// </summary>
-    /// <param name="createDto"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="KeyNotFoundException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <remarks>Validates required fields (including address), maps the DTO to an entity, saves changes,
+    /// detaches the tracked entity, and maps the entity back to a DTO.</remarks>
+    /// <param name="createDto">CreateOspedaleDto containing hospital and address data to persist.</param>
+    /// <param name="cancellationToken">CancellationToken to observe while awaiting the asynchronous operation.</param>
+    /// <returns>The created OspedaleDto representing the persisted entity.</returns>
+    /// <exception cref="InvalidOperationException">Thrown if saving changes to the database fails; the exception message includes a correlation identifier.</exception>
     public async Task<OspedaleDto> CreateOspedaleAsync(CreateOspedaleDto createDto, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(createDto);
@@ -82,15 +90,17 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     }
 
     /// <summary>
-    /// Aggiorna un ospedale esistente nel database.
+    /// Updates an existing hospital from the supplied UpdateOspedaleDto and returns the updated OspedaleDto.
     /// </summary>
-    /// <param name="updateDto"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="KeyNotFoundException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <remarks>Validates input and address fields, updates the entity, saves changes with concurrency
+    /// handling, and detaches the tracked entity after a successful save.</remarks>
+    /// <param name="updateDto">Update data for the hospital, including address and identifier; must not be null and must contain valid values.</param>
+    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+    /// <returns>The updated OspedaleDto representing the persisted hospital.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when a hospital with the specified Id is not found, including cases where a concurrency conflict
+    /// indicates the entity no longer exists. The exception message contains a correlation Id for diagnostics.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when an error occurs while saving changes to the database. The exception message contains a correlation
+    /// Id for diagnostics.</exception>
     public async Task<OspedaleDto> UpdateOspedaleAsync(UpdateOspedaleDto updateDto, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(updateDto);
@@ -132,14 +142,16 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     }
 
     /// <summary>
-    /// Elimina un ospedale esistente nel database.
+    /// Deletes the hospital entity with the specified identifier from the database.
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="KeyNotFoundException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <remarks>Validates the id is not Guid.Empty before lookup. A correlation id is generated and included
+    /// in the error message when SaveChangesAsync fails.</remarks>
+    /// <param name="id">The identifier of the hospital to delete. Must not be Guid.Empty.</param>
+    /// <param name="cancellationToken">A token to observe for cancellation while performing the asynchronous operation.</param>
+    /// <returns>A task that represents the asynchronous delete operation.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown if no hospital with the specified identifier is found.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if saving changes to the database fails; the inner exception contains the original DbUpdateException and
+    /// the message includes a correlation identifier.</exception>
     public async Task DeleteOspedaleAsync(Guid id, CancellationToken cancellationToken = default)
     {
         DependencyInjection.ValidateGuidNotEmpty(id, "Il campo Id non può essere vuoto.", nameof(id));

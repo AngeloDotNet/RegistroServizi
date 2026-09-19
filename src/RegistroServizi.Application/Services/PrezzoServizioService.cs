@@ -1,14 +1,24 @@
-﻿using RegistroServizi.Application.Services.Common;
+﻿namespace RegistroServizi.Application.Services;
 
-namespace RegistroServizi.Application.Services;
-
+/// <summary>
+/// Provides asynchronous operations to retrieve and update PrezzoServizio entities and map them to data transfer
+/// objects (DTOs).
+/// </summary>
+/// <remarks>All public methods are asynchronous and accept a CancellationToken. Inputs are validated (including
+/// non-negative numeric checks); failures may throw ArgumentNullException, ArgumentException, KeyNotFoundException, or
+/// InvalidOperationException. Queries use AsNoTracking and include related TipoServizio; updated entities are detached
+/// after saving. Concurrency and database update errors are surfaced with correlation identifiers.</remarks>
+/// <param name="dbContext">The database context used to query and update PrezziServizi and related TipoServizio details.</param>
 public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezzoServizioService
 {
     /// <summary>
-    /// Recupera tutti i prezzi dei servizi presenti nel database.
+    /// Asynchronously retrieves all PrezzoServizioDto instances ordered by service type.
     /// </summary>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <remarks>Throws OperationCanceledException if cancellation is requested. The query is executed and
+    /// results are projected to DTOs before being returned.</remarks>
+    /// <param name="cancellationToken">Cancellation token to cancel the asynchronous operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a read-only list of
+    /// PrezzoServizioDto ordered by service type.</returns>
     public async Task<IReadOnlyList<PrezzoServizioDto>> GetAllPrezziServiziAsync(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -22,12 +32,15 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
     }
 
     /// <summary>
-    /// Recupera un prezzo di servizio specifico in base all'ID fornito.
+    /// Gets the PrezzoServizioDto with the specified identifier asynchronously.
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="KeyNotFoundException"></exception>
+    /// <remarks>If cancellation is requested, an OperationCanceledException is thrown. The query projects the
+    /// entity to a DTO.</remarks>
+    /// <param name="id">The identifier of the PrezzoServizio to retrieve.</param>
+    /// <param name="cancellationToken">A cancellation token to cancel the asynchronous operation.</param>
+    /// <returns>A task representing the asynchronous operation. The task result contains the PrezzoServizioDto with the
+    /// specified identifier.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when a PrezzoServizio with the specified id is not found.</exception>
     public async Task<PrezzoServizioDto> GetByIdPrezzoServizioAsync(Guid id, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -40,37 +53,20 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
         return result;
     }
 
-    //public async Task<PrezzoServizioDto> CreatePrezzoServizioAsync(CreatePrezzoServizioDto createDto, CancellationToken cancellationToken = default)
-    //{
-    //    //TODO: Validazione dei dati in ingresso (createDto) se necessario.
-
-    //    var prezzoServizio = new PrezzoServizio
-    //    {
-    //        Id = Guid.NewGuid(),
-    //        TipologiaServizio = createDto.TipologiaServizio,
-    //        CostoFisso = createDto.CostoFisso,
-    //        CostoKm = createDto.CostoKm,
-    //        SecondoTrasportato = createDto.SecondoTrasportato,
-    //        FermoMacchina = createDto.FermoMacchina,
-    //        Accompagnatore = createDto.Accompagnatore,
-    //        ScontoSocio = createDto.ScontoSocio
-    //    };
-
-    //    dbContext.PrezziServizi.Add(prezzoServizio);
-    //    await dbContext.SaveChangesAsync(cancellationToken);
-
-    //    return PrezzoServizioHelper.MapPrezzoServizioToDto(prezzoServizio);
-    //}
-
     /// <summary>
-    /// Aggiorna un prezzo di servizio esistente nel database.
+    /// Updates an existing service price and returns the updated PrezzoServizioDto.
     /// </summary>
-    /// <param name="updateDto">Oggetto contenente i dati aggiornati del prezzo del servizio.</param>
-    /// <param name="cancellationToken">Token per la cancellazione dell'operazione asincrona.</param>
-    /// <returns>Il DTO del prezzo del servizio aggiornato.</returns>
-    /// <exception cref="ArgumentException"></exception>
-    /// <exception cref="KeyNotFoundException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <remarks>The DTO is mapped to the entity, changes are saved, and the entity is detached before mapping
+    /// back to a DTO for the return value.</remarks>
+    /// <param name="updateDto">DTO containing updated values for the service price. Id and TipologiaServizioId must be non-empty; numeric
+    /// fields (CostoFisso, CostoKm, SecondoTrasportato, FermoMacchina) must be non-negative.</param>
+    /// <param name="cancellationToken">CancellationToken to observe while performing the update operation.</param>
+    /// <returns>The updated PrezzoServizioDto representing the persisted entity.</returns>
+    /// <exception cref="ArgumentException">Thrown when updateDto is null, when Id or TipologiaServizioId is Guid.Empty, or when any numeric field is
+    /// negative.</exception>
+    /// <exception cref="KeyNotFoundException">Thrown when no PrezzoServizio with the specified Id is found; concurrency conflicts are surfaced as
+    /// KeyNotFoundException with a correlation id.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the database update fails; the exception message includes a correlation id.</exception>
     public async Task<PrezzoServizioDto> UpdatePrezzoServizioAsync(UpdatePrezzoServizioDto updateDto, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(updateDto);
@@ -132,6 +128,4 @@ public class PrezzoServizioService(IRegistroServiziDbContext dbContext) : IPrezz
         => dbContext.PrezziServizi
             .AsNoTracking()
             .IncludeTipoServizioDetails();
-
-    //=> dbContext.PrezziServizi.AsNoTracking().Include(x => x.TipologiaServizio);
 }

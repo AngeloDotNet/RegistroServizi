@@ -1,5 +1,12 @@
 ﻿namespace RegistroServizi.Domain.Entities;
 
+/// <summary>
+/// Represents pricing settings for a service type, including fixed and per-kilometer charges, additional fees and an
+/// optional member discount.
+/// </summary>
+/// <remarks>Monetary amounts are represented as decimal values. Accompagnatore is an optional additional fee and
+/// ScontoSocio is an optional percentage discount for members. TipologiaServizioId associates the price with a specific
+/// service type and TipologiaServizio provides the related navigation.</remarks>
 public class PrezzoServizio : BaseEntity
 {
     public Guid TipologiaServizioId { get; set; }

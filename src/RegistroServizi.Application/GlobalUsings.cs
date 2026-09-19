@@ -10,5 +10,6 @@ global using RegistroServizi.Application.Interfaces.Persistence;
 global using RegistroServizi.Application.Interfaces.Services;
 global using RegistroServizi.Application.Mapping;
 global using RegistroServizi.Application.Services;
+global using RegistroServizi.Application.Services.Common;
 global using RegistroServizi.Domain.Common;
 global using RegistroServizi.Domain.Entities;

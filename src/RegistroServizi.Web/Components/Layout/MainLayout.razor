@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
-@inject IOptionsMonitor<ApplicationOptions> ApplicationOptions
+@inject IOptionsMonitor<AssociazioneOptions> AssociazioneOptions
 @implements IDisposable
 
 <MudThemeProvider />
@@ -56,8 +56,8 @@
 
     protected override void OnInitialized()
     {
-        _nomeAssociazione = ApplicationOptions.CurrentValue.NomeAssociazione;
-        _optionsChangeSubscription = ApplicationOptions.OnChange(options =>
+        _nomeAssociazione = AssociazioneOptions.CurrentValue.NomeAssociazione;
+        _optionsChangeSubscription = AssociazioneOptions.OnChange(options =>
         {
             _nomeAssociazione = options.NomeAssociazione;
             _ = InvokeAsync(StateHasChanged);

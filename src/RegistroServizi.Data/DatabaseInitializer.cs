@@ -1,7 +1,25 @@
 ﻿namespace RegistroServizi.Data;
 
+/// <summary>
+/// Applies pending EF Core migrations and seeds required initial data (roles, default administrator, application
+/// metadata, service types, service prices, statuses, education titles, and hospitals) using a provided
+/// IServiceProvider.
+/// </summary>
+/// <remarks>Creates a scoped service provider to resolve the DbContext, UserManager, RoleManager, and ILogger.
+/// Operations are idempotent and skip seeding when data already exists; migrations are applied only when pending. Logs
+/// progress and throws on unrecoverable errors such as failed migrations or role creation.</remarks>
 public static class DatabaseInitializer
 {
+    /// <summary>
+    /// Applies pending Entity Framework Core migrations and seeds initial application data using the provided service
+    /// provider.
+    /// </summary>
+    /// <remarks>Creates a service scope, resolves RegistroServiziDbContext and
+    /// ILogger<RegistroServiziDbContext>, applies pending migrations if any, invokes seed methods for roles, default
+    /// users, Applicazione, TipologiaServizio, PrezzoServizio, StatiBolla, TitoliStudio, and Ospedali, logs progress,
+    /// and logs and rethrows exceptions.</remarks>
+    /// <param name="services">Service provider used to create a scope and resolve required services for database migration and data seeding.</param>
+    /// <returns>A task that completes when migrations and seeding are finished.</returns>
     public static async Task MigrateAsync(IServiceProvider services)
     {
         using var scope = services.CreateScope();
@@ -56,8 +74,10 @@ public static class DatabaseInitializer
     }
 
     /// <summary>
-    /// Default roles to be seeded into the database.
+    /// Default role names used for initial role assignment.
     /// </summary>
+    /// <remarks>Contains two role names: Admin and Manager. Values are obtained via nameof(Role.*) to stay
+    /// synchronized with the Role enum.</remarks>
     //private static readonly string[] defaultRoles = { nameof(Role.Admin), nameof(Role.Manager), nameof(Role.Operator) };
     private static readonly string[] defaultRoles = { nameof(Role.Admin), nameof(Role.Manager) };
 

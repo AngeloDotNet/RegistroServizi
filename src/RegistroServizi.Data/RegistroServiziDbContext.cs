@@ -16,6 +16,7 @@ public class RegistroServiziDbContext(DbContextOptions<RegistroServiziDbContext>
     public virtual DbSet<StatoBolla> StatiBolla => Set<StatoBolla>();
     public virtual DbSet<TitoloStudio> TitoliStudio => Set<TitoloStudio>();
     public virtual DbSet<Ospedale> Ospedali => Set<Ospedale>();
+    public virtual DbSet<Colonnina> Colonnine => Set<Colonnina>();
 
     /// <summary>
     /// Configures the EF Core model by applying entity configurations from the context assembly and invoking the base

@@ -8,10 +8,6 @@
 public class Ospedale : BaseEntity
 {
     public string NomeOspedale { get; set; } = string.Empty;
-    //public string Strada { get; set; } = string.Empty; // Indirizzo + Numero civico
-    //public string Citta { get; set; } = string.Empty;
-    //public string Provincia { get; set; } = string.Empty;
-    //public int Cap { get; set; }
     public Indirizzo Indirizzo { get; set; } = default!;
     public Coordinate Coordinate { get; set; } = default!;
 }

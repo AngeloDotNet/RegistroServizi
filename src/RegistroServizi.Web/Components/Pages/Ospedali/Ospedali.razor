@@ -1,0 +1,145 @@
+﻿@page "/ospedali"
+@rendermode InteractiveServer
+
+<PageTitle>Ospedali · Registro Servizi</PageTitle>
+
+<div class="section-header">
+    <div>
+        <h1 class="section-title">Ospedali</h1>
+        <p class="section-subtitle">Gestione della configurazione di base degli ospedali.</p>
+    </div>
+</div>
+
+<MudPaper Class="pa-4 mb-4">
+@if (isLoading)
+    {
+        <MudProgressLinear Indeterminate="true" />
+    }
+    else if (elements.Count == 0)
+    {
+        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
+            Nessun ospedale disponibile al momento.
+        </MudAlert>
+    }
+    else
+    {
+        <MudDataGrid @ref="dataGrid"
+                T="OspedaleDto"
+                Items="@elements"
+                ReadOnly="false"
+                EditMode="DataGridEditMode.Inline"
+                EditTrigger="DataGridEditTrigger.Manual"
+                SortMode="SortMode.None"
+                StartedEditingItem="@StartedEditingItem"
+                CanceledEditingItem="@CanceledEditingItem"
+                CommittedItemChanges="@CommittedItemChangesAsync"
+                Bordered="true"
+                Dense="true"
+                Hover="true">
+
+            <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" Editable="false" Hidden="true" />
+
+                <TemplateColumn Title="Nome Ospedale">
+                    <CellTemplate Context="context">
+                        @context.Item.NomeOspedale
+                    </CellTemplate>
+                    <EditTemplate>
+                        <MudTextField T="string"
+                            @bind-Value="context.Item.NomeOspedale"
+                            @bind-Value:after="() => ValidateNomeOspedale(context.Item.NomeOspedale)"
+                            Label="Nome Ospedale"
+                            Variant="Variant.Outlined"
+                            Required="true"
+                            RequiredError="Il nome dell'ospedale è obbligatorio."
+                            Immediate="true" />
+                    </EditTemplate>
+                </TemplateColumn>
+
+                <TemplateColumn Title="Strada">
+                    <CellTemplate Context="context">
+                        @context.Item.Indirizzo.Strada
+                    </CellTemplate>
+                    <EditTemplate>
+                        <MudTextField T="string"
+                            @bind-Value="context.Item.Indirizzo.Strada"
+                            @bind-Value:after="() => ValidateStrada(context.Item.Indirizzo.Strada)"
+                            Label="Strada"
+                            Variant="Variant.Outlined"
+                            Required="true"
+                            RequiredError="Il nome della strada è obbligatoria."
+                            Immediate="true" />
+                    </EditTemplate>
+                </TemplateColumn>
+
+                <TemplateColumn Title="Citt&agrave;">
+                    <CellTemplate Context="context">
+                        @context.Item.Indirizzo.Citta
+                    </CellTemplate>
+                    <EditTemplate>
+                        <MudTextField T="string"
+                            @bind-Value="context.Item.Indirizzo.Citta"
+                            @bind-Value:after="() => ValidateCitta(context.Item.Indirizzo.Citta)"
+                            Label="Citt&agrave;"
+                            Variant="Variant.Outlined"
+                            Required="true"
+                            RequiredError="Il nome della citt&agrave; è obbligatoria."
+                            Immediate="true" />
+                    </EditTemplate>
+                </TemplateColumn>
+
+                <TemplateColumn Title="Provincia">
+                    <CellTemplate Context="context">
+                        @context.Item.Indirizzo.Provincia
+                    </CellTemplate>
+                    <EditTemplate>
+                        <MudTextField T="string"
+                            @bind-Value="context.Item.Indirizzo.Provincia"
+                            @bind-Value:after="() => ValidateProvincia(context.Item.Indirizzo.Provincia)"
+                            Label="Provincia"
+                            Counter="2"
+                            MaxLength="2"
+                            Variant="Variant.Outlined"
+                            Required="true"
+                            RequiredError="Il nome della provincia è obbligatoria."
+                            Immediate="true" />
+                    </EditTemplate>
+                </TemplateColumn>
+
+                <TemplateColumn Title="Cap">
+                    <CellTemplate Context="context">
+                        @context.Item.Indirizzo.Cap
+                    </CellTemplate>
+                    <EditTemplate>
+                        <MudNumericField T="int"
+                            @bind-Value="@context.Item.Indirizzo.Cap"
+                            @bind-Value:after="() => ValidateCap(context.Item.Indirizzo.Cap)"
+                            Label="Cap"
+                            Counter="5"
+                            MaxLength="5"
+                            Variant="Variant.Outlined"
+                            Required="true"
+                            RequiredError="Il codice avviamento postale è obbligatorio."
+                            Immediate="true" />
+                    </EditTemplate>
+                </TemplateColumn>
+                
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        @if (context.IsEditing)
+                        {
+                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Check" Color="Color.Success" aria-label="Save changes" OnClick="@context.Actions.CommitEditingItemAsync" />
+                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Close" Color="Color.Error" aria-label="Cancel editing" OnClick="@context.Actions.CancelEditingItemAsync" />
+                        }
+                        else
+                        {
+                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Disabled="@isEditing" aria-label="Edit row" OnClick="@context.Actions.StartEditingItemAsync" />
+                            @* <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="@isEditing" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" /> *@
+                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="true" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" />
+                        }
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+        </MudDataGrid>
+    }
+</MudPaper>

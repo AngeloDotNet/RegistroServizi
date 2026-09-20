@@ -5,6 +5,8 @@ global using Microsoft.AspNetCore.Identity;
 global using Microsoft.Extensions.Options;
 global using RegistroServizi.Application;
 global using RegistroServizi.Application.DTOs.Applicazione;
+global using RegistroServizi.Application.DTOs.Indirizzo;
+global using RegistroServizi.Application.DTOs.Ospedale;
 global using RegistroServizi.Application.DTOs.PrezzoServizio;
 global using RegistroServizi.Application.Interfaces.Services;
 global using RegistroServizi.Application.Mapping;

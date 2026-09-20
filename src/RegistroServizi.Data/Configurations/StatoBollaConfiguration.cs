@@ -1,5 +1,10 @@
 ﻿namespace RegistroServizi.Data.Configurations;
 
+/// <summary>
+/// Configures the Entity Framework Core mapping for <see cref="StatoBolla"/>.
+/// </summary>
+/// <remarks>Maps the entity to the 'StatiBolla' table, sets Id as the primary key, requires Descrizione with a
+/// maximum length of 200 and adds a unique index on Descrizione.</remarks>
 public class StatoBollaConfiguration : IEntityTypeConfiguration<StatoBolla>
 {
     public void Configure(EntityTypeBuilder<StatoBolla> builder)

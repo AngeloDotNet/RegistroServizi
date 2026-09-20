@@ -1,15 +1,20 @@
 ﻿namespace RegistroServizi.Application.Mapping;
 
 /// <summary>
-/// Helper class for mapping PrezzoServizio entities to their corresponding DTOs.
+/// Provides static mapping methods to convert between PrezzoServizio entity and related DTO types.
 /// </summary>
+/// <remarks>Stateless helper methods that create new instances and do not perform validation. Includes
+/// MapPrezzoServizioToDto to produce a PrezzoServizioDto and MapPrezzoServizioToEntityUpdate to produce a
+/// PrezzoServizio for update operations.</remarks>
 public static class PrezzoServizioMapper
 {
     /// <summary>
-    /// Maps a PrezzoServizio entity to a PrezzoServizioDto.
+    /// Map a PrezzoServizio entity to a PrezzoServizioDto.
     /// </summary>
-    /// <param name="entity"></param>
-    /// <returns></returns>
+    /// <remarks>Does not validate the entity; passing null will cause a NullReferenceException.
+    /// TipologiaServizio?.TipoServizio is used with a fallback to an empty string.</remarks>
+    /// <param name="entity">PrezzoServizio instance to map; TipologiaServizio may be null and its TipoServizio defaults to an empty string.</param>
+    /// <returns>A PrezzoServizioDto populated from the entity's properties.</returns>
     public static PrezzoServizioDto MapPrezzoServizioToDto(PrezzoServizio entity) => new()
     {
         Id = entity.Id,
@@ -24,10 +29,11 @@ public static class PrezzoServizioMapper
     };
 
     /// <summary>
-    /// Maps an UpdatePrezzoServizioDto to a PrezzoServizio entity for updating purposes.
+    /// Creates a PrezzoServizio entity from an UpdatePrezzoServizioDto for update operations.
     /// </summary>
-    /// <param name="dtoUpdate"></param>
-    /// <returns></returns>
+    /// <remarks>Does not perform validation; dtoUpdate must not be null.</remarks>
+    /// <param name="dtoUpdate">UpdatePrezzoServizioDto containing the identifier and pricing fields to apply to the entity.</param>
+    /// <returns>PrezzoServizio populated with values from dtoUpdate.</returns>
     public static PrezzoServizio MapPrezzoServizioToEntityUpdate(UpdatePrezzoServizioDto dtoUpdate) => new()
     {
         Id = dtoUpdate.Id,

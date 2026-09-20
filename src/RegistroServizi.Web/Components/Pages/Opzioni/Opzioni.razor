@@ -12,7 +12,7 @@
 </div>
 
 <div class="mudpaper-grid mb-4">
-    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewOspedali()">
         <div class="d-flex gap-3">
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.LocalHospital" Size="MudBlazor.Size.Medium" />
@@ -28,7 +28,7 @@
         </div>
     </MudPaper>
 
-    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
+    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewColonnine()">
         <div class="d-flex gap-3">
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.LocalParking" Size="MudBlazor.Size.Medium" />
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-    </MudPaper> *@
+    </MudPaper>
 
     @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">
@@ -127,7 +127,12 @@
 
 @code {
     /// <summary>
-    /// Navigates to the Dashboard page.
+    /// Navigates to the Ospedali page.
     /// </summary>
-    private void ViewDashboard() => navigationManager.NavigateTo("/");
+    private void ViewOspedali() => navigationManager.NavigateTo("/ospedali");
+
+    /// <summary>
+    /// Navigates to the Colonnine page.
+    /// </summary>
+    private void ViewColonnine() => navigationManager.NavigateTo("/colonnine");
 }

@@ -16,8 +16,8 @@ public static class DatabaseInitializer
     /// </summary>
     /// <remarks>Creates a service scope, resolves RegistroServiziDbContext and
     /// ILogger<RegistroServiziDbContext>, applies pending migrations if any, invokes seed methods for roles, default
-    /// users, Applicazione, TipologiaServizio, PrezzoServizio, StatiBolla, TitoliStudio, and Ospedali, logs progress,
-    /// and logs and rethrows exceptions.</remarks>
+    /// users, Applicazione, TipologiaServizio, PrezzoServizio, StatiBolla, TitoliStudio, Ospedali, and Colonnine, 
+    /// logs progress and logs and rethrows exceptions.</remarks>
     /// <param name="services">Service provider used to create a scope and resolve required services for database migration and data seeding.</param>
     /// <returns>A task that completes when migrations and seeding are finished.</returns>
     public static async Task MigrateAsync(IServiceProvider services)
@@ -65,6 +65,9 @@ public static class DatabaseInitializer
 
             // Seed data for Ospedali
             await SeedDataOspedaliAsync(scope.ServiceProvider, logger);
+
+            // Seed data for Colonnine
+            //await SeedDataColonnineAsync(scope.ServiceProvider, logger); //TODO: Aggiungere nuove colonnine (Da Cairoli in poi)
         }
         catch (Exception ex)
         {
@@ -301,4 +304,29 @@ public static class DatabaseInitializer
         await dbContext.Ospedali.AddRangeAsync(ospedali);
         await dbContext.SaveChangesAsync();
     }
+
+    private static async Task SeedDataColonnineAsync(IServiceProvider services, ILogger logger)
+    {
+        var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
+        if (await dbContext.Colonnine.AnyAsync())
+        {
+            logger.LogInformation("Colonnine data already exists. Skipping seeding.");
+            return;
+        }
+        var colonnine = new List<Colonnina>
+        {
+            new Colonnina { Id = Guid.NewGuid(), NomeColonnina = "Certosa / Laghi", Comune = "Milano", Provincia = "MI", Coordinate = new Coordinate(45.49972, 9.13072) },
+            new Colonnina { Id = Guid.NewGuid(), NomeColonnina = "Rubicone", Comune = "Milano", Provincia = "MI", Coordinate = new Coordinate(45.53158, 9.16177) },
+            new Colonnina { Id = Guid.NewGuid(), NomeColonnina = "Nigra", Comune = "Milano", Provincia = "MI", Coordinate = new Coordinate(45.49667, 9.17107) },
+            new Colonnina { Id = Guid.NewGuid(), NomeColonnina = "Maciachini", Comune = "Milano", Provincia = "MI", Coordinate = new Coordinate(45.49750, 9.18611) },
+            new Colonnina { Id = Guid.NewGuid(), NomeColonnina = "Loreto", Comune = "Milano", Provincia = "MI", Coordinate = new Coordinate(45.48556, 9.21694) },
+            new Colonnina { Id = Guid.NewGuid(), NomeColonnina = "Testi / Rodi", Comune = "Milano", Provincia = "MI", Coordinate = new Coordinate(45.51500, 9.20611) },
+            new Colonnina { Id = Guid.NewGuid(), NomeColonnina = "Baiamonti", Comune = "Milano", Provincia = "MI", Coordinate = new Coordinate(45.48194, 9.18167) },
+            new Colonnina { Id = Guid.NewGuid(), NomeColonnina = "Baracca", Comune = "Milano", Provincia = "MI", Coordinate = new Coordinate(45.46611, 9.16528) },
+            new Colonnina { Id = Guid.NewGuid(), NomeColonnina = "Fontana / Duomo", Comune = "Milano", Provincia = "MI", Coordinate = new Coordinate(45.46361, 9.19389) },
+        };
+
+        await dbContext.Colonnine.AddRangeAsync(colonnine);
+        await dbContext.SaveChangesAsync();
+    })
 }

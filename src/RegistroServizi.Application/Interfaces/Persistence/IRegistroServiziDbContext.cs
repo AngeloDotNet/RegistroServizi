@@ -17,6 +17,7 @@ public interface IRegistroServiziDbContext
     DbSet<StatoBolla> StatiBolla { get; }
     DbSet<TitoloStudio> TitoliStudio { get; }
     DbSet<Ospedale> Ospedali { get; }
+    DbSet<Colonnina> Colonnine { get; }
 
     /// <summary>
     /// Saves all changes made in the context to the underlying data store asynchronously.

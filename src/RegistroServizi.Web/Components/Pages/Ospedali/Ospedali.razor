@@ -134,8 +134,8 @@
                         else
                         {
                             <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Disabled="@isEditing" aria-label="Edit row" OnClick="@context.Actions.StartEditingItemAsync" />
-                            @* <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="@isEditing" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" /> *@
-                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="true" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" />
+                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="@isEditing" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" />
+                            @* <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="true" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" /> *@
                         }
                     </CellTemplate>
                 </TemplateColumn>

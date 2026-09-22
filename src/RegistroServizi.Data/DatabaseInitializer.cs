@@ -48,9 +48,6 @@ public static class DatabaseInitializer
             // Seed data for users
             await SeedDefaultUsersAsync(scope.ServiceProvider, logger);
 
-            // Seed data for Applicazione
-            await SeedDataApplicazioneAsync(scope.ServiceProvider, logger);
-
             // Seed data for TipologiaServizio
             await SeedDataTipologiaServizioAsync(scope.ServiceProvider, logger);
 
@@ -137,28 +134,6 @@ public static class DatabaseInitializer
                 logger.LogInformation("Assigned roles '{Roles}' to administrator user.", string.Join(", ", adminRoles));
             }
         }
-    }
-
-    private static async Task SeedDataApplicazioneAsync(IServiceProvider services, ILogger logger)
-    {
-        var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
-        var existingDataApplicazione = await dbContext.Applicazioni.FirstOrDefaultAsync();
-
-        if (existingDataApplicazione != null)
-        {
-            logger.LogInformation("Data applicazione already exists. Skipping seeding.");
-            return;
-        }
-
-        var applicazione = new Applicazione
-        {
-            Id = Guid.NewGuid(),
-            NomeApplicazione = "Registro Servizi",
-            Versione = "1.0.0"
-        };
-
-        dbContext.Applicazioni.Add(applicazione);
-        await dbContext.SaveChangesAsync();
     }
 
     private static async Task SeedDataTipologiaServizioAsync(IServiceProvider services, ILogger logger)
@@ -313,6 +288,7 @@ public static class DatabaseInitializer
             logger.LogInformation("Colonnine data already exists. Skipping seeding.");
             return;
         }
+
         var colonnine = new List<Colonnina>
         {
             new Colonnina { Id = Guid.NewGuid(), NomeColonnina = "Certosa / Laghi", Comune = "Milano", Provincia = "MI", Coordinate = new Coordinate(45.49972, 9.13072) },
@@ -328,5 +304,5 @@ public static class DatabaseInitializer
 
         await dbContext.Colonnine.AddRangeAsync(colonnine);
         await dbContext.SaveChangesAsync();
-    })
+    }
 }

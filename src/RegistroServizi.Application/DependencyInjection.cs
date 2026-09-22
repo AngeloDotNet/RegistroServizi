@@ -12,7 +12,7 @@ public static class DependencyInjection
     /// <summary>
     /// Registers application services into the specified IServiceCollection and adds TimeProvider.System.
     /// </summary>
-    /// <remarks>Scans the assembly containing ApplicazioneService and registers classes whose names end with
+    /// <remarks>Scans the assembly containing OspedaleService and registers classes whose names end with
     /// "Service" as their implemented interfaces with a scoped lifetime. Also registers TimeProvider.System as a
     /// singleton.</remarks>
     /// <param name="services">The IServiceCollection to configure with application services and TimeProvider.System.</param>
@@ -21,14 +21,13 @@ public static class DependencyInjection
         /// <summary>
         /// Registers application services into the IServiceCollection and adds the system TimeProvider.
         /// </summary>
-        /// <remarks>Scans the assembly containing ApplicazioneService and registers classes with names
-        /// ending in 'Service' as their implemented interfaces with scoped lifetime. Also registers TimeProvider.System
-        /// as a singleton.</remarks>
+        /// <remarks>Scans the assembly containing OspedaleService and registers classes with names ending in 'Service' 
+        /// as their implemented interfaces with scoped lifetime. Also registers TimeProvider.System as a singleton.</remarks>
         /// <returns>The IServiceCollection with the registered services.</returns>
         public IServiceCollection AddRegistroServiziApplication()
         {
             services.Scan(scan => scan
-                .FromAssemblyOf<ApplicazioneService>()
+                .FromAssemblyOf<OspedaleService>()
                 .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Service")))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());

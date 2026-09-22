@@ -1,8 +1,6 @@
 ﻿global using System.ComponentModel.DataAnnotations;
-global using System.Text.RegularExpressions;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
-global using RegistroServizi.Application.DTOs.Applicazione;
 global using RegistroServizi.Application.DTOs.Indirizzo;
 global using RegistroServizi.Application.DTOs.Ospedale;
 global using RegistroServizi.Application.DTOs.PrezzoServizio;

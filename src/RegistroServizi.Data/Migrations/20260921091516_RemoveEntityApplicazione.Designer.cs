@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegistroServizi.Data;
 
@@ -12,9 +13,11 @@ using RegistroServizi.Data;
 namespace RegistroServizi.Data.Migrations
 {
     [DbContext(typeof(RegistroServiziDbContext))]
-    partial class RegistroServiziDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260921091516_RemoveEntityApplicazione")]
+    partial class RemoveEntityApplicazione
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,49 +244,6 @@ namespace RegistroServizi.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("RegistroServizi.Domain.Entities.Colonnina", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Comune")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NomeColonnina")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Provincia")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.ComplexProperty(typeof(Dictionary<string, object>), "Coordinate", "RegistroServizi.Domain.Entities.Colonnina.Coordinate#Coordinate", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<double?>("Latitudine")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("float")
-                                .HasDefaultValue(0.0);
-
-                            b1.Property<double?>("Longitudine")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("float")
-                                .HasDefaultValue(0.0);
-                        });
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NomeColonnina");
-
-                    b.ToTable("Colonnine", (string)null);
                 });
 
             modelBuilder.Entity("RegistroServizi.Domain.Entities.Ospedale", b =>

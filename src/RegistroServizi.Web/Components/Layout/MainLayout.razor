@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
+@inject IOptionsMonitor<ApplicazioneOptions> ApplicazioneOptions
 @inject IOptionsMonitor<AssociazioneOptions> AssociazioneOptions
 @implements IDisposable
 
@@ -48,67 +49,80 @@
 </MudLayout>
 
 @code {
-    private string? currentUrl;
-    private bool _drawerOpen = true;
+    // private string? currentUrl;
+    // private bool _drawerOpen = true;
 
-    private string? _nomeAssociazione;
-    private IDisposable? _optionsChangeSubscription;
+    // private string? _nomeApplicazione;
+    // private string? _versioneApplicazione;
 
-    protected override void OnInitialized()
-    {
-        _nomeAssociazione = AssociazioneOptions.CurrentValue.NomeAssociazione;
-        _optionsChangeSubscription = AssociazioneOptions.OnChange(options =>
-        {
-            _nomeAssociazione = options.NomeAssociazione;
-            _ = InvokeAsync(StateHasChanged);
-        });
+    // private string? _nomeAssociazione;
+    // private IDisposable? _optionsChangeSubscription;
 
-        NavigationManager.LocationChanged += OnLocationChanged;
-    }
+    // protected override void OnInitialized()
+    // {
+    //     _nomeAssociazione = AssociazioneOptions.CurrentValue.NomeAssociazione;
+    //     _nomeApplicazione = ApplicazioneOptions.CurrentValue.NomeApplicazione;
+    //     _versioneApplicazione = ApplicazioneOptions.CurrentValue.VersioneApplicazione;
 
-    public void Dispose()
-    {
-        NavigationManager.LocationChanged -= OnLocationChanged;
-        _optionsChangeSubscription?.Dispose();
-    }
+    //     _optionsChangeSubscription = AssociazioneOptions.OnChange(options =>
+    //     {
+    //         _nomeAssociazione = options.NomeAssociazione;
+    //         _ = InvokeAsync(StateHasChanged);
+    //     });
 
-    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
-    {
-        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
-        StateHasChanged();
-    }
+    //     _optionsChangeSubscription = ApplicazioneOptions.OnChange(options =>
+    //     {
+    //         _nomeApplicazione = options.NomeApplicazione;
+    //         _versioneApplicazione = options.VersioneApplicazione;
+    //         _ = InvokeAsync(StateHasChanged);
+    //     });
 
-    private void ToggleDrawer()
-    {
-        _drawerOpen = !_drawerOpen;
-    }
+    //     NavigationManager.LocationChanged += OnLocationChanged;
+    // }
 
-    protected override async Task OnInitializedAsync()
-    {
-        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-    }
+    // public void Dispose()
+    // {
+    //     NavigationManager.LocationChanged -= OnLocationChanged;
+    //     _optionsChangeSubscription?.Dispose();
+    // }
 
-    private static string GetProfileInitials(string? name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            return "?";
-        }
+    // private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    // {
+    //     currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+    //     StateHasChanged();
+    // }
 
-        var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+    // private void ToggleDrawer()
+    // {
+    //     _drawerOpen = !_drawerOpen;
+    // }
 
-        if (parts.Length == 1)
-        {
-            return string.Create(1, parts[0][0], static (destination, value) =>
-            {
-                destination[0] = char.ToUpperInvariant(value);
-            });
-        }
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    // }
 
-        return string.Create(2, parts, static (destination, value) =>
-        {
-            destination[0] = char.ToUpperInvariant(value[0][0]);
-            destination[1] = char.ToUpperInvariant(value[^1][0]);
-        });
-    }
+    // private static string GetProfileInitials(string? name)
+    // {
+    //     if (string.IsNullOrWhiteSpace(name))
+    //     {
+    //         return "?";
+    //     }
+
+    //     var parts = name.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+    //     if (parts.Length == 1)
+    //     {
+    //         return string.Create(1, parts[0][0], static (destination, value) =>
+    //         {
+    //             destination[0] = char.ToUpperInvariant(value);
+    //         });
+    //     }
+
+    //     return string.Create(2, parts, static (destination, value) =>
+    //     {
+    //         destination[0] = char.ToUpperInvariant(value[0][0]);
+    //         destination[1] = char.ToUpperInvariant(value[^1][0]);
+    //     });
+    // }
 }

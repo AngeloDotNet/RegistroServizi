@@ -7,13 +7,12 @@ namespace RegistroServizi.Application.Interfaces.Persistence;
 /// domain entities and EF Core operations for change tracking and persistence.
 /// </summary>
 /// <remarks>Implementations should provide DbSet<T> properties for TipologiaServizio, PrezzoServizio,
-/// Applicazione, StatoBolla, TitoloStudio and Ospedale, and implement SaveChangesAsync and Entry to support dependency
+/// StatoBolla, TitoloStudio and Ospedale, and implement SaveChangesAsync and Entry to support dependency
 /// injection, unit testing, and mocking of data access.</remarks>
 public interface IRegistroServiziDbContext
 {
     DbSet<TipologiaServizio> TipologieServizio { get; }
     DbSet<PrezzoServizio> PrezziServizi { get; }
-    DbSet<Applicazione> Applicazioni { get; }
     DbSet<StatoBolla> StatiBolla { get; }
     DbSet<TitoloStudio> TitoliStudio { get; }
     DbSet<Ospedale> Ospedali { get; }

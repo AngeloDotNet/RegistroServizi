@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Localization;
-
-namespace RegistroServizi.Web;
+﻿namespace RegistroServizi.Web;
 
 /// <summary>
 /// Provides extension methods for registering services and configuring options, including binding configuration

@@ -10,6 +10,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Configuration.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
+
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
@@ -26,6 +27,7 @@ public class Program
             config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
         });
 
+        builder.Services.AddRegistroServiziLocalization(builder.Configuration);
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
         {
             options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
@@ -108,8 +110,9 @@ public class Program
         app.UseAuthorization();
 
         app.UseAntiforgery();
-        app.MapStaticAssets();
+        app.UseRequestLocalization();
 
+        app.MapStaticAssets();
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode();
 

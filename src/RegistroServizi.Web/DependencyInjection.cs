@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Web;
+﻿using Microsoft.AspNetCore.Localization;
+
+namespace RegistroServizi.Web;
 
 /// <summary>
 /// Provides extension methods for registering services and configuring options, including binding configuration
@@ -26,5 +28,32 @@ public static class DependencyInjection
             .Bind(configuration.GetSection(sectionName))
             .ValidateDataAnnotations()
             .ValidateOnStart();
+    }
+
+    /// <summary>
+    /// Adds localization services and configures RequestLocalizationOptions using the 'SupportedCultures' configuration
+    /// section, sets the default culture to 'it', and registers a CookieRequestCultureProvider.
+    /// </summary>
+    /// <remarks>Reads supported cultures from the 'SupportedCultures' configuration section, calls
+    /// AddLocalization, sets default culture to 'it', registers supported cultures and UI cultures, and inserts a
+    /// CookieRequestCultureProvider as the first RequestCultureProvider.</remarks>
+    /// <param name="services">The service collection to which localization services and request localization options are added.</param>
+    /// <param name="configuration">The configuration used to retrieve the 'SupportedCultures' array.</param>
+    /// <returns>The same IServiceCollection instance to allow method chaining.</returns>
+    public static IServiceCollection AddRegistroServiziLocalization(this IServiceCollection services, IConfiguration configuration)
+    {
+        var supportedCultures = configuration.GetSection("SupportedCultures").Get<string[]>() ?? ["it"];
+
+        services.AddLocalization();
+        services.Configure<RequestLocalizationOptions>(options =>
+        {
+            options.SetDefaultCulture("it")
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
+            options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
+        });
+
+        return services;
     }
 }

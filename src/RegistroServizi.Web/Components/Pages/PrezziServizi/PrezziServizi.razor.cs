@@ -85,66 +85,6 @@ public partial class PrezziServizi : IAsyncDisposable
     private void ValidateScontoSocio(int? value)
         => MudblazorValidator.ValidateNonNegative(Snackbar, value, "Lo sconto socio non può essere negativo.");
 
-    //private void ValidateNonNegative(object? value, string defaultMessage)
-    //{
-    //    if (TryConvertToDecimalNullable(value, out var dec) && IsNegative(dec, out var msg))
-    //    {
-    //        Snackbar.Add(msg ?? defaultMessage, Severity.Warning);
-    //    }
-    //}
-
-    //private static bool TryConvertToDecimalNullable(object? value, out decimal? result)
-    //{
-    //    result = null;
-
-    //    if (value == null)
-    //    {
-    //        return false;
-    //    }
-
-    //    switch (value)
-    //    {
-    //        case decimal d:
-    //            result = d;
-    //            return true;
-    //        //case decimal? dn when dn.HasValue:
-    //        //    result = dn;
-    //        //    return true;
-    //        case int i:
-    //            result = i;
-    //            return true;
-    //        //case int? inull when inull.HasValue:
-    //        //    result = inull.Value;
-    //        //    return true;
-    //        case long l:
-    //            result = l;
-    //            return true;
-    //        //case long? lnull when lnull.HasValue:
-    //        //    result = lnull.Value;
-    //        //    return true;
-    //        case double dd:
-    //            result = (decimal)dd;
-    //            return true;
-    //        //case double? ddn when ddn.HasValue:
-    //        //    result = (decimal)ddn.Value;
-    //        //    return true;
-    //        default:
-    //            return false;
-    //    }
-    //}
-
-    //private static bool IsNegative(decimal? value, out string? message)
-    //{
-    //    message = null;
-
-    //    if (value.HasValue && value.Value < 0)
-    //    {
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
-
     private bool ValidatePrezzoServizio(PrezzoServizioDto item)
     {
         if (item == null)
@@ -178,6 +118,7 @@ public partial class PrezziServizi : IAsyncDisposable
     {
         cts.Cancel();
         cts.Dispose();
+
         return ValueTask.CompletedTask;
     }
 }

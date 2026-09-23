@@ -104,40 +104,20 @@ public partial class Ospedali : IDisposable
     }
 
     private void ValidateNomeOspedale(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            Snackbar.Add("Il nome dell'ospedale non può essere vuoto.", Severity.Warning);
-        }
-    }
+        => MudblazorValidator.ValidateIsNotNullOrWhiteSpace(Snackbar, value, "Il nome dell'ospedale non può essere vuoto.");
 
     private void ValidateStrada(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            Snackbar.Add("Il nome della strada non può essere vuoto.", Severity.Warning);
-        }
-    }
+        => MudblazorValidator.ValidateIsNotNullOrWhiteSpace(Snackbar, value, "Il nome della strada non può essere vuoto.");
 
     private void ValidateCitta(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            Snackbar.Add("Il nome della città non può essere vuoto.", Severity.Warning);
-        }
-    }
+        => MudblazorValidator.ValidateIsNotNullOrWhiteSpace(Snackbar, value, "Il nome della città non può essere vuoto.");
 
     private void ValidateProvincia(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value) || value.Length != 2)
-        {
-            Snackbar.Add("Il nome della provincia non può essere vuoto e deve essere di 2 caratteri.", Severity.Warning);
-        }
-    }
+        => MudblazorValidator.ValidateIsNotNullOrWhiteSpace(Snackbar, value, "Il nome della provincia non può essere vuoto e deve essere di 2 caratteri.");
 
     private void ValidateCap(int value)
     {
-        if (value < 10000 || value > 99999)
+        if (value < MudblazorValidator.minCap || value > MudblazorValidator.maxCap)
         {
             Snackbar.Add("Il codice avviamento postale deve essere un numero di 5 cifre.", Severity.Warning);
         }
@@ -150,9 +130,36 @@ public partial class Ospedali : IDisposable
             return false;
         }
 
-        if (string.IsNullOrWhiteSpace(item.NomeOspedale))
+        var addr = item.Indirizzo;
+        bool IsNullOrWhite(string s) => string.IsNullOrWhiteSpace(s);
+
+        if (IsNullOrWhite(item.NomeOspedale))
         {
             Snackbar.Add("Il nome dell'ospedale non può essere vuoto.", Severity.Warning);
+            return false;
+        }
+
+        if (IsNullOrWhite(addr.Strada))
+        {
+            Snackbar.Add("Il nome della strada non può essere vuoto.", Severity.Warning);
+            return false;
+        }
+
+        if (IsNullOrWhite(addr.Citta))
+        {
+            Snackbar.Add("Il nome della città non può essere vuoto.", Severity.Warning);
+            return false;
+        }
+
+        if (IsNullOrWhite(addr.Provincia) || addr.Provincia.Length != 2)
+        {
+            Snackbar.Add("Il nome della provincia non può essere vuoto e deve essere di 2 caratteri.", Severity.Warning);
+            return false;
+        }
+
+        if (addr.Cap < MudblazorValidator.minCap || addr.Cap > MudblazorValidator.maxCap)
+        {
+            Snackbar.Add("Il codice avviamento postale deve essere un numero di 5 cifre.", Severity.Warning);
             return false;
         }
 

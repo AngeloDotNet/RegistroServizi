@@ -67,74 +67,83 @@ public partial class PrezziServizi : IAsyncDisposable
         }
     }
 
-    #region "Validazione"
+    private void ValidateCostoFisso(decimal value)
+        => MudblazorValidator.ValidateNonNegative(Snackbar, value, "Il costo fisso non può essere negativo.");
 
-    private void ValidateCostoFisso(decimal value, PrezzoServizioDto item) => ValidateNonNegative(value, "Il costo fisso non può essere negativo.");
-    private void ValidateCostoKm(decimal value, PrezzoServizioDto item) => ValidateNonNegative(value, "Il costo per km non può essere negativo.");
-    private void ValidateSecondoTrasportato(decimal value, PrezzoServizioDto item) => ValidateNonNegative(value, "Il costo per il secondo trasportato non può essere negativo.");
-    private void ValidateFermoMacchina(decimal value, PrezzoServizioDto item) => ValidateNonNegative(value, "Il costo del fermo macchina non può essere negativo.");
-    private void ValidateAccompagnatore(decimal? value, PrezzoServizioDto item) => ValidateNonNegative(value, "Il costo per l'accompagnatore non può essere negativo.");
-    private void ValidateScontoSocio(int? value, PrezzoServizioDto item) => ValidateNonNegative(value, "Lo sconto socio non può essere negativo.");
+    private void ValidateCostoKm(decimal value)
+        => MudblazorValidator.ValidateNonNegative(Snackbar, value, "Il costo per km non può essere negativo.");
 
-    private void ValidateNonNegative(object? value, string defaultMessage)
-    {
-        if (TryConvertToDecimalNullable(value, out var dec) && IsNegative(dec, out var msg))
-        {
-            Snackbar.Add(msg ?? defaultMessage, Severity.Warning);
-        }
-    }
+    private void ValidateSecondoTrasportato(decimal value)
+        => MudblazorValidator.ValidateNonNegative(Snackbar, value, "Il costo per il secondo trasportato non può essere negativo.");
 
-    private static bool TryConvertToDecimalNullable(object? value, out decimal? result)
-    {
-        result = null;
+    private void ValidateFermoMacchina(decimal value)
+        => MudblazorValidator.ValidateNonNegative(Snackbar, value, "Il costo del fermo macchina non può essere negativo.");
 
-        if (value == null)
-        {
-            return false;
-        }
+    private void ValidateAccompagnatore(decimal? value)
+        => MudblazorValidator.ValidateNonNegative(Snackbar, value, "Il costo per l'accompagnatore non può essere negativo.");
 
-        switch (value)
-        {
-            case decimal d:
-                result = d;
-                return true;
-            //case decimal? dn when dn.HasValue:
-            //    result = dn;
-            //    return true;
-            case int i:
-                result = i;
-                return true;
-            //case int? inull when inull.HasValue:
-            //    result = inull.Value;
-            //    return true;
-            case long l:
-                result = l;
-                return true;
-            //case long? lnull when lnull.HasValue:
-            //    result = lnull.Value;
-            //    return true;
-            case double dd:
-                result = (decimal)dd;
-                return true;
-            //case double? ddn when ddn.HasValue:
-            //    result = (decimal)ddn.Value;
-            //    return true;
-            default:
-                return false;
-        }
-    }
+    private void ValidateScontoSocio(int? value)
+        => MudblazorValidator.ValidateNonNegative(Snackbar, value, "Lo sconto socio non può essere negativo.");
 
-    private static bool IsNegative(decimal? value, out string? message)
-    {
-        message = null;
+    //private void ValidateNonNegative(object? value, string defaultMessage)
+    //{
+    //    if (TryConvertToDecimalNullable(value, out var dec) && IsNegative(dec, out var msg))
+    //    {
+    //        Snackbar.Add(msg ?? defaultMessage, Severity.Warning);
+    //    }
+    //}
 
-        if (value.HasValue && value.Value < 0)
-        {
-            return true;
-        }
+    //private static bool TryConvertToDecimalNullable(object? value, out decimal? result)
+    //{
+    //    result = null;
 
-        return false;
-    }
+    //    if (value == null)
+    //    {
+    //        return false;
+    //    }
+
+    //    switch (value)
+    //    {
+    //        case decimal d:
+    //            result = d;
+    //            return true;
+    //        //case decimal? dn when dn.HasValue:
+    //        //    result = dn;
+    //        //    return true;
+    //        case int i:
+    //            result = i;
+    //            return true;
+    //        //case int? inull when inull.HasValue:
+    //        //    result = inull.Value;
+    //        //    return true;
+    //        case long l:
+    //            result = l;
+    //            return true;
+    //        //case long? lnull when lnull.HasValue:
+    //        //    result = lnull.Value;
+    //        //    return true;
+    //        case double dd:
+    //            result = (decimal)dd;
+    //            return true;
+    //        //case double? ddn when ddn.HasValue:
+    //        //    result = (decimal)ddn.Value;
+    //        //    return true;
+    //        default:
+    //            return false;
+    //    }
+    //}
+
+    //private static bool IsNegative(decimal? value, out string? message)
+    //{
+    //    message = null;
+
+    //    if (value.HasValue && value.Value < 0)
+    //    {
+    //        return true;
+    //    }
+
+    //    return false;
+    //}
 
     private bool ValidatePrezzoServizio(PrezzoServizioDto item)
     {
@@ -155,7 +164,7 @@ public partial class PrezziServizi : IAsyncDisposable
 
         foreach (var (value, message) in checks)
         {
-            if (TryConvertToDecimalNullable(value, out var dec) && IsNegative(dec, out _))
+            if (MudblazorValidator.TryConvertToDecimalNullable(value, out var dec) && MudblazorValidator.IsNegative(dec, out _))
             {
                 Snackbar.Add(message, Severity.Warning);
                 return false;
@@ -164,8 +173,6 @@ public partial class PrezziServizi : IAsyncDisposable
 
         return true;
     }
-
-    #endregion
 
     public ValueTask DisposeAsync()
     {

@@ -56,7 +56,7 @@
                         <EditTemplate>
                             <MudNumericField T="decimal"
                                 @bind-Value="context.Item.CostoFisso"
-                                @bind-Value:after="() => ValidateCostoFisso(context.Item.CostoFisso, context.Item)"
+                                @bind-Value:after="() => ValidateCostoFisso(context.Item.CostoFisso)"
                                 Label="Costo Fisso"
                                 Variant="Variant.Outlined"
                                 Step="0.1m"
@@ -78,7 +78,7 @@
                         <EditTemplate>
                             <MudNumericField T="decimal"
                                 @bind-Value="context.Item.CostoKm"
-                                @bind-Value:after="() => ValidateCostoKm(context.Item.CostoKm, context.Item)"
+                                @bind-Value:after="() => ValidateCostoKm(context.Item.CostoKm)"
                                 Label="Costo al Km"
                                 Variant="Variant.Outlined"
                                 Step="0.1m"
@@ -100,7 +100,7 @@
                         <EditTemplate>
                             <MudNumericField T="decimal"
                                 @bind-Value="context.Item.SecondoTrasportato"
-                                @bind-Value:after="() => ValidateSecondoTrasportato(context.Item.SecondoTrasportato, context.Item)"
+                                @bind-Value:after="() => ValidateSecondoTrasportato(context.Item.SecondoTrasportato)"
                                 Label="Secondo Trasportato"
                                 Variant="Variant.Outlined"
                                 Step="0.1m"
@@ -122,7 +122,7 @@
                         <EditTemplate>
                             <MudNumericField T="decimal"
                                 @bind-Value="context.Item.FermoMacchina"
-                                @bind-Value:after="() => ValidateFermoMacchina(context.Item.FermoMacchina, context.Item)"
+                                @bind-Value:after="() => ValidateFermoMacchina(context.Item.FermoMacchina)"
                                 Label="Fermo Macchina"
                                 Variant="Variant.Outlined"
                                 Step="0.1m"
@@ -144,7 +144,7 @@
                         <EditTemplate>
                             <MudNumericField T="decimal?"
                                 @bind-Value="context.Item.Accompagnatore"
-                                @bind-Value:after="() => ValidateAccompagnatore(context.Item.Accompagnatore, context.Item)"
+                                @bind-Value:after="() => ValidateAccompagnatore(context.Item.Accompagnatore)"
                                 Label="Accompagnatore"
                                 Variant="Variant.Outlined"
                                 Step="0.1m"
@@ -164,7 +164,7 @@
                         <EditTemplate>
                             <MudNumericField T="int?"
                                 @bind-Value="context.Item.ScontoSocio"
-                                @bind-Value:after="() => ValidateScontoSocio(context.Item.ScontoSocio, context.Item)"
+                                @bind-Value:after="() => ValidateScontoSocio(context.Item.ScontoSocio)"
                                 Label="Sconto Socio"
                                 Variant="Variant.Outlined"
                                 Step="1"
@@ -185,7 +185,6 @@
                             else
                             {
                                 <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Disabled="@isEditing" aria-label="Edit row" OnClick="@context.Actions.StartEditingItemAsync" />
-                                @* <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="@_isEditing" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" /> *@
                             }
                         </CellTemplate>
                     </TemplateColumn>

@@ -1,0 +1,571 @@
+﻿@* @page "/admin/identity"
+@* @attribute [Authorize(Roles = nameof(Role.Admin))]
+@using Microsoft.AspNetCore.Authorization *@
+@* @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using RegistroServizi.Data.Identity
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IDialogService DialogService
+@inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar *@
+
+<PageTitle>Gestione utenti e ruoli</PageTitle>
+
+@* <MudStack Spacing="4">
+    <MudText Typo="Typo.h4">Gestione utenti e ruoli</MudText>
+
+    <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h6">Ruoli</MudText>
+
+        <MudStack Row="true" Spacing="2" Class="mt-3">
+            <MudTextField @bind-Value="_newRoleName" Label="Nuovo ruolo" Immediate="true" />
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateRoleAsync">Aggiungi ruolo</MudButton>
+        </MudStack>
+
+        <div class="mt-3" style="display:flex; flex-wrap:wrap; gap:.75rem;">
+            @foreach (var role in _roles)
+            {
+                <div class="d-flex align-items-center" style="gap:.35rem;">
+                    <MudText>@role</MudText>
+
+                    @if (IsSystemRole(role))
+                    {
+                        <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined" Color="Color.Info">Sistema</MudChip>
+                    }
+
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small" Disabled="@IsSystemRole(role)" OnClick="() => DeleteRoleAsync(role)" />
+                </div>
+            }
+        </div>
+    </MudPaper> *@
+
+    @* <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h6">Nuovo utente</MudText>
+
+        <MudStack Spacing="2" Class="mt-3">
+            <MudStack Row="true" Spacing="2">
+                <MudTextField @bind-Value="_newUserName" Label="Username" />
+                <MudTextField @bind-Value="_newUserEmail" Label="Email" />
+                <MudTextField @bind-Value="_newUserPassword" Label="Password" InputType="InputType.Password" />
+            </MudStack>
+
+            <MudText Typo="Typo.subtitle2">Ruoli iniziali</MudText>
+            <div style="display:flex; flex-wrap:wrap; gap:1rem;">
+                @foreach (var role in _roles)
+                {
+                    <MudCheckBox T="bool" Label="@role" Checked="@_newUserRoles.Contains(role)" CheckedChanged="value => ToggleNewUserRoleAsync(role, value)" />
+                    <MudCheckBox T="bool" Label="@role" Checked="@(_newUserRoles.Contains(role))" CheckedChanged="(bool value) => ToggleNewUserRoleAsync(role, value)" />
+                }
+            </div>
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateUserAsync">Crea utente</MudButton>
+        </MudStack>
+    </MudPaper> *@
+
+   @*  <MudPaper Class="pa-4">
+        <MudText Typo="Typo.h6">Utenti</MudText>
+
+        <div class="table-responsive mt-3">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Ruoli</th>
+                        <th class="text-right">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in _users)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>
+                            <td>@string.Join(", ", user.Roles)</td>
+                            <td class="text-right">
+                                <MudButton Size="Size.Small" Variant="Variant.Outlined" OnClick="() => EditUserRolesAsync(user.Id)">Ruoli</MudButton>
+                                <MudButton Size="Size.Small" Color="Color.Error" Variant="Variant.Text" OnClick="() => DeleteUserAsync(user.Id)">Elimina</MudButton>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </MudPaper> *@
+
+    @* @if (_selectedUser is not null)
+    {
+        <MudPaper Class="pa-4">
+            <MudText Typo="Typo.h6">Ruoli utente: @_selectedUser.UserName</MudText>
+
+            <div class="mt-3" style="display:flex; flex-wrap:wrap; gap:1rem;">
+                @* @foreach (var role in _roles)
+                {
+                    <label @key="role" style="display:flex; align-items:center; gap:.5rem;">
+                        <input type="checkbox" checked="@_selectedUserRoles.Contains(role)" @onchange="async e => await ToggleSelectedUserRoleAsync(role, e.Value is bool b && b)" />
+                        <span>@role</span>
+                    </label>
+                }
+
+                @for (int i = 0; i < _roles.Count; i++)
+                {
+                    var item = _roles[i];
+                    var idx = i;
+                    @* <MudCheckBox T="bool" Label="@role" Checked="@(_selectedUserRoles.Contains(role))" CheckedChanged="(bool value) => ToggleSelectedUserRoleAsync(role, value)" />
+                    <MudCheckBox T="bool"
+                                 aria-label="@($"Select {item.EntityType} {item.Name}")"
+                                 Value="@_roles.Contains(item.Id)"
+                                 ValueChanged="@((bool v) => ToggleItem(item.Id, v))"
+                                 Size="Size.Small"
+                                 Color="Color.Primary" />
+                }
+            </div>
+
+            <MudButton Class="mt-3" Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveSelectedUserRolesAsync">Salva ruoli</MudButton>
+        </MudPaper>
+    }
+</MudStack> *@
+
+@code {
+    // private sealed record UserRow(string Id, string UserName, string? Email, IReadOnlyList<string> Roles);
+
+    // private static readonly HashSet<string> SystemRoleNames = Enum.GetNames<Role>().ToHashSet(StringComparer.OrdinalIgnoreCase);
+    // private const int MinRoleNameLength = 1;
+    // private const int MaxRoleNameLength = 64;
+
+    // private List<UserRow> _users = [];
+    // private List<string> _roles = [];
+
+    // private string _newRoleName = string.Empty;
+    // private string _newUserName = string.Empty;
+    // private string? _newUserEmail;
+    // private string _newUserPassword = string.Empty;
+    // private readonly HashSet<string> _newUserRoles = new(StringComparer.OrdinalIgnoreCase);
+
+    // private string? _selectedUserId;
+    // private ApplicationUser? _selectedUser;
+    // private readonly HashSet<string> _selectedUserRoles = new(StringComparer.OrdinalIgnoreCase);
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     await ReloadAsync();
+    // }
+
+    // private async Task ReloadAsync()
+    // {
+    //     _roles = await RoleManager.Roles
+    //         .OrderBy(role => role.Name)
+    //         .Select(role => role.Name!)
+    //         .ToListAsync();
+
+    //     var users = await UserManager.Users
+    //         .OrderBy(user => user.UserName)
+    //         .ToListAsync();
+
+    //     _users = new List<UserRow>(users.Count);
+
+    //     foreach (var user in users)
+    //     {
+    //         var roles = await UserManager.GetRolesAsync(user);
+    //         _users.Add(new UserRow(
+    //             user.Id,
+    //             user.UserName ?? user.Email ?? user.Id,
+    //             user.Email,
+    //             roles.OrderBy(role => role).ToArray()));
+    //     }
+
+    //     await SyncSelectedUserAsync();
+    // }
+
+    // private async Task SyncSelectedUserAsync()
+    // {
+    //     _selectedUser = null;
+    //     _selectedUserRoles.Clear();
+
+    //     if (string.IsNullOrWhiteSpace(_selectedUserId))
+    //     {
+    //         return;
+    //     }
+
+    //     _selectedUser = await UserManager.FindByIdAsync(_selectedUserId);
+
+    //     if (_selectedUser is null)
+    //     {
+    //         _selectedUserId = null;
+    //         return;
+    //     }
+
+    //     foreach (var role in await UserManager.GetRolesAsync(_selectedUser))
+    //     {
+    //         _selectedUserRoles.Add(role);
+    //     }
+    // }
+
+    // private async Task CreateRoleAsync()
+    // {
+    //     var roleName = _newRoleName.Trim();
+
+    //     if (!TryValidateRoleName(roleName, out var validationError))
+    //     {
+    //         Snackbar.Add(validationError, Severity.Warning);
+    //         return;
+    //     }
+
+    //     if (await RoleManager.RoleExistsAsync(roleName))
+    //     {
+    //         Snackbar.Add($"Role '{roleName}' already exists.", Severity.Info);
+    //         return;
+    //     }
+
+    //     var result = await RoleManager.CreateAsync(new IdentityRole(roleName));
+    //     if (!result.Succeeded)
+    //     {
+    //         Snackbar.Add(GetErrors(result), Severity.Error);
+    //         return;
+    //     }
+
+    //     _newRoleName = string.Empty;
+    //     Snackbar.Add($"Role '{roleName}' created.", Severity.Success);
+    //     await ReloadAsync();
+    // }
+
+    // private async Task DeleteRoleAsync(string roleName)
+    // {
+    //     roleName = roleName.Trim();
+
+    //     if (IsSystemRole(roleName))
+    //     {
+    //         Snackbar.Add($"Role '{roleName}' is a protected system role and cannot be deleted.", Severity.Warning);
+    //         return;
+    //     }
+
+    //     var assignedUsers = await UserManager.GetUsersInRoleAsync(roleName);
+    //     if (assignedUsers.Count > 0)
+    //     {
+    //         Snackbar.Add($"Role '{roleName}' is still assigned to {assignedUsers.Count} user(s).", Severity.Error);
+    //         return;
+    //     }
+
+    //     var role = await RoleManager.FindByNameAsync(roleName);
+    //     if (role is null)
+    //     {
+    //         return;
+    //     }
+
+    //     var result = await RoleManager.DeleteAsync(role);
+    //     if (!result.Succeeded)
+    //     {
+    //         Snackbar.Add(GetErrors(result), Severity.Error);
+    //         return;
+    //     }
+
+    //     Snackbar.Add($"Role '{roleName}' deleted.", Severity.Success);
+    //     await ReloadAsync();
+    // }
+
+    // private Task ToggleNewUserRoleAsync(string roleName, bool isChecked)
+    // {
+    //     if (isChecked)
+    //     {
+    //         _newUserRoles.Add(roleName);
+    //     }
+    //     else
+    //     {
+    //         _newUserRoles.Remove(roleName);
+    //     }
+
+    //     return Task.CompletedTask;
+    // }
+
+    // private async Task CreateUserAsync()
+    // {
+    //     var userName = _newUserName.Trim();
+    //     var email = _newUserEmail?.Trim();
+    //     var roles = _newUserRoles
+    //         .Where(role => _roles.Any(existing => string.Equals(existing, role, StringComparison.OrdinalIgnoreCase)))
+    //         .Distinct(StringComparer.OrdinalIgnoreCase)
+    //         .ToArray();
+
+    //     if (string.IsNullOrWhiteSpace(userName))
+    //     {
+    //         Snackbar.Add("Enter a username.", Severity.Warning);
+    //         return;
+    //     }
+
+    //     if (string.IsNullOrWhiteSpace(_newUserPassword))
+    //     {
+    //         Snackbar.Add("Enter a password.", Severity.Warning);
+    //         return;
+    //     }
+
+    //     foreach (var role in roles)
+    //     {
+    //         if (!await RoleManager.RoleExistsAsync(role))
+    //         {
+    //             Snackbar.Add($"Role '{role}' does not exist.", Severity.Error);
+    //             return;
+    //         }
+    //     }
+
+    //     var user = new ApplicationUser
+    //     {
+    //         UserName = userName,
+    //         Email = string.IsNullOrWhiteSpace(email) ? null : email,
+    //         EmailConfirmed = true
+    //     };
+
+    //     var createResult = await UserManager.CreateAsync(user, _newUserPassword);
+    //     if (!createResult.Succeeded)
+    //     {
+    //         Snackbar.Add(GetErrors(createResult), Severity.Error);
+    //         return;
+    //     }
+
+    //     if (roles.Length > 0)
+    //     {
+    //         var addRolesResult = await UserManager.AddToRolesAsync(user, roles);
+    //         if (!addRolesResult.Succeeded)
+    //         {
+    //             await UserManager.DeleteAsync(user);
+    //             Snackbar.Add(GetErrors(addRolesResult), Severity.Error);
+    //             return;
+    //         }
+    //     }
+
+    //     _newUserName = string.Empty;
+    //     _newUserEmail = null;
+    //     _newUserPassword = string.Empty;
+    //     _newUserRoles.Clear();
+
+    //     Snackbar.Add($"User '{userName}' created.", Severity.Success);
+    //     await ReloadAsync();
+    // }
+
+    // private async Task DeleteUserAsync(string userId)
+    // {
+    //     var user = await UserManager.FindByIdAsync(userId);
+    //     if (user is null)
+    //     {
+    //         return;
+    //     }
+
+    //     var result = await UserManager.DeleteAsync(user);
+    //     if (!result.Succeeded)
+    //     {
+    //         Snackbar.Add(GetErrors(result), Severity.Error);
+    //         return;
+    //     }
+
+    //     if (string.Equals(_selectedUserId, userId, StringComparison.Ordinal))
+    //     {
+    //         _selectedUserId = null;
+    //         _selectedUser = null;
+    //         _selectedUserRoles.Clear();
+    //     }
+
+    //     Snackbar.Add($"User '{user.UserName}' deleted.", Severity.Success);
+    //     await ReloadAsync();
+    // }
+
+    // private async Task EditUserRolesAsync(string userId)
+    // {
+    //     _selectedUserId = userId;
+    //     await SyncSelectedUserAsync();
+
+    //     if (_selectedUser is null)
+    //     {
+    //         Snackbar.Add("User not found.", Severity.Warning);
+    //     }
+    // }
+
+    // private async Task SaveSelectedUserRolesAsync()
+    // {
+    //     if (_selectedUser is null)
+    //     {
+    //         Snackbar.Add("Select a user first.", Severity.Warning);
+    //         return;
+    //     }
+
+    //     var desiredRoles = _selectedUserRoles
+    //         .Where(role => !string.IsNullOrWhiteSpace(role))
+    //         .Select(role => role.Trim())
+    //         .Distinct(StringComparer.OrdinalIgnoreCase)
+    //         .ToArray();
+
+    //     var currentRoles = await UserManager.GetRolesAsync(_selectedUser);
+    //     var rolesToRemove = currentRoles.Except(desiredRoles, StringComparer.OrdinalIgnoreCase).ToArray();
+    //     var rolesToAdd = desiredRoles.Except(currentRoles, StringComparer.OrdinalIgnoreCase).ToArray();
+
+    //     if (rolesToRemove.Length == 0 && rolesToAdd.Length == 0)
+    //     {
+    //         Snackbar.Add("No role changes detected.", Severity.Info);
+    //         return;
+    //     }
+
+    //     if (rolesToRemove.Length > 0 && await ConfirmCurrentUserRoleRemovalAsync(rolesToRemove) is false)
+    //     {
+    //         return;
+    //     }
+
+    //     if (rolesToRemove.Length > 0)
+    //     {
+    //         var removeResult = await UserManager.RemoveFromRolesAsync(_selectedUser, rolesToRemove);
+    //         if (!removeResult.Succeeded)
+    //         {
+    //             Snackbar.Add(GetErrors(removeResult), Severity.Error);
+    //             return;
+    //         }
+    //     }
+
+    //     if (rolesToAdd.Length > 0)
+    //     {
+    //         var addResult = await UserManager.AddToRolesAsync(_selectedUser, rolesToAdd);
+    //         if (!addResult.Succeeded)
+    //         {
+    //             Snackbar.Add(GetErrors(addResult), Severity.Error);
+    //             return;
+    //         }
+    //     }
+
+    //     await UserManager.UpdateSecurityStampAsync(_selectedUser);
+
+    //     if (await RefreshCurrentLoginIfNeededAsync())
+    //     {
+    //         return;
+    //     }
+
+    //     Snackbar.Add($"Roles updated for '{_selectedUser.UserName}'.", Severity.Success);
+    //     await ReloadAsync();
+    // }
+
+    // private Task ToggleSelectedUserRoleAsync(string roleName, bool isChecked)
+    // {
+    //     if (isChecked)
+    //     {
+    //         _selectedUserRoles.Add(roleName);
+    //     }
+    //     else
+    //     {
+    //         _selectedUserRoles.Remove(roleName);
+    //     }
+
+    //     return Task.CompletedTask;
+    // }
+
+    //private void ToggleItem(Guid id, bool selected)
+    //{
+    //    if (selected) _selectedItems.Add(id);
+    //    else _selectedItems.Remove(id);
+    //}
+
+    //private bool IsSelectedUserRole(string role) => _selectedUserRoles.Contains(role);
+    //
+    //private Task ToggleSelectedUserRoleAsync(string roleName, bool isChecked)
+    //{
+    //    if (isChecked)
+    //        _selectedUserRoles.Add(roleName);
+    //    else
+    //        _selectedUserRoles.Remove(roleName);
+    //
+    //    return InvokeAsync(StateHasChanged);
+    //}
+
+    // private async Task<bool> ConfirmCurrentUserRoleRemovalAsync(IReadOnlyCollection<string> rolesToRemove)
+    // {
+    //     if (_selectedUser is null || rolesToRemove.Count == 0)
+    //     {
+    //         return true;
+    //     }
+
+    //     var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    //     var currentUserId = UserManager.GetUserId(authState.User);
+
+    //     if (string.IsNullOrWhiteSpace(currentUserId) ||
+    //         !string.Equals(currentUserId, _selectedUser.Id, StringComparison.Ordinal))
+    //     {
+    //         return true;
+    //     }
+
+    //     var rolesText = string.Join(", ", rolesToRemove.OrderBy(role => role).Select(role => $"'{role}'"));
+    //     var message = rolesToRemove.Count == 1
+    //         ? $"Stai per rimuovere il ruolo {rolesText} dal tuo utente corrente. Dopo il salvataggio potresti perdere l'accesso a questa pagina. Continuare?"
+    //         : $"Stai per rimuovere i ruoli {rolesText} dal tuo utente corrente. Dopo il salvataggio potresti perdere l'accesso a questa pagina. Continuare?";
+
+    //     var confirmed = await DialogService.ShowMessageBoxAsync("Conferma rimozione ruoli", message, yesText: "Rimuovi", noText: "Annulla");
+
+    //     return confirmed == true;
+    // }
+
+    // private async Task<bool> RefreshCurrentLoginIfNeededAsync()
+    // {
+    //     if (_selectedUser is null)
+    //     {
+    //         return false;
+    //     }
+
+    //     var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    //     var currentUserId = UserManager.GetUserId(authState.User);
+
+    //     if (string.IsNullOrWhiteSpace(currentUserId) ||
+    //         !string.Equals(currentUserId, _selectedUser.Id, StringComparison.Ordinal))
+    //     {
+    //         return false;
+    //     }
+
+    //     await SignInManager.RefreshSignInAsync(_selectedUser);
+    //     NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    //     return true;
+    // }
+
+    // private static bool IsSystemRole(string roleName)
+    //     => SystemRoleNames.Contains(roleName.Trim());
+
+    // private static bool TryValidateRoleName(string roleName, out string validationError)
+    // {
+    //     if (string.IsNullOrWhiteSpace(roleName))
+    //     {
+    //         validationError = "Enter a role name.";
+    //         return false;
+    //     }
+
+    //     if (roleName.Length < MinRoleNameLength || roleName.Length > MaxRoleNameLength)
+    //     {
+    //         validationError = $"Role name must be between {MinRoleNameLength} and {MaxRoleNameLength} characters.";
+    //         return false;
+    //     }
+
+    //     if (!char.IsLetterOrDigit(roleName[0]) || !char.IsLetterOrDigit(roleName[^1]))
+    //     {
+    //         validationError = "Role name must start and end with a letter or a number.";
+    //         return false;
+    //     }
+
+    //     foreach (var character in roleName)
+    //     {
+    //         if (char.IsLetterOrDigit(character) ||
+    //             character is ' ' or '-' or '_' or '.')
+    //         {
+    //             continue;
+    //         }
+
+    //         validationError = "Role name can contain only letters, numbers, spaces, '-', '_' and '.'.";
+    //         return false;
+    //     }
+
+    //     if (IsSystemRole(roleName))
+    //     {
+    //         validationError = $"Role '{roleName}' is reserved for the system.";
+    //         return false;
+    //     }
+
+    //     validationError = string.Empty;
+    //     return true;
+    // }
+
+    // private static string GetErrors(IdentityResult result)
+    //     => string.Join(" ", result.Errors.Select(error => error.Description));
+}

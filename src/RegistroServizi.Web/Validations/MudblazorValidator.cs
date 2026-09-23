@@ -95,27 +95,19 @@ internal static class MudblazorValidator
             case decimal d:
                 result = d;
                 return true;
-            //case decimal? dn when dn.HasValue:
-            //    result = dn;
-            //    return true;
+
             case int i:
                 result = i;
                 return true;
-            //case int? inull when inull.HasValue:
-            //    result = inull.Value;
-            //    return true;
+
             case long l:
                 result = l;
                 return true;
-            //case long? lnull when lnull.HasValue:
-            //    result = lnull.Value;
-            //    return true;
+
             case double dd:
                 result = (decimal)dd;
                 return true;
-            //case double? ddn when ddn.HasValue:
-            //    result = (decimal)ddn.Value;
-            //    return true;
+
             default:
                 return false;
         }

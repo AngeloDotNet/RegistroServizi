@@ -11,34 +11,39 @@ public partial class MainLayout
     private string? _versioneApplicazione;
     private string? _nomeAssociazione;
 
-    private IDisposable? _optionsChangeSubscription;
+    private IDisposable? _associazioneOptionsChangeSubscription;
+    private IDisposable? _applicazioneOptionsChangeSubscription;
 
     protected override void OnInitialized()
     {
+        base.OnInitialized();
+
         _nomeAssociazione = AssociazioneOptions.CurrentValue.NomeAssociazione;
         _nomeApplicazione = ApplicazioneOptions.CurrentValue.NomeApplicazione;
         _versioneApplicazione = ApplicazioneOptions.CurrentValue.VersioneApplicazione;
 
-        _optionsChangeSubscription = AssociazioneOptions.OnChange(options =>
+        _associazioneOptionsChangeSubscription = AssociazioneOptions.OnChange(options =>
         {
             _nomeAssociazione = options.NomeAssociazione;
             _ = InvokeAsync(StateHasChanged);
         });
 
-        _optionsChangeSubscription = ApplicazioneOptions.OnChange(options =>
+        _applicazioneOptionsChangeSubscription = ApplicazioneOptions.OnChange(options =>
         {
             _nomeApplicazione = options.NomeApplicazione;
             _versioneApplicazione = options.VersioneApplicazione;
             _ = InvokeAsync(StateHasChanged);
         });
 
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
     }
 
     public void Dispose()
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
-        _optionsChangeSubscription?.Dispose();
+        _associazioneOptionsChangeSubscription?.Dispose();
+        _applicazioneOptionsChangeSubscription?.Dispose();
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
@@ -54,6 +59,7 @@ public partial class MainLayout
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
         var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
     }
 

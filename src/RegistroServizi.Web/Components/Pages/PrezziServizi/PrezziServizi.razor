@@ -37,6 +37,7 @@
                     Bordered="true"
                     Dense="true"
                     Hover="true">
+                    @* RowsPerPage="5"> *@
                 <Columns>
                     <PropertyColumn Property="x => x.Id" Title="Id" Editable="false" Hidden="true" />
                     <PropertyColumn Property="x => x.TipologiaServizioId" Title="Tipologia Servizio" Editable="false" Hidden="true" />
@@ -189,6 +190,9 @@
                         </CellTemplate>
                     </TemplateColumn>
                 </Columns>
+                @* <PagerContent>
+                    <MudDataGridPager T="PrezzoServizioDto" PageSizeOptions=@(new int[] {5, 10, 20}) />
+                </PagerContent> *@
             </MudDataGrid>
         }
 </MudPaper>

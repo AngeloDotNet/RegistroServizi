@@ -70,14 +70,13 @@ public static class DependencyInjection
         Position = DialogPosition.Center
     };
 
-    //public static DialogParameters GetConfirmDialogParameters(string message) => new DialogParameters
-    //{
-    //    //{ "ContentText", "Sei sicuro di voler procedere?" },
-    //    { "ContentText", message },
-    //    { "ButtonText", "Conferma" },
-    //    { "Color", Color.Success }
-    //};
-
+    /// <summary>
+    /// Creates dialog parameters for a confirmation dialog using the specified message.
+    /// </summary>
+    /// <remarks>Button labels are set to Italian: 'Annulla' (cancel) and 'Conferma' (confirm).</remarks>
+    /// <typeparam name="TParam">The type of the dialog parameter model.</typeparam>
+    /// <param name="message">The confirmation message displayed in the dialog.</param>
+    /// <returns>A DialogParameters instance containing ContentText, localized button labels, and Color set to Success.</returns>
     public static DialogParameters GetConfirmDialogParameters<TParam>(string message) => new DialogParameters<TParam>
     {
         { "ContentText", message },

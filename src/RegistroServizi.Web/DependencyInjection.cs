@@ -81,7 +81,8 @@ public static class DependencyInjection
     {
         { "ContentText", message },
         { "BtnCancel", "Annulla" },
+        { "BtnCancelColor", Color.Default },
         { "BtnConfirm", "Conferma" },
-        { "Color", Color.Success }
+        { "BtnConfirmColor", Color.Primary }
     };
 }

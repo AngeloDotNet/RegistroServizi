@@ -1,5 +1,4 @@
 ﻿using MudBlazor;
-using RegistroServizi.Web.Components.Shared;
 
 namespace RegistroServizi.Web.Components.Pages.Ospedali;
 
@@ -15,7 +14,6 @@ public partial class Ospedali : IDisposable
 
     private bool isLoading = true;
     private bool isEditing;
-    private bool isCellEditMode;
 
     private readonly CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -49,22 +47,16 @@ public partial class Ospedali : IDisposable
     private void StartedEditingItem(OspedaleDto item) => isEditing = true;
     private void CanceledEditingItem(OspedaleDto item) => isEditing = false;
 
-    private Task OpenDialogAsync()
+    private Task OpenDialogAsync
     {
-        var message = "Sei sicuro di voler aprire il dialogo ?";
+        get
+        {
+            const string message = "Sei sicuro di voler aprire il dialogo ?";
 
-        var parameters = DependencyInjection.GetConfirmDialogParameters<TestDialog>(message);
-        var options = DependencyInjection.GetDefaultDialogOptions();
-
-        //var parameters = new DialogParameters<TestDialog>
-        //{
-        //    { x => x.ContentText, message },
-        //    { x => x.BtnCancel, "Annulla" },
-        //    { x => x.BtnConfirm, "Conferma" },
-        //    { x => x.Color, Color.Success }
-        //};
-
-        return DialogService.ShowAsync<TestDialog>("Simple Dialog", parameters, options);
+            return DialogService?.ShowAsync<TestDialog>("Simple Dialog",
+                DependencyInjection.GetConfirmDialogParameters<TestDialog>(message),
+                DependencyInjection.GetDefaultDialogOptions()) ?? Task.CompletedTask;
+        }
     }
 
     private async Task<DataGridEditFormAction> CommittedItemChangesAsync(OspedaleDto item)
@@ -154,34 +146,22 @@ public partial class Ospedali : IDisposable
         var addr = item.Indirizzo;
         bool IsNullOrWhite(string s) => string.IsNullOrWhiteSpace(s);
 
-        if (IsNullOrWhite(item.NomeOspedale))
+        var validations = new (bool Invalid, string Message)[]
         {
-            Snackbar.Add("Il nome dell'ospedale non può essere vuoto.", Severity.Warning);
-            return false;
-        }
+            (IsNullOrWhite(item.NomeOspedale), "Il nome dell'ospedale non può essere vuoto."),
+            (IsNullOrWhite(addr.Strada), "Il nome della strada non può essere vuoto."),
+            (IsNullOrWhite(addr.Citta), "Il nome della città non può essere vuoto."),
+            (IsNullOrWhite(addr.Provincia) || addr.Provincia.Length != 2, "Il nome della provincia non può essere vuoto e deve essere di 2 caratteri."),
+            (addr.Cap < MudblazorValidator.minCap || addr.Cap > MudblazorValidator.maxCap, "Il codice avviamento postale deve essere un numero di 5 cifre.")
+        };
 
-        if (IsNullOrWhite(addr.Strada))
+        foreach (var v in validations)
         {
-            Snackbar.Add("Il nome della strada non può essere vuoto.", Severity.Warning);
-            return false;
-        }
-
-        if (IsNullOrWhite(addr.Citta))
-        {
-            Snackbar.Add("Il nome della città non può essere vuoto.", Severity.Warning);
-            return false;
-        }
-
-        if (IsNullOrWhite(addr.Provincia) || addr.Provincia.Length != 2)
-        {
-            Snackbar.Add("Il nome della provincia non può essere vuoto e deve essere di 2 caratteri.", Severity.Warning);
-            return false;
-        }
-
-        if (addr.Cap < MudblazorValidator.minCap || addr.Cap > MudblazorValidator.maxCap)
-        {
-            Snackbar.Add("Il codice avviamento postale deve essere un numero di 5 cifre.", Severity.Warning);
-            return false;
+            if (v.Invalid)
+            {
+                Snackbar.Add(v.Message, Severity.Warning);
+                return false;
+            }
         }
 
         return true;

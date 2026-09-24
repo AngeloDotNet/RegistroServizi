@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Web;
+﻿using MudBlazor;
+
+namespace RegistroServizi.Web;
 
 /// <summary>
 /// Provides extension methods for registering services and configuring options, including binding configuration
@@ -54,4 +56,33 @@ public static class DependencyInjection
 
         return services;
     }
+
+    /// <summary>
+    /// Gets a DialogOptions instance configured for modal dialogs with escape and backdrop closing disabled and
+    /// centered positioning.
+    /// </summary>
+    /// <returns>A DialogOptions configured with CloseOnEscapeKey = false, BackdropClick = false, and Position =
+    /// DialogPosition.Center.</returns>
+    public static DialogOptions GetDefaultDialogOptions() => new DialogOptions
+    {
+        CloseOnEscapeKey = false,
+        BackdropClick = false,
+        Position = DialogPosition.Center
+    };
+
+    //public static DialogParameters GetConfirmDialogParameters(string message) => new DialogParameters
+    //{
+    //    //{ "ContentText", "Sei sicuro di voler procedere?" },
+    //    { "ContentText", message },
+    //    { "ButtonText", "Conferma" },
+    //    { "Color", Color.Success }
+    //};
+
+    public static DialogParameters GetConfirmDialogParameters<TParam>(string message) => new DialogParameters<TParam>
+    {
+        { "ContentText", message },
+        { "BtnCancel", "Annulla" },
+        { "BtnConfirm", "Conferma" },
+        { "Color", Color.Success }
+    };
 }

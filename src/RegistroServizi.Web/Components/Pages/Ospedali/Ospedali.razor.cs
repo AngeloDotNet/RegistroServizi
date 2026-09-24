@@ -47,16 +47,13 @@ public partial class Ospedali : IDisposable
     private void StartedEditingItem(OspedaleDto item) => isEditing = true;
     private void CanceledEditingItem(OspedaleDto item) => isEditing = false;
 
-    private Task OpenDialogAsync
+    private Task OpenDialogAsync()
     {
-        get
-        {
-            const string message = "Sei sicuro di voler aprire il dialogo ?";
+        const string message = "Sei sicuro di voler aprire il dialogo ?";
 
-            return DialogService?.ShowAsync<TestDialog>("Simple Dialog",
-                DependencyInjection.GetConfirmDialogParameters<TestDialog>(message),
-                DependencyInjection.GetDefaultDialogOptions()) ?? Task.CompletedTask;
-        }
+        return DialogService?.ShowAsync<TestDialog>("Simple Dialog",
+            DependencyInjection.GetConfirmDialogParameters<TestDialog>(message),
+            DependencyInjection.GetDefaultDialogOptions()) ?? Task.CompletedTask;
     }
 
     private async Task<DataGridEditFormAction> CommittedItemChangesAsync(OspedaleDto item)

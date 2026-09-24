@@ -1,10 +1,12 @@
 ﻿using MudBlazor;
+using RegistroServizi.Web.Components.Shared;
 
 namespace RegistroServizi.Web.Components.Pages.Ospedali;
 
 public partial class Ospedali : IDisposable
 {
     [Inject] private ISnackbar Snackbar { get; set; } = default!;
+    [Inject] private IDialogService DialogService { get; set; } = default!;
     [Inject] private IOspedaleService OspedaleService { get; set; } = default!;
     [Inject] private ILogger<Ospedali> Logger { get; set; } = default!;
 
@@ -13,6 +15,7 @@ public partial class Ospedali : IDisposable
 
     private bool isLoading = true;
     private bool isEditing;
+    private bool isCellEditMode;
 
     private readonly CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -45,6 +48,24 @@ public partial class Ospedali : IDisposable
 
     private void StartedEditingItem(OspedaleDto item) => isEditing = true;
     private void CanceledEditingItem(OspedaleDto item) => isEditing = false;
+
+    private Task OpenDialogAsync()
+    {
+        var message = "Sei sicuro di voler aprire il dialogo ?";
+
+        var parameters = DependencyInjection.GetConfirmDialogParameters<TestDialog>(message);
+        var options = DependencyInjection.GetDefaultDialogOptions();
+
+        //var parameters = new DialogParameters<TestDialog>
+        //{
+        //    { x => x.ContentText, message },
+        //    { x => x.BtnCancel, "Annulla" },
+        //    { x => x.BtnConfirm, "Conferma" },
+        //    { x => x.Color, Color.Success }
+        //};
+
+        return DialogService.ShowAsync<TestDialog>("Simple Dialog", parameters, options);
+    }
 
     private async Task<DataGridEditFormAction> CommittedItemChangesAsync(OspedaleDto item)
     {

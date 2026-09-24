@@ -36,7 +36,14 @@
                 Bordered="true"
                 Dense="true"
                 Hover="true">
-
+            <ToolBarContent>
+                @* <MudText Typo="Typo.h6">Periodic Elements</MudText> *@
+                <MudSpacer />
+                <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
+                    @* <MudButton StartIcon="@Icons.Material.Filled.Add" OnClick="NewItemAsync">Aggiungi</MudButton> *@
+                    <MudButton StartIcon="@Icons.Material.Filled.Add" @onclick="OpenDialogAsync" Variant="Variant.Filled" Color="Color.Primary">Aggiungi</MudButton>
+                </MudButtonGroup>
+            </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Id" Title="Id" Editable="false" Hidden="true" />
 
@@ -137,6 +144,12 @@
                             <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="@isEditing" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" />
                         }
                     </CellTemplate>
+                    @* <CellTemplate>
+                        <MudStack Row Style="width: 250px" Justify="Justify.Center">
+                            <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Edit" Variant="@Variant.Filled" Color="@Color.Warning">Modifica</MudButton>
+                            <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" Variant="@Variant.Filled" Color="@Color.Error" aria-label="Cancella">Cancella</MudButton>
+                        </MudStack>
+                    </CellTemplate> *@
                 </TemplateColumn>
             </Columns>
         </MudDataGrid>

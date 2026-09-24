@@ -13,20 +13,15 @@ public partial class Footer : IDisposable
     }
 
     private string? nomeApplicazione;
-    //private string? versioneApplicazione;
-
     private IDisposable? optionsChangeSubscription;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         nomeApplicazione = ApplicazioneOptions?.CurrentValue?.NomeApplicazione;
-        //versioneApplicazione = ApplicazioneOptions.CurrentValue.VersioneApplicazione;
-
         optionsChangeSubscription = ApplicazioneOptions?.OnChange(options =>
         {
             nomeApplicazione = options.NomeApplicazione;
-            //versioneApplicazione = options.VersioneApplicazione;
             _ = InvokeAsync(StateHasChanged);
         });
     }

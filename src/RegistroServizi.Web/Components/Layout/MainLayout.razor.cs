@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Routing;
-
-namespace RegistroServizi.Web.Components.Layout;
+﻿namespace RegistroServizi.Web.Components.Layout;
 
 public partial class MainLayout
 {

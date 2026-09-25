@@ -1,9 +1,6 @@
 ﻿namespace RegistroServizi.Application.Interfaces.Services;
 
-/// <summary>
-/// Provides asynchronous operations to retrieve, create, update, and delete Ospedale entities represented by
-/// OspedaleDto.
-/// </summary>
+/// <summary>Provides asynchronous operations to retrieve, create, update, and delete Ospedale entities represented by OspedaleDto.</summary>
 /// <remarks>All methods are asynchronous and accept an optional CancellationToken. Implementations are intended
 /// for dependency injection and should handle validation, mapping, and concurrency concerns.</remarks>
 public interface IOspedaleService

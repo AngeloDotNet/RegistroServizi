@@ -40,12 +40,13 @@ public static class DependencyInjection
     /// <returns>The same IServiceCollection instance to allow method chaining.</returns>
     public static IServiceCollection AddRegistroServiziLocalization(this IServiceCollection services, IConfiguration configuration)
     {
-        var supportedCultures = configuration.GetSection("SupportedCultures").Get<string[]>() ?? ["en", "it"];
+        // List of supported cultures: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-10.0
+        var supportedCultures = configuration.GetSection("SupportedCultures").Get<string[]>() ?? throw new InvalidOperationException("SupportedCultures configuration section is missing.");
 
         services.AddLocalization();
         services.Configure<RequestLocalizationOptions>(options =>
         {
-            options.SetDefaultCulture("it")
+            options.SetDefaultCulture("it-IT")
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
 

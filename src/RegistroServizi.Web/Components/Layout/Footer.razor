@@ -1,11 +1,12 @@
 ﻿@rendermode InteractiveServer
 @inject IOptionsMonitor<ApplicazioneOptions> ApplicazioneOptions
+@inject IStringLocalizer<SharedResource> Localizer
 @implements IDisposable
 
 <footer class="app-footer">
     <div class="app-footer-content">
         <p </p>
-        <p>&copy; @yearLicense @nomeApplicazione. Tutti i diritti riservati.</p>
-        <p>Software sviluppato gratuitamente da Angelo Pirola e distribuito con licenza MIT.</p>
+        <p>&copy; @YearLicense @nomeApplicazione. @Localizer["RightsReserved"].</p>
+        <p>@Localizer["SoftwareDevelopedBy"].</p>
     </div>
 </footer>

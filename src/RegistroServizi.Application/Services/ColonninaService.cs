@@ -39,9 +39,9 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var result = await ColonninaQuery()
-            .Select(colonnina => ColonninaMapper.MapColonninaToDto(colonnina))
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken) ?? throw new KeyNotFoundException($"Colonnina con id {id} non trovato.");
+        var items = await ColonninaQuery().ToListAsync(cancellationToken);
+        var result = items.Select(colonnina => ColonninaMapper.MapColonninaToDto(colonnina))
+            .FirstOrDefault(x => x.Id == id) ?? throw new KeyNotFoundException($"Colonnina con id {id} non trovato.");
 
         return result;
     }

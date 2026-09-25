@@ -42,31 +42,11 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        //var result = await OspedaleQuery().ToListAsync(cancellationToken)
-        //    .Select(ospedale => OspedaleMapper.MapOspedaleToDto(ospedale))
-        //    .FirstOrDefault(x => x.Id == id) ?? throw new KeyNotFoundException($"Ospedale con id {id} non trovato.");
-
         var items = await OspedaleQuery().ToListAsync(cancellationToken);
-
         var result = items.Select(ospedale => OspedaleMapper.MapOspedaleToDto(ospedale))
             .FirstOrDefault(x => x.Id == id) ?? throw new KeyNotFoundException($"Ospedale con id {id} non trovato.");
 
         return result;
-
-        // FUNZIONA (1)
-        //var result = await OspedaleQuery().FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
-        //return result is null ? throw new KeyNotFoundException($"Ospedale con id {id} non trovato.") : OspedaleMapper.MapOspedaleToDto(result);
-
-        // FUNZIONA (2)
-        //var ospedali = await OspedaleQuery().ToListAsync(cancellationToken);
-        //var result = ospedali.FirstOrDefault(o => o.Id == id);
-        //
-        //if (result == null)
-        //{
-        //    throw new KeyNotFoundException($"Ospedale con id {id} non trovato.");
-        //}
-        //
-        //return OspedaleMapper.MapOspedaleToDto(result);
     }
 
     /// <summary>

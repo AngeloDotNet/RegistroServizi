@@ -1,5 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -28,16 +87,16 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="0" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
               <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
               <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
@@ -58,109 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <!-- Navigation -->
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>
-  <!-- Report Submenu -->
-  <!-- Common Actions -->
-  <!-- Messages -->
-  <!-- Layout -->
-  <!-- Labels -->
-  <!-- Buttons -->
-  <!-- Table Columns -->
-  <!-- Additional Messages -->
-  <!-- Tooltips -->
-  <!-- Educational Tips -->
-  <!-- Status -->
-  <!-- Time -->
-  <!-- Dashboard Page -->
-  <!-- Accounts Page -->
-  <!-- Transactions Page -->
-  <!-- Categories Page -->
-  <!-- Budgets Page -->
-  <!-- Import Page -->
-  <!-- Additional Buttons -->
-  <!-- CategoryDialog -->
-  <!-- ManualAdjustmentDialog -->
-  <!-- OpeningBalanceHistoryDialog -->
-  <!-- OpeningBalanceAdjustmentDialog -->
-  <!-- TransferDialog -->
-  <!-- TransactionDialog -->
-  <!-- Additional Columns for Reports -->
-  <!-- Common values for reports -->
-  <!-- Cashflow Report -->
-  <!-- Category Spending Report -->
-  <!-- Budget vs Actual Report -->
-  <!-- Net Worth Report -->
-  <!-- Account Balance History Report -->
-  <!-- Insight Explorer Report -->
-  <!-- Common Additional -->
-  <!-- Language Selector -->
-  <!-- Help Button -->
-  <!-- Navigation Additional -->
-  <!-- Error Pages -->
-  <!-- Auth - Login -->
-  <!-- Auth - Register -->
-  <!-- Auth - Forgot Password -->
-  <!-- Auth - Forgot Password Confirmation -->
-  <!-- Auth - Lockout -->
-  <!-- Auth - Reset Password -->
-  <!-- Auth - Reset Password Confirmation -->
-  <!-- Auth - Resend Email Confirmation -->
-  <!-- Auth - Register Confirmation -->
-  <!-- Auth - Confirm Email -->
-  <!-- Auth - Confirm Email Change -->
-  <!-- Auth - Access Denied -->
-  <!-- Auth - Invalid Password Reset -->
-  <!-- Auth - Invalid User -->
-  <!-- Auth - 2FA Login -->
-  <!-- Auth - Recovery Code Login -->
-  <!-- Auth - External Login -->
-  <!-- Manage - Profile -->
-  <!-- Manage - Change Password -->
-  <!-- Manage - Email -->
-  <!-- Manage - Delete Personal Data -->
-  <!-- Manage - Personal Data -->
-  <!-- Manage - Set Password -->
-  <!-- Manage - 2FA -->
-  <!-- Manage - Disable 2FA -->
-  <!-- Manage - Generate Recovery Codes -->
-  <!-- Manage - Reset Authenticator -->
-  <!-- Manage - External Logins -->
-  <!-- Manage - Passkeys -->
-  <!-- Manage - Rename Passkey -->
-  <!-- Manage - Enable Authenticator -->
-  <!-- Payee Management -->
-  <!-- Reconciliation Dialog -->
-  <!-- Reconciliations Page -->
-  <!-- Reconciliation Workspace Page -->
-  <!-- Balance History Page -->
-  <!-- Settings Page -->
-  <!-- Manual Adjustments Page -->
-  <!-- Opening Balances Page -->
-  <!-- License Page -->
-  <!-- Transaction Split Editor -->
-  <!-- Mobile Pages -->
-  <!-- PWA Install Prompt -->
-  <!-- License Enforcer -->
-  <!-- Setup Wizard -->
-  <!-- Labels - Additional -->
-  <!-- Account Types -->
-  <!-- Account Sub Types -->
-  <!-- Category Names for Setup -->
-  <!-- Transaction Dialog Keys (used in Mobile) -->
-  <!-- Account Dialog Keys -->
-  <!-- Budget Dialog -->
-  <!-- Add Category to Budget Dialog -->
-  <!-- Budget Assignment Dialog -->
-  <!-- Categories Page -->
-  <!-- Category Dialog Titles -->
-  <!-- Category Success Messages -->
-  <!-- Category Confirmation Messages -->
-  <!-- Category Empty States -->
-  <!-- Budget View -->
-  <!-- Category Help Content -->
   <data name="Version" xml:space="preserve">
     <value>Version</value>
   </data>
@@ -233,17 +192,14 @@
   <data name="SureDelete" xml:space="preserve">
     <value>Are you sure you want to delete</value>
   </data>
-  <data name="Title_Hospitals" xml:space="preserve">
+  <data name="TitleHospitals" xml:space="preserve">
     <value>Hospitals</value>
   </data>
-  <data name="SubTitle_Hospitals" xml:space="preserve">
+  <data name="SubTitleHospitals" xml:space="preserve">
     <value>Management of basic hospital configuration.</value>
   </data>
   <data name="PostcodeAbbreviation" xml:space="preserve">
     <value>Postal Code</value>
-  </data>
-  <data name="HospitalName" xml:space="preserve">
-    <value>Hospital Name</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
@@ -256,5 +212,20 @@
   </data>
   <data name="NoHospitalsFound" xml:space="preserve">
     <value>No hospitals available at the moment.</value>
+  </data>
+  <data name="NoServicePricesFound" xml:space="preserve">
+    <value>No services or associated prices are currently available.</value>
+  </data>
+  <data name="ServicePrices" xml:space="preserve">
+    <value>Service Prices</value>
+  </data>
+  <data name="SubTitleServicePrices" xml:space="preserve">
+    <value>Price management for each individual type of service.</value>
+  </data>
+  <data name="TitleServicePrices" xml:space="preserve">
+    <value>Service Prices</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
   </data>
 </root>

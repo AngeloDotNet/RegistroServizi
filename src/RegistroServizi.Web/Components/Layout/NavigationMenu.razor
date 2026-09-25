@@ -1,13 +1,14 @@
 ﻿@rendermode InteractiveServer
 @inject IOptionsMonitor<ApplicazioneOptions> ApplicazioneOptions
+@inject IStringLocalizer<SharedResource> Localizer
 @implements IDisposable
 
 <MudNavMenu>
     <p style="line-height: 20px;"></p>
     <MudText Typo="Typo.h6" Class="px-4">@_nomeApplicazione</MudText>
-    <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Version @_versioneApplicazione</MudText>
+    <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">@Localizer["Version"] @_versioneApplicazione</MudText>
     <MudDivider Class="my-2" />
-    <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" Match="NavLinkMatch.All">Dashboard</MudNavLink>
+    <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" Match="NavLinkMatch.All">@Localizer["Dashboard"]</MudNavLink>
     <MudNavGroup Title="Nuova Missione" Icon="@Icons.Material.Filled.MedicalServices" Expanded="false">
         <MudNavLink Href="/missione-118" Icon="@Icons.Material.Filled.Emergency" Disabled>118</MudNavLink>
         @* <MudNavLink Href="/centro-mobile-rianimazione" Icon="@Icons.Material.Filled.EmergencyShare">C.M.R.</MudNavLink> *@

@@ -1,6 +1,6 @@
 ﻿namespace RegistroServizi.Web.Components.Shared;
 
-public partial class DataGridPager
+public partial class DataGridPager<TItem>
 {
     [Parameter, EditorRequired] public MudBlazorDataGridOptions DataGridOptions { get; set; } = default!;
 

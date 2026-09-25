@@ -38,15 +38,35 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     /// <param name="cancellationToken">A cancellation token that can be used to cancel the operation.</param>
     /// <returns>A task whose result is the OspedaleDto with the specified identifier.</returns>
     /// <exception cref="KeyNotFoundException">Thrown when no Ospedale with the specified identifier exists.</exception>
-    public async Task<OspedaleDto> GetByIdOspedaleAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<OspedaleDto> GetOspedaleByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var result = await OspedaleQuery()
-            .Select(ospedale => OspedaleMapper.MapOspedaleToDto(ospedale))
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken) ?? throw new KeyNotFoundException($"Ospedale con id {id} non trovato.");
+        //var result = await OspedaleQuery().ToListAsync(cancellationToken)
+        //    .Select(ospedale => OspedaleMapper.MapOspedaleToDto(ospedale))
+        //    .FirstOrDefault(x => x.Id == id) ?? throw new KeyNotFoundException($"Ospedale con id {id} non trovato.");
+
+        var items = await OspedaleQuery().ToListAsync(cancellationToken);
+
+        var result = items.Select(ospedale => OspedaleMapper.MapOspedaleToDto(ospedale))
+            .FirstOrDefault(x => x.Id == id) ?? throw new KeyNotFoundException($"Ospedale con id {id} non trovato.");
 
         return result;
+
+        // FUNZIONA (1)
+        //var result = await OspedaleQuery().FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+        //return result is null ? throw new KeyNotFoundException($"Ospedale con id {id} non trovato.") : OspedaleMapper.MapOspedaleToDto(result);
+
+        // FUNZIONA (2)
+        //var ospedali = await OspedaleQuery().ToListAsync(cancellationToken);
+        //var result = ospedali.FirstOrDefault(o => o.Id == id);
+        //
+        //if (result == null)
+        //{
+        //    throw new KeyNotFoundException($"Ospedale con id {id} non trovato.");
+        //}
+        //
+        //return OspedaleMapper.MapOspedaleToDto(result);
     }
 
     /// <summary>
@@ -65,12 +85,12 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.NomeOspedale, "Il nome dell'ospedale non può essere vuoto.", nameof(createDto.NomeOspedale));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Strada, "La strada dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Strada));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Citta, "La città dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Citta));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Provincia, "La provincia dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Provincia));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.NomeOspedale, "Il nome dell'ospedale non può essere vuoto.", nameof(createDto.NomeOspedale));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Strada, "La strada dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Strada));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Citta, "La città dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Citta));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Provincia, "La provincia dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Provincia));
 
-        DependencyInjection.ValidateIntegerGreaterOrEqualThanZero(createDto.Indirizzo.Cap, "Il CAP dell'indirizzo non può essere negativo.", nameof(createDto.Indirizzo.Cap));
+        ObjectValidation.ValidateIntegerGreaterOrEqualThanZero(createDto.Indirizzo.Cap, "Il CAP dell'indirizzo non può essere negativo.", nameof(createDto.Indirizzo.Cap));
 
         var entity = OspedaleMapper.MapOspedaleToEntityCreate(createDto);
         dbContext.Ospedali.Add(entity);
@@ -108,13 +128,13 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        DependencyInjection.ValidateGuidNotEmpty(updateDto.Id, "Il campo Id non può essere vuoto.", nameof(updateDto.Id));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.NomeOspedale, "Il nome dell'ospedale non può essere vuoto.", nameof(updateDto.NomeOspedale));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Strada, "La strada dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Strada));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Citta, "La città dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Citta));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Provincia, "La provincia dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Provincia));
+        ObjectValidation.ValidateGuidNotEmpty(updateDto.Id, "Il campo Id non può essere vuoto.", nameof(updateDto.Id));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.NomeOspedale, "Il nome dell'ospedale non può essere vuoto.", nameof(updateDto.NomeOspedale));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Strada, "La strada dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Strada));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Citta, "La città dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Citta));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Provincia, "La provincia dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Provincia));
 
-        DependencyInjection.ValidateIntegerGreaterOrEqualThanZero(updateDto.Indirizzo.Cap, "Il CAP dell'indirizzo non può essere negativo.", nameof(updateDto.Indirizzo.Cap));
+        ObjectValidation.ValidateIntegerGreaterOrEqualThanZero(updateDto.Indirizzo.Cap, "Il CAP dell'indirizzo non può essere negativo.", nameof(updateDto.Indirizzo.Cap));
 
         var entity = await dbContext.Ospedali.FindAsync([updateDto.Id], cancellationToken).ConfigureAwait(false)
             ?? throw new KeyNotFoundException($"Ospedale con id {updateDto.Id} non trovato.");
@@ -154,7 +174,7 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     /// the message includes a correlation identifier.</exception>
     public async Task DeleteOspedaleAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        DependencyInjection.ValidateGuidNotEmpty(id, "Il campo Id non può essere vuoto.", nameof(id));
+        ObjectValidation.ValidateGuidNotEmpty(id, "Il campo Id non può essere vuoto.", nameof(id));
 
         var entity = await dbContext.Ospedali.FindAsync([id], cancellationToken).ConfigureAwait(false)
             ?? throw new KeyNotFoundException($"Ospedale con id {id} non trovato.");

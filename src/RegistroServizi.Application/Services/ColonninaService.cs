@@ -63,9 +63,9 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.NomeColonnina, "Il nome della colonnina non può essere vuoto.", nameof(createDto.NomeColonnina));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.Comune, "La città della colonnina non può essere vuota.", nameof(createDto.Comune));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(createDto.Provincia, "La provincia della colonnina non può essere vuota.", nameof(createDto.Provincia));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.NomeColonnina, "Il nome della colonnina non può essere vuoto.", nameof(createDto.NomeColonnina));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Comune, "La città della colonnina non può essere vuota.", nameof(createDto.Comune));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Provincia, "La provincia della colonnina non può essere vuota.", nameof(createDto.Provincia));
 
         var entity = ColonninaMapper.MapColonninaToEntityCreate(createDto);
         dbContext.Colonnine.Add(entity);
@@ -100,10 +100,10 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        DependencyInjection.ValidateGuidNotEmpty(updateDto.Id, "Il campo Id non può essere vuoto.", nameof(updateDto.Id));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.NomeColonnina, "Il nome della colonnina non può essere vuoto.", nameof(updateDto.NomeColonnina));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.Comune, "La città della colonnina non può essere vuota.", nameof(updateDto.Comune));
-        DependencyInjection.ValidateNotNullOrWhiteSpace(updateDto.Provincia, "La provincia della colonnina non può essere vuota.", nameof(updateDto.Provincia));
+        ObjectValidation.ValidateGuidNotEmpty(updateDto.Id, "Il campo Id non può essere vuoto.", nameof(updateDto.Id));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.NomeColonnina, "Il nome della colonnina non può essere vuoto.", nameof(updateDto.NomeColonnina));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Comune, "La città della colonnina non può essere vuota.", nameof(updateDto.Comune));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Provincia, "La provincia della colonnina non può essere vuota.", nameof(updateDto.Provincia));
 
         var entity = await dbContext.Colonnine.FindAsync([updateDto.Id], cancellationToken).ConfigureAwait(false)
             ?? throw new KeyNotFoundException($"Colonnina con id {updateDto.Id} non trovato.");
@@ -142,7 +142,7 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
     /// message includes a generated correlation identifier.</exception>
     public async Task DeleteColonninaAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        DependencyInjection.ValidateGuidNotEmpty(id, "Il campo Id non può essere vuoto.", nameof(id));
+        ObjectValidation.ValidateGuidNotEmpty(id, "Il campo Id non può essere vuoto.", nameof(id));
 
         var entity = await dbContext.Colonnine.FindAsync([id], cancellationToken).ConfigureAwait(false)
             ?? throw new KeyNotFoundException($"Colonnina con id {id} non trovato.");

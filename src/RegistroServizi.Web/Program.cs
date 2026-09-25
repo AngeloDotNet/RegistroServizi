@@ -81,10 +81,11 @@ public class Program
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-        // Configure strongly typed options and validate them
         builder.Services.ConfigureAndValidate<ApplicazioneOptions>(builder.Configuration, nameof(ApplicazioneOptions));
         builder.Services.ConfigureAndValidate<AdminUserOptions>(builder.Configuration, nameof(AdminUserOptions));
+
         builder.Services.ConfigureAndValidate<AssociazioneOptions>(builder.Configuration, nameof(AssociazioneOptions));
+        builder.Services.ConfigureAndValidate<MudBlazorDataGridOptions>(builder.Configuration, MudBlazorDataGridOptions.SectionName);
 
         var app = builder.Build();
 

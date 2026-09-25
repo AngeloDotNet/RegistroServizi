@@ -1,0 +1,37 @@
+﻿@if (MaxLengthText > 0)
+{
+    <MudTextField T="string"
+                  @bind-Value="@BindValueText"
+                  Label="@LabelText"
+                  Required="@IsRequired"
+                  RequiredError="@RequiredErrorText"
+                  HelperText="@HelperText"
+                  HelperTextOnFocus="true"
+                  Variant="Variant.Outlined"
+                  Margin="Margin.Dense"
+                  MaxLength="@MaxLengthText"
+                  Counter="@MaxLengthText" />
+}
+else
+{
+    <MudTextField T="string"
+                  @bind-Value="@BindValueText"
+                  Label="@LabelText"
+                  Required="@IsRequired"
+                  RequiredError="@RequiredErrorText"
+                  HelperText="@HelperText"
+                  HelperTextOnFocus="true"
+                  Variant="Variant.Outlined"
+                  Margin="Margin.Dense" />
+}
+
+@code {
+    [Parameter] public string BindValueText { get; set; } = string.Empty;
+    [Parameter] public string LabelText { get; set; } = string.Empty;
+    [Parameter] public string HelperText { get; set; } = string.Empty;
+    [Parameter] public string RequiredErrorText { get; set; } = string.Empty;
+
+    [Parameter] public int MaxLengthText { get; set; }
+
+    [Parameter] public bool IsRequired { get; set; } = false;
+}

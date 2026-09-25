@@ -1,0 +1,15 @@
+﻿<div align="center">
+    <MudButton Color="@BtnCancelColor" Variant="Variant.Filled" OnClick="OnCancel">@BtnCancelText</MudButton>
+    <MudButton Color="@BtnConfirmColor" Variant="Variant.Filled" OnClick="OnSubmit">@BtnSubmitText</MudButton>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnCancel { get; set; }
+    [Parameter] public EventCallback OnSubmit { get; set; }
+
+    [Parameter] public string BtnCancelText { get; set; } = string.Empty;
+    [Parameter] public string BtnSubmitText { get; set; } = string.Empty;
+    
+    [Parameter] public Color BtnCancelColor { get; set; }
+    [Parameter] public Color BtnConfirmColor { get; set; }
+}

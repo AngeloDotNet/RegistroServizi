@@ -8,22 +8,6 @@ namespace RegistroServizi.Web.Configuration;
 internal static class MudBlazorDialogParameters
 {
     /// <summary>
-    /// Creates dialog parameters for a confirmation dialog using the specified message.
-    /// </summary>
-    /// <remarks>Button labels are set to Italian: 'Annulla' (cancel) and 'Conferma' (confirm).</remarks>
-    /// <typeparam name="TParam">The type of the dialog parameter model.</typeparam>
-    /// <param name="message">The confirmation message displayed in the dialog.</param>
-    /// <returns>A DialogParameters instance containing ContentText, localized button labels, and Color set to Success.</returns>
-    //public static DialogParameters GetConfirmDialogParameters<TParam>(string message) => new DialogParameters<TParam>
-    //{
-    //    { "ContentText", message },
-    //    { "BtnCancel", "Annulla" },
-    //    { "BtnCancelColor", Color.Default },
-    //    { "BtnConfirm", "Conferma" },
-    //    { "BtnConfirmColor", Color.Primary }
-    //};
-
-    /// <summary>
     /// Creates dialog parameters for a create dialog using the specified title and cancel button text.
     /// </summary>
     /// <typeparam name="TParam">The type of the dialog parameter model.</typeparam>

@@ -10,25 +10,6 @@ namespace RegistroServizi.Web.Validations;
 /// postal-code range. Intended for internal use only.</remarks>
 internal static class MudblazorValidator
 {
-    //internal static readonly int minCap = 10000;
-    //internal static readonly int maxCap = 99999;
-
-    /// <summary>
-    /// Validates that a string is not null, empty, or consists only of white-space; if it is, adds the provided
-    /// defaultMessage to the snackbar as a warning.
-    /// </summary>
-    /// <remarks>No exception is thrown; a warning is added to the snackbar instead.</remarks>
-    /// <param name="snackbar">Snackbar used to display a warning when the value is null, empty, or whitespace.</param>
-    /// <param name="value">String to validate.</param>
-    /// <param name="defaultMessage">Message to display on the snackbar when the value is null, empty, or whitespace.</param>
-    //internal static void ValidateIsNotNullOrWhiteSpace(ISnackbar snackbar, string? value, string defaultMessage)
-    //{
-    //    if (string.IsNullOrWhiteSpace(value))
-    //    {
-    //        snackbar.Add(defaultMessage, Severity.Warning);
-    //    }
-    //}
-
     /// <summary>
     /// Adds a warning to the provided snackbar when the given value represents a negative number, using the specific
     /// validation message if available or the supplied defaultMessage.
@@ -46,32 +27,6 @@ internal static class MudblazorValidator
             snackbar.Add(message ?? defaultMessage, Severity.Warning);
         }
     }
-
-    //private const int CapDigits = 5;
-
-    //if (!HasExactDigits(addr.Cap, CapDigits))
-    //{
-    //    Snackbar.Add($"Il codice avviamento postale deve essere composto da {CapDigits} cifre.", Severity.Warning);
-    //    return false;
-    //}
-
-    //internal static bool HasExactDigits(int value, int digits)
-    //{
-    //    if (digits <= 0)
-    //    {
-    //        return false;
-    //    }
-
-    //    if (digits == 1)
-    //    {
-    //        return value is >= 0 and <= 9;
-    //    }
-
-    //    var min = (int)Math.Pow(10, digits - 1);
-    //    var max = (int)Math.Pow(10, digits) - 1;
-
-    //    return value >= min && value <= max;
-    //}
 
     /// <summary>
     /// Attempts to convert the specified object to a nullable decimal.

@@ -14,14 +14,15 @@ internal static class MudBlazorDialogParameters
     /// <param name="title">The title displayed in the dialog.</param>
     /// <param name="cancelText">The text displayed on the cancel button.</param>
     /// <returns>A DialogParameters instance containing EditDialogId, Title, localized button labels, and Color set to Primary.</returns>
-    internal static DialogParameters GetCreateItemDialogParameters<TParam>(string title, string cancelText) => new DialogParameters<TParam>
-    {
-        { "EditDialogId", null },
-        { "Title", title },
-        { "BtnCancelText", cancelText },
-        { "BtnCancelColor", Color.Default },
-        { "BtnConfirmColor", Color.Success }
-    };
+    internal static DialogParameters GetCreateItemDialogParameters<TParam>(string title, string cancelText)
+        => new DialogParameters<TParam>
+        {
+            { "EditDialogId", null },
+            { "Title", title },
+            { "BtnCancelText", cancelText },
+            { "BtnCancelColor", Color.Default },
+            { "BtnConfirmColor", Color.Success }
+        };
 
     /// <summary>
     /// Creates dialog parameters for an edit dialog populated with the specified dialog id, title, cancel text, and default button colors.
@@ -33,14 +34,15 @@ internal static class MudBlazorDialogParameters
     /// <param name="cancelText">Cancel button text.</param>
     /// <returns>A DialogParameters instance populated with the provided values and default button colors (BtnCancelColor =
     /// Color.Default, BtnConfirmColor = Color.Primary).</returns>
-    internal static DialogParameters GetEditItemDialogParameters<TParam>(Guid editDialogId, string title, string cancelText) => new DialogParameters<TParam>
-    {
-        { "EditDialogId", editDialogId },
-        { "Title", title },
-        { "BtnCancelText", cancelText },
-        { "BtnCancelColor", Color.Default },
-        { "BtnConfirmColor", Color.Warning }
-    };
+    internal static DialogParameters GetEditItemDialogParameters<TParam>(Guid editDialogId, string title, string cancelText)
+        => new DialogParameters<TParam>
+        {
+            { "EditDialogId", editDialogId },
+            { "Title", title },
+            { "BtnCancelText", cancelText },
+            { "BtnCancelColor", Color.Default },
+            { "BtnConfirmColor", Color.Warning }
+        };
 
     /// <summary>
     /// Creates dialog parameters for a delete confirmation dialog.
@@ -52,13 +54,15 @@ internal static class MudBlazorDialogParameters
     /// <param name="cancelText">Text for the cancel button.</param>
     /// <param name="confirmText">Text for the confirm button.</param>
     /// <returns>A DialogParameters instance configured with title, description, cancel and confirm texts, and button colors.</returns>
-    internal static DialogParameters GetDeleteItemDialogParameters<TParam>(string title, string description, string cancelText, string confirmText) => new DialogParameters<TParam>
-    {
-        { "Title", title },
-        { "Description", description },
-        { "BtnCancelText", cancelText },
-        { "BtnCancelColor", Color.Default },
-        { "BtnConfirmText", confirmText },
-        { "BtnConfirmColor", Color.Error }
-    };
+    internal static DialogParameters GetDeleteItemDialogParameters<TParam>(Guid editDialogId, string title, string description, string cancelText, string confirmText)
+        => new DialogParameters<TParam>
+        {
+            { "EditDialogId", editDialogId },
+            { "Title", title },
+            { "Description", description },
+            { "BtnCancelText", cancelText },
+            { "BtnCancelColor", Color.Default },
+            { "BtnConfirmText", confirmText },
+            { "BtnConfirmColor", Color.Error }
+        };
 }

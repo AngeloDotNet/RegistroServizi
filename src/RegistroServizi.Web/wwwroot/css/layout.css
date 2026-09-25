@@ -154,14 +154,6 @@
     border: 1px solid var(--mb-border-light);
 }
 
-/*.mudpaper-grid {
-    --mud-grid-gap: 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: var(--mud-grid-gap);
-    grid-auto-rows: minmax(min-content, max-content);
-}*/
-
 .mudpaper-grid {
     --mud-grid-gap: 1rem;
     display: grid;

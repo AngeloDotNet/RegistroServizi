@@ -10,8 +10,8 @@ namespace RegistroServizi.Web.Validations;
 /// postal-code range. Intended for internal use only.</remarks>
 internal static class MudblazorValidator
 {
-    internal static readonly int minCap = 10000;
-    internal static readonly int maxCap = 99999;
+    //internal static readonly int minCap = 10000;
+    //internal static readonly int maxCap = 99999;
 
     /// <summary>
     /// Validates that a string is not null, empty, or consists only of white-space; if it is, adds the provided
@@ -21,13 +21,13 @@ internal static class MudblazorValidator
     /// <param name="snackbar">Snackbar used to display a warning when the value is null, empty, or whitespace.</param>
     /// <param name="value">String to validate.</param>
     /// <param name="defaultMessage">Message to display on the snackbar when the value is null, empty, or whitespace.</param>
-    internal static void ValidateIsNotNullOrWhiteSpace(ISnackbar snackbar, string? value, string defaultMessage)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            snackbar.Add(defaultMessage, Severity.Warning);
-        }
-    }
+    //internal static void ValidateIsNotNullOrWhiteSpace(ISnackbar snackbar, string? value, string defaultMessage)
+    //{
+    //    if (string.IsNullOrWhiteSpace(value))
+    //    {
+    //        snackbar.Add(defaultMessage, Severity.Warning);
+    //    }
+    //}
 
     /// <summary>
     /// Adds a warning to the provided snackbar when the given value represents a negative number, using the specific

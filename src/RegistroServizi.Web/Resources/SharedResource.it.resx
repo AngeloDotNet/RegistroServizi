@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="0" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- Navigation -->
+  <data name="Dashboard" xml:space="preserve">
+    <value>Pannello di controllo</value>
+  </data>
+  <!-- Report Submenu -->
+  <!-- Common Actions -->
+  <!-- Messages -->
+  <!-- Layout -->
+  <!-- Labels -->
+  <!-- Buttons -->
+  <!-- Table Columns -->
+  <!-- Additional Messages -->
+  <!-- Tooltips -->
+  <!-- Status -->
+  <!-- Time -->
+  <!-- Dashboard Page -->
+  <!-- Accounts Page -->
+  <!-- Transactions Page -->
+  <!-- Categories Page -->
+  <!-- Budgets Page -->
+  <!-- Import Page -->
+  <!-- Additional Buttons -->
+  <!-- ManualAdjustmentDialog -->
+  <!-- OpeningBalanceHistoryDialog -->
+  <!-- OpeningBalanceAdjustmentDialog -->
+  <!-- TransferDialog -->
+  <!-- TransactionDialog -->
+  <!-- Additional Column Keys -->
+  <!-- Common Values -->
+  <!-- Cashflow Report -->
+  <!-- Category Spending Report -->
+  <!-- Budget vs Actual Report -->
+  <!-- Net Worth Report -->
+  <!-- Account Balance History Report -->
+  <!-- Insight Explorer Report -->
+  <!-- Common Additional -->
+  <!-- Language Selector -->
+  <!-- Help Button -->
+  <!-- Navigation Additional -->
+  <!-- Error Pages -->
+  <!-- Auth - Login -->
+  <!-- Auth - Register -->
+  <!-- Auth - Forgot Password -->
+  <!-- Auth - Forgot Password Confirmation -->
+  <!-- Auth - Lockout -->
+  <!-- Auth - Reset Password -->
+  <!-- Auth - Reset Password Confirmation -->
+  <!-- Auth - Resend Email Confirmation -->
+  <!-- Auth - Register Confirmation -->
+  <!-- Auth - Confirm Email -->
+  <!-- Auth - Confirm Email Change -->
+  <!-- Auth - Access Denied -->
+  <!-- Auth - Invalid Password Reset -->
+  <!-- Auth - Invalid User -->
+  <!-- Auth - 2FA Login -->
+  <!-- Auth - Recovery Code Login -->
+  <!-- Auth - External Login -->
+  <!-- Manage - Profile -->
+  <!-- Manage - Change Password -->
+  <!-- Manage - Email -->
+  <!-- Manage - Delete Personal Data -->
+  <!-- Manage - Personal Data -->
+  <!-- Manage - Set Password -->
+  <!-- Manage - 2FA -->
+  <!-- Manage - Disable 2FA -->
+  <!-- Manage - Generate Recovery Codes -->
+  <!-- Manage - Reset Authenticator -->
+  <!-- Manage - External Logins -->
+  <!-- Manage - Passkeys -->
+  <!-- Manage - Rename Passkey -->
+  <!-- Manage - Enable Authenticator -->
+  <!-- Payee Management -->
+  <!-- Reconciliation Dialog -->
+  <!-- Reconciliations Page -->
+  <!-- Reconciliation Workspace Page -->
+  <!-- Balance History Page -->
+  <!-- Settings Page -->
+  <!-- Manual Adjustments Page -->
+  <!-- Opening Balances Page -->
+  <!-- License Page -->
+  <!-- Transaction Split Editor -->
+  <!-- Mobile Pages -->
+  <!-- PWA Install Prompt -->
+  <!-- License Enforcer -->
+  <!-- Setup Wizard -->
+  <!-- Labels - Additional -->
+  <!-- Account Types -->
+  <!-- Account Sub Types -->
+  <!-- Category Names for Setup -->
+  <!-- Transaction Dialog Keys (used in Mobile) -->
+  <!-- Account Dialog Keys -->
+  <!-- PWA Install Prompt -->
+  <!-- Educational Tips -->
+  <!-- Budget Dialog -->
+  <!-- Add Category to Budget Dialog -->
+  <!-- Budget Assignment Dialog -->
+  <!-- Categories Page - Italian -->
+  <!-- CategoryDialog -->
+  <data name="Version" xml:space="preserve">
+    <value>Versione</value>
+  </data>
+  <data name="RightsReserved" xml:space="preserve">
+    <value>Tutti i diritti riservati</value>
+  </data>
+  <data name="SoftwareDevelopedBy" xml:space="preserve">
+    <value>Software sviluppato gratuitamente da Angelo Pirola e distribuito con licenza MIT</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Nuovo</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Salva modifiche</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Crea</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Aggiungi</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Cancella</value>
+  </data>
+  <data name="Postcode" xml:space="preserve">
+    <value>Codice avviamento postale</value>
+  </data>
+  <data name="PostcodeRequired" xml:space="preserve">
+    <value>Codice avviamento postale è obbligatorio</value>
+  </data>
+  <data name="PostcodeHelper" xml:space="preserve">
+    <value>Inserire il codice avviamento postale</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Messaggio</value>
+  </data>
+  <data name="ExceptionLoadIdRecord" xml:space="preserve">
+    <value>Errore durante il caricamento dell'ID</value>
+  </data>
+  <data name="AllRequiredFields" xml:space="preserve">
+    <value>Tutti i campi obbligatori</value>
+  </data>
+  <data name="EntityUpdateSuccess" xml:space="preserve">
+    <value>Entità aggiornata con successo</value>
+  </data>
+  <data name="EntityCreateSuccess" xml:space="preserve">
+    <value>Entità creata con successo</value>
+  </data>
+  <data name="ErrorOccurred" xml:space="preserve">
+    <value>Si è verificato un errore</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="Hospital" xml:space="preserve">
+    <value>Ospedale</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Conferma</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="CannotUndone" xml:space="preserve">
+    <value>Questa azione non può essere annullata</value>
+  </data>
+  <data name="SureDelete" xml:space="preserve">
+    <value>Sei sicuro di voler eliminare</value>
+  </data>
+  <data name="Title_Hospitals" xml:space="preserve">
+    <value>Ospedali</value>
+  </data>
+  <data name="SubTitle_Hospitals" xml:space="preserve">
+    <value>Gestione della configurazione di base degli ospedali.</value>
+  </data>
+  <data name="PostcodeAbbreviation" xml:space="preserve">
+    <value>Cap</value>
+  </data>
+  <data name="HospitalName" xml:space="preserve">
+    <value>Nome Ospedale</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Indirizzo</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Comune</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>Provincia</value>
+  </data>
+  <data name="NoHospitalsFound" xml:space="preserve">
+    <value>Nessun ospedale disponibile al momento.</value>
+  </data>
+</root>

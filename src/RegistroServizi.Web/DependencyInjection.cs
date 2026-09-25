@@ -41,7 +41,8 @@ public static class DependencyInjection
     public static IServiceCollection AddRegistroServiziLocalization(this IServiceCollection services, IConfiguration configuration)
     {
         // List of supported cultures: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-10.0
-        var supportedCultures = configuration.GetSection("SupportedCultures").Get<string[]>() ?? throw new InvalidOperationException("SupportedCultures configuration section is missing.");
+        var supportedCultures = configuration.GetSection("SupportedCultures").Get<string[]>()
+            ?? throw new InvalidOperationException("SupportedCultures configuration section is missing.");
 
         services.AddLocalization();
         services.Configure<RequestLocalizationOptions>(options =>

@@ -1,7 +1,11 @@
-﻿@page "/Error"
-@using System.Diagnostics
+﻿@using System.Diagnostics
 
-<PageTitle>Errore · Registro Servizi</PageTitle>
+@page "/Error"
+@rendermode InteractiveServer
+@inject IStringLocalizer<SharedResource> Localizer
+
+@* <PageTitle>Errore · Registro Servizi</PageTitle> *@
+<TextPageTitle Title="@Localizer["Error"]" />
 
 <h1 class="text-danger">Errore.</h1>
 <h2 class="text-danger">Si è verificato un errore durante l'elaborazione della richiesta.</h2>

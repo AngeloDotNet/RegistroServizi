@@ -1,11 +1,15 @@
 ﻿@using System.Threading
 @inject IOptionsMonitor<ApplicazioneOptions> ApplicazioneOptions
+@inject IStringLocalizer<SharedResource> Localizer
 
 @page "/"
 
-<PageTitle>Dashboard · Registro Servizi</PageTitle>
+@* <PageTitle>Dashboard · Registro Servizi</PageTitle> *@
+@* <PageTitle>@Localizer["Dashboard"] · Registro Servizi</PageTitle> *@
+<TextPageTitle Title="@Localizer["Dashboard"]" />
 
-<h1>Registro Servizi</h1>
+@* <h1>Registro Servizi</h1> *@
+<TextPageHeader Title="Registro Servizi" />
 
 <h6>Sono le ore @DateTime.Now.ToString("HH:mm:ss") - Orario UTC: @DateTime.UtcNow.ToString("HH:mm:ss")</h6>
 <p>TimeZone: @(timeZone?.Id ?? "Non disponibile")</p>

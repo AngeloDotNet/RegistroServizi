@@ -1,155 +1,74 @@
 ﻿@page "/ospedali"
 @rendermode InteractiveServer
+@inject IStringLocalizer<SharedResource> Localizer
+@inject IOptions<MudBlazorDataGridOptions> DataGridOptions
 
-<PageTitle>Ospedali · Registro Servizi</PageTitle>
+@* <PageTitle>@Localizer["TitleHospitals"] · Registro Servizi</PageTitle> *@
+<TextPageTitle Title="@Localizer["TitleHospitals"]" />
 
-<div class="section-header">
+@* <div class="section-header">
     <div>
-        <h1 class="section-title">Ospedali</h1>
-        <p class="section-subtitle">Gestione della configurazione di base degli ospedali.</p>
+        <h1 class="section-title">@Localizer["TitleHospitals"]</h1>
+        <p class="section-subtitle">@Localizer["SubTitleHospitals"]</p>
     </div>
-</div>
+</div> *@
+<TextPageHeader Title="@Localizer["TitleHospitals"]" SubTitle="@Localizer["SubTitleHospitals"]" />
 
 <MudPaper Class="pa-4 mb-4">
 @if (isLoading)
-    {
-        <MudProgressLinear Indeterminate="true" />
-    }
-    else if (elements.Count == 0)
-    {
-        <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-            Nessun ospedale disponibile al momento.
-        </MudAlert>
-    }
-    else
-    {
-        <MudDataGrid @ref="dataGrid"
-                T="OspedaleDto"
+{
+    <MudProgressLinear Indeterminate="true" />
+}
+else if (elements.Count == 0)
+{
+    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@Localizer["NoHospitalsFound"]</MudAlert>
+}
+else
+{
+    <MudDataGrid T="OspedaleDto"
                 Items="@elements"
-                ReadOnly="false"
-                EditMode="DataGridEditMode.Inline"
-                EditTrigger="DataGridEditTrigger.Manual"
-                SortMode="SortMode.None"
-                StartedEditingItem="@StartedEditingItem"
-                CanceledEditingItem="@CanceledEditingItem"
-                CommittedItemChanges="@CommittedItemChangesAsync"
-                Bordered="true"
-                Dense="true"
-                Hover="true">
-            <ToolBarContent>
-                <MudSpacer />
-                <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
-                    <MudButton StartIcon="@Icons.Material.Filled.Add" @onclick="OpenDialogAsync" Variant="Variant.Filled" Color="Color.Primary">Aggiungi</MudButton>
-                </MudButtonGroup>
-            </ToolBarContent>
-            <Columns>
-                <PropertyColumn Property="x => x.Id" Title="Id" Editable="false" Hidden="true" />
-
-                <TemplateColumn Title="Nome Ospedale">
-                    <CellTemplate Context="context">
-                        @context.Item.NomeOspedale
-                    </CellTemplate>
-                    <EditTemplate>
-                        <MudTextField T="string"
-                            @bind-Value="context.Item.NomeOspedale"
-                            @bind-Value:after="() => ValidateNomeOspedale(context.Item.NomeOspedale)"
-                            Label="Nome Ospedale"
-                            Variant="Variant.Outlined"
-                            Required="true"
-                            RequiredError="Il nome dell'ospedale è obbligatorio."
-                            Immediate="true" />
-                    </EditTemplate>
-                </TemplateColumn>
-
-                <TemplateColumn Title="Strada">
-                    <CellTemplate Context="context">
-                        @context.Item.Indirizzo.Strada
-                    </CellTemplate>
-                    <EditTemplate>
-                        <MudTextField T="string"
-                            @bind-Value="context.Item.Indirizzo.Strada"
-                            @bind-Value:after="() => ValidateStrada(context.Item.Indirizzo.Strada)"
-                            Label="Strada"
-                            Variant="Variant.Outlined"
-                            Required="true"
-                            RequiredError="Il nome della strada è obbligatoria."
-                            Immediate="true" />
-                    </EditTemplate>
-                </TemplateColumn>
-
-                <TemplateColumn Title="Citt&agrave;">
-                    <CellTemplate Context="context">
-                        @context.Item.Indirizzo.Citta
-                    </CellTemplate>
-                    <EditTemplate>
-                        <MudTextField T="string"
-                            @bind-Value="context.Item.Indirizzo.Citta"
-                            @bind-Value:after="() => ValidateCitta(context.Item.Indirizzo.Citta)"
-                            Label="Citt&agrave;"
-                            Variant="Variant.Outlined"
-                            Required="true"
-                            RequiredError="Il nome della citt&agrave; è obbligatoria."
-                            Immediate="true" />
-                    </EditTemplate>
-                </TemplateColumn>
-
-                <TemplateColumn Title="Provincia">
-                    <CellTemplate Context="context">
-                        @context.Item.Indirizzo.Provincia
-                    </CellTemplate>
-                    <EditTemplate>
-                        <MudTextField T="string"
-                            @bind-Value="context.Item.Indirizzo.Provincia"
-                            @bind-Value:after="() => ValidateProvincia(context.Item.Indirizzo.Provincia)"
-                            Label="Provincia"
-                            Counter="2"
-                            MaxLength="2"
-                            Variant="Variant.Outlined"
-                            Required="true"
-                            RequiredError="Il nome della provincia è obbligatoria."
-                            Immediate="true" />
-                    </EditTemplate>
-                </TemplateColumn>
-
-                <TemplateColumn Title="Cap">
-                    <CellTemplate Context="context">
-                        @context.Item.Indirizzo.Cap
-                    </CellTemplate>
-                    <EditTemplate>
-                        <MudNumericField T="int"
-                            @bind-Value="@context.Item.Indirizzo.Cap"
-                            @bind-Value:after="() => ValidateCap(context.Item.Indirizzo.Cap)"
-                            Label="Cap"
-                            Counter="5"
-                            MaxLength="5"
-                            Variant="Variant.Outlined"
-                            Required="true"
-                            RequiredError="Il codice avviamento postale è obbligatorio."
-                            Immediate="true" />
-                    </EditTemplate>
-                </TemplateColumn>
-                
-                <TemplateColumn CellClass="d-flex justify-end">
-                    <CellTemplate>
-                        @if (context.IsEditing)
-                        {
-                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Check" Color="Color.Success" aria-label="Save changes" OnClick="@context.Actions.CommitEditingItemAsync" />
-                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Close" Color="Color.Error" aria-label="Cancel editing" OnClick="@context.Actions.CancelEditingItemAsync" />
-                        }
-                        else
-                        {
-                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Disabled="@isEditing" aria-label="Edit row" OnClick="@context.Actions.StartEditingItemAsync" />
-                            <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Disabled="@isEditing" aria-label="Delete row" OnClick="@(() => DeleteItem(context.Item))" />
-                        }
-                    </CellTemplate>
-                    @* <CellTemplate>
-                        <MudStack Row Style="width: 250px" Justify="Justify.Center">
-                            <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Edit" Variant="@Variant.Filled" Color="@Color.Warning">Modifica</MudButton>
-                            <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" Variant="@Variant.Filled" Color="@Color.Error" aria-label="Cancella">Cancella</MudButton>
-                        </MudStack>
-                    </CellTemplate> *@
-                </TemplateColumn>
-            </Columns>
-        </MudDataGrid>
-    }
+                SortMode="@DataGridOptions.Value.SortMode"
+                Bordered="@DataGridOptions.Value.Bordered"
+                Dense="@DataGridOptions.Value.Dense"
+                Hover="@DataGridOptions.Value.Hover">
+        <ToolBarContent>
+            <MudSpacer />
+            <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
+                @*<MudButton StartIcon="@Icons.Material.Filled.Add" @onclick="CreateItemAsync" Variant="Variant.Filled" Color="Color.Primary">@Localizer["Add"]</MudButton>*@
+                <DataGridActionsButton ActionCallback="CreateItemAsync" Label="@Localizer["Add"]" Icon="@Icons.Material.Filled.Add" ColorButton="Color.Primary" />
+            </MudButtonGroup>
+        </ToolBarContent>
+        <Columns>
+            <PropertyColumn Property="x => x.Id" Title="Id" Hidden="true" />
+            <PropertyColumn Property="x => x.NomeOspedale" Title="@Localizer["Hospital"]" />
+            <PropertyColumn Property="x => x.Indirizzo.Strada" Title="@Localizer["Address"]" />
+            <PropertyColumn Property="x => x.Indirizzo.Citta" Title="@Localizer["City"]" />
+            <PropertyColumn Property="x => x.Indirizzo.Provincia" Title="@Localizer["Province"]" />
+            <PropertyColumn Property="x => x.Indirizzo.Cap" Title="@Localizer["PostcodeAbbreviation"]" />
+            
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudStack Row Style="width: 250px" Justify="Justify.Center">
+                        @*<MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Edit" Variant="@Variant.Filled" Color="@Color.Warning" @onclick="() => EditItemAsync(context.Item)">@Localizer["Edit"]</MudButton>
+                        <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" Variant="@Variant.Filled" Color="@Color.Error" @onclick="() => DeleteItemAsync(context.Item)">@Localizer["Delete"]</MudButton>*@
+                        <DataGridActionsButton ActionCallback="() => EditItemAsync(context.Item)" Label="@Localizer["Edit"]" Icon="@Icons.Material.Filled.Edit" ColorButton="Color.Warning" />
+                        <DataGridActionsButton ActionCallback="() => DeleteItemAsync(context.Item)" Label="@Localizer["Delete"]" Icon="@Icons.Material.Filled.Delete" ColorButton="Color.Error" />
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        <PagerContent>
+            @if (elements.Count >= 10)
+            {
+                <DataGridPager TItem="OspedaleDto"
+                    DataGridOptions="@DataGridOptions.Value"
+                    RowsPerPageString="Righe per pagina:"
+                    InfoFormat="Righe {first_item} - {last_item} di {all_items}"
+                    PageSizeSelector="true"
+                    ShowNavigation="true"
+                    ShowPageNumber="false" />
+            }
+        </PagerContent>
+    </MudDataGrid>
+}
 </MudPaper>

@@ -3,9 +3,11 @@
 @inject IStringLocalizer<SharedResource> Localizer
 @inject NavigationManager navigationManager
 
-<TextPageTitle Title="Opzioni" />
+@* <TextPageTitle Title="Opzioni" /> *@
+<TextPageTitle Title="@Localizer["TitleOptions"]" />
 
-<TextPageHeader Title="Opzioni" Subtitle="Gestione delle opzioni disponibili" />
+@* <TextPageHeader Title="Opzioni" Subtitle="Gestione delle opzioni disponibili" /> *@
+<TextPageHeader Title="@Localizer["TitleOptions"]" SubTitle="@Localizer["SubTitleOptions"]" />
 
 <div class="mudpaper-grid mb-4">
     <ServiceCard Title="@Localizer["TitleHospitals"]" 
@@ -13,7 +15,7 @@
                     IconName="@Icons.Material.Filled.LocalHospital"
                     OnClick="ViewOspedali" />
 
-    <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewColonnine()">
+    @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewColonnine()">
         <div class="d-flex gap-3">
             <div class="mudpaper-icon prezziservizi">
                 <MudIcon Icon="@Icons.Material.Filled.LocalParking" Size="MudBlazor.Size.Medium" />
@@ -27,7 +29,17 @@
                 </div>
             </div>
         </div>
-    </MudPaper>
+    </MudPaper> *@
+
+    @* <ServiceCard Title="Colonnine" 
+                    Subtitle="Gestione delle colonnine"
+                    IconName="@Icons.Material.Filled.LocalParking"
+                    OnClick="ViewColonnine" /> *@
+
+    <ServiceCard Title="@Localizer["TitleStations"]" 
+                Subtitle="@Localizer["SubTitleStations"]"
+                IconName="@Icons.Material.Filled.LocalParking"
+                OnClick="ViewColonnine" />
 
     @* <MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="() => ViewDashboard()">
         <div class="d-flex gap-3">
@@ -111,13 +123,13 @@
 </div>
 
 @code {
-    /// <summary>
-    /// Navigates to the Ospedali page.
-    /// </summary>
-    private void ViewOspedali() => navigationManager.NavigateTo("/ospedali");
+    // /// <summary>
+    // /// Navigates to the Ospedali page.
+    // /// </summary>
+    // private void ViewOspedali() => navigationManager.NavigateTo("/ospedali");
 
-    /// <summary>
-    /// Navigates to the Colonnine page.
-    /// </summary>
-    private void ViewColonnine() => navigationManager.NavigateTo("/colonnine");
+    // /// <summary>
+    // /// Navigates to the Colonnine page.
+    // /// </summary>
+    // private void ViewColonnine() => navigationManager.NavigateTo("/colonnine");
 }

@@ -1,0 +1,166 @@
+﻿@inject IOspedaleService OspedaleService
+@inject ISnackbar Snackbar
+@inject ILogger<OspedaleEditDialog> Logger
+@inject IStringLocalizer<SharedResource> Localizer
+
+<MudDialog>
+    <TitleContent>
+        <div class="d-flex align-center gap-2">
+            <MudIcon Icon="@(EditDialogId.HasValue ? @Icons.Material.Filled.Edit : @Icons.Material.Filled.AddCircle)" Color="@(EditDialogId.HasValue ? @Color.Warning : Color.Success)" />
+            <MudText Typo="Typo.h6">@(EditDialogId.HasValue ? $"{Localizer["Edit"]} {Title}" : $"{Localizer["New"]} {Title}")</MudText>
+        </div>
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="form" @bind-IsValid="isValid">
+            <MudGrid>
+                <MudItem xs="12">
+                @* <MudTextField T="string" @bind-Value="nomeOspedale" Label="Nome Ospedale" Required="true" HelperText="Inserisci il nome dell'ospedale"
+                    RequiredError="Nome Ospedale is required" Variant="Variant.Outlined" Margin="Margin.Dense" /> *@
+                    @* <TextFieldString BindValueText="@nomeOspedale" LabelText="Nome Ospedale" IsRequired="true" HelperText="Inserire il nome dell'ospedale"
+                        RequiredErrorText="Nome Ospedale è obbligatorio" /> *@
+                    <TextFieldString @bind-BindValueText="nomeOspedale"
+                                        LabelText="Nome Ospedale"
+                                        IsRequired="true"
+                                        HelperText="Inserire il nome dell'ospedale"
+                                        RequiredErrorText="Nome Ospedale è obbligatorio" />
+                </MudItem>
+
+                <MudItem sm="6">
+                    @*<MudTextField T="string" @bind-Value="strada" Label="Strada" Required="true" HelperText="Inserisci la strada"
+                        RequiredError="Strada is required" Variant="Variant.Outlined" Margin="Margin.Dense" /> *@
+                    <TextFieldString @bind-BindValueText="strada"
+                                        LabelText="Indirizzo"
+                                        IsRequired="true"
+                                        HelperText="Inserire l'indirizzo'"
+                                        RequiredErrorText="Indirizzo è obbligatorio" />
+                </MudItem>
+
+                <MudItem sm="6">
+                    @*<MudTextField T="string" @bind-Value="citta" Label="Città" Required="true" HelperText="Inserisci la città"
+                        RequiredError="Città is required" Variant="Variant.Outlined" Margin="Margin.Dense" /> *@
+                    <TextFieldString @bind-BindValueText="citta"
+                                        LabelText="Comune"
+                                        IsRequired="true"
+                                        HelperText="Inserire il comune"
+                                        RequiredErrorText="Comune è obbligatorio" />
+                </MudItem>
+
+                <MudItem sm="6">
+                    @*<MudTextField T="string" @bind-Value="provincia" Label="Provincia" Required="true" HelperText="Inserisci la provincia (sigla)" MaxLength="2"
+                        RequiredError="Provincia is required" Variant="Variant.Outlined" Margin="Margin.Dense" />*@
+                    <TextFieldString @bind-BindValueText="provincia"
+                                        LabelText="Provincia"
+                                        IsRequired="true"
+                                        HelperText="Inserire la provincia (sigla)"
+                                        MaxLengthText="2"
+                                        RequiredErrorText="La provincia (sigla) è obbligatorio" />
+                </MudItem>
+
+                <MudItem sm="6">
+                    @*<MudTextField T="int?" @bind-Value="cap" Label="@Localizer["Postcode"]" Required="true" HelperText="@Localizer["PostcodeHelper"]" Mask="@(new PatternMask("00000"))" 
+                        RequiredError="@Localizer["PostcodeRequired"]" Variant="Variant.Outlined" Margin="Margin.Dense" />*@
+                    <TextFieldNumber TValue="int?"
+                                        @bind-BindValueText="cap"
+                                        LabelText="@Localizer["Postcode"]"
+                                        IsRequired="true"
+                                        HelperText="@Localizer["PostcodeHelper"]"
+                                        IsMasked="true"
+                                        DefaultMask="00000"
+                                        RequiredErrorText="@Localizer["PostcodeRequired"]" />
+                </MudItem>
+            </MudGrid>
+
+            @* <MudTextField T="string" @bind-Value="nomeOspedale" Label="Nome Ospedale" Required="true" HelperText="Inserisci il nome dell'ospedale"
+                            RequiredError="Nome Ospedale is required" Variant="Variant.Outlined" Margin="Margin.Dense" />
+
+            <MudTextField T="string" @bind-Value="strada" Label="Strada" Required="true" HelperText="Inserisci la strada"
+                            RequiredError="Strada is required" Variant="Variant.Outlined" Margin="Margin.Dense" />
+
+            <MudTextField T="string" @bind-Value="citta" Label="Città" Required="true" HelperText="Inserisci la città"
+                            RequiredError="Città is required" Variant="Variant.Outlined" Margin="Margin.Dense" />
+
+            <MudTextField T="string" @bind-Value="provincia" Label="Provincia" Required="true" HelperText="Inserisci la provincia (sigla)" MaxLength="2"
+                            RequiredError="Provincia is required" Variant="Variant.Outlined" Margin="Margin.Dense" />
+
+            <MudTextField T="int?" @bind-Value="cap" Label="CAP" Required="true" HelperText="Inserisci il cap" Mask="@(new PatternMask("00000"))" 
+                            RequiredError="CAP is required" Variant="Variant.Outlined" Margin="Margin.Dense" /> *@
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        @*<MudButton Color="@BtnCancelColor" Variant="Variant.Filled" OnClick="Cancel">@BtnCancelText</MudButton>
+        <MudButton Color="@BtnConfirmColor" Variant="Variant.Filled" OnClick="SubmitForm">@(EditDialogId.HasValue ? "Salva modifiche" : $"Crea {Title}")</MudButton>
+        <DialogActionsButtons BtnCancelText="@BtnCancelText"
+                    BtnSubmitText="@(EditDialogId.HasValue ? Localizer["SaveChanges"] : $"{Localizer["Create"]} {Title}")"
+                    BtnCancelColor="@BtnCancelColor"
+                    BtnConfirmColor="@BtnConfirmColor"
+                    OnCancel="Cancel"
+                    OnSubmit="SubmitForm" />*@
+        <DialogActionsButtons BtnCancelText="@BtnCancelText"
+            BtnSubmitText="@(EditDialogId.HasValue ? Localizer["Save"] : $"{Localizer["Create"]} {Title}")"
+            BtnSubmitIcon="@Icons.Material.Filled.Save"
+            BtnCancelColor="@BtnCancelColor"
+            BtnConfirmColor="@BtnConfirmColor"
+            OnCancel="Cancel"
+            OnSubmit="SubmitForm" />
+    </DialogActions>
+</MudDialog>
+
+@code {
+    // [CascadingParameter] private IMudDialogInstance MudDialog { get; set; } = default!;
+
+    // [Parameter] public Guid? EditDialogId { get; set; }
+
+    // [Parameter] public string Title { get; set; } = string.Empty;
+    // [Parameter] public string BtnCancelText { get; set; } = string.Empty;
+
+    // [Parameter] public Color BtnCancelColor { get; set; }
+    // [Parameter] public Color BtnConfirmColor { get; set; }
+
+    // private MudForm form = null!;
+    // private bool isValid = false;
+
+    // private string nomeOspedale = string.Empty;
+    // private string strada = string.Empty;
+    // private string citta = string.Empty;
+    // private string provincia = string.Empty;
+    // private int? cap = null;
+
+    // private async Task SubmitForm()
+    // {
+    //     await form.Validate();
+
+    //     if (!isValid)
+    //     {
+    //         Snackbar.Add("Compila tutti i campi obbligatori !", Severity.Error);
+    //         return;
+    //     }
+
+    //     try
+    //     {
+    //         if (EditDialogId.HasValue)
+    //         {
+    //             var indirizzo = new UpdateIndirizzoDto(strada, citta, provincia, cap ?? 0);
+    //             UpdateOspedaleDto updateItem = new UpdateOspedaleDto(EditDialogId.Value, nomeOspedale, indirizzo);
+        
+    //             await OspedaleService.UpdateOspedaleAsync(updateItem);
+    //             Snackbar.Add("Ospedale aggiornato con successo!", Severity.Success);
+    //         }
+    //         else
+    //         {
+    //             var indirizzo = new CreateIndirizzoDto(strada, citta, provincia, cap ?? 0);
+    //             var createItem = new CreateOspedaleDto(nomeOspedale, indirizzo);
+        
+    //             await OspedaleService.CreateOspedaleAsync(createItem);
+    //             Snackbar.Add("Ospedale creato con successo!", Severity.Success);
+    //         }
+        
+    //         MudDialog.Close(DialogResult.Ok(true));
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Snackbar.Add($"Si è verificato un errore: {ex.Message}", Severity.Error);
+    //     }
+    // }
+
+    // private void Cancel() => MudDialog.Cancel();
+}

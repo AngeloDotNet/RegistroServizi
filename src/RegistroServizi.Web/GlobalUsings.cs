@@ -15,6 +15,4 @@ global using RegistroServizi.Data;
 global using RegistroServizi.Data.Identity;
 global using RegistroServizi.Web.Components;
 global using RegistroServizi.Web.Components.Account;
-global using RegistroServizi.Web.Components.Shared;
 global using RegistroServizi.Web.Configuration;
-global using RegistroServizi.Web.Validations;

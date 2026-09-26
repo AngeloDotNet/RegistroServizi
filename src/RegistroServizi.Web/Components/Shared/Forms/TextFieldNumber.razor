@@ -1,0 +1,31 @@
+﻿@typeparam TValue
+
+@if (IsMasked)
+{
+        <MudTextField T="TValue"
+                        Value="BindValueText"
+                        ValueChanged="BindValueTextChanged"
+                        ValueExpression="BindValueTextExpression"
+                        Label="@LabelText"
+                        Required="@IsRequired"
+                        RequiredError="@RequiredErrorText"
+                        HelperText="@HelperText"
+                        HelperTextOnFocus="true"
+                        Variant="Variant.Outlined"
+                        Margin="Margin.Dense"
+                        Mask="@(new PatternMask(DefaultMask))" />
+}
+else
+{
+        <MudTextField T="TValue"
+                        Value="BindValueText"
+                        ValueChanged="BindValueTextChanged"
+                        ValueExpression="BindValueTextExpression"
+                        Label="@LabelText"
+                        Required="@IsRequired"
+                        RequiredError="@RequiredErrorText"
+                        HelperText="@HelperText"
+                        HelperTextOnFocus="true"
+                        Variant="Variant.Outlined"
+                        Margin="Margin.Dense" />
+}

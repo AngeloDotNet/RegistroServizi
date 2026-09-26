@@ -1,0 +1,28 @@
+﻿@if (MaxLengthText > 0)
+{
+    <MudTextField T="string"
+                    Value="BindValueText"
+                    ValueChanged="BindValueTextChanged"
+                    Label="@LabelText"
+                    Required="@IsRequired"
+                    RequiredError="@RequiredErrorText"
+                    HelperText="@HelperText"
+                    HelperTextOnFocus="true"
+                    Variant="Variant.Outlined"
+                    Margin="Margin.Dense"
+                    MaxLength="@MaxLengthText"
+                    Counter="@MaxLengthText" />
+}
+else
+{
+    <MudTextField T="string"
+                    Value="BindValueText"
+                    ValueChanged="BindValueTextChanged"
+                    Label="@LabelText"
+                    Required="@IsRequired"
+                    RequiredError="@RequiredErrorText"
+                    HelperText="@HelperText"
+                    HelperTextOnFocus="true"
+                    Variant="Variant.Outlined"
+                    Margin="Margin.Dense" />
+}

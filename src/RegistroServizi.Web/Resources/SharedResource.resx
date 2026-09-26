@@ -117,18 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-  </data>
-  <data name="Version" xml:space="preserve">
-    <value>Version</value>
-  </data>
-  <data name="RightsReserved" xml:space="preserve">
-    <value>All rights reserved</value>
-  </data>
-  <data name="SoftwareDevelopedBy" xml:space="preserve">
-    <value>Software developed for free by Angelo Pirola and distributed under the MIT license</value>
-  </data>
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>
@@ -227,5 +215,38 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="LoadingError" xml:space="preserve">
+    <value>Error while loading</value>
+  </data>
+  <data name="CancelCreate" xml:space="preserve">
+    <value>Creation cancelled</value>
+  </data>
+  <data name="CancelModify" xml:space="preserve">
+    <value>Modification cancelled</value>
+  </data>
+  <data name="CancelDelete" xml:space="preserve">
+    <value>Deletion cancelled</value>
+  </data>
+  <data name="LoadingIdError" xml:space="preserve">
+    <value>Error loading the ID</value>
+  </data>
+  <data name="ExceptionIdError" xml:space="preserve">
+    <value>Error while deleting the ID</value>
+  </data>
+  <data name="EntityDeleteSuccess" xml:space="preserve">
+    <value>Entity successfully deleted</value>
+  </data>
+  <data name="TitleOptions" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="SubTitleOptions" xml:space="preserve">
+    <value>Management of available options</value>
+  </data>
+  <data name="TitleStations" xml:space="preserve">
+    <value>Charging stations</value>
+  </data>
+  <data name="SubTitleStations" xml:space="preserve">
+    <value>Management of available charging stations</value>
   </data>
 </root>

@@ -117,18 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Dashboard" xml:space="preserve">
-    <value>Pannello di controllo</value>
-  </data>
-  <data name="Version" xml:space="preserve">
-    <value>Versione</value>
-  </data>
-  <data name="RightsReserved" xml:space="preserve">
-    <value>Tutti i diritti riservati</value>
-  </data>
-  <data name="SoftwareDevelopedBy" xml:space="preserve">
-    <value>Software sviluppato gratuitamente da Angelo Pirola e distribuito con licenza MIT</value>
-  </data>
   <data name="New" xml:space="preserve">
     <value>Nuovo</value>
   </data>
@@ -227,5 +215,38 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Errore</value>
+  </data>
+  <data name="LoadingError" xml:space="preserve">
+    <value>Errore durante il caricamento</value>
+  </data>
+  <data name="CancelCreate" xml:space="preserve">
+    <value>Creazione annullata</value>
+  </data>
+  <data name="CancelModify" xml:space="preserve">
+    <value>Modifica annullata</value>
+  </data>
+  <data name="CancelDelete" xml:space="preserve">
+    <value>Cancellazione annullata</value>
+  </data>
+  <data name="LoadingIdError" xml:space="preserve">
+    <value>Errore durante il caricamento dell'ID</value>
+  </data>
+  <data name="ExceptionIdError" xml:space="preserve">
+    <value>Errore durante la cancellazione dell'ID</value>
+  </data>
+  <data name="EntityDeleteSuccess" xml:space="preserve">
+    <value>Entità cancellata con successo</value>
+  </data>
+  <data name="TitleOptions" xml:space="preserve">
+    <value>Opzioni</value>
+  </data>
+  <data name="SubTitleOptions" xml:space="preserve">
+    <value>Gestione delle opzioni disponibili</value>
+  </data>
+  <data name="TitleStations" xml:space="preserve">
+    <value>Colonnine</value>
+  </data>
+  <data name="SubTitleStations" xml:space="preserve">
+    <value>Gestione delle colonnine disponibili</value>
   </data>
 </root>

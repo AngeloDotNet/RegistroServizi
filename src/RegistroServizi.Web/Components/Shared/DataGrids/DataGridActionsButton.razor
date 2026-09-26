@@ -1,0 +1,21 @@
+﻿@* @if (IsSmall)
+{
+    <MudButton Size="Size.Small" StartIcon="@Icon" @onclick="ActionCallback" Variant="Variant.Filled" Color="@ColorButton">@Label</MudButton>
+}
+else
+{
+    <MudButton StartIcon="@Icon" @onclick="ActionCallback" Variant="Variant.Filled" Color="@ColorButton">@Label</MudButton>
+} *@
+
+<MudButton StartIcon="@Icon" @onclick="ActionCallback" Variant="Variant.Filled" Color="@ColorButton">@Label</MudButton>
+
+@code {
+    // [Parameter] public EventCallback ActionCallback { get; set; }
+
+    // [Parameter] public string Label { get; set; } = string.Empty;
+    // [Parameter] public string Icon { get; set; }  = string.Empty;
+
+    // // [Parameter] public bool IsSmall { get; set; } = false;
+
+    // [Parameter] public Color ColorButton { get; set; }
+}

@@ -1,0 +1,26 @@
+﻿<MudPaper Elevation="2" Class="mudpaper pa-4" @onclick="HandleClick">
+    <div class="d-flex gap-3">
+        <div class="mudpaper-icon prezziservizi">
+            <MudIcon Icon="@IconName" Size="MudBlazor.Size.Medium" />
+        </div>
+
+        <div class="flex-grow-1" style="min-width: 0;">
+            <div class="d-flex justify-space-between align-start mb-2">
+                <div class="flex-grow-1" style="min-width: 0;">
+                    <div style="font-weight: 600; font-size: 1.1rem; color: var(--mb-text-primary);">@Title</div>
+                    <div style="font-size: 0.75rem; color: var(--mb-text-muted);">@Subtitle</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</MudPaper>
+
+@code {
+    // [Parameter] public string Title { get; set; } = string.Empty;
+    // [Parameter] public string Subtitle { get; set; } = string.Empty;
+    // [Parameter] public string IconName { get; set; } = string.Empty;
+
+    // [Parameter] public EventCallback OnClick { get; set; }
+
+    // private async Task HandleClick() => await OnClick.InvokeAsync();
+}

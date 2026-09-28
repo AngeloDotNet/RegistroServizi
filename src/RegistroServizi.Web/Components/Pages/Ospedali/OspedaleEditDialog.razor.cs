@@ -40,7 +40,6 @@ public partial class OspedaleEditDialog
             }
             catch (Exception ex)
             {
-                //Logger.LogError(ex, $"Errore durante il caricamento dell'ospedale con ID {EditDialogId}. Message: {ex.Message}", EditDialogId, ex.Message);
                 Logger.LogError(ex, $"{Localizer["LoadingIdError"]}: {EditDialogId}. {Localizer["Message"]}: {ex.Message}");
                 Snackbar.Add($"{Localizer["LoadingIdError"]}: {EditDialogId}.", Severity.Error);
             }
@@ -65,7 +64,6 @@ public partial class OspedaleEditDialog
                 var updateItem = new UpdateOspedaleDto(EditDialogId.Value, nomeOspedale, indirizzo);
 
                 await OspedaleService.UpdateOspedaleAsync(updateItem);
-                //Snackbar.Add("Ospedale aggiornato con successo!", Severity.Success);
                 Snackbar.Add($"{Localizer["EntityUpdateSuccess"]} !", Severity.Success);
             }
             else
@@ -74,7 +72,6 @@ public partial class OspedaleEditDialog
                 var createItem = new CreateOspedaleDto(nomeOspedale, indirizzo);
 
                 await OspedaleService.CreateOspedaleAsync(createItem);
-                //Snackbar.Add("Ospedale creato con successo!", Severity.Success);
                 Snackbar.Add($"{Localizer["EntityCreateSuccess"]} !", Severity.Success);
             }
 
@@ -83,9 +80,7 @@ public partial class OspedaleEditDialog
         }
         catch (Exception ex)
         {
-            //Snackbar.Add($"Si è verificato un errore: {ex.Message}", Severity.Error);
             Snackbar.Add($"{Localizer["ErrorOccurred"]}: {ex.Message}", Severity.Error);
-
             return false;
         }
     }

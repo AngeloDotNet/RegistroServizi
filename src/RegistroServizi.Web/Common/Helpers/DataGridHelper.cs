@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Localization;
-using RegistroServizi.Web.Resources;
-
-namespace RegistroServizi.Web.Common.Helpers;
+﻿namespace RegistroServizi.Web.Common.Helpers;
 
 public sealed class DataGridHelper(IStringLocalizer<SharedResource> localizer)
 {

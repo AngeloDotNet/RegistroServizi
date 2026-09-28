@@ -1,5 +1,4 @@
 ﻿using MudBlazor;
-using RegistroServizi.Web.Common.Helpers;
 
 namespace RegistroServizi.Web.Components.Pages.Ospedali;
 
@@ -15,10 +14,6 @@ public partial class Ospedali
     private List<OspedaleDto> elements = [];
     private bool isLoading = true;
     private string Title => Localizer["Hospital"];
-    //private string CancelText => Localizer["Cancel"];
-    //private string ConfirmText => Localizer["Confirm"];
-    //private string RowsPerPageString => Localizer["RowsPerPage"];
-    //private string RowsPerPageInfoFormat => Localizer["RowsPerPageInfoFormat", "{first_item}", "{last_item}", "{all_items}"];
 
     protected override async Task OnInitializedAsync() => await LoadingDataAsync();
 
@@ -49,64 +44,6 @@ public partial class Ospedali
         }
     }
 
-    //private async Task CreateItemAsync()
-    //{
-    //    var dialogReference = await DialogService.ShowAsync<OspedaleEditDialog>(
-    //        MudBlazorDialogParameters.GetCreateItemDialogParameters<OspedaleEditDialog>(title: Title, cancelText: CancelText),
-    //        MudBlazorDialogOptions.GetBackdropFilterDialogOptions());
-
-    //    var result = await dialogReference.Result;
-
-    //    if (result is not null && !result.Canceled)
-    //    {
-    //        await LoadingDataAsync();
-    //    }
-    //    else
-    //    {
-    //        await InvokeAsync(() => Snackbar.Add(Localizer["CancelCreate"], Severity.Info));
-    //    }
-    //}
-
-    //private async Task EditItemAsync(OspedaleDto item)
-    //{
-    //    var dialogReference = await DialogService.ShowAsync<OspedaleEditDialog>(
-    //        MudBlazorDialogParameters.GetEditItemDialogParameters<OspedaleEditDialog>(editDialogId: item.Id, title: Title, cancelText: CancelText),
-    //        MudBlazorDialogOptions.GetBackdropFilterDialogOptions());
-
-    //    var result = await dialogReference.Result;
-
-    //    if (result is not null && !result.Canceled)
-    //    {
-    //        await LoadingDataAsync();
-    //    }
-    //    else
-    //    {
-    //        await InvokeAsync(() => Snackbar.Add(Localizer["CancelModify"], Severity.Info));
-    //    }
-    //}
-
-    //private async Task DeleteItemAsync(OspedaleDto item)
-    //{
-    //    var dialogReference = await DialogService.ShowAsync<OspedaleDeleteDialog>(
-    //        MudBlazorDialogParameters.GetDeleteItemDialogParameters<OspedaleDeleteDialog>(editDialogId: item.Id,
-    //            title: Title,
-    //            description: item.NomeOspedale,
-    //            cancelText: CancelText,
-    //            confirmText: Localizer["Confirm"]), MudBlazorDialogOptions.GetBackdropFilterDialogOptions());
-
-    //    var result = await dialogReference.Result;
-
-    //    if (result is not null && !result.Canceled)
-    //    {
-    //        elements.Remove(item);
-    //        await LoadingDataAsync();
-    //    }
-    //    else
-    //    {
-    //        await InvokeAsync(() => Snackbar.Add(Localizer["CancelDelete"], Severity.Info));
-    //    }
-    //}
-
     private async Task<bool> OpenDialogAndRefreshAsync<TDialog>(Func<DialogParameters> parametersFactory, string cancelMessage) where TDialog : IComponent
     {
         var dialogReference = await DialogService.ShowAsync<TDialog>(parametersFactory(), MudBlazorDialogOptions.GetBackdropFilterDialogOptions());
@@ -124,28 +61,9 @@ public partial class Ospedali
 
     private Task CreateItemAsync() => OpenDialogAndRefreshAsync<OspedaleEditDialog>(()
         => MudBlazorDialogParameters.GetCreateItemDialogParameters<OspedaleEditDialog>(Title, DataGridHelper.CancelText), "CancelCreate");
-    //{
-    //    return OpenDialogAndRefreshAsync<OspedaleEditDialog>(() => MudBlazorDialogParameters
-    //        .GetCreateItemDialogParameters<OspedaleEditDialog>(title: Title, cancelText: CancelText), "CancelCreate");
-    //}
 
     private Task EditItemAsync(OspedaleDto item) => OpenDialogAndRefreshAsync<OspedaleEditDialog>(()
         => MudBlazorDialogParameters.GetEditItemDialogParameters<OspedaleEditDialog>(item.Id, Title, DataGridHelper.CancelText), "CancelModify");
-    //{
-    //    return OpenDialogAndRefreshAsync<OspedaleEditDialog>(() => MudBlazorDialogParameters
-    //        .GetEditItemDialogParameters<OspedaleEditDialog>(editDialogId: item.Id, title: Title, cancelText: CancelText), "CancelModify");
-    //}
-
-    //private async Task DeleteItemAsync(OspedaleDto item)
-    //{
-    //    var confirmed = await OpenDialogAndRefreshAsync<OspedaleDeleteDialog>(()
-    //        => MudBlazorDialogParameters.GetDeleteItemDialogParameters<OspedaleDeleteDialog>(item.Id, Title, item.NomeOspedale, CancelText, ConfirmText), "CancelDelete");
-
-    //    //if (confirmed)
-    //    //{
-    //    //    elements.Remove(item);
-    //    //}
-    //}
 
     private async Task DeleteItemAsync(OspedaleDto item) => OpenDialogAndRefreshAsync<OspedaleDeleteDialog>(()
         => MudBlazorDialogParameters.GetDeleteItemDialogParameters<OspedaleDeleteDialog>(item.Id, Title, item.NomeOspedale, DataGridHelper.CancelText, DataGridHelper.ConfirmText), "CancelDelete");

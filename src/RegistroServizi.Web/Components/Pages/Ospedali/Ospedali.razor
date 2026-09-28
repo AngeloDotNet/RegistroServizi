@@ -3,8 +3,6 @@
 @inject IStringLocalizer<SharedResource> Localizer
 @inject IOptions<MudBlazorDataGridOptions> DataGridOptions
 
-@*<TextPageTitle Title="@Localizer["TitleHospitals"]" />
-<TextPageHeader Title="@Localizer["TitleHospitals"]" SubTitle="@Localizer["SubTitleHospitals"]" />*@
 <TextPageTitle Title="@Localizer["TitleHospitals"]" SubTitle="@Localizer["SubTitleHospitals"]" />
 
 <MudPaper Class="pa-4 mb-4">
@@ -21,10 +19,6 @@ else
     <MudDataGrid T="OspedaleDto" Items="@elements" SortMode="@DataGridOptions.Value.SortMode" Bordered="@DataGridOptions.Value.Bordered"
                     Dense="@DataGridOptions.Value.Dense" Hover="@DataGridOptions.Value.Hover">
         <ToolBarContent>
-            @*<MudSpacer />
-            <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
-                <DataGridActionsButton ActionCallback="CreateItemAsync" Label="@Localizer["Add"]" Icon="@Icons.Material.Filled.Add" ColorButton="Color.Success" />
-            </MudButtonGroup>*@
             <DataGridActionsToolbar ActionCallback="CreateItemAsync" Label="@Localizer["Add"]" Icon="@Icons.Material.Filled.Add" />
         </ToolBarContent>
         <ColGroup>
@@ -44,10 +38,6 @@ else
             
             <TemplateColumn CellClass="d-flex justify-end">
                 <CellTemplate>
-                    @* <MudStack Row Style="width: 250px" Justify="Justify.Center">
-                        <DataGridActionsButton ActionCallback="() => EditItemAsync(context.Item)" Label="@Localizer["Edit"]" Icon="@Icons.Material.Filled.Edit" ColorButton="Color.Warning" />
-                        <DataGridActionsButton ActionCallback="() => DeleteItemAsync(context.Item)" Label="@Localizer["Delete"]" Icon="@Icons.Material.Filled.Delete" ColorButton="Color.Error" />
-                    </MudStack> *@
                     <DataGridActionsColumns ActionEditCallback="() => EditItemAsync(context.Item)"
                         ActionDeleteCallback="() => DeleteItemAsync(context.Item)"
                         LabelEdit="@Localizer["Edit"]"
@@ -60,8 +50,6 @@ else
             </TemplateColumn>
         </Columns>
         <PagerContent>
-            @* @if (elements.Count >= 0)
-            { *@
             <DataGridPager TItem="OspedaleDto"
                 DataGridOptions="@DataGridOptions.Value"
                 PageSizeSelector="true"
@@ -70,7 +58,6 @@ else
                 RowsPerPageString="@DataGridHelper.RowsPerPageString"
                 InfoFormat="@DataGridHelper.RowsPerPageInfoFormat"
                 />
-            @* } *@
         </PagerContent>
     </MudDataGrid>
 }

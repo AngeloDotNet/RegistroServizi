@@ -249,4 +249,10 @@
   <data name="SubTitleStations" xml:space="preserve">
     <value>Management of available charging stations</value>
   </data>
+  <data name="RowsPerPage" xml:space="preserve">
+    <value>Rows for page:</value>
+  </data>
+  <data name="RowsPerPageInfoFormat" xml:space="preserve">
+    <value>Rows: {0} - {1} of {2}</value>
+  </data>
 </root>

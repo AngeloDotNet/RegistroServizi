@@ -159,9 +159,6 @@
   <data name="EntityCreateSuccess" xml:space="preserve">
     <value>Entità creata con successo</value>
   </data>
-  <data name="ErrorOccurred" xml:space="preserve">
-    <value>Si è verificato un errore</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
@@ -248,5 +245,14 @@
   </data>
   <data name="SubTitleStations" xml:space="preserve">
     <value>Gestione delle colonnine disponibili</value>
+  </data>
+  <data name="RowsPerPage" xml:space="preserve">
+    <value>Righe per pagina:</value>
+  </data>
+  <data name="RowsPerPageInfoFormat" xml:space="preserve">
+    <value>Righe: {0} - {1} di {2}</value>
+  </data>
+  <data name="ErrorOccurred" xml:space="preserve">
+    <value>Si è verificato un errore</value>
   </data>
 </root>

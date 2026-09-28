@@ -14,6 +14,7 @@ global using RegistroServizi.Application.Interfaces.Services;
 global using RegistroServizi.Application.Options;
 global using RegistroServizi.Data;
 global using RegistroServizi.Data.Identity;
+global using RegistroServizi.Web.Common.Helpers;
 global using RegistroServizi.Web.Components;
 global using RegistroServizi.Web.Components.Account;
 global using RegistroServizi.Web.Configuration;

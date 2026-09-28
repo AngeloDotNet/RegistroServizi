@@ -30,22 +30,6 @@ public class Program
 
         builder.Services.AddRegistroServiziLocalization(builder.Configuration);
         builder.Services.AddRegistroServiziProxy(builder.Configuration);
-        //builder.Services.Configure<ForwardedHeadersOptions>(options =>
-        //{
-        //    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-        //    options.KnownIPNetworks.Clear();
-        //    options.KnownProxies.Clear();
-        //});
-
-        //builder.Services.AddHsts(options =>
-        //{
-        //    options.MaxAge = TimeSpan.FromDays(60);
-        //});
-
-        //builder.Services.AddAntiforgery(options =>
-        //{
-        //    options.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-        //});
 
         builder.Services.AddCascadingAuthenticationState();
         builder.Services.AddScoped<IdentityRedirectManager>();
@@ -56,44 +40,10 @@ public class Program
         builder.Services.AddRegistroServiziData(builder.Configuration);
         builder.Services.AddRegistroServiziAuth(builder.Configuration);
 
-        ////builder.Services.AddAuthentication(options =>
-        ////{
-        ////    options.DefaultScheme = IdentityConstants.ApplicationScheme;
-        ////    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-        ////});
-
-        ////builder.Services.ConfigureApplicationCookie(options =>
-        ////{
-        ////    options.Cookie.HttpOnly = true;
-        ////    options.Cookie.SameSite = SameSiteMode.Lax;
-        ////    options.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-        ////});
-
-        ////var identityConfig = builder.Configuration.GetSection("Identity");
-
-        //////builder.Services.AddRegistroServiziData(builder.Configuration);
-        ////builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-        ////{
-        ////    options.SignIn.RequireConfirmedAccount = identityConfig.GetValue("RequireConfirmedAccount", false);
-        ////    options.Lockout.AllowedForNewUsers = identityConfig.GetValue("AllowedForNewUsers", true);
-        ////    options.Lockout.MaxFailedAccessAttempts = identityConfig.GetValue("MaxFailedAccessAttempts", 5);
-        ////    options.Lockout.DefaultLockoutTimeSpan = identityConfig.GetValue("DefaultLockoutTimeSpan", TimeSpan.FromMinutes(15));
-        ////    options.Password.RequiredLength = identityConfig.GetValue("Password:RequiredLength", 10);
-        ////    options.Stores.SchemaVersion = IdentitySchemaVersions.Version3;
-        ////})
-        ////.AddEntityFrameworkStores<RegistroServiziDbContext>()
-        ////.AddSignInManager()
-        ////.AddDefaultTokenProviders();
-
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
         builder.Services.AddConfigurationOptions(builder.Configuration);
-        //builder.Services.ConfigureAndValidate<ApplicazioneOptions>(builder.Configuration, nameof(ApplicazioneOptions));
-        //builder.Services.ConfigureAndValidate<AdminUserOptions>(builder.Configuration, nameof(AdminUserOptions));
-
-        //builder.Services.ConfigureAndValidate<AssociazioneOptions>(builder.Configuration, nameof(AssociazioneOptions));
-        //builder.Services.ConfigureAndValidate<MudBlazorDataGridOptions>(builder.Configuration, MudBlazorDataGridOptions.SectionName);
 
         var app = builder.Build();
 

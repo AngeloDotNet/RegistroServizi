@@ -3,41 +3,37 @@
 @inject IStringLocalizer<SharedResource> Localizer
 @inject IOptions<MudBlazorDataGridOptions> DataGridOptions
 
-@* <PageTitle>@Localizer["TitleHospitals"] · Registro Servizi</PageTitle> *@
-<TextPageTitle Title="@Localizer["TitleHospitals"]" />
-
-@* <div class="section-header">
-    <div>
-        <h1 class="section-title">@Localizer["TitleHospitals"]</h1>
-        <p class="section-subtitle">@Localizer["SubTitleHospitals"]</p>
-    </div>
-</div> *@
-<TextPageHeader Title="@Localizer["TitleHospitals"]" SubTitle="@Localizer["SubTitleHospitals"]" />
+@*<TextPageTitle Title="@Localizer["TitleHospitals"]" />
+<TextPageHeader Title="@Localizer["TitleHospitals"]" SubTitle="@Localizer["SubTitleHospitals"]" />*@
+<TextPageTitle Title="@Localizer["TitleHospitals"]" SubTitle="@Localizer["SubTitleHospitals"]" />
 
 <MudPaper Class="pa-4 mb-4">
 @if (isLoading)
 {
-    <MudProgressLinear Indeterminate="true" />
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
 }
 else if (elements.Count == 0)
 {
-    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@Localizer["NoHospitalsFound"]</MudAlert>
+    <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">@Localizer["NoHospitalsFound"]</MudAlert>
 }
 else
 {
-    <MudDataGrid T="OspedaleDto"
-                Items="@elements"
-                SortMode="@DataGridOptions.Value.SortMode"
-                Bordered="@DataGridOptions.Value.Bordered"
-                Dense="@DataGridOptions.Value.Dense"
-                Hover="@DataGridOptions.Value.Hover">
+    <MudDataGrid T="OspedaleDto" Items="@elements" SortMode="@DataGridOptions.Value.SortMode" Bordered="@DataGridOptions.Value.Bordered"
+                    Dense="@DataGridOptions.Value.Dense" Hover="@DataGridOptions.Value.Hover">
         <ToolBarContent>
-            <MudSpacer />
+            @*<MudSpacer />
             <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
-                @*<MudButton StartIcon="@Icons.Material.Filled.Add" @onclick="CreateItemAsync" Variant="Variant.Filled" Color="Color.Primary">@Localizer["Add"]</MudButton>*@
-                <DataGridActionsButton ActionCallback="CreateItemAsync" Label="@Localizer["Add"]" Icon="@Icons.Material.Filled.Add" ColorButton="Color.Primary" />
-            </MudButtonGroup>
+                <DataGridActionsButton ActionCallback="CreateItemAsync" Label="@Localizer["Add"]" Icon="@Icons.Material.Filled.Add" ColorButton="Color.Success" />
+            </MudButtonGroup>*@
+            <DataGridActionsToolbar ActionCallback="CreateItemAsync" Label="@Localizer["Add"]" Icon="@Icons.Material.Filled.Add" />
         </ToolBarContent>
+        <ColGroup>
+            <col style="width: 30%;" />
+            <col style="width: 30%;" />
+            <col style="width: 30%;" />
+            <col style="width: 5%;" />
+            <col style="width: 5%;" />
+        </ColGroup>
         <Columns>
             <PropertyColumn Property="x => x.Id" Title="Id" Hidden="true" />
             <PropertyColumn Property="x => x.NomeOspedale" Title="@Localizer["Hospital"]" />
@@ -48,26 +44,33 @@ else
             
             <TemplateColumn CellClass="d-flex justify-end">
                 <CellTemplate>
-                    <MudStack Row Style="width: 250px" Justify="Justify.Center">
-                        @*<MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Edit" Variant="@Variant.Filled" Color="@Color.Warning" @onclick="() => EditItemAsync(context.Item)">@Localizer["Edit"]</MudButton>
-                        <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" Variant="@Variant.Filled" Color="@Color.Error" @onclick="() => DeleteItemAsync(context.Item)">@Localizer["Delete"]</MudButton>*@
+                    @* <MudStack Row Style="width: 250px" Justify="Justify.Center">
                         <DataGridActionsButton ActionCallback="() => EditItemAsync(context.Item)" Label="@Localizer["Edit"]" Icon="@Icons.Material.Filled.Edit" ColorButton="Color.Warning" />
                         <DataGridActionsButton ActionCallback="() => DeleteItemAsync(context.Item)" Label="@Localizer["Delete"]" Icon="@Icons.Material.Filled.Delete" ColorButton="Color.Error" />
-                    </MudStack>
+                    </MudStack> *@
+                    <DataGridActionsColumns ActionEditCallback="() => EditItemAsync(context.Item)"
+                        ActionDeleteCallback="() => DeleteItemAsync(context.Item)"
+                        LabelEdit="@Localizer["Edit"]"
+                        LabelDelete="@Localizer["Delete"]"
+                        IconEdit="@Icons.Material.Filled.Edit"
+                        IconDelete="@Icons.Material.Filled.Delete"
+                        ColorButtonEdit="Color.Warning"
+                        ColorButtonDelete="Color.Error" />
                 </CellTemplate>
             </TemplateColumn>
         </Columns>
         <PagerContent>
-            @if (elements.Count >= 10)
-            {
-                <DataGridPager TItem="OspedaleDto"
-                    DataGridOptions="@DataGridOptions.Value"
-                    RowsPerPageString="Righe per pagina:"
-                    InfoFormat="Righe {first_item} - {last_item} di {all_items}"
-                    PageSizeSelector="true"
-                    ShowNavigation="true"
-                    ShowPageNumber="false" />
-            }
+            @* @if (elements.Count >= 0)
+            { *@
+            <DataGridPager TItem="OspedaleDto"
+                DataGridOptions="@DataGridOptions.Value"
+                PageSizeSelector="true"
+                ShowNavigation="true"
+                ShowPageNumber="true"
+                RowsPerPageString="@DataGridHelper.RowsPerPageString"
+                InfoFormat="@DataGridHelper.RowsPerPageInfoFormat"
+                />
+            @* } *@
         </PagerContent>
     </MudDataGrid>
 }

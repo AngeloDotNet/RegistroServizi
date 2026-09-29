@@ -6,63 +6,70 @@
 <MudDialog>
     <TitleContent>
         <div class="d-flex align-center gap-2">
-            <MudIcon Icon="@(EditDialogId.HasValue ? @Icons.Material.Filled.Edit : @Icons.Material.Filled.AddCircle)" Color="@(EditDialogId.HasValue ? @Color.Warning : Color.Success)" />
+            <MudIcon Icon="@(EditDialogId.HasValue ? @Icons.Material.Filled.Edit : @Icons.Material.Filled.AddCircle)" Color="@(EditDialogId.HasValue ? @Color.Warning : @Color.Success)" />
             <MudText Typo="Typo.h6">@(EditDialogId.HasValue ? $"{Localizer["Edit"]} {Title}" : $"{Localizer["New"]} {Title}")</MudText>
         </div>
     </TitleContent>
     <DialogContent>
+        <MudAlert Severity="Severity.Warning" Class="mb-4">@Localizer["AllRequiredFields"]</MudAlert>
         <MudForm @ref="form" @bind-IsValid="isValid">
             <MudGrid>
                 <MudItem xs="12">
                     <TextFieldString @bind-BindValueText="nomeOspedale"
-                                        LabelText="Nome Ospedale"
+                                        LabelText="@Localizer["HospitalName"]"
+                                        PlaceholderText="Inserire il nome dell'ospedale"
                                         IsRequired="true"
                                         HelperText="Inserire il nome dell'ospedale"
-                                        RequiredErrorText="Nome Ospedale è obbligatorio" />
+                                        RequiredErrorText="@Localizer["MandatoryField"]" />
                 </MudItem>
 
                 <MudItem sm="6">
                     <TextFieldString @bind-BindValueText="strada"
-                                        LabelText="Indirizzo"
+                                        LabelText="@Localizer["Address"]"
+                                        PlaceholderText="Inserire l'indirizzo"
                                         IsRequired="true"
                                         HelperText="Inserire l'indirizzo'"
-                                        RequiredErrorText="Indirizzo è obbligatorio" />
+                                        RequiredErrorText="@Localizer["MandatoryField"]" />
                 </MudItem>
 
                 <MudItem sm="6">
                     <TextFieldString @bind-BindValueText="citta"
-                                        LabelText="Comune"
+                                        LabelText="@Localizer["Municipality"]"
+                                        PlaceholderText="Inserire il comune"
                                         IsRequired="true"
                                         HelperText="Inserire il comune"
-                                        RequiredErrorText="Comune è obbligatorio" />
+                                        RequiredErrorText="@Localizer["MandatoryField"]" />
                 </MudItem>
 
                 <MudItem sm="6">
                     <TextFieldString @bind-BindValueText="provincia"
-                                        LabelText="Provincia"
+                                        LabelText="@Localizer["ProvinceAbbreviation"]"
+                                        PlaceholderText="Inserire la provincia"
                                         IsRequired="true"
-                                        HelperText="Inserire la provincia (sigla)"
+                                        HelperText="Inserire la provincia"
                                         MaxLengthText="2"
-                                        RequiredErrorText="La provincia (sigla) è obbligatorio" />
+                                        RequiredErrorText="@Localizer["MandatoryField"]" />
                 </MudItem>
 
                 <MudItem sm="6">
                     <TextFieldNumber TValue="int?"
                                         @bind-BindValueText="cap"
                                         LabelText="@Localizer["Postcode"]"
+                                        PlaceholderText="Inserire il cap"
                                         IsRequired="true"
                                         HelperText="@Localizer["PostcodeHelper"]"
                                         IsMasked="true"
                                         DefaultMask="00000"
-                                        RequiredErrorText="@Localizer["PostcodeRequired"]" />
+                                        RequiredErrorText="@Localizer["MandatoryField"]" />
                 </MudItem>
             </MudGrid>
         </MudForm>
     </DialogContent>
     <DialogActions>
         <DialogActionsButtons BtnCancelText="@BtnCancelText"
+            BtnCancelIcon="@MudblazorPresets.IconCancel"
             BtnSubmitText="@(EditDialogId.HasValue ? Localizer["Save"] : $"{Localizer["Create"]} {Title}")"
-            BtnSubmitIcon="@Icons.Material.Filled.Save"
+            BtnSubmitIcon="@(EditDialogId.HasValue ? @MudblazorPresets.IconSave : @MudblazorPresets.IconCreate)"
             BtnCancelColor="@BtnCancelColor"
             BtnConfirmColor="@BtnConfirmColor"
             OnCancel="Cancel"

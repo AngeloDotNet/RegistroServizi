@@ -8,6 +8,7 @@ public partial class TextFieldNumber<TValue>
     [Parameter] public string HelperText { get; set; } = string.Empty;
     [Parameter] public string RequiredErrorText { get; set; } = string.Empty;
     [Parameter] public string DefaultMask { get; set; } = string.Empty;
+    [Parameter] public string PlaceholderText { get; set; } = string.Empty;
 
     [Parameter] public TValue BindValueText { get; set; } = default!;
     [Parameter] public EventCallback<TValue> BindValueTextChanged { get; set; }

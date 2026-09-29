@@ -13,7 +13,9 @@
                         HelperTextOnFocus="true"
                         Variant="Variant.Outlined"
                         Margin="Margin.Dense"
-                        Mask="@(new PatternMask(DefaultMask))" />
+                        Mask="@(new PatternMask(DefaultMask))"
+                        Placeholder="@PlaceholderText"
+                        ShrinkLabel="true" />
 }
 else
 {
@@ -27,5 +29,7 @@ else
                         HelperText="@HelperText"
                         HelperTextOnFocus="true"
                         Variant="Variant.Outlined"
-                        Margin="Margin.Dense" />
+                        Margin="Margin.Dense"
+                        Placeholder="@PlaceholderText"
+                        ShrinkLabel="true" />
 }

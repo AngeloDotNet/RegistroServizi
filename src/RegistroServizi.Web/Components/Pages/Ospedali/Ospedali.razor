@@ -1,64 +1,45 @@
 ﻿@page "/ospedali"
 @rendermode InteractiveServer
-@inject IStringLocalizer<SharedResource> Localizer
-@inject IOptions<MudBlazorDataGridOptions> DataGridOptions
+@inherits PageBaseHelper
+@* @inject IStringLocalizer<SharedResource> Localizer *@
 
 <TextPageTitle Title="@Localizer["TitleHospitals"]" SubTitle="@Localizer["SubTitleHospitals"]" />
 
 <MudPaper Class="pa-4 mb-4">
-@if (isLoading)
+@* @if (isLoading)
 {
     <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
 }
 else if (elements.Count == 0)
 {
     <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">@Localizer["NoHospitalsFound"]</MudAlert>
+} *@
+
+@if (isLoading || elements.Count == 0)
+{
+    <ProgressNoData IsLoading="@isLoading" ElementsCount="@elements.Count" CountMessage="@Localizer["NoHospitalsFound"]" />
 }
 else
 {
-    <MudDataGrid T="OspedaleDto" Items="@elements" SortMode="@DataGridOptions.Value.SortMode" Bordered="@DataGridOptions.Value.Bordered"
-                    Dense="@DataGridOptions.Value.Dense" Hover="@DataGridOptions.Value.Hover">
-        <ToolBarContent>
-            <DataGridActionsToolbar ActionCallback="CreateItemAsync" Label="@Localizer["Add"]" Icon="@Icons.Material.Filled.Add" />
-        </ToolBarContent>
-        <ColGroup>
-            <col style="width: 30%;" />
-            <col style="width: 30%;" />
-            <col style="width: 30%;" />
-            <col style="width: 5%;" />
-            <col style="width: 5%;" />
-        </ColGroup>
-        <Columns>
-            <PropertyColumn Property="x => x.Id" Title="Id" Hidden="true" />
-            <PropertyColumn Property="x => x.NomeOspedale" Title="@Localizer["Hospital"]" />
-            <PropertyColumn Property="x => x.Indirizzo.Strada" Title="@Localizer["Address"]" />
-            <PropertyColumn Property="x => x.Indirizzo.Citta" Title="@Localizer["City"]" />
-            <PropertyColumn Property="x => x.Indirizzo.Provincia" Title="@Localizer["Province"]" />
-            <PropertyColumn Property="x => x.Indirizzo.Cap" Title="@Localizer["PostcodeAbbreviation"]" />
-            
-            <TemplateColumn CellClass="d-flex justify-end">
-                <CellTemplate>
-                    <DataGridActionsColumns ActionEditCallback="() => EditItemAsync(context.Item)"
-                        ActionDeleteCallback="() => DeleteItemAsync(context.Item)"
-                        LabelEdit="@Localizer["Edit"]"
-                        LabelDelete="@Localizer["Delete"]"
-                        IconEdit="@Icons.Material.Filled.Edit"
-                        IconDelete="@Icons.Material.Filled.Delete"
-                        ColorButtonEdit="Color.Warning"
-                        ColorButtonDelete="Color.Error" />
-                </CellTemplate>
-            </TemplateColumn>
-        </Columns>
-        <PagerContent>
-            <DataGridPager TItem="OspedaleDto"
-                DataGridOptions="@DataGridOptions.Value"
-                PageSizeSelector="true"
-                ShowNavigation="true"
-                ShowPageNumber="true"
-                RowsPerPageString="@DataGridHelper.RowsPerPageString"
-                InfoFormat="@DataGridHelper.RowsPerPageInfoFormat"
-                />
-        </PagerContent>
-    </MudDataGrid>
+    @* <DataGridGeneric T="OspedaleDto"
+                        Items="@elements"
+                        SortMode="@DataGridOptions.Value.SortMode"
+                        Bordered="@DataGridOptions.Value.Bordered"
+                        Dense="@DataGridOptions.Value.Dense"
+                        Hover="@DataGridOptions.Value.Hover"
+                        ActionCallback="@(() => CreateItemAsync(Title))"
+                        ActionEditCallback="@((context) => EditItemAsync(Title, context.Id, context.NomeOspedale))"
+                        ActionDeleteCallback="@((context) => DeleteItemAsync(Title, context.Id, context.NomeOspedale))"
+                        Columns="@columnDefinition"
+                        LayoutWidths="@columnWidths">
+    </DataGridGeneric> *@
+    <DataGridGeneric T="OspedaleDto"
+                        Items="@elements"
+                        ActionCallback="@(() => CreateItemAsync(Title))"
+                        ActionEditCallback="@((context) => EditItemAsync(Title, context.Id, context.NomeOspedale))"
+                        ActionDeleteCallback="@((context) => DeleteItemAsync(Title, context.Id, context.NomeOspedale))"
+                        Columns="@columnDefinition"
+                        LayoutWidths="@columnWidths">
+    </DataGridGeneric>
 }
 </MudPaper>

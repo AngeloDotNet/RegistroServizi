@@ -1,0 +1,14 @@
+﻿@if (IsLoading)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+}
+else if (ElementsCount == 0)
+{
+    <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">@CountMessage</MudAlert>
+}
+
+@code {
+    // [Parameter] public bool IsLoading { get; set; }
+    // [Parameter] public int ElementsCount { get; set; }
+    // [Parameter] public string CountMessage { get; set; } = string.Empty;
+}

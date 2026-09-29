@@ -1,0 +1,102 @@
+﻿@typeparam T
+@inject IStringLocalizer<SharedResource> Localizer
+@inject IOptions<MudBlazorDataGridOptions> DataGridOptions
+@inject DataGridHelper DataGridHelper
+
+<MudDataGrid T="@T"
+                Items="@Items"
+                SortMode="@DataGridOptions.Value.SortMode"
+                Bordered="@DataGridOptions.Value.Bordered"
+                Dense="@DataGridOptions.Value.Dense"
+                Hover="@DataGridOptions.Value.Hover"
+                RowsPerPage="@DataGridOptions.Value.RowsPerPage">
+
+    <!-- Toolbar content -->
+    <ToolBarContent>
+        @* <DataGridActionsToolbar ActionCallback="ActionCallback" Label="@Localizer["Add"]" Icon="@Icons.Material.Filled.Add" /> *@
+        <MudSpacer />
+        <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
+            <MudButton StartIcon="@Icons.Material.Filled.Add" @onclick="ActionCallback" Variant="Variant.Filled">@Localizer["Add"]</MudButton>
+        </MudButtonGroup>
+    </ToolBarContent>
+
+    <!-- ColGroup generato dinamicamente basato sul layoutWidths -->
+    <ColGroup>
+        @foreach (var width in LayoutWidths)
+        {
+            <col style="@width" />
+        }
+    </ColGroup>
+
+    <!-- Colonne dinamiche generate dinamicamente -->
+    <Columns>
+        @foreach (var colDef in Columns)
+        {
+            <PropertyColumn Property="@colDef.Property" Title="@colDef.Title" Hidden="colDef.IsHidden" />
+        }
+
+        <TemplateColumn CellClass="d-flex justify-end">
+            <CellTemplate>
+                @* <DataGridActionsColumns ActionEditCallback="() => ActionEditCallback.InvokeAsync(context.Item)"
+                                        ActionDeleteCallback="() => ActionDeleteCallback.InvokeAsync(context.Item)"
+                                        LabelEdit="@Localizer["Edit"]"
+                                        LabelDelete="@Localizer["Delete"]"
+                                        IconEdit="@MudblazorPresets.IconEdit"
+                                        IconDelete="@MudblazorPresets.IconDelete"
+                                        ColorButtonEdit="Color.Warning"
+                                        ColorButtonDelete="Color.Error" /> *@
+
+                <MudStack Row Style="width: 250px" Justify="Justify.Center">
+                    <MudButton StartIcon="@MudblazorPresets.IconEdit" @onclick="() => ActionEditCallback.InvokeAsync(context.Item)" Variant="Variant.Filled" Color="@Color.Warning">@Localizer["Edit"]</MudButton>
+                    <MudButton StartIcon="@MudblazorPresets.IconDelete" @onclick="() => ActionDeleteCallback.InvokeAsync(context.Item)" Variant="Variant.Filled" Color="@Color.Error">@Localizer["Delete"]</MudButton>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+
+    <PagerContent>
+        @* <DataGridPager TItem="@T"
+                        DataGridOptions="@DataGridOptions.Value"
+                        PageSizeSelector="true"
+                        ShowNavigation="true"
+                        ShowPageNumber="true"
+                        RowsPerPageString="@DataGridHelper.RowsPerPageString"
+                        InfoFormat="@DataGridHelper.RowsPerPageInfoFormat" /> *@
+        <MudDataGridPager T="@T"
+                            PageSizeOptions="@DataGridOptions.Value.PageSize"
+                            PageSizeSelector="true"
+                            ShowNavigation="true"
+                            ShowPageNumber="true"
+                            RowsPerPageString="@DataGridHelper.RowsPerPageString"
+                            InfoFormat="@DataGridHelper.RowsPerPageInfoFormat" />
+    </PagerContent>
+</MudDataGrid>
+
+@code {
+    // // --- PARAMETRI DI INPUT (Da passare dal componente padre) ---
+    // [Parameter] public IEnumerable<T> Items { get; set; } = Enumerable.Empty<T>();
+    // [Parameter] public SortMode SortMode { get; set; } = SortMode.None;
+    // [Parameter] public bool Bordered { get; set; } = true;
+    // [Parameter] public bool Dense { get; set; } = false;
+    // [Parameter] public bool Hover { get; set; } = false;
+
+    // // Definizione del Layout (per il ColGroup)
+    // [Parameter] public List<string> LayoutWidths { get; set; } = new List<string>();
+
+    // // Definizione delle Colonne (per le PropertyColumn)
+    // [Parameter] public List<ColumnDefinition> Columns { get; set; } = new List<ColumnDefinition>();
+
+    // // Callbacks per le azioni CRUD
+    // [Parameter] public EventCallback ActionCallback { get; set; }
+    // [Parameter] public EventCallback<T> ActionEditCallback { get; set; }
+    // [Parameter] public EventCallback<T> ActionDeleteCallback { get; set; }
+
+
+    // // --- STRUTTURE INTERNE ---
+    // public class ColumnDefinition
+    // {
+    //     // store an expression that selects the property from T
+    //     public Expression<Func<T, object>> Property { get; set; }
+    //     public string Title { get; set; } = string.Empty; // Etichetta visuale
+    // }
+}

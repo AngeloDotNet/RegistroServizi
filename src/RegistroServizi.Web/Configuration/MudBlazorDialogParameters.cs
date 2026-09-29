@@ -44,7 +44,7 @@ internal static class MudBlazorDialogParameters
             { "Title", title },
             { "BtnCancelText", cancelText },
             { "BtnCancelColor", Color.Default },
-            { "BtnConfirmColor", Color.Warning } // Rimosso il Primary per seguire la logica precedente (che usava Warning)
+            { "BtnConfirmColor", Color.Warning }
         };
 
     /// <summary>

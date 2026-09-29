@@ -8,5 +8,5 @@ public partial class ServiceCard
 
     [Parameter] public EventCallback OnClick { get; set; }
 
-    private async Task HandleClick() => await OnClick.InvokeAsync();
+    private async Task HandleClickAsync() => await OnClick.InvokeAsync();
 }

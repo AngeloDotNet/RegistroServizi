@@ -23,6 +23,11 @@ public static class MudblazorPresets
     public static string IconDelete => Icons.Material.Filled.Delete;
 
     /// <summary>
+    /// Gets the icon used for secure delete actions.
+    /// </summary>
+    public static string IconDeleteSecure => Icons.Material.Filled.DeleteForever;
+
+    /// <summary>
     /// Gets the icon used for save actions.
     /// </summary>
     public static string IconSave => Icons.Material.Filled.Save;

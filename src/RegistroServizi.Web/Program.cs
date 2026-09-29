@@ -1,6 +1,5 @@
 using MudBlazor;
 using MudBlazor.Services;
-using RegistroServizi.Web.Common.Helpers;
 
 namespace RegistroServizi.Web;
 
@@ -28,8 +27,11 @@ public class Program
             config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
         });
 
+        var isDevelopment = builder.Configuration.GetValue("Environment:IsDevelopment", false);
+        var identityConfig = builder.Configuration.GetSection("Identity");
+
         builder.Services.AddRegistroServiziLocalization(builder.Configuration);
-        builder.Services.AddRegistroServiziProxy(builder.Configuration);
+        builder.Services.AddRegistroServiziProxy(builder.Configuration, isDevelopment);
 
         builder.Services.AddCascadingAuthenticationState();
         builder.Services.AddScoped<IdentityRedirectManager>();
@@ -38,7 +40,7 @@ public class Program
         builder.Services.AddScoped<DataGridHelper>();
 
         builder.Services.AddRegistroServiziData(builder.Configuration);
-        builder.Services.AddRegistroServiziAuth(builder.Configuration);
+        builder.Services.AddRegistroServiziAuth(builder.Configuration, isDevelopment, identityConfig);
 
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();

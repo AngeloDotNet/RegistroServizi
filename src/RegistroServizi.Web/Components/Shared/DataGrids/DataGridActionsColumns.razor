@@ -1,0 +1,24 @@
+﻿@* <MudStack Row Style="width: 250px" Justify="Justify.Center">
+    <DataGridActionsButton ActionCallback="() => EditItemAsync(context.Item)" Label="@Localizer["Edit"]" Icon="@Icons.Material.Filled.Edit" ColorButton="Color.Warning" />
+    <DataGridActionsButton ActionCallback="() => DeleteItemAsync(context.Item)" Label="@Localizer["Delete"]" Icon="@Icons.Material.Filled.Delete" ColorButton="Color.Error" />
+</MudStack> *@
+<MudStack Row Style="width: 250px" Justify="Justify.Center">
+    @* <DataGridActionsButton ActionCallback="() => EditItemAsync(context.Item)" Label="@Localizer["Edit"]" Icon="@Icons.Material.Filled.Edit" ColorButton="Color.Warning" />
+    <DataGridActionsButton ActionCallback="() => DeleteItemAsync(context.Item)" Label="@Localizer["Delete"]" Icon="@Icons.Material.Filled.Delete" ColorButton="Color.Error" /> *@
+        <MudButton StartIcon="@IconEdit" @onclick="ActionEditCallback" Variant="Variant.Filled" Color="@ColorButtonEdit">@LabelEdit</MudButton>
+        <MudButton StartIcon="@IconDelete" @onclick="ActionDeleteCallback" Variant="Variant.Filled" Color="@ColorButtonDelete">@LabelDelete</MudButton>
+</MudStack>
+
+@code {
+    // [Parameter] public EventCallback ActionEditCallback { get; set; }
+    // [Parameter] public EventCallback ActionDeleteCallback { get; set; }
+
+    // [Parameter] public string LabelEdit { get; set; } = string.Empty;
+    // [Parameter] public string LabelDelete { get; set; } = string.Empty;
+
+    // [Parameter] public string IconEdit { get; set; } = string.Empty;
+    // [Parameter] public string IconDelete { get; set; } = string.Empty;
+    
+    // [Parameter] public Color ColorButtonEdit { get; set; }
+    // [Parameter] public Color ColorButtonDelete { get; set; }
+}

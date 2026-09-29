@@ -256,7 +256,7 @@
     <value>Mandatory field</value>
   </data>
   <data name="ProvinceAbbreviation" xml:space="preserve">
-    <value>Province (Abbreviation)</value>
+    <value>Province (abbreviation)</value>
   </data>
   <data name="Municipality" xml:space="preserve">
     <value>Municipality</value>

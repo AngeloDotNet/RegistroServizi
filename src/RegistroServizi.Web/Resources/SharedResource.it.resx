@@ -256,7 +256,7 @@
     <value>Campo obbligatorio</value>
   </data>
   <data name="ProvinceAbbreviation" xml:space="preserve">
-    <value>Provincia (Sigla)</value>
+    <value>Provincia (sigla)</value>
   </data>
   <data name="Municipality" xml:space="preserve">
     <value>Comune</value>

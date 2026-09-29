@@ -138,9 +138,6 @@
   <data name="Postcode" xml:space="preserve">
     <value>Postal code</value>
   </data>
-  <data name="PostcodeRequired" xml:space="preserve">
-    <value>Postal code is required</value>
-  </data>
   <data name="PostcodeHelper" xml:space="preserve">
     <value>Enter the postal code</value>
   </data>
@@ -151,7 +148,7 @@
     <value>Error loading the ID</value>
   </data>
   <data name="AllRequiredFields" xml:space="preserve">
-    <value>All required fields</value>
+    <value>Fields marked with an asterisk (*) are mandatory</value>
   </data>
   <data name="EntityUpdateSuccess" xml:space="preserve">
     <value>Entity successfully updated</value>
@@ -254,5 +251,17 @@
   </data>
   <data name="RowsPerPageInfoFormat" xml:space="preserve">
     <value>Rows: {0} - {1} of {2}</value>
+  </data>
+  <data name="MandatoryField" xml:space="preserve">
+    <value>Mandatory field</value>
+  </data>
+  <data name="ProvinceAbbreviation" xml:space="preserve">
+    <value>Province (Abbreviation)</value>
+  </data>
+  <data name="Municipality" xml:space="preserve">
+    <value>Municipality</value>
+  </data>
+  <data name="HospitalName" xml:space="preserve">
+    <value>Hospital Name</value>
   </data>
 </root>

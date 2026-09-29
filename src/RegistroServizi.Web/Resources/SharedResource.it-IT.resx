@@ -136,10 +136,7 @@
     <value>Cancella</value>
   </data>
   <data name="Postcode" xml:space="preserve">
-    <value>Codice avviamento postale</value>
-  </data>
-  <data name="PostcodeRequired" xml:space="preserve">
-    <value>Codice avviamento postale è obbligatorio</value>
+    <value>Codice avviamento postale (cap)</value>
   </data>
   <data name="PostcodeHelper" xml:space="preserve">
     <value>Inserire il codice avviamento postale</value>
@@ -151,7 +148,7 @@
     <value>Errore durante il caricamento dell'ID</value>
   </data>
   <data name="AllRequiredFields" xml:space="preserve">
-    <value>Tutti i campi obbligatori</value>
+    <value>I campi contrassegnati con asterisco (*) sono obbligatori</value>
   </data>
   <data name="EntityUpdateSuccess" xml:space="preserve">
     <value>Entità aggiornata con successo</value>
@@ -254,5 +251,17 @@
   </data>
   <data name="ErrorOccurred" xml:space="preserve">
     <value>Si è verificato un errore</value>
+  </data>
+  <data name="MandatoryField" xml:space="preserve">
+    <value>Campo obbligatorio</value>
+  </data>
+  <data name="ProvinceAbbreviation" xml:space="preserve">
+    <value>Provincia (Sigla)</value>
+  </data>
+  <data name="Municipality" xml:space="preserve">
+    <value>Comune</value>
+  </data>
+  <data name="HospitalName" xml:space="preserve">
+    <value>Nome Ospedale</value>
   </data>
 </root>

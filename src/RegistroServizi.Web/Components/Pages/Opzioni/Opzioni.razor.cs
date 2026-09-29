@@ -11,7 +11,6 @@ public partial class Opzioni
     /// <summary>
     /// Navigates to the '/colonnine' route.
     /// </summary>
-    /// <remarks>Performs a programmatic navigation using NavigationManager to change the current
-    /// URI.</remarks>
+    /// <remarks>Performs a programmatic navigation using NavigationManager to change the current URI.</remarks>
     private void ViewColonnine() => navigationManager.NavigateTo("/colonnine");
 }

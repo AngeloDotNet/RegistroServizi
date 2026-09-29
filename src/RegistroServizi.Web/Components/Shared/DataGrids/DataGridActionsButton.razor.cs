@@ -1,15 +1,11 @@
-﻿using MudBlazor;
-
-namespace RegistroServizi.Web.Components.Shared.DataGrids;
+﻿namespace RegistroServizi.Web.Components.Shared.DataGrids;
 
 public partial class DataGridActionsButton
 {
-    [Parameter] public EventCallback ActionCallback { get; set; }
+    //[Parameter] public EventCallback ActionCallback { get; set; }
 
-    [Parameter] public string Label { get; set; } = string.Empty;
-    [Parameter] public string Icon { get; set; } = string.Empty;
+    //[Parameter] public string Label { get; set; } = string.Empty;
+    //[Parameter] public string Icon { get; set; } = string.Empty;
 
-    // [Parameter] public bool IsSmall { get; set; } = false;
-
-    [Parameter] public Color ColorButton { get; set; }
+    //[Parameter] public Color ColorButton { get; set; }
 }

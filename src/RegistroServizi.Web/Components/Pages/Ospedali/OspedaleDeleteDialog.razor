@@ -6,7 +6,8 @@
 <MudDialog>
     <TitleContent>
         <div class="d-flex align-center gap-2">
-            <MudIcon Icon="@Icons.Material.Filled.Delete" Color="@Color.Error" />
+            @* <MudIcon Icon="@Icons.Material.Filled.Delete" Color="@Color.Error" /> *@
+            <MudIcon Icon="@MudblazorPresets.IconDelete" Color="@Color.Error" Size="MudBlazor.Size.Medium" />
             <MudText Typo="Typo.h6">@($"{Localizer["Delete"]} {Title}")</MudText>
         </div>
     </TitleContent>
@@ -15,9 +16,18 @@
         <MudAlert Severity="Severity.Warning" Class="mt-4">@Localizer["CannotUndone"]</MudAlert>
     </DialogContent>
     <DialogActions>
-        <DialogActionsButtons BtnCancelText="@BtnCancelText"
+        @* <DialogActionsButtons BtnCancelText="@BtnCancelText"
+            BtnCancelIcon="@MudblazorPresets.IconCancel"
             BtnSubmitText="@($"{Localizer["Confirm"]}")"
-            BtnSubmitIcon="@Icons.Material.Filled.Check"
+            BtnSubmitIcon="@MudblazorPresets.IconCreate"
+            BtnCancelColor="@BtnCancelColor"
+            BtnConfirmColor="@BtnConfirmColor"
+            OnCancel="Cancel"
+            OnSubmit="SubmitForm" /> *@
+        <DialogActionsButtons BtnCancelText="@BtnCancelText"
+            BtnCancelIcon="@MudblazorPresets.IconCancel"
+            BtnSubmitText="@($"{Localizer["Confirm"]}")"
+            BtnSubmitIcon="@MudblazorPresets.IconDeleteSecure"
             BtnCancelColor="@BtnCancelColor"
             BtnConfirmColor="@BtnConfirmColor"
             OnCancel="Cancel"

@@ -6,6 +6,4 @@ public partial class DataGridActionsToolbar
 
     [Parameter] public string Label { get; set; } = string.Empty;
     [Parameter] public string Icon { get; set; } = string.Empty;
-
-    // [Parameter] public Color ColorButton { get; set; }
 }

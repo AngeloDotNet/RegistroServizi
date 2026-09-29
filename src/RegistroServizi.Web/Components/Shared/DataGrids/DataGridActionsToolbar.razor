@@ -1,15 +1,4 @@
 ﻿<MudSpacer />
 <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
-    @* <DataGridActionsButton ActionCallback="CreateItemAsync" Label="@Localizer["Add"]" Icon="@Icons.Material.Filled.Add" ColorButton="Color.Primary" />
-    <MudButton StartIcon="@Icon" @onclick="ActionCallback" Variant="Variant.Filled" Color="@ColorButton">@Label</MudButton> *@
     <MudButton StartIcon="@Icon" @onclick="ActionCallback" Variant="Variant.Filled">@Label</MudButton>
 </MudButtonGroup>
-
-@code {
-    // [Parameter] public EventCallback ActionCallback { get; set; }
-
-    // [Parameter] public string Label { get; set; } = string.Empty;
-    // [Parameter] public string Icon { get; set; } = string.Empty;
-    
-    // // [Parameter] public Color ColorButton { get; set; }
-}

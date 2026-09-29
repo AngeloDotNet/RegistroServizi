@@ -1,38 +1,16 @@
 ﻿@page "/ospedali"
 @rendermode InteractiveServer
 @inherits PageBaseHelper
-@* @inject IStringLocalizer<SharedResource> Localizer *@
 
 <TextPageTitle Title="@Localizer["TitleHospitals"]" SubTitle="@Localizer["SubTitleHospitals"]" />
 
 <MudPaper Class="pa-4 mb-4">
-@* @if (isLoading)
-{
-    <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
-}
-else if (elements.Count == 0)
-{
-    <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Center">@Localizer["NoHospitalsFound"]</MudAlert>
-} *@
-
 @if (isLoading || elements.Count == 0)
 {
     <ProgressNoData IsLoading="@isLoading" ElementsCount="@elements.Count" CountMessage="@Localizer["NoHospitalsFound"]" />
 }
 else
 {
-    @* <DataGridGeneric T="OspedaleDto"
-                        Items="@elements"
-                        SortMode="@DataGridOptions.Value.SortMode"
-                        Bordered="@DataGridOptions.Value.Bordered"
-                        Dense="@DataGridOptions.Value.Dense"
-                        Hover="@DataGridOptions.Value.Hover"
-                        ActionCallback="@(() => CreateItemAsync(Title))"
-                        ActionEditCallback="@((context) => EditItemAsync(Title, context.Id, context.NomeOspedale))"
-                        ActionDeleteCallback="@((context) => DeleteItemAsync(Title, context.Id, context.NomeOspedale))"
-                        Columns="@columnDefinition"
-                        LayoutWidths="@columnWidths">
-    </DataGridGeneric> *@
     <DataGridGeneric T="OspedaleDto"
                         Items="@elements"
                         ActionCallback="@(() => CreateItemAsync(Title))"

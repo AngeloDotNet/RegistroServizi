@@ -1,15 +1,18 @@
 ﻿@page "/prezzi-servizi"
 @rendermode InteractiveServer
-@attribute [Authorize(Roles = nameof(Role.Manager))]
+@* @attribute [Authorize(Roles = nameof(Role.Manager))] *@
+@inject IStringLocalizer<SharedResource> Localizer
+@inject IOptions<MudBlazorDataGridOptions> DataGridOptions
 
-<PageTitle>Prezzi Servizi · Registro Servizi</PageTitle>
+<TextPageTitle Title="@Localizer["TitleServicePrices"]" SubTitle="@Localizer["SubTitleServicePrices"]" />
 
+@*<PageTitle>@Localizer["ServicePrices"] · Registro Servizi</PageTitle>
 <div class="section-header">
     <div>
-        <h1 class="section-title">Prezzi Servizi</h1>
-        <p class="section-subtitle">Gestione dei prezzi per ogni singola tipologia di servizio.</p>
+        <h1 class="section-title">@Localizer["TitleServicePrices"]</h1>
+        <p class="section-subtitle">@Localizer["SubTitleServicePrices"]</p>
     </div>
-</div>
+</div>*@
 
 <MudPaper Class="pa-4 mb-4">
         @if (isLoading)
@@ -18,31 +21,34 @@
         }
         else if (elements.Count == 0)
         {
-            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">
-                Nessun tipo di servizio e relativo prezzo disponibile al momento.
-            </MudAlert>
+            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@Localizer["NoServicePricesFound"]</MudAlert>
         }
         else
         {
-            <MudDataGrid @ref="dataGrid"
-                    T="PrezzoServizioDto"
+            <MudDataGrid T="PrezzoServizioDto"
                     Items="@elements"
-                    ReadOnly="false"
-                    EditMode="DataGridEditMode.Inline"
-                    EditTrigger="DataGridEditTrigger.Manual"
-                    SortMode="SortMode.None"
-                    StartedEditingItem="@StartedEditingItem"
-                    CanceledEditingItem="@CanceledEditingItem"
-                    CommittedItemChanges="@CommittedItemChangesAsync"
-                    Bordered="true"
-                    Dense="true"
-                    Hover="true">
-                    @* RowsPerPage="5"> *@
+                    SortMode="@DataGridOptions.Value.SortMode"
+                    Bordered="@DataGridOptions.Value.Bordered"
+                    Dense="@DataGridOptions.Value.Dense"
+                    Hover="@DataGridOptions.Value.Hover">
+                <ToolBarContent>
+                    <MudSpacer />
+                    <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
+                        <MudButton StartIcon="@Icons.Material.Filled.Add" @onclick="CreateItem" Variant="Variant.Filled" Color="Color.Primary">@Localizer["Add"]</MudButton>
+                    </MudButtonGroup>
+                </ToolBarContent>
                 <Columns>
-                    <PropertyColumn Property="x => x.Id" Title="Id" Editable="false" Hidden="true" />
-                    <PropertyColumn Property="x => x.TipologiaServizioId" Title="Tipologia Servizio" Editable="false" Hidden="true" />
+                    <PropertyColumn Property="x => x.Id" Title="Id" Hidden="true" />
+                    <PropertyColumn Property="x => x.TipologiaServizioId" Title="Tipologia Servizio Id" Hidden="true" />
+                    <PropertyColumn Property="x => x.TipoServizio" Title="Tipo di Servizio" />
+                    <PropertyColumn Property="x => x.CostoFisso" Title="Costo Fisso" Format="C2" />
+                    <PropertyColumn Property="x => x.CostoKm" Title="Costo al Km" Format="C2" />
+                    <PropertyColumn Property="x => x.SecondoTrasportato" Title="Secondo Trasportato" Format="C2" />
+                    <PropertyColumn Property="x => x.FermoMacchina" Title="Fermo Macchina" Format="C2" />
+                    <PropertyColumn Property="x => x.Accompagnatore" Title="Accompagnatore" Format="C2" />
+                    <PropertyColumn Property="x => x.ScontoSocio" Title="Sconto Socio" Format="P2" />
 
-                    <TemplateColumn Title="Tipo di Servizio">
+                    @* <TemplateColumn Title="Tipo di Servizio">
                         <CellTemplate Context="context">
                             @context.Item.TipoServizio
                         </CellTemplate>
@@ -174,9 +180,9 @@
                                 AdornmentText="%"
                                 Format="N0" />
                         </EditTemplate>
-                    </TemplateColumn>
+                    </TemplateColumn> *@
 
-                    <TemplateColumn CellClass="d-flex justify-end">
+                    @* <TemplateColumn CellClass="d-flex justify-end">
                         <CellTemplate>
                             @if (context.IsEditing)
                             {
@@ -188,11 +194,29 @@
                                 <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Disabled="@isEditing" aria-label="Edit row" OnClick="@context.Actions.StartEditingItemAsync" />
                             }
                         </CellTemplate>
+                    </TemplateColumn> *@
+
+                    <TemplateColumn CellClass="d-flex justify-end">
+                        <CellTemplate>
+                            <MudStack Row Style="width: 250px" Justify="Justify.Center">
+                                <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Edit" Variant="@Variant.Filled" Color="@Color.Warning" @onclick="() => EditItem(context.Item)">@Localizer["Edit"]</MudButton>
+                                @*<MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" Variant="@Variant.Filled" Color="@Color.Error" Disabled="true">@Localizer["Delete"]</MudButton>*@
+                            </MudStack>
+                        </CellTemplate>
                     </TemplateColumn>
                 </Columns>
-                @* <PagerContent>
-                    <MudDataGridPager T="PrezzoServizioDto" PageSizeOptions=@(new int[] {5, 10, 20}) />
-                </PagerContent> *@
+                <PagerContent>
+                    @if (elements.Count >= 10)
+                    {
+                        <DataGridPager TItem="PrezzoServizioDto"
+                            DataGridOptions="@DataGridOptions.Value"
+                            RowsPerPageString="Righe per pagina:"
+                            InfoFormat="Righe {first_item} - {last_item} di {all_items}"
+                            PageSizeSelector="true"
+                            ShowNavigation="true"
+                            ShowPageNumber="false" />
+                    }
+                </PagerContent>
             </MudDataGrid>
         }
 </MudPaper>

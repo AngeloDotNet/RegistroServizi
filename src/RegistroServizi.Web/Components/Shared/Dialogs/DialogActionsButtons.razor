@@ -1,8 +1,12 @@
 ﻿<div align="center">
-    <MudButton StartIcon="@MudblazorPresets.IconCancel"
+    @* <MudButton StartIcon="@MudblazorPresets.IconCancel"
                 Color="@BtnCancelColor"
                 Variant="Variant.Filled"
-                OnClick="OnCancel">@BtnCancelText</MudButton>
+                OnClick="OnCancel">@BtnCancelText</MudButton> *@
+    <MudButton StartIcon="@BtnCancelIcon"
+            Color="@BtnCancelColor"
+            Variant="Variant.Filled"
+            OnClick="OnCancel">@BtnCancelText</MudButton>
 
     <MudButton StartIcon="@BtnSubmitIcon"
                 Color="@BtnConfirmColor"

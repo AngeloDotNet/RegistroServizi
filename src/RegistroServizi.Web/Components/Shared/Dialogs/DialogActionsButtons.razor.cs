@@ -9,6 +9,8 @@ public partial class DialogActionsButtons
 
     [Parameter] public string BtnCancelText { get; set; } = string.Empty;
     [Parameter] public string BtnSubmitText { get; set; } = string.Empty;
+
+    [Parameter] public string BtnCancelIcon { get; set; } = string.Empty;
     [Parameter] public string BtnSubmitIcon { get; set; } = string.Empty;
 
     [Parameter] public Color BtnCancelColor { get; set; }

@@ -19,7 +19,6 @@ public partial class OspedaleEditDialog
     private string strada = string.Empty;
     private string citta = string.Empty;
     private string provincia = string.Empty;
-    //private int cap = 0;
     private int? cap;
 
     protected override async Task OnInitializedAsync()
@@ -42,7 +41,6 @@ public partial class OspedaleEditDialog
             catch (Exception ex)
             {
                 Logger.LogError(ex, $"{Localizer["LoadingIdError"]}: {EditDialogId}. {Localizer["Message"]}: {ex.Message}");
-                //Snackbar.Add($"{Localizer["LoadingIdError"]}: {EditDialogId}.", Severity.Error);
                 SnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["LoadingIdError"]}: {EditDialogId}.");
             }
         }
@@ -54,8 +52,7 @@ public partial class OspedaleEditDialog
 
         if (!isValid)
         {
-            //Snackbar.Add($"{Localizer["AllRequiredFields"]} !", Severity.Error);
-
+            // TODO: Remove the localizer and use the validation messages from the form instead
             // Show a notification error message using the SnackbarExtensions
             //SnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["AllRequiredFields"]} !");
             return false;
@@ -69,7 +66,6 @@ public partial class OspedaleEditDialog
                 var updateItem = new UpdateOspedaleDto(EditDialogId.Value, nomeOspedale, indirizzo);
 
                 await OspedaleService.UpdateOspedaleAsync(updateItem);
-                //Snackbar.Add($"{Localizer["EntityUpdateSuccess"]} !", Severity.Success);
                 SnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityUpdateSuccess"]} !");
             }
             else
@@ -78,7 +74,6 @@ public partial class OspedaleEditDialog
                 var createItem = new CreateOspedaleDto(nomeOspedale, indirizzo);
 
                 await OspedaleService.CreateOspedaleAsync(createItem);
-                //Snackbar.Add($"{Localizer["EntityCreateSuccess"]} !", Severity.Success);
                 SnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityCreateSuccess"]} !");
             }
 
@@ -87,7 +82,6 @@ public partial class OspedaleEditDialog
         }
         catch (Exception ex)
         {
-            //Snackbar.Add($"{Localizer["ErrorOccurred"]}: {ex.Message}", Severity.Error);
             SnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["ErrorOccurred"]}: {ex.Message}");
             return false;
         }

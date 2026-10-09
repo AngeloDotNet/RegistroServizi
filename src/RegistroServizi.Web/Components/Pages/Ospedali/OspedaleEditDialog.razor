@@ -67,12 +67,12 @@
     </DialogContent>
     <DialogActions>
         <DialogActionsButtons BtnCancelText="@BtnCancelText"
-            BtnCancelIcon="@MudblazorPresets.IconCancel"
-            BtnSubmitText="@(EditDialogId.HasValue ? Localizer["Save"] : $"{Localizer["Create"]} {Title}")"
-            BtnSubmitIcon="@(EditDialogId.HasValue ? @MudblazorPresets.IconSave : @MudblazorPresets.IconCreate)"
-            BtnCancelColor="@BtnCancelColor"
-            BtnConfirmColor="@BtnConfirmColor"
-            OnCancel="Cancel"
-            OnSubmit="SubmitForm" />
+                                BtnCancelIcon="@MudblazorPresets.IconCancel"
+                                BtnSubmitText="@(EditDialogId.HasValue ? Localizer["Save"] : $"{Localizer["Create"]} {Title}")"
+                                BtnSubmitIcon="@(EditDialogId.HasValue ? @MudblazorPresets.IconSave : @MudblazorPresets.IconCreate)"
+                                BtnCancelColor="@BtnCancelColor"
+                                BtnConfirmColor="@BtnConfirmColor"
+                                OnCancel="Cancel"
+                                OnSubmit="SubmitForm" />
     </DialogActions>
 </MudDialog>

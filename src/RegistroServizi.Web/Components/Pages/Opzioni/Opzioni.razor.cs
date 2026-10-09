@@ -1,5 +1,8 @@
 ﻿namespace RegistroServizi.Web.Components.Pages.Opzioni;
 
+/// <summary>
+/// Provides navigation actions for the <c>Opzioni</c> page.
+/// </summary>
 public partial class Opzioni
 {
     /// <summary>

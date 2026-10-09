@@ -1,16 +1,16 @@
 ﻿namespace RegistroServizi.Application.DTOs.PrezzoServizio;
 
 /// <summary>
-/// DTO per l'aggiornamento di un prezzo servizio
+/// Represents the data required to update a <c>PrezzoServizio</c> record.
 /// </summary>
-/// <param name="Id">Identificativo del prezzo servizio</param>
-/// <param name="TipologiaServizioId">Identificativo della tipologia di servizio</param>
-/// <param name="CostoFisso">Costo fisso del servizio</param>
-/// <param name="CostoKm">Costo per chilometro del servizio</param>
-/// <param name="SecondoTrasportato">Costo per secondo trasportato del servizio</param>
-/// <param name="FermoMacchina">Costo per fermo macchina del servizio</param>
-/// <param name="Accompagnatore">Costo per accompagnatore del servizio</param>
-/// <param name="ScontoSocio">Sconto per i soci del servizio</param>
+/// <param name="Id">The unique identifier of the price record to update.</param>
+/// <param name="TipologiaServizioId">The identifier of the related service type.</param>
+/// <param name="CostoFisso">The fixed cost for the service.</param>
+/// <param name="CostoKm">The cost per kilometre.</param>
+/// <param name="SecondoTrasportato">The cost per transported second.</param>
+/// <param name="FermoMacchina">The cost for vehicle idle time.</param>
+/// <param name="Accompagnatore">The optional additional cost for an accompanying person.</param>
+/// <param name="ScontoSocio">The optional discount percentage or amount reserved for members.</param>
 public record class UpdatePrezzoServizioDto(
     Guid Id,
     Guid TipologiaServizioId,

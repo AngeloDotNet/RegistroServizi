@@ -1,15 +1,15 @@
 ﻿namespace RegistroServizi.Application.DTOs.PrezzoServizio;
 
 /// <summary>
-/// Data Transfer Object (DTO) for creating a new PrezzoServizio.
+/// Rappresenta i dati necessari per creare un nuovo prezzo di servizio.
 /// </summary>
-/// <param name="TipologiaServizio"></param>
-/// <param name="CostoFisso"></param>
-/// <param name="CostoKm"></param>
-/// <param name="SecondoTrasportato"></param>
-/// <param name="FermoMacchina"></param>
-/// <param name="Accompagnatore"></param>
-/// <param name="ScontoSocio"></param>
+/// <param name="TipologiaServizio">Tipologia di servizio associata al prezzo.</param>
+/// <param name="CostoFisso">Costo fisso del servizio.</param>
+/// <param name="CostoKm">Costo applicato per chilometro.</param>
+/// <param name="SecondoTrasportato">Costo applicato per ogni secondo trasportato.</param>
+/// <param name="FermoMacchina">Costo applicato per il fermo macchina.</param>
+/// <param name="Accompagnatore">Costo opzionale per l'accompagnatore.</param>
+/// <param name="ScontoSocio">Sconto opzionale riservato al socio.</param>
 public record class CreatePrezzoServizioDto(
     TipologiaServizio TipologiaServizio,
     decimal CostoFisso,

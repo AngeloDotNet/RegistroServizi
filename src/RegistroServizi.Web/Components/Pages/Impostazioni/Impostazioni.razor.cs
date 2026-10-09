@@ -3,8 +3,10 @@
 public partial class Impostazioni
 {
     /// <summary>
-    /// Navigates to the '/prezzi-servizi' route.
+    /// Navigates to the Prezzi Servizi page.
     /// </summary>
-    /// <remarks>Uses NavigationManager to perform a client-side navigation to the Prezzi Servizi page.</remarks>
+    /// <remarks>
+    /// Performs a client-side navigation to the <c>/prezzi-servizi</c> route using <c>NavigationManager</c>.
+    /// </remarks>
     private void ViewPrezziServizi() => navigationManager.NavigateTo("/prezzi-servizi");
 }

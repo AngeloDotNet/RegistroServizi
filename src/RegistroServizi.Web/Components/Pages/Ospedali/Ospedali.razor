@@ -17,7 +17,6 @@ else
                         ActionEditCallback="@((context) => EditItemAsync(Title, context.Id, context.NomeOspedale))"
                         ActionDeleteCallback="@((context) => DeleteItemAsync(Title, context.Id, context.NomeOspedale))"
                         Columns="@columnDefinition"
-                        LayoutWidths="@columnWidths">
-    </DataGridGeneric>
+                        LayoutWidths="@columnWidths" />
 }
 </MudPaper>

@@ -264,4 +264,7 @@
   <data name="HospitalName" xml:space="preserve">
     <value>Nome Ospedale</value>
   </data>
+  <data name="NoDeletedItems" xml:space="preserve">
+    <value>In questa sezione non è possibile eliminare gli elementi.</value>
+  </data>
 </root>

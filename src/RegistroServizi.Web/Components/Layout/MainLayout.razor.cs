@@ -1,5 +1,12 @@
 ﻿namespace RegistroServizi.Web.Components.Layout;
 
+/// <summary>
+/// Main application layout for the Blazor UI.
+/// </summary>
+/// <remarks>
+/// This layout keeps the header, drawer state, and authentication-dependent actions
+/// synchronized with the current application and association options.
+/// </remarks>
 public partial class MainLayout
 {
     private string? currentUrl;
@@ -12,6 +19,9 @@ public partial class MainLayout
     private IDisposable? _associazioneOptionsChangeSubscription;
     private IDisposable? _applicazioneOptionsChangeSubscription;
 
+    /// <summary>
+    /// Initializes the layout state and subscribes to option changes and navigation updates.
+    /// </summary>
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -37,6 +47,9 @@ public partial class MainLayout
         NavigationManager.LocationChanged += OnLocationChanged;
     }
 
+    /// <summary>
+    /// Releases navigation and options subscriptions created by the layout.
+    /// </summary>
     public void Dispose()
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
@@ -44,23 +57,41 @@ public partial class MainLayout
         _applicazioneOptionsChangeSubscription?.Dispose();
     }
 
+    /// <summary>
+    /// Updates the current return URL whenever navigation changes.
+    /// </summary>
+    /// <param name="sender">The event source.</param>
+    /// <param name="e">Navigation event data.</param>
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {
         currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
         StateHasChanged();
     }
 
+    /// <summary>
+    /// Toggles the navigation drawer open or closed.
+    /// </summary>
     private void ToggleDrawer()
     {
         _drawerOpen = !_drawerOpen;
     }
 
+    /// <summary>
+    /// Loads the current authentication state used by the authorization-aware header.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
     }
 
+    /// <summary>
+    /// Builds a two-letter set of initials from a display name for the user avatar.
+    /// </summary>
+    /// <param name="name">The full display name.</param>
+    /// <returns>
+    /// A single initial, two initials, or <c>?</c> when the input is null, empty, or whitespace.
+    /// </returns>
     private static string GetProfileInitials(string? name)
     {
         if (string.IsNullOrWhiteSpace(name))

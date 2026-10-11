@@ -25,10 +25,10 @@ public static class MudBlazorDataGridParameters
     internal static List<DataGridColumnDefinition<OspedaleDto>> GetOspedaliColumns(IStringLocalizer<SharedResource> localizer) => [
         new DataGridColumnDefinition<OspedaleDto> { Property = x => x.Id, Title = "Id", IsHidden = true },
         new DataGridColumnDefinition<OspedaleDto> { Property = x => x.NomeOspedale, Title = localizer["Hospital"] },
-        new DataGridColumnDefinition<OspedaleDto> { Property = x => x.Indirizzo.Strada, Title = localizer["Address"] },
-        new DataGridColumnDefinition<OspedaleDto> { Property = x => x.Indirizzo.Citta, Title = localizer["City"] },
-        new DataGridColumnDefinition<OspedaleDto> { Property = x => x.Indirizzo.Provincia, Title = localizer["Province"] },
-        new DataGridColumnDefinition<OspedaleDto> { Property = x => x.Indirizzo.Cap, Title = localizer["PostcodeAbbreviation"] } //PostalCodeAbbreviation
+        new DataGridColumnDefinition<OspedaleDto> { Property = x => x.Ubicazione.Indirizzo, Title = localizer["Address"] },
+        new DataGridColumnDefinition<OspedaleDto> { Property = x => x.Ubicazione.Comune, Title = localizer["City"] },
+        new DataGridColumnDefinition<OspedaleDto> { Property = x => x.Ubicazione.Provincia, Title = localizer["Province"] },
+        new DataGridColumnDefinition<OspedaleDto> { Property = x => x.Ubicazione.Cap, Title = localizer["PostcodeAbbreviation"] } //PostalCodeAbbreviation
     ];
 
     /// <summary>

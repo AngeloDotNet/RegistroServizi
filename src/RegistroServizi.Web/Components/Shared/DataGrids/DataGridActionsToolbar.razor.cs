@@ -2,8 +2,8 @@
 
 public partial class DataGridActionsToolbar
 {
-    [Parameter] public EventCallback ActionCallback { get; set; }
+    //[Parameter] public EventCallback ActionCallback { get; set; }
 
-    [Parameter] public string Label { get; set; } = string.Empty;
-    [Parameter] public string Icon { get; set; } = string.Empty;
+    //[Parameter] public string Label { get; set; } = string.Empty;
+    //[Parameter] public string Icon { get; set; } = string.Empty;
 }

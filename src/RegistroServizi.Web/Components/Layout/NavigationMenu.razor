@@ -1,6 +1,8 @@
-﻿@rendermode InteractiveServer
+﻿@using RegistroServizi.Web.Resources.Components.Layout
+@rendermode InteractiveServer
 @inject IOptionsMonitor<ApplicazioneOptions> ApplicazioneOptions
-@inject IStringLocalizer<SharedResource> Localizer
+@inject IStringLocalizer<NavigationResource> Localizer
+@inject IStringLocalizer<SharedResource> SharedLocalizer
 @implements IDisposable
 
 <MudNavMenu>
@@ -36,13 +38,13 @@
                 <MudNavLink Href="/Account/Manage" Icon="@Icons.Material.Filled.AccountCircle">Gestione Profilo</MudNavLink>
             </Authorized>
         </AuthorizeView>
-        <AuthorizeView Roles="@nameof(Role.Admin)">
+        @* <AuthorizeView Roles="@nameof(Role.Admin)">
             <Authorized>
-                <MudNavLink Href="/gestione-database" Icon="@Icons.Material.Filled.BackupTable" Disabled>Gestione Database</MudNavLink>
+                <MudNavLink Href="/gestione-database" Icon="@Icons.Material.Filled.BackupTable">Gestione Database</MudNavLink>
             </Authorized>
-        </AuthorizeView>
+        </AuthorizeView> *@
         <MudNavLink Href="/gestione-clienti" Icon="@Icons.Material.Filled.Groups2" Disabled>Gestione Clienti</MudNavLink>
-        <MudNavLink Href="/opzioni" Icon="@Icons.Material.Filled.Anchor">Opzioni</MudNavLink>
+        <MudNavLink Href="/opzioni" Icon="@Icons.Material.Filled.Anchor">@SharedLocalizer["TitleOptions"]</MudNavLink>
         <MudNavLink Href="/impostazioni" Icon="@Icons.Material.Filled.AccountTree">Impostazioni</MudNavLink>
     </MudNavGroup>
     <MudNavLink Href="/help" Icon="@Icons.Material.Filled.Help" Disabled>Help</MudNavLink>

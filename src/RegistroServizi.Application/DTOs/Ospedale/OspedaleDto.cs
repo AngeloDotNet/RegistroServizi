@@ -18,9 +18,7 @@ public class OspedaleDto
     /// <summary>
     /// Gets or sets the address associated with the hospital.
     /// </summary>
-    public IndirizzoDto Indirizzo { get; set; } = new IndirizzoDto();
+    public UbicazioneDto Ubicazione { get; set; } = new UbicazioneDto();
 
     //public CoordinateDto Coordinate { get; set; } = new CoordinateDto();
-
-    //TODO: Rename Indirizzo To Ubicazione
 }

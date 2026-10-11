@@ -31,10 +31,6 @@
     </ColGroup>
 
     <Columns>
-        @* @foreach (var colDef in Columns)
-        {
-            <PropertyColumn Property="@colDef.Property" Title="@colDef.Title" Hidden="colDef.IsHidden" />
-        } *@
         @foreach (var colDef in Columns)
         {
             @if (!string.IsNullOrEmpty(colDef.Format))

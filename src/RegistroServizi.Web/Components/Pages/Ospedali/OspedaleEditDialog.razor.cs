@@ -32,10 +32,10 @@ public partial class OspedaleEditDialog
                 if (item != null)
                 {
                     nomeOspedale = item.NomeOspedale;
-                    strada = item.Indirizzo.Strada;
-                    citta = item.Indirizzo.Citta;
-                    provincia = item.Indirizzo.Provincia;
-                    cap = item.Indirizzo.Cap;
+                    strada = item.Ubicazione.Indirizzo;
+                    citta = item.Ubicazione.Comune;
+                    provincia = item.Ubicazione.Provincia;
+                    cap = item.Ubicazione.Cap;
                 }
             }
             catch (Exception ex)
@@ -62,7 +62,7 @@ public partial class OspedaleEditDialog
         {
             if (EditDialogId.HasValue)
             {
-                var indirizzo = new UpdateIndirizzoDto(strada, citta, provincia, cap ?? 0);
+                var indirizzo = new UpdateUbicazioneDto(strada, citta, provincia, cap ?? 0);
                 var updateItem = new UpdateOspedaleDto(EditDialogId.Value, nomeOspedale, indirizzo);
 
                 await OspedaleService.UpdateOspedaleAsync(updateItem);
@@ -70,7 +70,7 @@ public partial class OspedaleEditDialog
             }
             else
             {
-                var indirizzo = new CreateIndirizzoDto(strada, citta, provincia, cap ?? 0);
+                var indirizzo = new CreateUbicazioneDto(strada, citta, provincia, cap ?? 0);
                 var createItem = new CreateOspedaleDto(nomeOspedale, indirizzo);
 
                 await OspedaleService.CreateOspedaleAsync(createItem);

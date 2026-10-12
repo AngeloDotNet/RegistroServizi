@@ -23,7 +23,7 @@ public partial class Footer : IDisposable
     /// Returns a single year when the current year matches
     /// <see cref="LicenseStartYear"/>; otherwise returns a year range.
     /// </remarks>
-    private string YearLicense => DateTime.Now.Year == LicenseStartYear ? LicenseStartYear.ToString() : $"{LicenseStartYear} - {DateTime.Now.Year}";
+    private static string YearLicense => DateTime.Now.Year == LicenseStartYear ? LicenseStartYear.ToString() : $"{LicenseStartYear} - {DateTime.Now.Year}";
 
     /// <summary>
     /// Stores the current application name displayed in the footer.

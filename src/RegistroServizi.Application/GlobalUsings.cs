@@ -2,9 +2,9 @@
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using RegistroServizi.Application.DTOs.Colonnina;
-global using RegistroServizi.Application.DTOs.Indirizzo;
 global using RegistroServizi.Application.DTOs.Ospedale;
 global using RegistroServizi.Application.DTOs.PrezzoServizio;
+global using RegistroServizi.Application.DTOs.Ubicazione;
 global using RegistroServizi.Application.Interfaces.Persistence;
 global using RegistroServizi.Application.Interfaces.Services;
 global using RegistroServizi.Application.Mapping;

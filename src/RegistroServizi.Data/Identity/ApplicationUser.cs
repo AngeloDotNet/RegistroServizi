@@ -1,12 +1,13 @@
 namespace RegistroServizi.Data.Identity;
 
 /// <summary>
-/// Represents an application user that extends IdentityUser and can be extended with additional user-specific
-/// properties for authentication and authorization.
+/// Represents the application's concrete Identity user type.
 /// </summary>
-/// <remarks>Use as the concrete Identity user type for the application; add profile, preference, or domain
-/// properties as needed.</remarks>
+/// <remarks>
+/// Use this class as the user entity for ASP.NET Core Identity when the application needs to extend the
+/// built-in <see cref="IdentityUser"/> model with custom profile, preference, or domain-specific properties.
+/// </remarks>
 public class ApplicationUser : IdentityUser
 {
-    // Additional properties can be added here if needed
+    // Add custom user properties here as needed.
 }

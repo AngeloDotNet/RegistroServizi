@@ -11,13 +11,9 @@ public partial class MainLayout
 {
     private string? currentUrl;
     private bool _drawerOpen = true;
-
-    //private string? _nomeApplicazione;
-    //private string? _versioneApplicazione;
     private string? _nomeAssociazione;
 
     private IDisposable? _associazioneOptionsChangeSubscription;
-    //private IDisposable? _applicazioneOptionsChangeSubscription;
 
     /// <summary>
     /// Initializes the layout state and subscribes to option changes and navigation updates.
@@ -27,21 +23,11 @@ public partial class MainLayout
         base.OnInitialized();
 
         _nomeAssociazione = AssociazioneOptions.CurrentValue.NomeAssociazione;
-        //_nomeApplicazione = ApplicazioneOptions.CurrentValue.NomeApplicazione;
-        //_versioneApplicazione = ApplicazioneOptions.CurrentValue.VersioneApplicazione;
-
         _associazioneOptionsChangeSubscription = AssociazioneOptions.OnChange(options =>
         {
             _nomeAssociazione = options.NomeAssociazione;
             _ = InvokeAsync(StateHasChanged);
         });
-
-        //_applicazioneOptionsChangeSubscription = ApplicazioneOptions.OnChange(options =>
-        //{
-        //    _nomeApplicazione = options.NomeApplicazione;
-        //    _versioneApplicazione = options.VersioneApplicazione;
-        //    _ = InvokeAsync(StateHasChanged);
-        //});
 
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
@@ -54,7 +40,6 @@ public partial class MainLayout
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
         _associazioneOptionsChangeSubscription?.Dispose();
-        //_applicazioneOptionsChangeSubscription?.Dispose();
     }
 
     /// <summary>

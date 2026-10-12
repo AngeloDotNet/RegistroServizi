@@ -1,12 +1,17 @@
 ﻿namespace RegistroServizi.Domain.Common;
 
 /// <summary>
-/// Represents an abstract base class for domain entities that exposes a unique identifier.
+/// Provides a common base type for domain entities that are identified by a <see cref="Guid"/>.
 /// </summary>
-/// <remarks>Intended to be inherited by concrete entity types. The Id property is a Guid that serves as the
-/// entity identifier; assignment and lifecycle semantics are determined by the persistence strategy (client-side
-/// generation or database-generated). Override equality and hashing as needed to reflect entity identity.</remarks>
+/// <remarks>
+/// Inherit from this class for entities that share a single identifier property.
+/// The value of <see cref="Id"/> is typically assigned either by the application or by persistence
+/// infrastructure, depending on the entity lifecycle and storage strategy.
+/// </remarks>
 public abstract class BaseEntity
 {
+    /// <summary>
+    /// Gets or sets the unique identifier for the entity.
+    /// </summary>
     public Guid Id { get; set; }
 }

@@ -5,6 +5,27 @@
 
 <TextPageTitle Title="@Localizer["TitleServicePrices"]" SubTitle="@Localizer["SubTitleServicePrices"]" />
 
+<MudPaper Class="pa-4">
+@if (isLoading || elements.Count == 0)
+{
+    <ProgressNoData IsLoading="@isLoading" ElementsCount="@elements.Count" CountMessage="@Localizer["NoServicePricesFound"]" />
+}
+else
+{
+    <DataGridGeneric T="PrezzoServizioDto"
+                        Items="@elements"
+                        ActionCallback="@(() => CreateItemAsync(Title))"
+                        ActionEditCallback="@((context) => EditItemAsync(Title, context.Id, context.TipoServizio))"
+                        ActionDeleteCallback="@((context) => DeleteItemAsync(Title, context.Id, context.TipoServizio))"
+                        Columns="@columnDefinition"
+                        LayoutWidths="@columnWidths"
+                        AddButtonIsDisabled = "@addDisabled"
+                        ModifyButtonIsDisabled="@modifyDisabled"
+                        DeleteButtonIsDisabled="@deleteDisabled" />
+}
+</MudPaper>
+
+<!--
 <MudPaper Class="pa-4 mb-4">
         @if (isLoading)
         {
@@ -63,3 +84,4 @@
             </MudDataGrid>
         }
 </MudPaper>
+-->

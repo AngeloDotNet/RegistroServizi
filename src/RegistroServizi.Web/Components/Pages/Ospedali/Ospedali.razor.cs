@@ -17,7 +17,6 @@ public partial class Ospedali
     private bool modifyDisabled;
     private bool deleteDisabled;
 
-    //protected override async Task OnInitializedAsync() => await LoadingDataAsync();
     protected override async Task OnInitializedAsync()
     {
         //addDisabled = await new UserExtensions(AuthenticationStateProvider).ManageButtonDisabledAsync(new string[] { nameof(Role.Manager) });

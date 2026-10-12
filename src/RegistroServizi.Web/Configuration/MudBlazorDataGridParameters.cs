@@ -31,6 +31,18 @@ public static class MudBlazorDataGridParameters
         new DataGridColumnDefinition<OspedaleDto> { Property = x => x.Ubicazione.Cap, Title = localizer["PostcodeAbbreviation"] } //PostalCodeAbbreviation
     ];
 
+    internal static List<DataGridColumnDefinition<PrezzoServizioDto>> GetPrezziServiziColumns(IStringLocalizer<SharedResource> localizer) => [
+        new DataGridColumnDefinition<PrezzoServizioDto> { Property = x => x.Id, Title = "Id", IsHidden = true },
+        new DataGridColumnDefinition<PrezzoServizioDto> { Property = x => x.TipologiaServizioId, Title = "Id", IsHidden = true },
+        new DataGridColumnDefinition<PrezzoServizioDto> { Property = x => x.TipoServizio, Title = "Tipologia Servizio" },
+        new DataGridColumnDefinition<PrezzoServizioDto> { Property = x => x.CostoFisso, Title = "Costo Fisso", Format = GetEuroFormatTypeColumn() },
+        new DataGridColumnDefinition<PrezzoServizioDto> { Property = x => x.CostoKm, Title = "Costo al Km", Format = GetEuroFormatTypeColumn() },
+        new DataGridColumnDefinition<PrezzoServizioDto> { Property = x => x.SecondoTrasportato, Title = "Secondo Trasportato", Format = GetEuroFormatTypeColumn() },
+        new DataGridColumnDefinition<PrezzoServizioDto> { Property = x => x.FermoMacchina, Title = "Fermo Macchina", Format = GetEuroFormatTypeColumn() },
+        new DataGridColumnDefinition<PrezzoServizioDto> { Property = x => x.Accompagnatore, Title = "Accompagnatore", Format = GetEuroFormatTypeColumn() },
+        new DataGridColumnDefinition<PrezzoServizioDto> { Property = x => x.ScontoSocio, Title = "Sconto Socio", Format = GetPercentFormatTypeColumn() }
+    ];
+
     /// <summary>
     /// Gets the standard numeric format string for euro currency values.
     /// </summary>

@@ -9,10 +9,23 @@ public partial class Ospedali
     private List<OspedaleDto> elements = [];
     private List<string> columnWidths = [];
     private List<DataGridColumnDefinition<OspedaleDto>> columnDefinition = [];
-    private bool isLoading = true;
+    //private bool isLoading = true;
     private string Title => Localizer["Hospital"];
 
-    protected override async Task OnInitializedAsync() => await LoadingDataAsync();
+    private bool isLoading = true;
+    private bool addDisabled;
+    private bool modifyDisabled;
+    private bool deleteDisabled;
+
+    //protected override async Task OnInitializedAsync() => await LoadingDataAsync();
+    protected override async Task OnInitializedAsync()
+    {
+        //addDisabled = await new UserExtensions(AuthenticationStateProvider).ManageButtonDisabledAsync(new string[] { nameof(Role.Manager) });
+        //modifyDisabled = await new UserExtensions(AuthenticationStateProvider).ManageButtonDisabledAsync(new string[] { nameof(Role.Manager) });
+        //deleteDisabled = await new UserExtensions(AuthenticationStateProvider).ManageButtonDisabledAsync(new string[] { nameof(Role.Admin) });
+
+        await LoadingDataAsync();
+    }
 
     private async Task LoadingDataAsync()
     {

@@ -3,11 +3,6 @@
 @inject IOptions<MudBlazorDataGridOptions> DataGridOptions
 @inject DataGridHelper DataGridHelper
 
-@if(DeleteButtonIsDisabled)
-{
-    <MudAlert Severity="Severity.Warning" ContentAlignment="HorizontalAlignment.Center">@Localizer["NoDeletedItems"]</MudAlert>
-}
-
 <MudDataGrid T="@T"
                 Items="@Items"
                 SortMode="@DataGridOptions.Value.SortMode"
@@ -19,7 +14,7 @@
     <ToolBarContent>
         <MudSpacer />
         <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
-            <MudButton StartIcon="@Icons.Material.Filled.Add" @onclick="ActionCallback" Variant="Variant.Filled">@Localizer["Add"]</MudButton>
+            <MudButton StartIcon="@Icons.Material.Filled.Add" @onclick="ActionCallback" Variant="Variant.Filled" Disabled="@AddButtonIsDisabled">@Localizer["Add"]</MudButton>
         </MudButtonGroup>
     </ToolBarContent>
 
@@ -46,7 +41,7 @@
         <TemplateColumn CellClass="d-flex justify-end">
             <CellTemplate>
                 <MudStack Row Style="width: 250px" Justify="Justify.Center">
-                    <MudButton StartIcon="@MudblazorPresets.IconEdit" @onclick="() => ActionEditCallback.InvokeAsync(context.Item)" Variant="Variant.Filled" Color="@Color.Warning">@Localizer["Edit"]</MudButton>
+                    <MudButton StartIcon="@MudblazorPresets.IconEdit" @onclick="() => ActionEditCallback.InvokeAsync(context.Item)" Variant="Variant.Filled" Color="@Color.Warning" Disabled="@ModifyButtonIsDisabled">@Localizer["Edit"]</MudButton>
                     <MudButton StartIcon="@MudblazorPresets.IconDelete" @onclick="() => ActionDeleteCallback.InvokeAsync(context.Item)" Variant="Variant.Filled" Color="@Color.Error" Disabled="@DeleteButtonIsDisabled">@Localizer["Delete"]</MudButton>
                 </MudStack>
             </CellTemplate>

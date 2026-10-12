@@ -3,15 +3,20 @@
 namespace RegistroServizi.Web.Common.Helpers;
 
 /// <summary>
-/// Base helper for Blazor pages and components that need access to common services.
+/// Provides a reusable base component for Blazor pages and components.
 /// </summary>
 /// <remarks>
-/// Inherit from this class to reuse injected services for configuration access,
-/// snackbar notifications, dialog interactions, localization, and data grid support
-/// without repeating service injection in each component.
+/// Exposes commonly used services through dependency injection, including authentication,
+/// configuration, notifications, dialogs, localization, and MudBlazor data-grid support.
 /// </remarks>
 public class PageBaseHelper : ComponentBase
 {
+
+    /// <summary>
+    /// Gets the provider used to retrieve the current user's authentication state.
+    /// </summary>
+    [Inject] protected AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
+
     /// <summary>
     /// Gets the application configuration used to read settings and options.
     /// </summary>

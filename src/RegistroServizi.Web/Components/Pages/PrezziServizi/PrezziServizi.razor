@@ -1,6 +1,5 @@
 ﻿@page "/prezzi-servizi"
 @rendermode InteractiveServer
-@* @attribute [Authorize(Roles = nameof(Role.Manager))] *@
 @inherits PageBaseHelper
 
 <TextPageTitle Title="@Localizer["TitleServicePrices"]" SubTitle="@Localizer["SubTitleServicePrices"]" />
@@ -24,64 +23,3 @@ else
                         DeleteButtonIsDisabled="@deleteDisabled" />
 }
 </MudPaper>
-
-<!--
-<MudPaper Class="pa-4 mb-4">
-        @if (isLoading)
-        {
-            <MudProgressLinear Indeterminate="true" />
-        }
-        else if (elements.Count == 0)
-        {
-            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">@Localizer["NoServicePricesFound"]</MudAlert>
-        }
-        else
-        {
-            <MudDataGrid T="PrezzoServizioDto"
-                    Items="@elements"
-                    SortMode="@DataGridOptions.Value.SortMode"
-                    Bordered="@DataGridOptions.Value.Bordered"
-                    Dense="@DataGridOptions.Value.Dense"
-                    Hover="@DataGridOptions.Value.Hover">
-                <ToolBarContent>
-                    <MudSpacer />
-                    <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
-                        <MudButton StartIcon="@Icons.Material.Filled.Add" @onclick="CreateItem" Variant="Variant.Filled" Color="Color.Primary">@Localizer["Add"]</MudButton>
-                    </MudButtonGroup>
-                </ToolBarContent>
-                <Columns>
-                    <PropertyColumn Property="x => x.Id" Title="Id" Hidden="true" />
-                    <PropertyColumn Property="x => x.TipologiaServizioId" Title="Tipologia Servizio Id" Hidden="true" />
-                    <PropertyColumn Property="x => x.TipoServizio" Title="Tipo di Servizio" />
-                    <PropertyColumn Property="x => x.CostoFisso" Title="Costo Fisso" Format="C2" />
-                    <PropertyColumn Property="x => x.CostoKm" Title="Costo al Km" Format="C2" />
-                    <PropertyColumn Property="x => x.SecondoTrasportato" Title="Secondo Trasportato" Format="C2" />
-                    <PropertyColumn Property="x => x.FermoMacchina" Title="Fermo Macchina" Format="C2" />
-                    <PropertyColumn Property="x => x.Accompagnatore" Title="Accompagnatore" Format="C2" />
-                    <PropertyColumn Property="x => x.ScontoSocio" Title="Sconto Socio" Format="P2" />
-
-                    <TemplateColumn CellClass="d-flex justify-end">
-                        <CellTemplate>
-                            <MudStack Row Style="width: 250px" Justify="Justify.Center">
-                                <MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Edit" Variant="@Variant.Filled" Color="@Color.Warning" @onclick="() => EditItem(context.Item)">@Localizer["Edit"]</MudButton>
-                                @*<MudButton Size="@Size.Small" StartIcon="@Icons.Material.Filled.Delete" Variant="@Variant.Filled" Color="@Color.Error" Disabled="true">@Localizer["Delete"]</MudButton>*@
-                            </MudStack>
-                        </CellTemplate>
-                    </TemplateColumn>
-                </Columns>
-                <PagerContent>
-                    @if (elements.Count >= 10)
-                    {
-                        <DataGridPager TItem="PrezzoServizioDto"
-                            DataGridOptions="@DataGridOptions.Value"
-                            RowsPerPageString="Righe per pagina:"
-                            InfoFormat="Righe {first_item} - {last_item} di {all_items}"
-                            PageSizeSelector="true"
-                            ShowNavigation="true"
-                            ShowPageNumber="false" />
-                    }
-                </PagerContent>
-            </MudDataGrid>
-        }
-</MudPaper>
--->

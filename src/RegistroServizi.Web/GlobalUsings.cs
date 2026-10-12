@@ -16,6 +16,7 @@ global using RegistroServizi.Application.Options;
 global using RegistroServizi.Data;
 global using RegistroServizi.Data.Identity;
 global using RegistroServizi.Domain.Enums;
+global using RegistroServizi.Web.Common.Application;
 global using RegistroServizi.Web.Common.Definitions;
 global using RegistroServizi.Web.Common.Helpers;
 global using RegistroServizi.Web.Components;

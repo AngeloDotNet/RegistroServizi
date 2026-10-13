@@ -21,7 +21,7 @@ public interface IPrezzoServizioService
     /// <param name="id">The identifier of the record to retrieve.</param>
     /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
     /// <returns>The matching <see cref="PrezzoServizioDto"/>.</returns>
-    Task<PrezzoServizioDto> GetByIdPrezzoServizioAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<PrezzoServizioDto> GetPrezzoServizioByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates an existing <c>PrezzoServizio</c> record.

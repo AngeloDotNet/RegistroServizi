@@ -264,4 +264,25 @@
   <data name="HospitalName" xml:space="preserve">
     <value>Nome Ospedale</value>
   </data>
+  <data name="ServiceType" xml:space="preserve">
+    <value>Tipologia servizio</value>
+  </data>
+  <data name="FixedCost" xml:space="preserve">
+    <value>Costo fisso</value>
+  </data>
+  <data name="CostKm" xml:space="preserve">
+    <value>Costo per km</value>
+  </data>
+  <data name="SecondPassenger" xml:space="preserve">
+    <value>Secondo trasportato</value>
+  </data>
+  <data name="VehicleWaitingTime" xml:space="preserve">
+    <value>Fermo macchina</value>
+  </data>
+  <data name="Companion" xml:space="preserve">
+    <value>Accompagnatore</value>
+  </data>
+  <data name="MemberDiscount" xml:space="preserve">
+    <value>Sconto socio</value>
+  </data>
 </root>

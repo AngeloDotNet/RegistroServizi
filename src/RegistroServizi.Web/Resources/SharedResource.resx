@@ -264,4 +264,25 @@
   <data name="HospitalName" xml:space="preserve">
     <value>Hospital Name</value>
   </data>
+  <data name="ServiceType" xml:space="preserve">
+    <value>Service Type</value>
+  </data>
+  <data name="FixedCost" xml:space="preserve">
+    <value>Fixed cost</value>
+  </data>
+  <data name="CostKm" xml:space="preserve">
+    <value>Cost per km</value>
+  </data>
+  <data name="SecondPassenger" xml:space="preserve">
+    <value>Second passenger</value>
+  </data>
+  <data name="VehicleWaitingTime" xml:space="preserve">
+    <value>Vehicle waiting time</value>
+  </data>
+  <data name="Companion" xml:space="preserve">
+    <value>Companion</value>
+  </data>
+  <data name="MemberDiscount" xml:space="preserve">
+    <value>Member discount</value>
+  </data>
 </root>

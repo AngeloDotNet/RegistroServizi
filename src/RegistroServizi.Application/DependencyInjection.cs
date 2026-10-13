@@ -1,28 +1,45 @@
 ﻿namespace RegistroServizi.Application;
 
 /// <summary>
-/// Provides extension methods and helper functions for registering application services and performing parameter
-/// validations with the dependency injection container.
+/// Provides dependency injection registration helpers for the application layer.
 /// </summary>
-/// <remarks>Registers types whose names end with 'Service' from the application's assembly as implemented
-/// interfaces with scoped lifetime and adds TimeProvider.System as a singleton.</remarks>
+/// <remarks>
+/// This type exposes extension members that register application services by convention and
+/// add shared framework services required by the application.
+/// </remarks>
 public static class DependencyInjection
 {
     /// <summary>
-    /// Registers application services into the specified IServiceCollection and adds TimeProvider.System.
+    /// Registers application services and shared infrastructure services in the specified
+    /// <see cref="IServiceCollection" />.
     /// </summary>
-    /// <remarks>Scans the assembly containing OspedaleService and registers classes whose names end with
-    /// "Service" as their implemented interfaces with a scoped lifetime. Also registers TimeProvider.System as a
-    /// singleton.</remarks>
-    /// <param name="services">The IServiceCollection to configure with application services and TimeProvider.System.</param>
+    /// <remarks>
+    /// Discovers classes in the assembly containing <c>OspedaleService</c> whose names end with
+    /// <c>Service</c>, registers them against their implemented interfaces, and configures them
+    /// with a scoped lifetime.
+    /// <para>
+    /// Also registers <see cref="TimeProvider.System" /> as a singleton so application services can
+    /// depend on an abstracted time source.
+    /// </para>
+    /// </remarks>
+    /// <param name="services">
+    /// The service collection to configure.
+    /// </param>
+    /// <returns>
+    /// The configured <see cref="IServiceCollection" /> instance.
+    /// </returns>
     extension(IServiceCollection services)
     {
         /// <summary>
-        /// Registers application services into the IServiceCollection and adds the system TimeProvider.
+        /// Adds the application-layer service registrations to the service collection.
         /// </summary>
-        /// <remarks>Scans the assembly containing OspedaleService and registers classes with names ending in 'Service' 
-        /// as their implemented interfaces with scoped lifetime. Also registers TimeProvider.System as a singleton.</remarks>
-        /// <returns>The IServiceCollection with the registered services.</returns>
+        /// <remarks>
+        /// This method applies convention-based registration for application services and registers
+        /// the system time provider for use throughout the application.
+        /// </remarks>
+        /// <returns>
+        /// The configured <see cref="IServiceCollection" /> instance.
+        /// </returns>
         public IServiceCollection AddRegistroServiziApplication()
         {
             services.Scan(scan => scan

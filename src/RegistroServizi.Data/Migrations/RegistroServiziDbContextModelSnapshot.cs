@@ -312,7 +312,7 @@ namespace RegistroServizi.Data.Migrations
                                 .HasDefaultValue(0.0);
                         });
 
-                    b.ComplexProperty(typeof(Dictionary<string, object>), "Indirizzo", "RegistroServizi.Domain.Entities.Ospedale.Indirizzo#Indirizzo", b1 =>
+                    b.ComplexProperty(typeof(Dictionary<string, object>), "Ubicazione", "RegistroServizi.Domain.Entities.Ospedale.Ubicazione#Ubicazione", b1 =>
                         {
                             b1.IsRequired();
 
@@ -321,20 +321,20 @@ namespace RegistroServizi.Data.Migrations
                                 .HasColumnType("int")
                                 .HasDefaultValue(0);
 
-                            b1.Property<string>("Citta")
+                            b1.Property<string>("Comune")
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("Indirizzo")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
 
                             b1.Property<string>("Provincia")
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
-
-                            b1.Property<string>("Strada")
-                                .IsRequired()
-                                .HasMaxLength(200)
-                                .HasColumnType("nvarchar(200)");
                         });
 
                     b.HasKey("Id");

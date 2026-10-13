@@ -1,29 +1,35 @@
 ﻿namespace RegistroServizi.Application.Options;
 
 /// <summary>
-/// Represents options for creating an administrative user, including username, email, and password.
+/// Configuration values used to create an initial administrative user.
 /// </summary>
-/// <remarks>All properties are required. Validate inputs and handle the password securely according to
-/// application password policies.</remarks>
+/// <remarks>
+/// All properties are required and are intended to be bound from configuration or input during setup.
+/// Validate values before use, and handle the password securely in accordance with application policy.
+/// </remarks>
 public class AdminUserOptions
 {
     /// <summary>
-    /// The username of the user account.
+    /// Gets or sets the administrative user's login name.
     /// </summary>
-    /// <remarks>Decorated with [Required] for model validation. Initialized to an empty string to avoid null;
-    /// model validation will treat empty strings as invalid unless AllowEmptyStrings is true.</remarks>
+    /// <remarks>
+    /// This value is required and defaults to an empty string to avoid null references during binding.
+    /// </remarks>
     [Required] public string UserName { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the user's email address.
+    /// Gets or sets the administrative user's email address.
     /// </summary>
-    /// <remarks>Marked with [Required]. Initialized to an empty string.</remarks>
+    /// <remarks>
+    /// This value is required and defaults to an empty string to avoid null references during binding.
+    /// </remarks>
     [Required] public string Email { get; set; } = string.Empty;
 
     /// <summary>
-    /// The account password.
+    /// Gets or sets the administrative user's password.
     /// </summary>
-    /// <remarks>Required. Handle securely: avoid logging, minimize time in memory, and persist only after
-    /// hashing or using a secure credential store.</remarks>
+    /// <remarks>
+    /// This value is required. Do not log it or persist it in plain text; hash or store it securely as soon as possible.
+    /// </remarks>
     [Required] public string Password { get; set; } = string.Empty;
 }

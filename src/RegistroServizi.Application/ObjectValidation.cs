@@ -1,21 +1,26 @@
 ﻿namespace RegistroServizi.Application;
 
 /// <summary>
-/// Provides internal helper methods to validate argument values (strings, GUIDs, and nullable integers).
+/// Provides internal helper methods for validating common argument values.
 /// </summary>
-/// <remarks>Validation methods throw ArgumentException or ArgumentOutOfRangeException for invalid values;
-/// intended for internal use.</remarks>
+/// <remarks>
+/// These helpers are intended for use within the application layer only and throw
+/// <see cref="ArgumentException"/> or <see cref="ArgumentOutOfRangeException"/> when validation fails.
+/// </remarks>
 internal static class ObjectValidation
 {
     /// <summary>
-    /// Validates that a string is not null, empty, or consists only of white-space characters.
+    /// Ensures that a string value is not <see langword="null"/>, empty, or whitespace-only.
     /// </summary>
-    /// <remarks>Uses ArgumentException for null, empty, or white-space values; supply a specific message and
-    /// parameter name for clearer diagnostics.</remarks>
-    /// <param name="value">The string to validate.</param>
-    /// <param name="message">The message to include in the ArgumentException if validation fails.</param>
-    /// <param name="paramName">The name of the parameter to include in the ArgumentException.</param>
-    /// <exception cref="ArgumentException">Thrown when value is null, empty, or consists only of white-space characters.</exception>
+    /// <param name="value">The string value to validate.</param>
+    /// <param name="message">The exception message to use when validation fails.</param>
+    /// <param name="paramName">The parameter name associated with the exception.</param>
+    /// <exception cref="ArgumentException">
+    /// Thrown when <paramref name="value"/> is <see langword="null"/>, empty, or contains only whitespace.
+    /// </exception>
+    /// <remarks>
+    /// Use this method when a meaningful, non-blank string value is required.
+    /// </remarks>
     internal static void ValidateNotNullOrWhiteSpace(string? value, string message, string paramName)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -25,12 +30,14 @@ internal static class ObjectValidation
     }
 
     /// <summary>
-    /// Validates that the specified GUID is not Guid.Empty.
+    /// Ensures that a <see cref="Guid"/> value is not <see cref="Guid.Empty"/>.
     /// </summary>
-    /// <param name="value">The GUID to validate.</param>
-    /// <param name="message">The error message for the ArgumentException.</param>
-    /// <param name="paramName">The name of the parameter to associate with the ArgumentException.</param>
-    /// <exception cref="ArgumentException">Thrown when the specified GUID equals Guid.Empty.</exception>
+    /// <param name="value">The GUID value to validate.</param>
+    /// <param name="message">The exception message to use when validation fails.</param>
+    /// <param name="paramName">The parameter name associated with the exception.</param>
+    /// <exception cref="ArgumentException">
+    /// Thrown when <paramref name="value"/> equals <see cref="Guid.Empty"/>.
+    /// </exception>
     internal static void ValidateGuidNotEmpty(Guid value, string message, string paramName)
     {
         if (value == Guid.Empty)
@@ -40,20 +47,22 @@ internal static class ObjectValidation
     }
 
     /// <summary>
-    /// Validates that value is null or greater than or equal to zero. Throws ArgumentOutOfRangeException when value is
-    /// less than zero.
+    /// Ensures that a nullable integer value is either <see langword="null"/> or greater than or equal to zero.
     /// </summary>
-    /// <remarks>Null values are considered valid.</remarks>
-    /// <param name="value">Nullable integer to validate. Null is permitted; values must be >= 0.</param>
-    /// <param name="message">Error message to include in the thrown exception.</param>
-    /// <param name="paramName">Name of the parameter to include in the thrown exception.</param>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when value is less than zero. The exception includes the parameter name, the actual value, and the
-    /// provided message.</exception>
+    /// <param name="value">The nullable integer value to validate.</param>
+    /// <param name="message">The exception message to use when validation fails.</param>
+    /// <param name="paramName">The parameter name associated with the exception.</param>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Thrown when <paramref name="value"/> is less than zero.
+    /// </exception>
+    /// <remarks>
+    /// A <see langword="null"/> value is considered valid.
+    /// </remarks>
     internal static void ValidateIntegerGreaterOrEqualThanZero(int? value, string message, string paramName)
     {
-        if (value < 0)
+        if (value.HasValue && value.Value < 0)
         {
-            throw new ArgumentOutOfRangeException(paramName, value, message);
+            throw new ArgumentOutOfRangeException(paramName, value.Value, message);
         }
     }
 }

@@ -1,31 +1,45 @@
 ﻿namespace RegistroServizi.Data;
 
 /// <summary>
-/// Provides extension methods to register and configure RegistroServizi data services and related persistence
-/// components in an IServiceCollection.
+/// Registers the data access services for the RegistroServizi application.
 /// </summary>
-/// <remarks>Registers RegistroServiziDbContext, a DbContextFactory, and IRegistroServiziDbContext. Configures SQL
-/// Server options (retry on failure, migrations assembly and history table, query splitting, compatibility level),
-/// logging, error and sensitive-data settings, warning configuration, and no-tracking query behavior. Uses the
-/// connection string name 'SqlServerConnection' by default and will throw InvalidOperationException if the connection
-/// string is not found.</remarks>
+/// <remarks>
+/// Adds the Entity Framework Core <see cref="RegistroServiziDbContext"/>,
+/// a scoped <see cref="IDbContextFactory{TContext}"/>, and the
+/// <see cref="IRegistroServiziDbContext"/> abstraction to the service container.
+/// Also configures SQL Server persistence with retry handling, split-query behavior,
+/// compatibility level settings, logging, and no-tracking queries.
+/// </remarks>
 public static class DependencyInjection
 {
     extension(IServiceCollection services)
     {
         /// <summary>
-        /// Adds and configures RegistroServiziDbContext, its factory, and related services using a SQL Server
-        /// connection string.
+        /// Adds and configures the RegistroServizi data layer services.
         /// </summary>
-        /// <remarks>Registers RegistroServiziDbContext and a DbContextFactory with scoped lifetimes, maps
-        /// IRegistroServiziDbContext to RegistroServiziDbContext, and configures SQL Server options including retry on
-        /// failure, migrations assembly and history table, query splitting behavior, compatibility level, logging,
-        /// detailed error and sensitive data logging settings, warning suppression for pending model changes, and
-        /// NoTracking query behavior.</remarks>
-        /// <param name="configuration">Application configuration used to retrieve the connection string.</param>
-        /// <param name="sqlConnection">Name of the connection string in configuration. Defaults to 'SqlServerConnection'.</param>
-        /// <returns>The IServiceCollection after registering the database context and related services.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when the specified connection string is not found in the configuration.</exception>
+        /// <param name="configuration">
+        /// The application configuration used to resolve the database connection string.
+        /// </param>
+        /// <param name="sqlConnection">
+        /// The name of the connection string to read from configuration.
+        /// The default value is <c>SqlServerConnection</c>.
+        /// </param>
+        /// <returns>
+        /// The same <see cref="IServiceCollection"/> instance so additional registrations can be chained.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown when the specified connection string cannot be found in configuration.
+        /// </exception>
+        /// <remarks>
+        /// This method:
+        /// <list type="bullet">
+        /// <item><description>Registers <see cref="RegistroServiziDbContext"/> as a scoped service.</description></item>
+        /// <item><description>Registers a scoped <see cref="IDbContextFactory{TContext}"/> for the same context.</description></item>
+        /// <item><description>Maps <see cref="IRegistroServiziDbContext"/> to the concrete context implementation.</description></item>
+        /// <item><description>Configures SQL Server retry behavior, migrations metadata, query splitting, and compatibility level.</description></item>
+        /// <item><description>Enables logging and configures queries to use no-tracking by default.</description></item>
+        /// </list>
+        /// </remarks>
         public IServiceCollection AddRegistroServiziData(IConfiguration configuration, string sqlConnection = "SqlServerConnection")
         {
             var connectionString = configuration.GetConnectionString(sqlConnection) ?? throw new InvalidOperationException($"Connection string '{sqlConnection}' was not found.");

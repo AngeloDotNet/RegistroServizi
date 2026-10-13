@@ -1,20 +1,27 @@
 ﻿namespace RegistroServizi.Application.Options;
 
 /// <summary>
-/// Configuration options that specify an association's full name and abbreviation.
+/// Represents configuration settings for an association.
 /// </summary>
-/// <remarks>Both NomeAssociazione and SiglaAssociazione are required and default to empty strings.</remarks>
+/// <remarks>
+/// These options are typically bound from configuration and require both the full name
+/// and the abbreviation to be provided.
+/// </remarks>
 public class AssociazioneOptions
 {
     /// <summary>
-    /// Name of the association.
+    /// Gets or sets the full name of the association.
     /// </summary>
-    /// <remarks>Marked with [Required] for model validation; defaults to an empty string.</remarks>
+    /// <remarks>
+    /// This value is required and defaults to an empty string until configuration is bound.
+    /// </remarks>
     [Required] public string NomeAssociazione { get; set; } = string.Empty;
 
     /// <summary>
-    /// Abbreviation of the association's name.
+    /// Gets or sets the association abbreviation.
     /// </summary>
-    /// <remarks>Marked with [Required] for model validation; defaults to an empty string.</remarks>
+    /// <remarks>
+    /// This value is required and defaults to an empty string until configuration is bound.
+    /// </remarks>
     [Required] public string SiglaAssociazione { get; set; } = string.Empty;
 }

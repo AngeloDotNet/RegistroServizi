@@ -1,19 +1,25 @@
 ﻿namespace RegistroServizi.Application.Services.Common;
 
 /// <summary>
-/// Includes the TipologiaServizio navigation property to eager-load related entities.
+/// Query extension methods for eager-loading related <see cref="PrezzoServizio"/> data.
 /// </summary>
-/// <remarks>Uses Entity Framework Core's Include for eager loading and supports fluent query
-/// composition.</remarks>
+/// <remarks>
+/// These extensions wrap Entity Framework Core <c>Include</c> calls to keep query composition fluent.
+/// </remarks>
 internal static class QueryableExtensions
 {
     /// <summary>
-    /// Includes the TipologiaServizio navigation property to eager-load related entities.
+    /// Adds the <see cref="PrezzoServizio.TipologiaServizio"/> navigation property to the query.
     /// </summary>
-    /// <remarks>Uses Entity Framework Core's Include for eager loading and supports fluent query
-    /// composition.</remarks>
-    /// <param name="query">The queryable sequence of PrezzoServizio to include related TipologiaServizio entities.</param>
-    /// <returns>An IQueryable<PrezzoServizio> that includes the TipologiaServizio navigation property.</returns>
+    /// <param name="query">
+    /// The source query for <see cref="PrezzoServizio"/> entities.
+    /// </param>
+    /// <returns>
+    /// A query that eagerly loads <see cref="PrezzoServizio.TipologiaServizio"/>.
+    /// </returns>
+    /// <remarks>
+    /// Use this when the related <see cref="TipologiaServizio"/> data is required and should be loaded in the same query.
+    /// </remarks>
     internal static IQueryable<PrezzoServizio> IncludeTipoServizioDetails(this IQueryable<PrezzoServizio> query)
         => query.Include(x => x.TipologiaServizio);
 }

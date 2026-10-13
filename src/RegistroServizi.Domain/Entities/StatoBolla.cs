@@ -1,10 +1,15 @@
 ﻿namespace RegistroServizi.Domain.Entities;
 
 /// <summary>
-/// Represents the state of a delivery note.
+/// Represents the status of a delivery note.
 /// </summary>
-/// <remarks>Inherits from BaseEntity and exposes a Descrizione property for a human-readable label.</remarks>
+/// <remarks>
+/// Inherits from <see cref="BaseEntity"/> and exposes a descriptive label for display purposes.
+/// </remarks>
 public class StatoBolla : BaseEntity
 {
+    /// <summary>
+    /// Gets or sets the human-readable description of the delivery note status.
+    /// </summary>
     public string Descrizione { get; set; } = string.Empty;
 }

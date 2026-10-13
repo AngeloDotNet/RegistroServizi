@@ -1,14 +1,22 @@
 ﻿namespace RegistroServizi.Domain.Entities;
 
 /// <summary>
-/// Represents a service type with a human-readable name and a collection of associated PrezzoServizio entities.
+/// Represents a service category identified by a human-readable name.
 /// </summary>
-/// <remarks>Persistent entity derived from BaseEntity. The PrezziServizi navigation property models a one-to-many
-/// relationship to PrezzoServizio; TipoServizio holds the service name.</remarks>
+/// <remarks>
+/// This entity derives from <see cref="BaseEntity"/> and is related to
+/// multiple <see cref="PrezzoServizio"/> entries through the
+/// <see cref="PrezziServizi"/> navigation property.
+/// </remarks>
 public class TipologiaServizio : BaseEntity
 {
+    /// <summary>
+    /// Gets or sets the display name of the service type.
+    /// </summary>
     public string TipoServizio { get; set; } = string.Empty;
 
-    // Navigation property for PrezzoServizio
+    /// <summary>
+    /// Gets or sets the collection of prices associated with this service type.
+    /// </summary>
     public ICollection<PrezzoServizio> PrezziServizi { get; set; } = [];
 }

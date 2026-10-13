@@ -52,7 +52,7 @@
     margin-right: 10px;
 }
 
-.user-profile {
+/*.user-profile {
     font-size: 0.88rem;
     color: var(--appbar-text-soft);
     max-width: 18ch;
@@ -60,6 +60,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-right: 10px;
+}*/
+
+.user-profile {
+    font-size: 0.88rem;
+    color: var(--appbar-text-soft);
+    max-width: none; /* value: 18ch => limita la larghezza a circa 18 caratteri */
+    overflow: visible;
+    text-overflow: clip;
+    white-space: nowrap;
+    margin-right: 1rem;
+    flex-shrink: 0;
 }
 
 .btn-logout {
@@ -119,7 +130,6 @@
     color: var(--mb-text-secondary);
 }
 
-/*.mudpaper-icon.prezziservizi {*/
 .mudpaper-icon.servicecard {
     background-color: #667eea;
     background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

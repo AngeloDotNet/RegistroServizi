@@ -1,20 +1,23 @@
 ﻿namespace RegistroServizi.Application.Mapping;
 
 /// <summary>
-/// Provides static mapping methods to convert between PrezzoServizio entity and related DTO types.
+/// Provides mapping helpers for <see cref="PrezzoServizio"/> and its DTOs.
 /// </summary>
-/// <remarks>Stateless helper methods that create new instances and do not perform validation. Includes
-/// MapPrezzoServizioToDto to produce a PrezzoServizioDto and MapPrezzoServizioToEntityUpdate to produce a
-/// PrezzoServizio for update operations.</remarks>
+/// <remarks>
+/// This class contains stateless helper methods that create new instances and do not perform validation.
+/// </remarks>
 public static class PrezzoServizioMapper
 {
     /// <summary>
-    /// Map a PrezzoServizio entity to a PrezzoServizioDto.
+    /// Maps a <see cref="PrezzoServizio"/> entity to a <see cref="PrezzoServizioDto"/>.
     /// </summary>
-    /// <remarks>Does not validate the entity; passing null will cause a NullReferenceException.
-    /// TipologiaServizio?.TipoServizio is used with a fallback to an empty string.</remarks>
-    /// <param name="entity">PrezzoServizio instance to map; TipologiaServizio may be null and its TipoServizio defaults to an empty string.</param>
-    /// <returns>A PrezzoServizioDto populated from the entity's properties.</returns>
+    /// <remarks>
+    /// The entity is not validated. Passing <see langword="null"/> results in a <see cref="NullReferenceException"/>.
+    /// If <see cref="PrezzoServizio.TipologiaServizio"/> is <see langword="null"/>, <see cref="PrezzoServizioDto.TipoServizio"/>
+    /// is set to <see cref="string.Empty"/>.
+    /// </remarks>
+    /// <param name="entity">The source entity to map.</param>
+    /// <returns>A new <see cref="PrezzoServizioDto"/> populated from the entity.</returns>
     public static PrezzoServizioDto MapPrezzoServizioToDto(PrezzoServizio entity) => new()
     {
         Id = entity.Id,
@@ -29,11 +32,13 @@ public static class PrezzoServizioMapper
     };
 
     /// <summary>
-    /// Creates a PrezzoServizio entity from an UpdatePrezzoServizioDto for update operations.
+    /// Maps an <see cref="UpdatePrezzoServizioDto"/> to a <see cref="PrezzoServizio"/> entity for update operations.
     /// </summary>
-    /// <remarks>Does not perform validation; dtoUpdate must not be null.</remarks>
-    /// <param name="dtoUpdate">UpdatePrezzoServizioDto containing the identifier and pricing fields to apply to the entity.</param>
-    /// <returns>PrezzoServizio populated with values from dtoUpdate.</returns>
+    /// <remarks>
+    /// The DTO is not validated. Passing <see langword="null"/> results in a <see cref="NullReferenceException"/>.
+    /// </remarks>
+    /// <param name="dtoUpdate">The DTO containing the identifier and pricing values to apply.</param>
+    /// <returns>A new <see cref="PrezzoServizio"/> populated from the DTO.</returns>
     public static PrezzoServizio MapPrezzoServizioToEntityUpdate(UpdatePrezzoServizioDto dtoUpdate) => new()
     {
         Id = dtoUpdate.Id,

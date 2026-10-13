@@ -13,9 +13,16 @@
 
     <ToolBarContent>
         <MudSpacer />
-        <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
-            <MudButton StartIcon="@Icons.Material.Filled.Add" @onclick="ActionCallback" Variant="Variant.Filled" Disabled="@AddButtonIsDisabled">@Localizer["Add"]</MudButton>
-        </MudButtonGroup>
+        @if (ActionCallback.HasDelegate)
+        {
+            <MudButtonGroup Class="ma-0 pa-0" Color="Color.Success" Variant="Variant.Filled">
+                <MudButton StartIcon="@Icons.Material.Filled.Add"
+                            @onclick="ActionCallback"
+                            Variant="Variant.Filled"
+                            Disabled="@DisableAddButton"
+                            Color="@Color.Success">@Localizer["Add"]</MudButton>
+            </MudButtonGroup>
+        }
     </ToolBarContent>
 
     <ColGroup>
@@ -41,8 +48,23 @@
         <TemplateColumn CellClass="d-flex justify-end">
             <CellTemplate>
                 <MudStack Row Style="width: 250px" Justify="Justify.Center">
-                    <MudButton StartIcon="@MudblazorPresets.IconEdit" @onclick="() => ActionEditCallback.InvokeAsync(context.Item)" Variant="Variant.Filled" Color="@Color.Warning" Disabled="@ModifyButtonIsDisabled">@Localizer["Edit"]</MudButton>
-                    <MudButton StartIcon="@MudblazorPresets.IconDelete" @onclick="() => ActionDeleteCallback.InvokeAsync(context.Item)" Variant="Variant.Filled" Color="@Color.Error" Disabled="@DeleteButtonIsDisabled">@Localizer["Delete"]</MudButton>
+                    @if (ActionEditCallback.HasDelegate)
+                    {
+                        <MudButton StartIcon="@MudblazorPresets.IconEdit"
+                                    @onclick="() => ActionEditCallback.InvokeAsync(context.Item)"
+                                    Variant="Variant.Filled"
+                                    Disabled="@DisableEditButton"
+                                    Color="@Color.Warning">@Localizer["Edit"]</MudButton>
+                    }
+
+                    @if (ActionDeleteCallback.HasDelegate)
+                    {
+                        <MudButton StartIcon="@MudblazorPresets.IconDelete"
+                                    @onclick="() => ActionDeleteCallback.InvokeAsync(context.Item)"
+                                    Variant="Variant.Filled"
+                                    Disabled="@DisableDeleteButton"
+                                    Color="@Color.Error">@Localizer["Delete"]</MudButton>
+                    }
                 </MudStack>
             </CellTemplate>
         </TemplateColumn>

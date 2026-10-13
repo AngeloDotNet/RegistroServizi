@@ -1,61 +1,78 @@
 ﻿namespace RegistroServizi.Application.Mapping;
 
 /// <summary>
-/// Provides methods to map between Ospedale domain entities and their DTO representations.
+/// Maps <see cref="Ospedale"/> domain entities to DTOs and creates <see cref="Ospedale"/> entities from DTOs.
 /// </summary>
-/// <remarks>Stateless mapping helpers for converting an Ospedale to OspedaleDto and for creating or updating
-/// Ospedale entities from CreateOspedaleDto and UpdateOspedaleDto. Create mapping generates a new Guid for Id; address
-/// postal code (Cap) defaults to 0 when null; Coordinate is initialized to (0, 0).</remarks>
+/// <remarks>
+/// This mapper is stateless and contains only conversion helpers for:
+/// <list type="bullet">
+/// <item><description>Mapping <see cref="Ospedale"/> to <see cref="OspedaleDto"/>.</description></item>
+/// <item><description>Creating <see cref="Ospedale"/> from <see cref="CreateOspedaleDto"/>.</description></item>
+/// <item><description>Creating <see cref="Ospedale"/> from <see cref="UpdateOspedaleDto"/>.</description></item>
+/// </list>
+/// <para>
+/// When mapping from DTOs, <c>Cap</c> defaults to <c>0</c> when null and <see cref="Coordinate"/> is initialized to
+/// <c>(0, 0)</c>.
+/// </para>
+/// </remarks>
 public static class OspedaleMapper
 {
     /// <summary>
-    /// Maps an Ospedale to an OspedaleDto, including its Indirizzo mapped to an IndirizzoDto.
+    /// Maps an <see cref="Ospedale"/> to an <see cref="OspedaleDto"/>.
     /// </summary>
-    /// <remarks>Does not validate input; will throw a NullReferenceException if ospedale or
-    /// ospedale.Indirizzo is null.</remarks>
-    /// <param name="ospedale">Ospedale to map to a DTO.</param>
-    /// <returns>An OspedaleDto with Id, NomeOspedale and Indirizzo mapped; Indirizzo.Cap defaults to 0 when null.</returns>
+    /// <param name="ospedale">The hospital entity to map.</param>
+    /// <returns>A DTO containing the mapped hospital data, including the nested address.</returns>
+    /// <remarks>
+    /// <paramref name="ospedale"/> and <c>ospedale.Indirizzo</c> are expected to be non-null.
+    /// <c>Cap</c> is set to <c>0</c> when the source value is null.
+    /// </remarks>
     public static OspedaleDto MapOspedaleToDto(Ospedale ospedale) => new OspedaleDto
     {
         Id = ospedale.Id,
         NomeOspedale = ospedale.NomeOspedale,
-        Indirizzo = new IndirizzoDto
+        Ubicazione = new UbicazioneDto
         {
-            Strada = ospedale.Indirizzo.Strada,
-            Citta = ospedale.Indirizzo.Citta,
-            Provincia = ospedale.Indirizzo.Provincia,
-            Cap = ospedale.Indirizzo.Cap ?? 0
+            Indirizzo = ospedale.Ubicazione.Indirizzo,
+            Comune = ospedale.Ubicazione.Comune,
+            Provincia = ospedale.Ubicazione.Provincia,
+            Cap = ospedale.Ubicazione.Cap ?? 0
         }
     };
 
     /// <summary>
-    /// Creates an Ospedale entity from a CreateOspedaleDto, generating a new Id, mapping the name and address, and
-    /// initializing coordinates to (0,0).
+    /// Creates a new <see cref="Ospedale"/> from a <see cref="CreateOspedaleDto"/>.
     /// </summary>
-    /// <remarks>Indirizzo.Cap defaults to 0 when null; Coordinate is initialized to (0,0).</remarks>
-    /// <param name="dtoCreate">CreateOspedaleDto containing hospital name and address information used to populate the entity.</param>
-    /// <returns>A new Ospedale instance with a generated Id, mapped NomeOspedale and Indirizzo, and default Coordinate values.</returns>
+    /// <param name="dtoCreate">The DTO containing the data used to create the entity.</param>
+    /// <returns>
+    /// A new <see cref="Ospedale"/> with a generated <see cref="Ospedale.Id"/>,
+    /// mapped address values, and default coordinates.
+    /// </returns>
+    /// <remarks>
+    /// <c>Cap</c> defaults to <c>0</c> when null.
+    /// </remarks>
     public static Ospedale MapOspedaleToEntityCreate(CreateOspedaleDto dtoCreate) => new Ospedale
     {
         Id = Guid.NewGuid(),
         NomeOspedale = dtoCreate.NomeOspedale,
-        Indirizzo = new Indirizzo(dtoCreate.Indirizzo.Strada, dtoCreate.Indirizzo.Citta, dtoCreate.Indirizzo.Provincia, dtoCreate.Indirizzo.Cap ?? 0),
+        Ubicazione = new Ubicazione(dtoCreate.Ubicazione.Indirizzo, dtoCreate.Ubicazione.Comune, dtoCreate.Ubicazione.Provincia, dtoCreate.Ubicazione.Cap),
         Coordinate = new Coordinate(0, 0)
     };
 
     /// <summary>
-    /// Creates a new Ospedale entity from an UpdateOspedaleDto, copying Id and NomeOspedale and constructing Indirizzo
-    /// from the DTO.
+    /// Creates a new <see cref="Ospedale"/> from an <see cref="UpdateOspedaleDto"/>.
     /// </summary>
-    /// <remarks>Indirizzo.Cap is coalesced to 0 if null; Coordinate is initialized to (0, 0).</remarks>
-    /// <param name="dtoUpdate">DTO containing Id, NomeOspedale and Indirizzo; Indirizzo.Cap may be null and is defaulted to 0 when constructing
-    /// the entity.</param>
-    /// <returns>A new Ospedale instance populated from dtoUpdate for update operations.</returns>
+    /// <param name="dtoUpdate">The DTO containing the updated hospital data.</param>
+    /// <returns>
+    /// A new <see cref="Ospedale"/> populated with the DTO values, including the original identifier.
+    /// </returns>
+    /// <remarks>
+    /// <c>Cap</c> defaults to <c>0</c> when null.
+    /// </remarks>
     public static Ospedale MapOspedaleToEntityUpdate(UpdateOspedaleDto dtoUpdate) => new Ospedale
     {
         Id = dtoUpdate.Id,
         NomeOspedale = dtoUpdate.NomeOspedale,
-        Indirizzo = new Indirizzo(dtoUpdate.Indirizzo.Strada, dtoUpdate.Indirizzo.Citta, dtoUpdate.Indirizzo.Provincia, dtoUpdate.Indirizzo.Cap ?? 0),
+        Ubicazione = new Ubicazione(dtoUpdate.Ubicazione.Indirizzo, dtoUpdate.Ubicazione.Comune, dtoUpdate.Ubicazione.Provincia, dtoUpdate.Ubicazione.Cap),
         Coordinate = new Coordinate(0, 0)
     };
 }

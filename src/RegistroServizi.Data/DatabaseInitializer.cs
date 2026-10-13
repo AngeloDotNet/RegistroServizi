@@ -1,25 +1,25 @@
 ﻿namespace RegistroServizi.Data;
 
 /// <summary>
-/// Applies pending EF Core migrations and seeds required initial data (roles, default administrator, application
-/// metadata, service types, service prices, statuses, education titles, and hospitals) using a provided
-/// IServiceProvider.
+/// Applies pending EF Core migrations and seeds the initial application data required to run RegistroServizi.
 /// </summary>
-/// <remarks>Creates a scoped service provider to resolve the DbContext, UserManager, RoleManager, and ILogger.
-/// Operations are idempotent and skip seeding when data already exists; migrations are applied only when pending. Logs
-/// progress and throws on unrecoverable errors such as failed migrations or role creation.</remarks>
+/// <remarks>
+/// This initializer creates a scoped service provider, resolves the database context, identity managers, and logger,
+/// then performs migrations only when pending. Seeding operations are designed to be idempotent and will skip work
+/// when the target data already exists. Any unrecoverable error is logged and rethrown.
+/// </remarks>
 public static class DatabaseInitializer
 {
     /// <summary>
-    /// Applies pending Entity Framework Core migrations and seeds initial application data using the provided service
-    /// provider.
+    /// Applies pending Entity Framework Core migrations and seeds the application's baseline data set.
     /// </summary>
-    /// <remarks>Creates a service scope, resolves RegistroServiziDbContext and
-    /// ILogger<RegistroServiziDbContext>, applies pending migrations if any, invokes seed methods for roles, default
-    /// users, Applicazione, TipologiaServizio, PrezzoServizio, StatiBolla, TitoliStudio, Ospedali, and Colonnine, 
-    /// logs progress and logs and rethrows exceptions.</remarks>
-    /// <param name="services">Service provider used to create a scope and resolve required services for database migration and data seeding.</param>
-    /// <returns>A task that completes when migrations and seeding are finished.</returns>
+    /// <remarks>
+    /// The initializer resolves <see cref="RegistroServiziDbContext"/>, applies pending migrations if any are found,
+    /// and then seeds roles, the default administrator user, and reference data for service types, service prices,
+    /// statuses, education titles, and hospitals. Colonnine seeding is currently disabled.
+    /// </remarks>
+    /// <param name="services">The root service provider used to create a scope and resolve required services.</param>
+    /// <returns>A task that represents the asynchronous migration and seeding operation.</returns>
     public static async Task MigrateAsync(IServiceProvider services)
     {
         using var scope = services.CreateScope();
@@ -74,13 +74,20 @@ public static class DatabaseInitializer
     }
 
     /// <summary>
-    /// Default role names used for initial role assignment.
+    /// The default application roles created during initialization.
     /// </summary>
-    /// <remarks>Contains two role names: Admin and Manager. Values are obtained via nameof(Role.*) to stay
-    /// synchronized with the Role enum.</remarks>
-    //private static readonly string[] defaultRoles = { nameof(Role.Admin), nameof(Role.Manager), nameof(Role.Operator) };
+    /// <remarks>
+    /// The values are derived from <c>nameof(Role.*)</c> to keep them aligned with the role enumeration.
+    /// </remarks>
     private static readonly string[] defaultRoles = { nameof(Role.Admin), nameof(Role.Manager) };
 
+    /// <summary>
+    /// Ensures the default identity roles exist.
+    /// </summary>
+    /// <param name="services">The scoped service provider used to resolve <see cref="RoleManager{TRole}"/>.</param>
+    /// <param name="logger">The logger used to record seeding progress and failures.</param>
+    /// <returns>A task that represents the asynchronous role-seeding operation.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when a role cannot be created successfully.</exception>
     private static async Task SeedRolesAsync(IServiceProvider services, ILogger logger)
     {
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
@@ -105,6 +112,16 @@ public static class DatabaseInitializer
         }
     }
 
+    /// <summary>
+    /// Creates the default administrator account if it does not already exist.
+    /// </summary>
+    /// <remarks>
+    /// The administrator credentials are read from <see cref="AdminUserOptions"/>. If the user is created
+    /// successfully, the account is assigned the <c>Admin</c> and <c>Manager</c> roles.
+    /// </remarks>
+    /// <param name="services">The scoped service provider used to resolve user-management services and options.</param>
+    /// <param name="logger">The logger used to record seeding progress.</param>
+    /// <returns>A task that represents the asynchronous user-seeding operation.</returns>
     private static async Task SeedDefaultUsersAsync(IServiceProvider services, ILogger logger)
     {
         var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
@@ -136,6 +153,12 @@ public static class DatabaseInitializer
         }
     }
 
+    /// <summary>
+    /// Seeds the <c>TipologieServizio</c> reference table with the application's default service types.
+    /// </summary>
+    /// <param name="services">The scoped service provider used to resolve <see cref="RegistroServiziDbContext"/>.</param>
+    /// <param name="logger">The logger used to record seeding progress.</param>
+    /// <returns>A task that represents the asynchronous seeding operation.</returns>
     private static async Task SeedDataTipologiaServizioAsync(IServiceProvider services, ILogger logger)
     {
         var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
@@ -164,6 +187,15 @@ public static class DatabaseInitializer
         await dbContext.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Seeds the <c>PrezziServizi</c> table with a default price record for each service type.
+    /// </summary>
+    /// <remarks>
+    /// If no service types are available, the method logs a warning and exits without creating records.
+    /// </remarks>
+    /// <param name="services">The scoped service provider used to resolve <see cref="RegistroServiziDbContext"/>.</param>
+    /// <param name="logger">The logger used to record seeding progress and warnings.</param>
+    /// <returns>A task that represents the asynchronous seeding operation.</returns>
     private static async Task SeedDataPrezziServiziAsync(IServiceProvider services, ILogger logger)
     {
         var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
@@ -201,6 +233,12 @@ public static class DatabaseInitializer
         await dbContext.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Seeds the <c>StatiBolla</c> table with the default transport status values.
+    /// </summary>
+    /// <param name="services">The scoped service provider used to resolve <see cref="RegistroServiziDbContext"/>.</param>
+    /// <param name="logger">The logger used to record seeding progress.</param>
+    /// <returns>A task that represents the asynchronous seeding operation.</returns>
     private static async Task SeedDataStatiBollaAsync(IServiceProvider services, ILogger logger)
     {
         var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
@@ -228,6 +266,12 @@ public static class DatabaseInitializer
         await dbContext.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Seeds the <c>TitoliStudio</c> table with the default education titles used by the application.
+    /// </summary>
+    /// <param name="services">The scoped service provider used to resolve <see cref="RegistroServiziDbContext"/>.</param>
+    /// <param name="logger">The logger used to record seeding progress.</param>
+    /// <returns>A task that represents the asynchronous seeding operation.</returns>
     private static async Task SeedDataTitoliStudioAsync(IServiceProvider services, ILogger logger)
     {
         var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
@@ -256,6 +300,12 @@ public static class DatabaseInitializer
         await dbContext.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Seeds the <c>Ospedali</c> table with the default hospital records required by the application.
+    /// </summary>
+    /// <param name="services">The scoped service provider used to resolve <see cref="RegistroServiziDbContext"/>.</param>
+    /// <param name="logger">The logger used to record seeding progress.</param>
+    /// <returns>A task that represents the asynchronous seeding operation.</returns>
     private static async Task SeedDataOspedaliAsync(IServiceProvider services, ILogger logger)
     {
         var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
@@ -268,10 +318,11 @@ public static class DatabaseInitializer
 
         var ospedali = new List<Ospedale>
         {
-            new Ospedale {
+            new Ospedale
+            {
                 Id = Guid.NewGuid(),
                 NomeOspedale = "H. Galmarini",
-                Indirizzo = new Indirizzo("Via Angelo Zanaboni 1", "Tradate", "VA", 21049),
+                Ubicazione = new Ubicazione("Via Angelo Zanaboni 1", "Tradate", "VA", 21049),
                 Coordinate = new Coordinate(45.722205, 8.900592)
             }
         };
@@ -280,6 +331,15 @@ public static class DatabaseInitializer
         await dbContext.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// Seeds the <c>Colonnine</c> table with the default location records for service columns.
+    /// </summary>
+    /// <remarks>
+    /// This method is currently not invoked by <see cref="MigrateAsync(IServiceProvider)"/>.
+    /// </remarks>
+    /// <param name="services">The scoped service provider used to resolve <see cref="RegistroServiziDbContext"/>.</param>
+    /// <param name="logger">The logger used to record seeding progress.</param>
+    /// <returns>A task that represents the asynchronous seeding operation.</returns>
     private static async Task SeedDataColonnineAsync(IServiceProvider services, ILogger logger)
     {
         var dbContext = services.GetRequiredService<RegistroServiziDbContext>();

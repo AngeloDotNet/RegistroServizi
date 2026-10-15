@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Web;
+﻿using RegistroServizi.Web.Configuration.Options;
+
+namespace RegistroServizi.Web;
 
 /// <summary>
 /// Provides extension methods for registering application configuration, authentication, and proxy-related services.
@@ -8,12 +10,19 @@ public static class DependencyInjection
     extension(IServiceCollection services)
     {
         /// <summary>
-        /// Binds an options type to a configuration section, validates its data annotations, and fails fast on startup if invalid.
+        /// Binds an options type to a configuration section, validates its data annotations, and validates it when the
+        /// application starts.
         /// </summary>
         /// <typeparam name="TOptions">The options type to bind and validate.</typeparam>
         /// <param name="configuration">The application configuration source.</param>
         /// <param name="sectionName">The name of the configuration section that contains the options values.</param>
-        /// <returns>An <see cref="OptionsBuilder{TOptions}"/> that can be further configured.</returns>
+        /// <returns>
+        /// An <see cref="OptionsBuilder{TOptions}"/> that can be used to apply additional configuration or validation.
+        /// </returns>
+        /// <remarks>
+        /// Startup validation prevents the application from running with invalid configuration and makes configuration
+        /// errors visible during application startup rather than during the first use of the options.
+        /// </remarks>
         public OptionsBuilder<TOptions> ConfigureAndValidate<TOptions>(IConfiguration configuration, string sectionName) where TOptions : class
         {
             return services.AddOptions<TOptions>()
@@ -23,19 +32,20 @@ public static class DependencyInjection
         }
 
         /// <summary>
-        /// Registers and validates application configuration options.
+        /// Registers and validates the application configuration options used by the web application.
         /// </summary>
+        /// <param name="configuration">The application configuration source.</param>
+        /// <returns>The same <see cref="IServiceCollection"/> instance for chaining.</returns>
         /// <remarks>
-        /// The following options are bound from configuration and validated at startup:
+        /// The following options are bound from configuration and validated when the application starts:
         /// <list type="bullet">
         /// <item><description><see cref="ApplicazioneOptions"/></description></item>
         /// <item><description><see cref="AdminUserOptions"/></description></item>
         /// <item><description><see cref="AssociazioneOptions"/></description></item>
         /// <item><description><see cref="MudBlazorDataGridOptions"/></description></item>
+        /// <item><description><see cref="LocalizationCustomOptions"/></description></item>
         /// </list>
         /// </remarks>
-        /// <param name="configuration">The application configuration source.</param>
-        /// <returns>The same <see cref="IServiceCollection"/> instance for chaining.</returns>
         public IServiceCollection AddConfigurationOptions(IConfiguration configuration)
         {
             services.ConfigureAndValidate<ApplicazioneOptions>(configuration, nameof(ApplicazioneOptions));
@@ -52,14 +62,29 @@ public static class DependencyInjection
         /// <summary>
         /// Registers authentication, ASP.NET Core Identity, and application cookie settings.
         /// </summary>
-        /// <remarks>
-        /// Identity settings are read from the <c>Identity</c> configuration section.
-        /// Cookie security is relaxed for development environments and enforced in non-development environments.
-        /// </remarks>
         /// <param name="configuration">The application configuration source.</param>
-        /// <param name="isDevelopment">Indicates whether the application is running in a development environment.</param>
+        /// <param name="isDevelopment">
+        /// <see langword="true"/> when the application is running in a development environment; otherwise,
+        /// <see langword="false"/>.
+        /// </param>
+        /// <param name="identitySection">
+        /// The configuration section containing ASP.NET Core Identity settings.
+        /// </param>
         /// <returns>The same <see cref="IServiceCollection"/> instance for chaining.</returns>
-        public IServiceCollection AddRegistroServiziAuth(IConfiguration configuration, bool isDevelopment, IConfigurationSection identitySection)
+        /// <remarks>
+        /// Identity settings are read from the supplied configuration section. The method registers
+        /// <see cref="ApplicationUser"/> with <see cref="IdentityRole"/>, persists Identity data through
+        /// <see cref="RegistroServiziDbContext"/>, and adds the default sign-in manager and token providers.
+        /// <para>
+        /// Application cookies use <see cref="SameSiteMode.Lax"/> and are HTTP-only. Secure cookies are required
+        /// outside development environments to prevent authentication cookies from being transmitted over an
+        /// unencrypted connection.
+        /// </para>
+        /// </remarks>
+        public IServiceCollection AddRegistroServiziAuth(
+            IConfiguration configuration,
+            bool isDevelopment,
+            IConfigurationSection identitySection)
         {
             services.AddAuthentication(options =>
             {
@@ -101,13 +126,32 @@ public static class DependencyInjection
         /// <summary>
         /// Registers proxy-related infrastructure services used when the application runs behind a reverse proxy.
         /// </summary>
-        /// <remarks>
-        /// This configuration enables support for <c>X-Forwarded-For</c> and <c>X-Forwarded-Proto</c>,
-        /// clears known proxies and networks so proxy-aware deployments can be configured externally,
-        /// configures HSTS, and applies antiforgery cookie security settings based on the current environment.
-        /// </remarks>
         /// <param name="configuration">The application configuration source.</param>
+        /// <param name="isDevelopment">
+        /// <see langword="true"/> when the application is running in a development environment; otherwise,
+        /// <see langword="false"/>.
+        /// </param>
         /// <returns>The same <see cref="IServiceCollection"/> instance for chaining.</returns>
+        /// <remarks>
+        /// This configuration enables support for <c>X-Forwarded-For</c> and <c>X-Forwarded-Proto</c>, allowing
+        /// ASP.NET Core to reconstruct the original client address and request scheme when requests pass through
+        /// a reverse proxy.
+        /// <para>
+        /// Known proxies and networks are cleared so the deployment can configure trusted proxy infrastructure
+        /// externally. The hosting environment must ensure that forwarded headers are accepted only from trusted
+        /// proxies.
+        /// </para>
+        /// <para>
+        /// HSTS is configured with a maximum age of 60 days. Antiforgery cookies use relaxed secure-cookie behavior
+        /// during development and require HTTPS elsewhere.
+        /// </para>
+        /// <para>
+        /// For additional details, see the
+        /// <see href="https://learn.microsoft.com/aspnet/core/host-and-deploy/proxy-load-balancer">
+        /// ASP.NET Core proxy and load-balancer guidance
+        /// </see>.
+        /// </para>
+        /// </remarks>
         public IServiceCollection AddRegistroServiziProxy(IConfiguration configuration, bool isDevelopment)
         {
             services.Configure<ForwardedHeadersOptions>(options =>

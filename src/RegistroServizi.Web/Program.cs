@@ -63,7 +63,7 @@ public class Program
         builder.Services.AddScoped<DataGridHelper>();
 
         builder.Services.AddRegistroServiziData(builder.Configuration);
-        builder.Services.AddRegistroServiziAuth(builder.Configuration, isDevelopment, identityConfig);
+        builder.Services.AddRegistroServiziAuth(isDevelopment, identityConfig);
 
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();

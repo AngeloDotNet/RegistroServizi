@@ -1,6 +1,4 @@
-﻿using RegistroServizi.Web.Configuration.Options;
-
-namespace RegistroServizi.Web;
+﻿namespace RegistroServizi.Web;
 
 /// <summary>
 /// Provides extension methods for registering application configuration, authentication, and proxy-related services.
@@ -42,7 +40,7 @@ public static class DependencyInjection
         /// <item><description><see cref="ApplicazioneOptions"/></description></item>
         /// <item><description><see cref="AdminUserOptions"/></description></item>
         /// <item><description><see cref="AssociazioneOptions"/></description></item>
-        /// <item><description><see cref="MudBlazorDataGridOptions"/></description></item>
+        /// <item><description><see cref="MudDataGridOptions"/></description></item>
         /// <item><description><see cref="LocalizationCustomOptions"/></description></item>
         /// </list>
         /// </remarks>
@@ -52,7 +50,7 @@ public static class DependencyInjection
             services.ConfigureAndValidate<AdminUserOptions>(configuration, nameof(AdminUserOptions));
 
             services.ConfigureAndValidate<AssociazioneOptions>(configuration, nameof(AssociazioneOptions));
-            services.ConfigureAndValidate<MudBlazorDataGridOptions>(configuration, MudBlazorDataGridOptions.SectionName);
+            services.ConfigureAndValidate<MudDataGridOptions>(configuration, MudDataGridOptions.SectionName);
 
             services.ConfigureAndValidate<LocalizationCustomOptions>(configuration, LocalizationCustomOptions.SectionName);
 
@@ -81,10 +79,7 @@ public static class DependencyInjection
         /// unencrypted connection.
         /// </para>
         /// </remarks>
-        public IServiceCollection AddRegistroServiziAuth(
-            IConfiguration configuration,
-            bool isDevelopment,
-            IConfigurationSection identitySection)
+        public IServiceCollection AddRegistroServiziAuth(bool isDevelopment, IConfigurationSection identitySection)
         {
             services.AddAuthentication(options =>
             {
@@ -96,19 +91,11 @@ public static class DependencyInjection
             {
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SameSite = SameSiteMode.Lax;
-                //options.Cookie.SecurePolicy = configuration.GetValue("Environment:IsDevelopment", false) ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
                 options.Cookie.SecurePolicy = isDevelopment ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
             });
 
-            //var identityConfig = configuration.GetSection("Identity");
-
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-                //options.SignIn.RequireConfirmedAccount = identityConfig.GetValue("RequireConfirmedAccount", false);
-                //options.Lockout.AllowedForNewUsers = identityConfig.GetValue("AllowedForNewUsers", true);
-                //options.Lockout.MaxFailedAccessAttempts = identityConfig.GetValue("MaxFailedAccessAttempts", 5);
-                //options.Lockout.DefaultLockoutTimeSpan = identityConfig.GetValue("DefaultLockoutTimeSpan", TimeSpan.FromMinutes(15));
-                //options.Password.RequiredLength = identityConfig.GetValue("Password:RequiredLength", 10);
                 options.SignIn.RequireConfirmedAccount = identitySection.GetValue("RequireConfirmedAccount", false);
                 options.Lockout.AllowedForNewUsers = identitySection.GetValue("AllowedForNewUsers", true);
                 options.Lockout.MaxFailedAccessAttempts = identitySection.GetValue("MaxFailedAccessAttempts", 3);
@@ -161,16 +148,15 @@ public static class DependencyInjection
                 options.KnownProxies.Clear();
             });
 
-            services.AddHsts(options =>
-            {
-                options.MaxAge = TimeSpan.FromDays(60);
-            });
+            services.AddHsts(options => options.MaxAge = TimeSpan.FromDays(60));
+            //{
+            //    options.MaxAge = TimeSpan.FromDays(60);
+            //});
 
-            services.AddAntiforgery(options =>
-            {
-                //options.Cookie.SecurePolicy = configuration.GetValue("Environment:IsDevelopment", false) ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-                options.Cookie.SecurePolicy = isDevelopment ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-            });
+            services.AddAntiforgery(options => options.Cookie.SecurePolicy = isDevelopment ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always);
+            //{
+            //    options.Cookie.SecurePolicy = isDevelopment ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
+            //});
 
             return services;
         }

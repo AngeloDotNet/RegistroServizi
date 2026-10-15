@@ -17,6 +17,25 @@
                         Placeholder="@PlaceholderText"
                         ShrinkLabel="true" />
 }
+else if(IsCurrency)
+{
+        <MudTextField T="TValue"
+                Value="BindValueText"
+                ValueChanged="BindValueTextChanged"
+                ValueExpression="BindValueTextExpression"
+                Label="@LabelText"
+                Required="@IsRequired"
+                RequiredError="@RequiredErrorText"
+                HelperText="@HelperText"
+                HelperTextOnFocus="true"
+                Variant="Variant.Outlined"
+                Margin="Margin.Dense"
+                Placeholder="@PlaceholderText"
+                ShrinkLabel="true"
+                Format="N2"
+                Culture="@LocalizationCulture"
+                Immediate="false" />    
+}
 else
 {
         <MudTextField T="TValue"

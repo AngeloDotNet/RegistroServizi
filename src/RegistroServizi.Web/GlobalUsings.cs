@@ -21,6 +21,7 @@ global using RegistroServizi.Web.Common.Definitions;
 global using RegistroServizi.Web.Common.Helpers;
 global using RegistroServizi.Web.Components;
 global using RegistroServizi.Web.Components.Account;
-global using RegistroServizi.Web.Configuration;
+global using RegistroServizi.Web.Configuration.Options;
+global using RegistroServizi.Web.Configuration.Parameters;
 global using RegistroServizi.Web.Extensions;
 global using RegistroServizi.Web.Resources;

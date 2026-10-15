@@ -3,8 +3,31 @@ using MudBlazor.Services;
 
 namespace RegistroServizi.Web;
 
+/// <summary>
+/// Defines the entry point and host configuration for the RegistroServizi Blazor application.
+/// </summary>
+/// <remarks>
+/// The application uses .NET hosting to configure dependency injection, authentication,
+/// localization, data access, MudBlazor services, and the request pipeline before starting
+/// the interactive server-rendered Blazor application.
+/// </remarks>
 public class Program
 {
+    /// <summary>
+    /// Builds, configures, and starts the RegistroServizi web application.
+    /// </summary>
+    /// <param name="args">
+    /// Command-line arguments supplied to the application host.
+    /// </param>
+    /// <returns>
+    /// A task that represents the asynchronous lifetime of the web application.
+    /// </returns>
+    /// <remarks>
+    /// Database migrations are applied before the application begins processing requests.
+    /// The request pipeline supports forwarded headers, HTTPS redirection, authentication,
+    /// authorization, antiforgery protection, localization, static assets, and interactive
+    /// server-side Blazor rendering.
+    /// </remarks>
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +68,7 @@ public class Program
         builder.Services.AddRegistroServiziApplication();
         builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
+        builder.Services.AddScoped<UserExtensions>();
         builder.Services.AddConfigurationOptions(builder.Configuration);
 
         var app = builder.Build();

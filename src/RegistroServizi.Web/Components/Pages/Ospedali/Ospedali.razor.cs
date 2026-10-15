@@ -59,7 +59,7 @@ public partial class Ospedali
             ConfigureView = () =>
             {
                 columnWidths = Configuration.GetSection("DataGridColumnWidths:Ospedali").Get<List<string>>() ?? [];
-                columnDefinition = MudBlazorDataGridParameters.GetOspedaliColumns(Localizer);
+                columnDefinition = MudDataGridParameters.GetOspedaliColumns(Localizer);
             },
             SetLoading = value => isLoading = value,
             Logger = Logger,

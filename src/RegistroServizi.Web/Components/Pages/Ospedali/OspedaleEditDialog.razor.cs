@@ -41,7 +41,7 @@ public partial class OspedaleEditDialog
             catch (Exception ex)
             {
                 Logger.LogError(ex, $"{Localizer["LoadingIdError"]}: {EditDialogId}. {Localizer["Message"]}: {ex.Message}");
-                SnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["LoadingIdError"]}: {EditDialogId}.");
+                MudSnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["LoadingIdError"]}: {EditDialogId}.");
             }
         }
     }
@@ -66,7 +66,7 @@ public partial class OspedaleEditDialog
                 var updateItem = new UpdateOspedaleDto(EditDialogId.Value, nomeOspedale, ubicazione);
 
                 await OspedaleService.UpdateOspedaleAsync(updateItem);
-                SnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityUpdateSuccess"]} !");
+                MudSnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityUpdateSuccess"]} !");
             }
             else
             {
@@ -74,7 +74,7 @@ public partial class OspedaleEditDialog
                 var createItem = new CreateOspedaleDto(nomeOspedale, ubicazione);
 
                 await OspedaleService.CreateOspedaleAsync(createItem);
-                SnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityCreateSuccess"]} !");
+                MudSnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityCreateSuccess"]} !");
             }
 
             MudDialog.Close(DialogResult.Ok(true));
@@ -82,7 +82,7 @@ public partial class OspedaleEditDialog
         }
         catch (Exception ex)
         {
-            SnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["ErrorOccurred"]}: {ex.Message}");
+            MudSnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["ErrorOccurred"]}: {ex.Message}");
             return false;
         }
     }

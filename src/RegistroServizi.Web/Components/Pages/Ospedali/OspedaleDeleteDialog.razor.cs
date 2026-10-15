@@ -24,11 +24,11 @@ public partial class OspedaleDeleteDialog
             if (EditDialogId.HasValue)
             {
                 await OspedaleService.DeleteOspedaleAsync(EditDialogId.Value);
-                SnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityDeleteSuccess"]}");
+                MudSnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityDeleteSuccess"]}");
             }
             else
             {
-                SnackbarExtensions.ShowNotifyWarning(Snackbar, $"{Localizer["LoadingIdError"]}: {EditDialogId}.");
+                MudSnackbarExtensions.ShowNotifyWarning(Snackbar, $"{Localizer["LoadingIdError"]}: {EditDialogId}.");
                 return false;
             }
 
@@ -38,7 +38,7 @@ public partial class OspedaleDeleteDialog
         catch (Exception ex)
         {
             Logger.LogError(ex, $"{Localizer["ExceptionIdError"]}: {EditDialogId}. {Localizer["Message"]}: {ex.Message}");
-            SnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["ExceptionIdError"]}: {EditDialogId}.");
+            MudSnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["ExceptionIdError"]}: {EditDialogId}.");
 
             return false;
         }

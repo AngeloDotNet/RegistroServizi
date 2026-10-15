@@ -16,8 +16,8 @@ public partial class OspedaleEditDialog
     private bool isValid = false;
 
     private string nomeOspedale = string.Empty;
-    private string strada = string.Empty;
-    private string citta = string.Empty;
+    private string indirizzo = string.Empty;
+    private string comune = string.Empty;
     private string provincia = string.Empty;
     private int? cap;
 
@@ -32,8 +32,8 @@ public partial class OspedaleEditDialog
                 if (item != null)
                 {
                     nomeOspedale = item.NomeOspedale;
-                    strada = item.Ubicazione.Indirizzo;
-                    citta = item.Ubicazione.Comune;
+                    indirizzo = item.Ubicazione.Indirizzo;
+                    comune = item.Ubicazione.Comune;
                     provincia = item.Ubicazione.Provincia;
                     cap = item.Ubicazione.Cap;
                 }
@@ -62,16 +62,16 @@ public partial class OspedaleEditDialog
         {
             if (EditDialogId.HasValue)
             {
-                var indirizzo = new UpdateUbicazioneDto(strada, citta, provincia, cap ?? 0);
-                var updateItem = new UpdateOspedaleDto(EditDialogId.Value, nomeOspedale, indirizzo);
+                var ubicazione = new UpdateUbicazioneDto(indirizzo, comune, provincia, cap ?? 0);
+                var updateItem = new UpdateOspedaleDto(EditDialogId.Value, nomeOspedale, ubicazione);
 
                 await OspedaleService.UpdateOspedaleAsync(updateItem);
                 SnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityUpdateSuccess"]} !");
             }
             else
             {
-                var indirizzo = new CreateUbicazioneDto(strada, citta, provincia, cap ?? 0);
-                var createItem = new CreateOspedaleDto(nomeOspedale, indirizzo);
+                var ubicazione = new CreateUbicazioneDto(indirizzo, comune, provincia, cap ?? 0);
+                var createItem = new CreateOspedaleDto(nomeOspedale, ubicazione);
 
                 await OspedaleService.CreateOspedaleAsync(createItem);
                 SnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityCreateSuccess"]} !");

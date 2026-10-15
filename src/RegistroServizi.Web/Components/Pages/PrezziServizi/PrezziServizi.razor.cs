@@ -64,7 +64,7 @@ public partial class PrezziServizi
             ConfigureView = () =>
             {
                 columnWidths = Configuration.GetSection("DataGridColumnWidths:PrezziServizi").Get<List<string>>() ?? [];
-                columnDefinition = MudBlazorDataGridParameters.GetPrezziServiziColumns(Localizer);
+                columnDefinition = MudDataGridParameters.GetPrezziServiziColumns(Localizer);
             },
             SetLoading = value => isLoading = value,
             Logger = Logger,

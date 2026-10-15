@@ -59,7 +59,7 @@ public partial class PrezzoServizioEditDialog
             catch (Exception ex)
             {
                 Logger.LogError(ex, $"{Localizer["LoadingIdError"]}: {EditDialogId}. {Localizer["Message"]}: {ex.Message}");
-                SnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["LoadingIdError"]}: {EditDialogId}.");
+                MudSnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["LoadingIdError"]}: {EditDialogId}.");
             }
         }
     }
@@ -83,7 +83,7 @@ public partial class PrezzoServizioEditDialog
                 var updateItem = new UpdatePrezzoServizioDto(EditDialogId.Value, tipologiaServizioId, costoFisso, costoKm, secondoTrasportato, fermoMacchina, accompagnatore, scontoSocio);
 
                 await PrezzoServizioService.UpdatePrezzoServizioAsync(updateItem);
-                SnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityUpdateSuccess"]} !");
+                MudSnackbarExtensions.ShowNotifySuccess(Snackbar, $"{Localizer["EntityUpdateSuccess"]} !");
             }
             else
             {
@@ -95,7 +95,7 @@ public partial class PrezzoServizioEditDialog
         }
         catch (Exception ex)
         {
-            SnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["ErrorOccurred"]}: {ex.Message}");
+            MudSnackbarExtensions.ShowNotifyError(Snackbar, $"{Localizer["ErrorOccurred"]}: {ex.Message}");
             return false;
         }
     }

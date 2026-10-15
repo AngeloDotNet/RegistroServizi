@@ -1,0 +1,132 @@
+﻿@inject IPrezzoServizioService PrezzoServizioService
+@inject ISnackbar Snackbar
+@inject ILogger<PrezzoServizioEditDialog> Logger
+@inject IStringLocalizer<SharedResource> Localizer
+@inject IConfiguration Configuration
+
+<MudDialog>
+    <TitleContent>
+        <div class="d-flex align-center gap-2">
+            @* <MudIcon Icon="@(EditDialogId.HasValue ? @Icons.Material.Filled.Edit : @Icons.Material.Filled.AddCircle)" Color="@(EditDialogId.HasValue ? @Color.Warning : @Color.Success)" /> *@
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Color="@Color.Warning" />
+            @* <MudText Typo="Typo.h6">@(EditDialogId.HasValue ? $"{Localizer["Edit"]} {Title}" : $"{Localizer["New"]} {Title}")</MudText> *@
+                <MudText Typo="Typo.h6">@($"{Localizer["Edit"]} {Title}")</MudText>
+        </div>
+    </TitleContent>
+    <DialogContent>
+        <MudAlert Severity="Severity.Warning" Class="mb-4">@Localizer["AllRequiredFields"]</MudAlert>
+        <MudForm @ref="form" @bind-IsValid="isValid">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField T="string"
+                                    Value="tipologiaServizio"
+                                    Label="@Localizer["ServiceType"]"
+                                    Variant="Variant.Outlined"
+                                    Margin="Margin.Dense"
+                                    ShrinkLabel="true"
+                                    Disabled="true" />
+                </MudItem>
+
+                <MudItem sm="4">
+                    <div class="d-flex align-center gap-2">
+                        <TextFieldNumber TValue="decimal"
+                                            @bind-BindValueText="costoFisso"
+                                            LabelText="@Localizer["FixedCost"]"
+                                            PlaceholderText="Inserire il costo fisso"
+                                            IsRequired="true"
+                                            HelperText="@Localizer["FixedCost"]"
+                                            IsCurrency="true"
+                                            LocalizationCulture="@localizeCulture"
+                                            RequiredErrorText="@Localizer["MandatoryField"]" />
+                        <MudIcon Class="mb-3" Icon="@iconCurrency" />
+                    </div>
+                </MudItem>
+
+                <MudItem sm="4">
+                    <div class="d-flex align-center gap-2">
+                        <TextFieldNumber TValue="decimal"
+                                            @bind-BindValueText="costoKm"
+                                            LabelText="@Localizer["CostKm"]"
+                                            PlaceholderText="Inserire il costo per km"
+                                            IsRequired="true"
+                                            HelperText="@Localizer["CostKm"]"
+                                            IsCurrency="true"
+                                            LocalizationCulture="@localizeCulture"
+                                            RequiredErrorText="@Localizer["MandatoryField"]" />
+                        <MudIcon Class="mb-3" Icon="@iconCurrency" />
+                    </div>
+                </MudItem>
+
+                <MudItem sm="4">
+                    <div class="d-flex align-center gap-2">
+                        <TextFieldNumber TValue="decimal"
+                                            @bind-BindValueText="secondoTrasportato"
+                                            LabelText="@Localizer["SecondPassenger"]"
+                                            PlaceholderText="Inserire il costo per secondo trasportato"
+                                            IsRequired="true"
+                                            HelperText="@Localizer["SecondPassenger"]"
+                                            IsCurrency="true"
+                                            LocalizationCulture="@localizeCulture"
+                                            RequiredErrorText="@Localizer["MandatoryField"]" />
+                        <MudIcon Class="mb-3" Icon="@iconCurrency" />
+                    </div>
+                </MudItem>
+
+                <MudItem sm="4">
+                    <div class="d-flex align-center gap-2">
+                        <TextFieldNumber TValue="decimal"
+                                            @bind-BindValueText="fermoMacchina"
+                                            LabelText="@Localizer["VehicleWaitingTime"]"
+                                            PlaceholderText="Inserire il costo per fermo macchina"
+                                            IsRequired="true"
+                                            HelperText="@Localizer["VehicleWaitingTime"]"
+                                            IsCurrency="true"
+                                            LocalizationCulture="@localizeCulture"
+                                            RequiredErrorText="@Localizer["MandatoryField"]" />
+                        <MudIcon Class="mb-3" Icon="@iconCurrency" />
+                    </div>
+                </MudItem>
+
+                <MudItem sm="4">
+                    <div class="d-flex align-center gap-2">
+                        <TextFieldNumber TValue="decimal?"
+                                            @bind-BindValueText="accompagnatore"
+                                            LabelText="@Localizer["Companion"]"
+                                            PlaceholderText="Inserire il costo per l'accompagnatore'"
+                                            IsRequired="false"
+                                            HelperText="@Localizer["Companion"]"
+                                            IsCurrency="true"
+                                            LocalizationCulture="@localizeCulture"
+                                            RequiredErrorText="@Localizer["MandatoryField"]" />
+                        <MudIcon Class="mb-3" Icon="@iconCurrency" />
+                    </div>
+                </MudItem>
+
+                <MudItem sm="4">
+                    <div class="d-flex align-center gap-2">
+                        <TextFieldNumber TValue="int?"
+                                            @bind-BindValueText="scontoSocio"
+                                            LabelText="@Localizer["MemberDiscount"]"
+                                            PlaceholderText="Inserire lo sconto socio"
+                                            IsRequired="false"
+                                            HelperText="@Localizer["MemberDiscount"]"
+                                            IsCurrency="true"
+                                            LocalizationCulture="@localizeCulture"
+                                            RequiredErrorText="@Localizer["MandatoryField"]" />
+                        <MudIcon Class="mb-3" Icon="@Icons.Material.Filled.Percent" />
+                    </div>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogActionsButtons BtnCancelText="@BtnCancelText"
+                                BtnCancelIcon="@MudblazorPresets.IconCancel"
+                                BtnSubmitText="@(Localizer["Save"])"
+                                BtnSubmitIcon="@(MudblazorPresets.IconSave)"
+                                BtnCancelColor="@BtnCancelColor"
+                                BtnConfirmColor="@BtnConfirmColor"
+                                OnCancel="Cancel"
+                                OnSubmit="SubmitForm" />
+    </DialogActions>
+</MudDialog>

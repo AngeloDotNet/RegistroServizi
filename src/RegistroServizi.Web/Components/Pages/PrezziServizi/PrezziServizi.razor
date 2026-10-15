@@ -1,8 +1,10 @@
 ﻿@page "/prezzi-servizi"
 @rendermode InteractiveServer
 @inherits PageBaseHelper
+@attribute [Authorize]
 
 <TextPageTitle Title="@Localizer["TitleServicePrices"]" SubTitle="@Localizer["SubTitleServicePrices"]" />
+@* <MudAlert Severity="Severity.Warning">Al momento non è possibile ne creare ne eliminare i prezzi dei servizi.</MudAlert> *@
 
 <MudPaper Class="pa-4">
 @if (isLoading || elements.Count == 0)
@@ -13,13 +15,9 @@ else
 {
     <DataGridGeneric T="PrezzoServizioDto"
                         Items="@elements"
-                        ActionCallback="@(() => CreateItemAsync(Title))"
                         ActionEditCallback="@((context) => EditItemAsync(Title, context.Id, context.TipoServizio))"
-                        ActionDeleteCallback="@((context) => DeleteItemAsync(Title, context.Id, context.TipoServizio))"
                         Columns="@columnDefinition"
                         LayoutWidths="@columnWidths"
-                        AddButtonIsDisabled = "@addDisabled"
-                        ModifyButtonIsDisabled="@modifyDisabled"
-                        DeleteButtonIsDisabled="@deleteDisabled" />
+                        DisableEditButton="@disableEditButton" />
 }
 </MudPaper>

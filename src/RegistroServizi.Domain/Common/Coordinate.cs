@@ -4,13 +4,21 @@
 /// Represents a geographic coordinate expressed as latitude and longitude in decimal degrees.
 /// </summary>
 /// <remarks>
-/// The coordinate uses the WGS84 geographic reference system.
-/// <list type="bullet">
-/// <item><description><c>Latitudine</c> must be in the range -90 to 90 when specified.</description></item>
-/// <item><description><c>Longitudine</c> must be in the range -180 to 180 when specified.</description></item>
-/// <item><description>Either value may be <see langword="null" /> when the coordinate is partially unknown.</description></item>
-/// </list>
+/// Coordinates are interpreted using the WGS84 geographic reference system.
+/// A coordinate may be partially known; either component can be <see langword="null" />.
+/// <para>
+/// When specified, <paramref name="Latitudine" /> should be within the inclusive range
+/// from -90 to 90, while <paramref name="Longitudine" /> should be within the inclusive
+/// range from -180 to 180.
+/// </para>
+/// <para>
+/// This type stores coordinate values but does not validate their ranges at construction time.
+/// </para>
 /// </remarks>
-/// <param name="Latitudine">Latitude in decimal degrees; positive values indicate north.</param>
-/// <param name="Longitudine">Longitude in decimal degrees; positive values indicate east.</param>
+/// <param name="Latitudine">
+/// The latitude in decimal degrees. Positive values indicate locations north of the equator.
+/// </param>
+/// <param name="Longitudine">
+/// The longitude in decimal degrees. Positive values indicate locations east of the prime meridian.
+/// </param>
 public record class Coordinate(double? Latitudine, double? Longitudine);

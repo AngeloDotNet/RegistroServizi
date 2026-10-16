@@ -63,7 +63,6 @@ public static class MudDataGridExtensions
     //    }
     //}
 
-    // Opzione 3
     /// <summary>
     /// Loads data asynchronously and applies the result to a Blazor data-grid component.
     /// </summary>
@@ -141,7 +140,7 @@ public static class MudDataGridExtensions
 
             await options.InvokeAsync(() =>
             {
-                SnackbarExtensions.ShowNotifyError(options.Snackbar, options.Localizer["LoadingError"]);
+                MudSnackbarExtensions.ShowNotifyError(options.Snackbar, options.Localizer["LoadingError"]);
                 return Task.CompletedTask;
             });
         }

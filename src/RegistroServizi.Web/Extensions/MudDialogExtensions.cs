@@ -72,9 +72,9 @@ public static class MudDialogExtensions
     {
         return actionType switch
         {
-            ItemActionType.Create => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudBlazorDialogParameters.GetCreateItemDialogParameters<TDialog>(title, cancelText)),
-            ItemActionType.Edit => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudBlazorDialogParameters.GetEditItemDialogParameters<TDialog>(id, title, cancelText)),
-            ItemActionType.Delete => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudBlazorDialogParameters.GetDeleteItemDialogParameters<TDialog>(id, title, description, cancelText, confirmText)),
+            ItemActionType.Create => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetCreateItemDialogParameters<TDialog>(title, cancelText)),
+            ItemActionType.Edit => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetEditItemDialogParameters<TDialog>(id, title, cancelText)),
+            ItemActionType.Delete => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetDeleteItemDialogParameters<TDialog>(id, title, description, cancelText, confirmText)),
             _ => false,
         };
     }
@@ -97,7 +97,7 @@ public static class MudDialogExtensions
     /// </returns>
     private static async Task<bool> OpenDialogAndRefreshAsync<TDialog>(IDialogService dialogService, Func<DialogParameters> parametersFactory) where TDialog : IComponent
     {
-        var dialogReference = await dialogService.ShowAsync<TDialog>(parametersFactory(), MudBlazorDialogOptions.GetSmallDialogOptions());
+        var dialogReference = await dialogService.ShowAsync<TDialog>(parametersFactory(), MudDialogOptions.GetSmallDialogOptions());
         var result = await dialogReference.Result;
 
         if (result is not null && !result.Canceled)

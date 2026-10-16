@@ -1,12 +1,19 @@
 ﻿namespace RegistroServizi.Data.Configurations;
 
 /// <summary>
-/// Configures the Entity Framework Core mapping for <see cref="StatoBolla"/>.
+/// Provides the Entity Framework Core configuration for the <see cref="StatoBolla"/> entity.
 /// </summary>
-/// <remarks>Maps the entity to the 'StatiBolla' table, sets Id as the primary key, requires Descrizione with a
-/// maximum length of 200 and adds a unique index on Descrizione.</remarks>
+/// <remarks>
+/// This configuration maps <see cref="StatoBolla"/> to the <c>StatiBolla</c> table, defines <see cref="StatoBolla.Id"/>
+/// as the primary key, enforces a unique constraint on <see cref="StatoBolla.Descrizione"/>, and limits the
+/// description length to 200 characters.
+/// </remarks>
 public class StatoBollaConfiguration : IEntityTypeConfiguration<StatoBolla>
 {
+    /// <summary>
+    /// Configures the entity mapping for <see cref="StatoBolla"/>.
+    /// </summary>
+    /// <param name="builder">The entity type builder used to configure the model.</param>
     public void Configure(EntityTypeBuilder<StatoBolla> builder)
     {
         builder.ToTable("StatiBolla");

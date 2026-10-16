@@ -1,12 +1,16 @@
 ﻿namespace RegistroServizi.Data.Configurations;
 
 /// <summary>
-/// Configures the Entity Framework Core mapping for the PrezzoServizio entity.
+/// Configures the Entity Framework Core mapping for <see cref="PrezzoServizio"/>.
 /// </summary>
-/// <remarks>Maps the entity to the 'PrezziServizi' table and sets Id as the primary key. Defines a required
-/// relationship to TipologiaServizio with foreign key TipologiaServizioId and DeleteBehavior.Restrict. Configures
-/// numeric properties: CostoFisso, CostoKm, SecondoTrasportato, and FermoMacchina as required with default 0 and
-/// precision 18,2; Accompagnatore with precision 18,2; and ScontoSocio with default 0.</remarks>
+/// <remarks>
+/// <para>Maps <see cref="PrezzoServizio"/> to the <c>PrezziServizi</c> table and uses <c>Id</c> as the primary key.</para>
+/// <para>Configures the required relationship to <see cref="TipologiaServizio"/> through <c>TipologiaServizioId</c>
+/// with <see cref="DeleteBehavior.Restrict"/> to prevent cascading deletes.</para>
+/// <para>Configures the monetary fields <c>CostoFisso</c>, <c>CostoKm</c>, <c>SecondoTrasportato</c>, and
+/// <c>FermoMacchina</c> as required with a default value of 0 and precision <c>18,2</c>; <c>Accompagnatore</c>
+/// with precision <c>18,2</c>; and <c>ScontoSocio</c> with a default value of 0.</para>
+/// </remarks>
 public class PrezzoServizioConfiguration : IEntityTypeConfiguration<PrezzoServizio>
 {
     public void Configure(EntityTypeBuilder<PrezzoServizio> builder)

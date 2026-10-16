@@ -1,11 +1,13 @@
 ﻿namespace RegistroServizi.Data.Configurations;
 
 /// <summary>
-/// Configures the TipologiaServizio entity for Entity Framework Core: maps to the "TipologieServizi" table, sets Id as
-/// the primary key, and configures TipoServizio as required with a maximum length of 30.
+/// Provides the Entity Framework Core mapping for <see cref="TipologiaServizio"/>.
 /// </summary>
-/// <remarks>Applied in DbContext.OnModelCreating via
-/// modelBuilder.ApplyConfiguration<TipologiaServizioConfiguration>().</remarks>
+/// <remarks>
+/// This configuration maps the entity to the <c>TipologieServizi</c> table, defines <see cref="TipologiaServizio.Id"/>
+/// as the primary key, and configures <see cref="TipologiaServizio.TipoServizio"/> as a required column with a
+/// maximum length of 30 characters.
+/// </remarks>
 public class TipologiaServizioConfiguration : IEntityTypeConfiguration<TipologiaServizio>
 {
     public void Configure(EntityTypeBuilder<TipologiaServizio> builder)

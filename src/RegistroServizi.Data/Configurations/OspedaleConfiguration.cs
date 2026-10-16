@@ -1,13 +1,20 @@
 ﻿namespace RegistroServizi.Data.Configurations;
 
 /// <summary>
-/// Configures the Entity Framework Core mapping for the Ospedale entity.
+/// Configures the Entity Framework Core mapping for <see cref="Ospedale"/>.
 /// </summary>
-/// <remarks>Maps Ospedale to the 'Ospedali' table; defines the primary key (Id) and a unique index on
-/// NomeOspedale; enforces required fields and maximum lengths for NomeOspedale and the Indirizzo components (Strada,
-/// Citta, Provincia); and configures default values for Cap, Latitudine, and Longitudine.</remarks>
+/// <remarks>
+/// Maps the entity to the <c>Ospedali</c> table, uses the inherited <c>Id</c> property as the primary key,
+/// enforces a unique index on <see cref="Ospedale.NomeOspedale"/>, and configures the complex properties
+/// <see cref="Ospedale.Ubicazione"/> and <see cref="Ospedale.Coordinate"/> with required fields, maximum lengths,
+/// and default values.
+/// </remarks>
 public class OspedaleConfiguration : IEntityTypeConfiguration<Ospedale>
 {
+    /// <summary>
+    /// Applies the database schema configuration for <see cref="Ospedale"/>.
+    /// </summary>
+    /// <param name="builder">The entity type builder used to configure the model.</param>
     public void Configure(EntityTypeBuilder<Ospedale> builder)
     {
         builder.ToTable("Ospedali");
@@ -21,21 +28,21 @@ public class OspedaleConfiguration : IEntityTypeConfiguration<Ospedale>
             .IsRequired()
             .HasMaxLength(200);
 
-        builder.ComplexProperty(o => o.Indirizzo, indirizzo =>
+        builder.ComplexProperty(o => o.Ubicazione, ubicazione =>
         {
-            indirizzo.Property(i => i.Strada)
+            ubicazione.Property(i => i.Indirizzo)
                 .IsRequired()
                 .HasMaxLength(200);
 
-            indirizzo.Property(i => i.Citta)
+            ubicazione.Property(i => i.Comune)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            indirizzo.Property(i => i.Provincia)
+            ubicazione.Property(i => i.Provincia)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            indirizzo.Property(i => i.Cap)
+            ubicazione.Property(i => i.Cap)
                 .HasDefaultValue(0);
         });
 

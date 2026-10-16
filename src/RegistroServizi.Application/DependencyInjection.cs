@@ -4,39 +4,51 @@
 /// Provides dependency injection registration helpers for the application layer.
 /// </summary>
 /// <remarks>
-/// This type exposes extension members that register application services by convention and
-/// add shared framework services required by the application.
+/// The registration convention keeps the composition root independent of individual application
+/// services. Any class in the application assembly whose name ends with <c>Service</c> is registered
+/// through its implemented interfaces with a scoped lifetime.
 /// </remarks>
 public static class DependencyInjection
 {
     /// <summary>
-    /// Registers application services and shared infrastructure services in the specified
-    /// <see cref="IServiceCollection" />.
+    /// Registers the application-layer services and shared application dependencies.
     /// </summary>
     /// <remarks>
-    /// Discovers classes in the assembly containing <c>OspedaleService</c> whose names end with
-    /// <c>Service</c>, registers them against their implemented interfaces, and configures them
-    /// with a scoped lifetime.
     /// <para>
-    /// Also registers <see cref="TimeProvider.System" /> as a singleton so application services can
-    /// depend on an abstracted time source.
+    /// Service classes are discovered from the assembly containing <see cref="OspedaleService" />.
+    /// Classes whose names end with <c>Service</c> are registered against their implemented
+    /// interfaces using a scoped lifetime.
+    /// </para>
+    /// <para>
+    /// The system <see cref="TimeProvider" /> is also registered as a singleton. Application
+    /// services can depend on the abstraction instead of accessing the system clock directly,
+    /// which makes time-dependent behavior easier to test.
+    /// </para>
+    /// <para>
+    /// Call this method while configuring the application's service collection:
+    /// </para>
+    /// <code>
+    /// builder.Services.AddRegistroServiziApplication();
+    /// </code>
+    /// <para>
+    /// For more information about dependency injection, see
+    /// <see href="https://learn.microsoft.com/dotnet/core/extensions/dependency-injection" />
+    /// and for service scanning, see
+    /// <see href="https://github.com/khellang/Scrutor" />.
     /// </para>
     /// </remarks>
     /// <param name="services">
-    /// The service collection to configure.
+    /// The service collection to which the application-layer registrations are added.
     /// </param>
     /// <returns>
-    /// The configured <see cref="IServiceCollection" /> instance.
+    /// The same <see cref="IServiceCollection" /> instance, after the registrations have been added,
+    /// allowing additional service registrations to be chained.
     /// </returns>
     extension(IServiceCollection services)
     {
         /// <summary>
-        /// Adds the application-layer service registrations to the service collection.
+        /// Adds all conventionally registered application services to the service collection.
         /// </summary>
-        /// <remarks>
-        /// This method applies convention-based registration for application services and registers
-        /// the system time provider for use throughout the application.
-        /// </remarks>
         /// <returns>
         /// The configured <see cref="IServiceCollection" /> instance.
         /// </returns>

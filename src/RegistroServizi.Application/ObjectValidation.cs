@@ -1,25 +1,27 @@
 ﻿namespace RegistroServizi.Application;
 
 /// <summary>
-/// Provides internal helper methods for validating common argument values.
+/// Provides reusable validation helpers for arguments used by the application layer.
 /// </summary>
 /// <remarks>
-/// These helpers are intended for use within the application layer only and throw
-/// <see cref="ArgumentException"/> or <see cref="ArgumentOutOfRangeException"/> when validation fails.
+/// The helpers centralize common precondition checks so application services apply
+/// consistent validation rules and exception types before processing input.
+/// These methods do not modify the values being validated.
 /// </remarks>
 internal static class ObjectValidation
 {
     /// <summary>
-    /// Ensures that a string value is not <see langword="null"/>, empty, or whitespace-only.
+    /// Verifies that a string contains a meaningful value.
     /// </summary>
     /// <param name="value">The string value to validate.</param>
-    /// <param name="message">The exception message to use when validation fails.</param>
-    /// <param name="paramName">The parameter name associated with the exception.</param>
+    /// <param name="message">The message included in the exception when validation fails.</param>
+    /// <param name="paramName">The name of the parameter associated with the exception.</param>
     /// <exception cref="ArgumentException">
     /// Thrown when <paramref name="value"/> is <see langword="null"/>, empty, or contains only whitespace.
     /// </exception>
     /// <remarks>
-    /// Use this method when a meaningful, non-blank string value is required.
+    /// Use this validation when downstream application logic requires a non-blank
+    /// identifier, name, or other textual value.
     /// </remarks>
     internal static void ValidateNotNullOrWhiteSpace(string? value, string message, string paramName)
     {
@@ -30,14 +32,18 @@ internal static class ObjectValidation
     }
 
     /// <summary>
-    /// Ensures that a <see cref="Guid"/> value is not <see cref="Guid.Empty"/>.
+    /// Verifies that a <see cref="Guid"/> contains a non-empty identifier.
     /// </summary>
     /// <param name="value">The GUID value to validate.</param>
-    /// <param name="message">The exception message to use when validation fails.</param>
-    /// <param name="paramName">The parameter name associated with the exception.</param>
+    /// <param name="message">The message included in the exception when validation fails.</param>
+    /// <param name="paramName">The name of the parameter associated with the exception.</param>
     /// <exception cref="ArgumentException">
-    /// Thrown when <paramref name="value"/> equals <see cref="Guid.Empty"/>.
+    /// Thrown when <paramref name="value"/> is <see cref="Guid.Empty"/>.
     /// </exception>
+    /// <remarks>
+    /// Use this validation when an application-layer operation requires an existing
+    /// entity identifier rather than the default GUID value.
+    /// </remarks>
     internal static void ValidateGuidNotEmpty(Guid value, string message, string paramName)
     {
         if (value == Guid.Empty)
@@ -47,16 +53,17 @@ internal static class ObjectValidation
     }
 
     /// <summary>
-    /// Ensures that a nullable integer value is either <see langword="null"/> or greater than or equal to zero.
+    /// Verifies that a nullable integer is either absent or non-negative.
     /// </summary>
     /// <param name="value">The nullable integer value to validate.</param>
-    /// <param name="message">The exception message to use when validation fails.</param>
-    /// <param name="paramName">The parameter name associated with the exception.</param>
+    /// <param name="message">The message included in the exception when validation fails.</param>
+    /// <param name="paramName">The name of the parameter associated with the exception.</param>
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown when <paramref name="value"/> is less than zero.
     /// </exception>
     /// <remarks>
-    /// A <see langword="null"/> value is considered valid.
+    /// A <see langword="null"/> value is valid because it represents an omitted
+    /// optional value. When a value is provided, it must be zero or greater.
     /// </remarks>
     internal static void ValidateIntegerGreaterOrEqualThanZero(int? value, string message, string paramName)
     {

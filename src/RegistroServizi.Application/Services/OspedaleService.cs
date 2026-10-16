@@ -1,22 +1,22 @@
 ﻿namespace RegistroServizi.Application.Services;
 
 /// <summary>
-/// Provides create, read, update, and delete operations for Ospedale entities using the supplied database context.
+/// Provides asynchronous create, read, update, and delete operations for <see cref="Ospedale"/> entities.
 /// </summary>
-/// <remarks>Uses Entity Framework Core via the provided context; methods honor CancellationToken, perform input
-/// validation, map entities to DTOs, and detach tracked entities after persistence. Throws ArgumentException,
-/// ArgumentNullException, KeyNotFoundException, and InvalidOperationException for validation and persistence
-/// errors.</remarks>
-/// <param name="dbContext">The database context used to query and persist Ospedale entities.</param>
+/// <remarks>
+/// Uses Entity Framework Core through the supplied <see cref="IRegistroServiziDbContext"/> instance.
+/// The service validates required input, maps between entities and DTOs, honors cancellation tokens,
+/// and detaches tracked entities after successful persistence.
+/// </remarks>
+/// <param name="dbContext">The database context used to query and persist hospital data.</param>
 public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleService
 {
     /// <summary>
-    /// Gets all hospitals as OspedaleDto instances ordered by Id.
+    /// Retrieves all hospitals as <see cref="OspedaleDto"/> instances ordered by identifier.
     /// </summary>
-    /// <remarks>Executes the query asynchronously against the data source and maps entities to OspedaleDto.
-    /// The operation may throw OperationCanceledException if cancellation is requested.</remarks>
-    /// <param name="cancellationToken">Cancellation token to observe while awaiting the asynchronous operation.</param>
-    /// <returns>A read-only list of OspedaleDto containing all hospitals ordered by Id.</returns>
+    /// <param name="cancellationToken">The token to observe while executing the query.</param>
+    /// <returns>A read-only list of hospitals ordered by <c>Id</c>.</returns>
+    /// <exception cref="OperationCanceledException">Thrown when cancellation is requested.</exception>
     public async Task<IReadOnlyList<OspedaleDto>> GetAllOspedaliAsync(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -30,14 +30,13 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     }
 
     /// <summary>
-    /// Retrieves an OspedaleDto with the specified identifier.
+    /// Retrieves a hospital by identifier.
     /// </summary>
-    /// <remarks>Supports cancellation via the provided token; may throw OperationCanceledException if
-    /// canceled.</remarks>
-    /// <param name="id">The identifier of the Ospedale to retrieve.</param>
-    /// <param name="cancellationToken">A cancellation token that can be used to cancel the operation.</param>
-    /// <returns>A task whose result is the OspedaleDto with the specified identifier.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown when no Ospedale with the specified identifier exists.</exception>
+    /// <param name="id">The identifier of the hospital to retrieve.</param>
+    /// <param name="cancellationToken">The token to observe while executing the operation.</param>
+    /// <returns>The matching hospital as an <see cref="OspedaleDto"/>.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when no hospital with the specified identifier exists.</exception>
+    /// <exception cref="OperationCanceledException">Thrown when cancellation is requested.</exception>
     public async Task<OspedaleDto> GetOspedaleByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -50,27 +49,28 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     }
 
     /// <summary>
-    /// Creates a new Ospedale from the provided CreateOspedaleDto and persists it to the database asynchronously.
+    /// Creates a new hospital and persists it to the database.
     /// </summary>
-    /// <remarks>Validates required fields (including address), maps the DTO to an entity, saves changes,
-    /// detaches the tracked entity, and maps the entity back to a DTO.</remarks>
-    /// <param name="createDto">CreateOspedaleDto containing hospital and address data to persist.</param>
-    /// <param name="cancellationToken">CancellationToken to observe while awaiting the asynchronous operation.</param>
-    /// <returns>The created OspedaleDto representing the persisted entity.</returns>
-    /// <exception cref="InvalidOperationException">Thrown if saving changes to the database fails; the exception message includes a correlation identifier.</exception>
+    /// <param name="createDto">The data used to create the hospital.</param>
+    /// <param name="cancellationToken">The token to observe while executing the operation.</param>
+    /// <returns>The created hospital as an <see cref="OspedaleDto"/>.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="createDto"/> or its address is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when one or more required fields are invalid.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when saving changes fails.</exception>
+    /// <exception cref="OperationCanceledException">Thrown when cancellation is requested.</exception>
     public async Task<OspedaleDto> CreateOspedaleAsync(CreateOspedaleDto createDto, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(createDto);
-        ArgumentNullException.ThrowIfNull(createDto.Indirizzo);
+        ArgumentNullException.ThrowIfNull(createDto.Ubicazione);
 
         cancellationToken.ThrowIfCancellationRequested();
 
         ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.NomeOspedale, "Il nome dell'ospedale non può essere vuoto.", nameof(createDto.NomeOspedale));
-        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Strada, "La strada dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Strada));
-        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Citta, "La città dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Citta));
-        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Indirizzo.Provincia, "La provincia dell'indirizzo non può essere vuota.", nameof(createDto.Indirizzo.Provincia));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Ubicazione.Indirizzo, "L'indirizzo dell'ubicazione non può essere vuoto.", nameof(createDto.Ubicazione.Indirizzo));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Ubicazione.Comune, "Il comune dell'ubicazione non può essere vuoto.", nameof(createDto.Ubicazione.Comune));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Ubicazione.Provincia, "La provincia dell'ubicazione non può essere vuota.", nameof(createDto.Ubicazione.Provincia));
 
-        ObjectValidation.ValidateIntegerGreaterOrEqualThanZero(createDto.Indirizzo.Cap, "Il CAP dell'indirizzo non può essere negativo.", nameof(createDto.Indirizzo.Cap));
+        ObjectValidation.ValidateIntegerGreaterOrEqualThanZero(createDto.Ubicazione.Cap, "Il CAP dell'ubicazione non può essere negativo.", nameof(createDto.Ubicazione.Cap));
 
         var entity = OspedaleMapper.MapOspedaleToEntityCreate(createDto);
         dbContext.Ospedali.Add(entity);
@@ -90,31 +90,32 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     }
 
     /// <summary>
-    /// Updates an existing hospital from the supplied UpdateOspedaleDto and returns the updated OspedaleDto.
+    /// Updates an existing hospital and returns the persisted result.
     /// </summary>
-    /// <remarks>Validates input and address fields, updates the entity, saves changes with concurrency
-    /// handling, and detaches the tracked entity after a successful save.</remarks>
-    /// <param name="updateDto">Update data for the hospital, including address and identifier; must not be null and must contain valid values.</param>
-    /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-    /// <returns>The updated OspedaleDto representing the persisted hospital.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown when a hospital with the specified Id is not found, including cases where a concurrency conflict
-    /// indicates the entity no longer exists. The exception message contains a correlation Id for diagnostics.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when an error occurs while saving changes to the database. The exception message contains a correlation
-    /// Id for diagnostics.</exception>
+    /// <param name="updateDto">The update data, including identifier and address.</param>
+    /// <param name="cancellationToken">The token to observe while executing the operation.</param>
+    /// <returns>The updated hospital as an <see cref="OspedaleDto"/>.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="updateDto"/> or its address is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when one or more required fields are invalid.</exception>
+    /// <exception cref="KeyNotFoundException">
+    /// Thrown when the hospital does not exist or a concurrency conflict indicates it was removed.
+    /// </exception>
+    /// <exception cref="InvalidOperationException">Thrown when saving changes fails.</exception>
+    /// <exception cref="OperationCanceledException">Thrown when cancellation is requested.</exception>
     public async Task<OspedaleDto> UpdateOspedaleAsync(UpdateOspedaleDto updateDto, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(updateDto);
-        ArgumentNullException.ThrowIfNull(updateDto.Indirizzo);
+        ArgumentNullException.ThrowIfNull(updateDto.Ubicazione);
 
         cancellationToken.ThrowIfCancellationRequested();
 
         ObjectValidation.ValidateGuidNotEmpty(updateDto.Id, "Il campo Id non può essere vuoto.", nameof(updateDto.Id));
         ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.NomeOspedale, "Il nome dell'ospedale non può essere vuoto.", nameof(updateDto.NomeOspedale));
-        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Strada, "La strada dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Strada));
-        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Citta, "La città dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Citta));
-        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Indirizzo.Provincia, "La provincia dell'indirizzo non può essere vuota.", nameof(updateDto.Indirizzo.Provincia));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Ubicazione.Indirizzo, "L'indirizzo dell'ubicazione non può essere vuoto.", nameof(updateDto.Ubicazione.Indirizzo));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Ubicazione.Comune, "Il comune dell'ubicazione non può essere vuoto.", nameof(updateDto.Ubicazione.Comune));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Ubicazione.Provincia, "La provincia dell'ubicazione non può essere vuota.", nameof(updateDto.Ubicazione.Provincia));
 
-        ObjectValidation.ValidateIntegerGreaterOrEqualThanZero(updateDto.Indirizzo.Cap, "Il CAP dell'indirizzo non può essere negativo.", nameof(updateDto.Indirizzo.Cap));
+        ObjectValidation.ValidateIntegerGreaterOrEqualThanZero(updateDto.Ubicazione.Cap, "Il CAP dell'ubicazione non può essere negativo.", nameof(updateDto.Ubicazione.Cap));
 
         var entity = await dbContext.Ospedali.FindAsync([updateDto.Id], cancellationToken).ConfigureAwait(false)
             ?? throw new KeyNotFoundException($"Ospedale con id {updateDto.Id} non trovato.");
@@ -142,16 +143,14 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
     }
 
     /// <summary>
-    /// Deletes the hospital entity with the specified identifier from the database.
+    /// Deletes a hospital by identifier.
     /// </summary>
-    /// <remarks>Validates the id is not Guid.Empty before lookup. A correlation id is generated and included
-    /// in the error message when SaveChangesAsync fails.</remarks>
-    /// <param name="id">The identifier of the hospital to delete. Must not be Guid.Empty.</param>
-    /// <param name="cancellationToken">A token to observe for cancellation while performing the asynchronous operation.</param>
-    /// <returns>A task that represents the asynchronous delete operation.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown if no hospital with the specified identifier is found.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if saving changes to the database fails; the inner exception contains the original DbUpdateException and
-    /// the message includes a correlation identifier.</exception>
+    /// <param name="id">The identifier of the hospital to delete.</param>
+    /// <param name="cancellationToken">The token to observe while executing the operation.</param>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="id"/> is empty.</exception>
+    /// <exception cref="KeyNotFoundException">Thrown when no hospital with the specified identifier exists.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when saving changes fails.</exception>
+    /// <exception cref="OperationCanceledException">Thrown when cancellation is requested.</exception>
     public async Task DeleteOspedaleAsync(Guid id, CancellationToken cancellationToken = default)
     {
         ObjectValidation.ValidateGuidNotEmpty(id, "Il campo Id non può essere vuoto.", nameof(id));
@@ -172,5 +171,10 @@ public class OspedaleService(IRegistroServiziDbContext dbContext) : IOspedaleSer
         }
     }
 
+    /// <summary>
+    /// Returns the hospitals query configured for read-only access.
+    /// </summary>
+    /// <remarks>The query uses <see cref="EntityFrameworkQueryableExtensions.AsNoTracking{TEntity}(IQueryable{TEntity})"/>.</remarks>
+    /// <returns>An <see cref="IQueryable{T}"/> over <see cref="Ospedale"/> entities.</returns>
     private IQueryable<Ospedale> OspedaleQuery() => dbContext.Ospedali.AsNoTracking();
 }

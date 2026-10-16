@@ -1,20 +1,18 @@
 ﻿namespace RegistroServizi.Application.Services;
 
 /// <summary>
-/// Provides read-only operations to retrieve Colonnina entities and map them to ColonninaDto.
+/// Provides read and write operations for colonnina data.
 /// </summary>
-/// <remarks>Queries are executed with AsNoTracking. Methods are asynchronous and accept a CancellationToken.
-/// GetByIdColonninaAsync throws KeyNotFoundException if a Colonnina with the specified id is not found.</remarks>
-/// <param name="dbContext">The IRegistroServiziDbContext used to access the Colonnine DbSet for queries.</param>
+/// <remarks>Read operations use AsNoTracking. Public methods are asynchronous and accept an optional CancellationToken.</remarks>
+/// <param name="dbContext">The database context used to query and persist colonnina entities.</param>
 public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaService
 {
     /// <summary>
-    /// Gets all colonnine as ColonninaDto objects ordered by Id.
+    /// Gets all colonnine as ColonninaDto instances ordered by Id.
     /// </summary>
-    /// <remarks>Throws OperationCanceledException if cancellation is requested. Projects entities to
-    /// ColonninaDto using ColonninaMapper and materializes the results asynchronously via ToListAsync.</remarks>
-    /// <param name="cancellationToken">Token to monitor for cancellation of the asynchronous operation.</param>
-    /// <returns>A read-only list of ColonninaDto ordered by Id.</returns>
+    /// <remarks>The query is projected through ColonninaMapper and materialized asynchronously.</remarks>
+    /// <param name="cancellationToken">Token used to cancel the asynchronous operation.</param>
+    /// <returns>A read-only list of ColonninaDto objects ordered by Id.</returns>
     public async Task<IReadOnlyList<ColonninaDto>> GetAllColonnineAsync(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -28,13 +26,13 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
     }
 
     /// <summary>
-    /// Asynchronously retrieves the ColonninaDto with the specified identifier.
+    /// Gets the ColonninaDto with the specified identifier.
     /// </summary>
-    /// <remarks>Projects the entity to a ColonninaDto and honors the provided cancellation token.</remarks>
+    /// <remarks>The current colonnina set is materialized, mapped to DTOs, and searched for the requested identifier.</remarks>
     /// <param name="id">The identifier of the colonnina to retrieve.</param>
-    /// <param name="cancellationToken">Token used to cancel the operation.</param>
-    /// <returns>A task that resolves to the ColonninaDto with the specified identifier.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown if no colonnina with the specified identifier is found.</exception>
+    /// <param name="cancellationToken">Token used to cancel the asynchronous operation.</param>
+    /// <returns>The matching ColonninaDto.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when no colonnina with the specified identifier exists.</exception>
     public async Task<ColonninaDto> GetByIdColonninaAsync(Guid id, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -47,16 +45,17 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
     }
 
     /// <summary>
-    /// Creates a new Colonnina from the provided DTO, persists it to the database asynchronously, and returns the created ColonninaDto.
+    /// Creates a new colonnina, saves it to the database, and returns the created DTO.
     /// </summary>
-    /// <remarks>Validates input (throws ArgumentNullException or validation exceptions for missing or empty
-    /// fields), maps the DTO to an entity, saves changes, and detaches the entity from the DbContext before mapping back to a DTO.</remarks>
-    /// <param name="createDto">DTO with the data required to create a Colonnina (including NomeColonnina, Comune and Provincia); must not be
-    /// null and required fields must not be empty.</param>
-    /// <param name="cancellationToken">CancellationToken to observe while waiting for the operation to complete; optional.</param>
-    /// <returns>The created ColonninaDto representing the persisted entity.</returns>
-    /// <exception cref="InvalidOperationException">Thrown when an error occurs while saving changes to the database; the exception message contains a correlation
-    /// identifier for troubleshooting.</exception>
+    /// <remarks>
+    /// Validates required fields, maps the DTO to an entity, persists the entity, and detaches it from the context after
+    /// saving. Database failures are wrapped in an InvalidOperationException that includes a correlation identifier.
+    /// </remarks>
+    /// <param name="createDto">The data required to create a new colonnina.</param>
+    /// <param name="cancellationToken">Token used to cancel the asynchronous operation.</param>
+    /// <returns>The created ColonninaDto.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="createDto"/> is null.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when saving the new colonnina fails.</exception>
     public async Task<ColonninaDto> CreateColonninaAsync(CreateColonninaDto createDto, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(createDto);
@@ -78,22 +77,25 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
         catch (Exception ex)
         {
             var correlationId = Guid.NewGuid().ToString("D");
-            throw new InvalidOperationException($"Errore durante la creazione dell'ospedale. CorrelationId: {correlationId}", ex);
+            throw new InvalidOperationException($"Errore durante la creazione della colonnina. CorrelationId: {correlationId}", ex);
         }
 
         return ColonninaMapper.MapColonninaToDto(entity);
     }
 
     /// <summary>
-    /// Updates an existing colonnina using values from updateDto and persists the changes to the database.
+    /// Updates an existing colonnina and returns the updated DTO.
     /// </summary>
-    /// <param name="updateDto">Data transfer object containing the Id and the updated properties for the colonnina.</param>
-    /// <param name="cancellationToken">Token to observe while waiting for the operation to complete.</param>
-    /// <returns>The updated ColonninaDto representing the persisted entity.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown when a colonnina with the specified Id is not found or if a concurrency conflict indicates the entity no
-    /// longer exists.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when the database update fails due to an underlying persistence error; the exception message includes a
-    /// correlation id.</exception>
+    /// <remarks>
+    /// Validates the input, loads the existing entity, maps the updated values, and saves the changes. Concurrency and
+    /// persistence failures are wrapped with a correlation identifier when appropriate.
+    /// </remarks>
+    /// <param name="updateDto">The DTO containing the identifier and updated values.</param>
+    /// <param name="cancellationToken">Token used to cancel the asynchronous operation.</param>
+    /// <returns>The updated ColonninaDto.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="updateDto"/> is null.</exception>
+    /// <exception cref="KeyNotFoundException">Thrown when the colonnina cannot be found or a concurrency conflict indicates it no longer exists.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when saving the updated colonnina fails.</exception>
     public async Task<ColonninaDto> UpdateColonninaAsync(UpdateColonninaDto updateDto, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(updateDto);
@@ -131,15 +133,14 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
     }
 
     /// <summary>
-    /// Deletes the specified colonnina from the database asynchronously.
+    /// Deletes the specified colonnina from the database.
     /// </summary>
-    /// <remarks>Validates that id is not Guid.Empty. Any DbUpdateException from SaveChangesAsync is wrapped in an InvalidOperationException with a correlation id.</remarks>
-    /// <param name="id">Identifier of the colonnina to delete. Must be a non-empty GUID.</param>
-    /// <param name="cancellationToken">A cancellation token to cancel the asynchronous operation.</param>
+    /// <remarks>Validates the identifier, removes the matching entity, and saves the change asynchronously.</remarks>
+    /// <param name="id">The identifier of the colonnina to delete.</param>
+    /// <param name="cancellationToken">Token used to cancel the asynchronous operation.</param>
     /// <returns>A task that represents the asynchronous delete operation.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown if no colonnina with the specified id is found.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if saving changes to the database fails; the inner exception contains database error details and the
-    /// message includes a generated correlation identifier.</exception>
+    /// <exception cref="KeyNotFoundException">Thrown when no colonnina with the specified identifier exists.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when saving the delete operation fails.</exception>
     public async Task DeleteColonninaAsync(Guid id, CancellationToken cancellationToken = default)
     {
         ObjectValidation.ValidateGuidNotEmpty(id, "Il campo Id non può essere vuoto.", nameof(id));
@@ -160,5 +161,8 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
         }
     }
 
+    /// <summary>
+    /// Returns a queryable set of colonnine configured for read-only access.
+    /// </summary>
     private IQueryable<Colonnina> ColonninaQuery() => dbContext.Colonnine.AsNoTracking();
 }

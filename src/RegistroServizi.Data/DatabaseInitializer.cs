@@ -79,7 +79,7 @@ public static class DatabaseInitializer
     /// <remarks>
     /// The values are derived from <c>nameof(Role.*)</c> to keep them aligned with the role enumeration.
     /// </remarks>
-    private static readonly string[] defaultRoles = { nameof(Role.Admin), nameof(Role.Manager) };
+    private static readonly string[] defaultRoles = { nameof(Role.Admin), nameof(Role.Manager), nameof(Role.Operator) };
 
     /// <summary>
     /// Ensures the default identity roles exist.

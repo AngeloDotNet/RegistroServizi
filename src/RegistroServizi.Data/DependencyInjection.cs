@@ -1,45 +1,74 @@
 ﻿namespace RegistroServizi.Data;
 
 /// <summary>
-/// Registers the data access services for the RegistroServizi application.
+/// Provides dependency-injection registration for the RegistroServizi data-access layer.
 /// </summary>
 /// <remarks>
-/// Adds the Entity Framework Core <see cref="RegistroServiziDbContext"/>,
-/// a scoped <see cref="IDbContextFactory{TContext}"/>, and the
-/// <see cref="IRegistroServiziDbContext"/> abstraction to the service container.
-/// Also configures SQL Server persistence with retry handling, split-query behavior,
-/// compatibility level settings, logging, and no-tracking queries.
+/// The registered services use Entity Framework Core with SQL Server and are configured
+/// for resilient connections, split queries, no-tracking reads, and centralized migration
+/// metadata. This keeps database configuration consistent across application components
+/// while exposing <see cref="IRegistroServiziDbContext"/> to consumers that do not need
+/// to depend on the concrete context type.
+/// <para>
+/// For additional information, see the
+/// <a href="https://learn.microsoft.com/ef/core/dbcontext-configuration/">Entity Framework Core DbContext configuration documentation</a>
+/// and the
+/// <a href="https://learn.microsoft.com/aspnet/core/fundamentals/dependency-injection">ASP.NET Core dependency injection documentation</a>.
+/// </para>
 /// </remarks>
 public static class DependencyInjection
 {
     extension(IServiceCollection services)
     {
         /// <summary>
-        /// Adds and configures the RegistroServizi data layer services.
+        /// Registers and configures the RegistroServizi Entity Framework Core services.
         /// </summary>
         /// <param name="configuration">
-        /// The application configuration used to resolve the database connection string.
+        /// The application configuration containing the connection string.
         /// </param>
         /// <param name="sqlConnection">
-        /// The name of the connection string to read from configuration.
-        /// The default value is <c>SqlServerConnection</c>.
+        /// The configuration key of the SQL Server connection string.
+        /// The default key is <c>SqlServerConnection</c>.
         /// </param>
         /// <returns>
-        /// The same <see cref="IServiceCollection"/> instance so additional registrations can be chained.
+        /// The current <see cref="IServiceCollection"/> instance, allowing additional
+        /// service registrations to be chained.
         /// </returns>
         /// <exception cref="InvalidOperationException">
-        /// Thrown when the specified connection string cannot be found in configuration.
+        /// Thrown when <paramref name="sqlConnection"/> does not identify a connection
+        /// string in <paramref name="configuration"/>.
         /// </exception>
         /// <remarks>
-        /// This method:
+        /// This method registers the following services:
         /// <list type="bullet">
-        /// <item><description>Registers <see cref="RegistroServiziDbContext"/> as a scoped service.</description></item>
-        /// <item><description>Registers a scoped <see cref="IDbContextFactory{TContext}"/> for the same context.</description></item>
-        /// <item><description>Maps <see cref="IRegistroServiziDbContext"/> to the concrete context implementation.</description></item>
-        /// <item><description>Configures SQL Server retry behavior, migrations metadata, query splitting, and compatibility level.</description></item>
-        /// <item><description>Enables logging and configures queries to use no-tracking by default.</description></item>
+        /// <item>
+        /// <description>
+        /// <see cref="RegistroServiziDbContext"/> as a scoped Entity Framework Core context.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// A scoped <see cref="IDbContextFactory{TContext}"/> for creating
+        /// <see cref="RegistroServiziDbContext"/> instances.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// <see cref="IRegistroServiziDbContext"/> mapped to the registered
+        /// <see cref="RegistroServiziDbContext"/> instance.
+        /// </description>
+        /// </item>
         /// </list>
+        /// SQL Server is configured with transient-failure retries, split-query behavior,
+        /// compatibility level 160, migration history metadata, informational logging,
+        /// disabled sensitive-data logging, and no-tracking queries by default.
         /// </remarks>
+        /// <example>
+        /// The data layer can be registered during application startup:
+        /// <code language="csharp">
+        /// builder.Services.AddRegistroServiziData(builder.Configuration);
+        /// </code>
+        /// </example>
         public IServiceCollection AddRegistroServiziData(IConfiguration configuration, string sqlConnection = "SqlServerConnection")
         {
             var connectionString = configuration.GetConnectionString(sqlConnection) ?? throw new InvalidOperationException($"Connection string '{sqlConnection}' was not found.");

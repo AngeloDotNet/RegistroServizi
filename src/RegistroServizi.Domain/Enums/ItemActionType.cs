@@ -1,22 +1,26 @@
 ﻿namespace RegistroServizi.Domain.Enums;
 
 /// <summary>
-/// Specifies the action performed on an item.
+/// Specifies the operation to perform on an item.
 /// </summary>
+/// <remarks>
+/// Use this enumeration to identify the intended lifecycle operation when processing
+/// an item, such as creating, editing, or deleting it.
+/// </remarks>
 public enum ItemActionType
 {
     /// <summary>
-    /// Creates a new item.
+    /// Creates and persists a new item.
     /// </summary>
     Create,
 
     /// <summary>
-    /// Updates an existing item.
+    /// Updates and persists changes to an existing item.
     /// </summary>
     Edit,
 
     /// <summary>
-    /// Deletes an existing item.
+    /// Removes an existing item.
     /// </summary>
     Delete
 }

@@ -1,28 +1,30 @@
 ﻿namespace RegistroServizi.Domain.Enums;
 
 /// <summary>
-/// Represents the application roles that can be assigned to users for authorization and access control.
+/// Defines the roles that determine a user's authorization level within the application.
 /// </summary>
 /// <remarks>
-/// Use these values to enforce role-based behavior across the application.
-/// Each member includes a <see cref="DisplayAttribute"/> name for UI-friendly rendering.
+/// Use these values when assigning roles to users or enforcing role-based authorization.
+/// Each member is decorated with a
+/// <see cref="System.ComponentModel.DataAnnotations.DisplayAttribute"/> that provides
+/// a user-facing name for UI components and other presentation scenarios.
 /// </remarks>
 public enum Role
 {
     /// <summary>
-    /// Identifies an administrator with full access to the application.
+    /// Grants the highest level of access intended for application administration.
     /// </summary>
     [Display(Name = "Admin")]
     Admin,
 
     /// <summary>
-    /// Identifies a manager with elevated permissions for administrative workflows.
+    /// Grants elevated access intended for users responsible for managing operational workflows.
     /// </summary>
     [Display(Name = "Manager")]
     Manager,
 
     /// <summary>
-    /// Identifies an operator with standard operational permissions.
+    /// Grants the standard access required to perform day-to-day operational tasks.
     /// </summary>
     [Display(Name = "Operator")]
     Operator

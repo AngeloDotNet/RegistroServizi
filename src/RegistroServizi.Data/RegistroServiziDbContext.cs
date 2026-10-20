@@ -64,6 +64,14 @@ public class RegistroServiziDbContext(DbContextOptions<RegistroServiziDbContext>
     /// </remarks>
     public virtual DbSet<Colonnina> Colonnine => Set<Colonnina>();
 
+    /// <summary>
+    /// Gets a DbSet<SquadraFeriale> for querying and saving SquadraFeriale entities.
+    /// </summary>
+    /// <remarks>The DbSet is provided and managed by the DbContext; queries against it are translated to
+    /// database operations and changes are tracked by the context. Use the context's Set<SquadraFeriale>() when a DbSet
+    /// reference is required.</remarks>
+    public virtual DbSet<SquadraFeriale> SquadreFeriali => Set<SquadraFeriale>();
+
     /// <inheritdoc />
     /// <remarks>
     /// The base implementation is called first so that ASP.NET Core Identity and Entity Framework

@@ -64,7 +64,10 @@ public static class DatabaseInitializer
             await SeedDataOspedaliAsync(scope.ServiceProvider, logger);
 
             // Seed data for Colonnine
-            //await SeedDataColonnineAsync(scope.ServiceProvider, logger); //TODO: Aggiungere nuove colonnine (Da Cairoli in poi)
+            await SeedDataColonnineAsync(scope.ServiceProvider, logger); //TODO: Aggiungere nuove colonnine (Da Cairoli in poi)
+
+            // Seed data for SquadreFeriali
+            await SeedDataSquadreFerialiAsync(scope.ServiceProvider, logger);
         }
         catch (Exception ex)
         {
@@ -343,6 +346,7 @@ public static class DatabaseInitializer
     private static async Task SeedDataColonnineAsync(IServiceProvider services, ILogger logger)
     {
         var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
+
         if (await dbContext.Colonnine.AnyAsync())
         {
             logger.LogInformation("Colonnine data already exists. Skipping seeding.");
@@ -363,6 +367,44 @@ public static class DatabaseInitializer
         };
 
         await dbContext.Colonnine.AddRangeAsync(colonnine);
+        await dbContext.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Seeds the <c>SquadreFeriali</c> table with the default weekday and weekend team schedules.
+    /// </summary>
+    /// <remarks>
+    /// Seeding is skipped when at least one team schedule already exists. This preserves existing schedules
+    /// and makes the initializer safe to execute during every application startup.
+    /// </remarks>
+    /// <param name="services">
+    /// The scoped service provider used to resolve <see cref="RegistroServiziDbContext"/>.
+    /// </param>
+    /// <param name="logger">The logger used to record whether seeding was performed or skipped.</param>
+    /// <returns>A task that represents the asynchronous team-schedule seeding operation.</returns>
+    private static async Task SeedDataSquadreFerialiAsync(IServiceProvider services, ILogger logger)
+    {
+        var dbContext = services.GetRequiredService<RegistroServiziDbContext>();
+
+        if (await dbContext.SquadreFeriali.AnyAsync())
+        {
+            logger.LogInformation("Squadre Feriali data already exists. Skipping seeding.");
+            return;
+        }
+
+        var squadreFeriali = new List<SquadraFeriale>
+        {
+            new SquadraFeriale { Id = Guid.NewGuid(), Squadra = "Lunedì notte" },
+            new SquadraFeriale { Id = Guid.NewGuid(), Squadra = "Martedì notte" },
+            new SquadraFeriale { Id = Guid.NewGuid(), Squadra = "Mercoledì notte" },
+            new SquadraFeriale { Id = Guid.NewGuid(), Squadra = "Giovedì notte" },
+            new SquadraFeriale { Id = Guid.NewGuid(), Squadra = "Venerdì notte" },
+            new SquadraFeriale { Id = Guid.NewGuid(), Squadra = "Sabato mattina" },
+            new SquadraFeriale { Id = Guid.NewGuid(), Squadra = "Sabato pomeriggio" },
+            new SquadraFeriale { Id = Guid.NewGuid(), Squadra = "Sabato notte" },
+            new SquadraFeriale { Id = Guid.NewGuid(), Squadra = "Diurno" }
+        };
+        await dbContext.SquadreFeriali.AddRangeAsync(squadreFeriali);
         await dbContext.SaveChangesAsync();
     }
 }

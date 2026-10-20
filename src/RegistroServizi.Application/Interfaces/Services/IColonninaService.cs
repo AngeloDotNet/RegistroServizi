@@ -23,7 +23,7 @@ public interface IColonninaService
     /// <param name="id">The unique identifier of the charging station to retrieve.</param>
     /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
     /// <returns>The charging station DTO that matches the specified identifier.</returns>
-    Task<ColonninaDto> GetByIdColonninaAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<ColonninaDto> GetColonninaByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a new charging station and returns the created DTO.

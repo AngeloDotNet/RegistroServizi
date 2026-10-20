@@ -29,6 +29,9 @@ public interface IRegistroServiziDbContext
     /// <summary>Gets the set of <see cref="Colonnina"/> entities.</summary>
     DbSet<Colonnina> Colonnine { get; }
 
+    /// <summary>Gets the set of <see cref="SquadraFeriale"/> entities.</summary>
+    DbSet<SquadraFeriale> SquadreFeriali { get; }
+
     /// <summary>
     /// Saves all pending changes to the underlying data store asynchronously.
     /// </summary>

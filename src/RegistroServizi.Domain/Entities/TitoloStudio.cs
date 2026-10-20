@@ -1,19 +1,20 @@
 ﻿namespace RegistroServizi.Domain.Entities;
 
 /// <summary>
-/// Represents an academic qualification or educational title.
+/// Represents an educational qualification that can be associated with a person
+/// or used as a reference value within the registry.
 /// </summary>
 /// <remarks>
-/// This entity inherits from <see cref="BaseEntity"/> and is used to store the
-/// human-readable description of a study title.
+/// The entity inherits its unique identifier from <see cref="BaseEntity"/>.
 /// </remarks>
 public class TitoloStudio : BaseEntity
 {
     /// <summary>
-    /// Gets or sets the descriptive name of the study title.
+    /// Gets or sets the human-readable name of the educational qualification.
     /// </summary>
     /// <remarks>
-    /// Use this property to store the display label shown to users.
+    /// This value is intended for display in lists, forms, and other user-facing
+    /// parts of the application.
     /// </remarks>
     public string Descrizione { get; set; } = string.Empty;
 }

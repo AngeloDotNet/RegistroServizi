@@ -18,7 +18,7 @@ namespace RegistroServizi.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.12")
+                .HasAnnotation("ProductVersion", "10.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -392,6 +392,21 @@ namespace RegistroServizi.Data.Migrations
                     b.HasIndex("TipologiaServizioId");
 
                     b.ToTable("PrezziServizi", (string)null);
+                });
+
+            modelBuilder.Entity("RegistroServizi.Domain.Entities.SquadraFeriale", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Squadra")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SquadreFeriali");
                 });
 
             modelBuilder.Entity("RegistroServizi.Domain.Entities.StatoBolla", b =>

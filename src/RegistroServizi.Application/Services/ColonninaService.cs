@@ -33,7 +33,7 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
     /// <param name="cancellationToken">Token used to cancel the asynchronous operation.</param>
     /// <returns>The matching ColonninaDto.</returns>
     /// <exception cref="KeyNotFoundException">Thrown when no colonnina with the specified identifier exists.</exception>
-    public async Task<ColonninaDto> GetByIdColonninaAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<ColonninaDto> GetColonninaByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -63,7 +63,7 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
         cancellationToken.ThrowIfCancellationRequested();
 
         ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.NomeColonnina, "Il nome della colonnina non può essere vuoto.", nameof(createDto.NomeColonnina));
-        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Comune, "La città della colonnina non può essere vuota.", nameof(createDto.Comune));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Comune, "Il comune della colonnina non può essere vuoto.", nameof(createDto.Comune));
         ObjectValidation.ValidateNotNullOrWhiteSpace(createDto.Provincia, "La provincia della colonnina non può essere vuota.", nameof(createDto.Provincia));
 
         var entity = ColonninaMapper.MapColonninaToEntityCreate(createDto);
@@ -104,7 +104,7 @@ public class ColonninaService(IRegistroServiziDbContext dbContext) : IColonninaS
 
         ObjectValidation.ValidateGuidNotEmpty(updateDto.Id, "Il campo Id non può essere vuoto.", nameof(updateDto.Id));
         ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.NomeColonnina, "Il nome della colonnina non può essere vuoto.", nameof(updateDto.NomeColonnina));
-        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Comune, "La città della colonnina non può essere vuota.", nameof(updateDto.Comune));
+        ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Comune, "Il comune della colonnina non può essere vuoto.", nameof(updateDto.Comune));
         ObjectValidation.ValidateNotNullOrWhiteSpace(updateDto.Provincia, "La provincia della colonnina non può essere vuota.", nameof(updateDto.Provincia));
 
         var entity = await dbContext.Colonnine.FindAsync([updateDto.Id], cancellationToken).ConfigureAwait(false)

@@ -1,11 +1,13 @@
 ﻿namespace RegistroServizi.Web.Components.Layout;
 
 /// <summary>
-/// Main application layout for the Blazor UI.
+/// Provides the shared layout for the application's Blazor pages.
 /// </summary>
 /// <remarks>
-/// This layout keeps the header, drawer state, and authentication-dependent actions
-/// synchronized with the current application and association options.
+/// The layout coordinates the navigation drawer, association name, authentication-aware
+/// actions, and logout return URL. It also responds to changes from
+/// <see cref="NavigationManager"/> and <see cref="IOptionsMonitor{TOptions}"/> so the
+/// rendered layout remains synchronized with application state.
 /// </remarks>
 public partial class MainLayout
 {
@@ -15,9 +17,11 @@ public partial class MainLayout
 
     private IDisposable? _associazioneOptionsChangeSubscription;
 
-    /// <summary>
-    /// Initializes the layout state and subscribes to option changes and navigation updates.
-    /// </summary>
+    /// <inheritdoc />
+    /// <remarks>
+    /// Initializes the association name, subscribes to association-option changes, and
+    /// starts tracking navigation changes so the logout action can preserve the current URL.
+    /// </remarks>
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -34,8 +38,12 @@ public partial class MainLayout
     }
 
     /// <summary>
-    /// Releases navigation and options subscriptions created by the layout.
+    /// Releases the navigation and configuration-change subscriptions created by the layout.
     /// </summary>
+    /// <remarks>
+    /// This prevents callbacks from targeting the layout after it has been removed from the
+    /// Blazor component hierarchy.
+    /// </remarks>
     public void Dispose()
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
@@ -43,10 +51,10 @@ public partial class MainLayout
     }
 
     /// <summary>
-    /// Updates the current return URL whenever navigation changes.
+    /// Updates the relative URL used as the logout return URL after navigation occurs.
     /// </summary>
-    /// <param name="sender">The event source.</param>
-    /// <param name="e">Navigation event data.</param>
+    /// <param name="sender">The object that raised the navigation event.</param>
+    /// <param name="e">The event data containing the new absolute URL.</param>
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {
         currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
@@ -54,16 +62,18 @@ public partial class MainLayout
     }
 
     /// <summary>
-    /// Toggles the navigation drawer open or closed.
+    /// Changes the navigation drawer between its open and closed states.
     /// </summary>
     private void ToggleDrawer()
     {
         _drawerOpen = !_drawerOpen;
     }
 
-    /// <summary>
-    /// Loads the current authentication state used by the authorization-aware header.
-    /// </summary>
+    /// <inheritdoc />
+    /// <remarks>
+    /// Requests the current authentication state so authorization-aware content in the
+    /// layout is initialized before it is rendered.
+    /// </remarks>
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -71,11 +81,16 @@ public partial class MainLayout
     }
 
     /// <summary>
-    /// Builds a two-letter set of initials from a display name for the user avatar.
+    /// Creates the initials displayed in the authenticated user's avatar.
     /// </summary>
-    /// <param name="name">The full display name.</param>
+    /// <param name="name">
+    /// The user's display name. Names are split on whitespace, using the first and last
+    /// components when more than one component is available.
+    /// </param>
     /// <returns>
-    /// A single initial, two initials, or <c>?</c> when the input is null, empty, or whitespace.
+    /// The upper-case initial for a single-component name, the upper-case initials for a
+    /// multi-component name, or <c>?</c> when <paramref name="name"/> is
+    /// <see langword="null"/>, empty, or contains only whitespace.
     /// </returns>
     private static string GetProfileInitials(string? name)
     {

@@ -2,67 +2,6 @@
 
 public static class MudDataGridExtensions
 {
-    // Opzione 2
-    //public static async Task LoadDataAsync<T>(this ComponentBase component, Func<Task<IEnumerable<T>?>> loadItemsAsync, Action<List<T>> setItems, Action configureView, Action<bool> setLoading,
-    //    ILogger logger, IStringLocalizer<SharedResource> localizer, ISnackbar snackbar, Func<Func<Task>, Task> invokeAsync, CancellationToken cancellationToken)
-    //{
-    //    ArgumentNullException.ThrowIfNull(component);
-    //    ArgumentNullException.ThrowIfNull(loadItemsAsync);
-    //    ArgumentNullException.ThrowIfNull(setItems);
-    //    ArgumentNullException.ThrowIfNull(configureView);
-    //    ArgumentNullException.ThrowIfNull(setLoading);
-    //    ArgumentNullException.ThrowIfNull(logger);
-    //    ArgumentNullException.ThrowIfNull(localizer);
-    //    ArgumentNullException.ThrowIfNull(snackbar);
-    //    ArgumentNullException.ThrowIfNull(invokeAsync);
-
-    //    await invokeAsync(() =>
-    //    {
-    //        setLoading(true);
-    //        return Task.CompletedTask;
-    //    });
-
-    //    try
-    //    {
-    //        var loadedItems = await loadItemsAsync();
-
-    //        if (cancellationToken.IsCancellationRequested)
-    //        {
-    //            return;
-    //        }
-
-    //        await invokeAsync(() =>
-    //        {
-    //            setItems(loadedItems?.ToList() ?? []);
-    //            configureView();
-
-    //            return Task.CompletedTask;
-    //        });
-    //    }
-    //    catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-    //    {
-    //        // The operation was canceled, so we can safely ignore this exception.
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        logger.LogError(ex, "{LoadingError}. {Message}: {ExceptionMessage}", localizer["LoadingError"], localizer["Message"], ex.Message);
-
-    //        await invokeAsync(() =>
-    //        {
-    //            SnackbarExtensions.ShowNotifyError(snackbar, localizer["LoadingError"]);
-    //            return Task.CompletedTask;
-    //        });
-    //    }
-    //    finally
-    //    {
-    //        await invokeAsync(() =>
-    //        {
-    //            setLoading(false);
-    //            return Task.CompletedTask;
-    //        });
-    //    }
-    //}
-
     /// <summary>
     /// Loads data asynchronously and applies the result to a Blazor data-grid component.
     /// </summary>

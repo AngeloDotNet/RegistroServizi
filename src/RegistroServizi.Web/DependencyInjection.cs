@@ -149,14 +149,7 @@ public static class DependencyInjection
             });
 
             services.AddHsts(options => options.MaxAge = TimeSpan.FromDays(60));
-            //{
-            //    options.MaxAge = TimeSpan.FromDays(60);
-            //});
-
             services.AddAntiforgery(options => options.Cookie.SecurePolicy = isDevelopment ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always);
-            //{
-            //    options.Cookie.SecurePolicy = isDevelopment ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-            //});
 
             return services;
         }

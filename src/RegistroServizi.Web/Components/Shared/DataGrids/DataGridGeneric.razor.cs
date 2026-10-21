@@ -19,8 +19,7 @@ public partial class DataGridGeneric<T>
     /// The collection is initialized as empty so the grid can be rendered before
     /// data is available.
     /// </remarks>
-    [Parameter]
-    public IEnumerable<T> Items { get; set; } = [];
+    [Parameter] public IEnumerable<T> Items { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the CSS width declarations used to build the grid's column group.
@@ -29,8 +28,7 @@ public partial class DataGridGeneric<T>
     /// Each entry is applied to a <c>col</c> element in the same order as the
     /// corresponding grid column.
     /// </remarks>
-    [Parameter]
-    public List<string> LayoutWidths { get; set; } = [];
+    [Parameter] public List<string> LayoutWidths { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the column definitions used to render the item properties.
@@ -39,14 +37,12 @@ public partial class DataGridGeneric<T>
     /// Each definition specifies the property expression, header title, visibility,
     /// and optional value format for a column.
     /// </remarks>
-    [Parameter]
-    public List<DataGridColumnDefinition<T>> Columns { get; set; } = [];
+    [Parameter] public List<DataGridColumnDefinition<T>> Columns { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the callback invoked when the user requests a new item.
     /// </summary>
-    [Parameter]
-    public EventCallback ActionCallback { get; set; }
+    [Parameter] public EventCallback ActionCallback { get; set; }
 
     /// <summary>
     /// Gets or sets the callback invoked when the user requests to edit an item.
@@ -54,8 +50,7 @@ public partial class DataGridGeneric<T>
     /// <remarks>
     /// The callback receives the item associated with the selected grid row.
     /// </remarks>
-    [Parameter]
-    public EventCallback<T> ActionEditCallback { get; set; }
+    [Parameter] public EventCallback<T> ActionEditCallback { get; set; }
 
     /// <summary>
     /// Gets or sets the callback invoked when the user requests to delete an item.
@@ -63,8 +58,7 @@ public partial class DataGridGeneric<T>
     /// <remarks>
     /// The callback receives the item associated with the selected grid row.
     /// </remarks>
-    [Parameter]
-    public EventCallback<T> ActionDeleteCallback { get; set; }
+    [Parameter] public EventCallback<T> ActionDeleteCallback { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the button for adding a new item is disabled.
@@ -74,8 +68,7 @@ public partial class DataGridGeneric<T>
     /// Set this property to <see langword="true" /> to keep the button visible while
     /// preventing the user from invoking the add action.
     /// </remarks>
-    [Parameter]
-    public bool DisableAddButton { get; set; }
+    [Parameter] public bool DisableAddButton { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the edit buttons are disabled.
@@ -85,8 +78,7 @@ public partial class DataGridGeneric<T>
     /// Set this property to <see langword="true" /> to keep the buttons visible while
     /// preventing the user from invoking the edit action.
     /// </remarks>
-    [Parameter]
-    public bool DisableEditButton { get; set; }
+    [Parameter] public bool DisableEditButton { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the delete buttons are disabled.
@@ -96,6 +88,5 @@ public partial class DataGridGeneric<T>
     /// Set this property to <see langword="true" /> to keep the buttons visible while
     /// preventing the user from invoking the delete action.
     /// </remarks>
-    [Parameter]
-    public bool DisableDeleteButton { get; set; }
+    [Parameter] public bool DisableDeleteButton { get; set; }
 }

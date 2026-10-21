@@ -4,45 +4,47 @@
 /// Represents the application footer component.
 /// </summary>
 /// <remarks>
-/// Displays the copyright year range, the current application name,
-/// and localized footer text. The component also listens for
-/// <see cref="ApplicazioneOptions"/> changes so the rendered content
-/// updates when the application name changes.
+/// Renders the copyright year, the configured application name, and localized
+/// footer content. The component observes <see cref="ApplicazioneOptions"/>
+/// changes so the displayed application name remains synchronized with the
+/// current configuration while the component is rendered.
 /// </remarks>
 public partial class Footer : IDisposable
 {
     /// <summary>
-    /// The first year used in the copyright range.
+    /// Defines the first year displayed in the copyright notice.
     /// </summary>
     private const int LicenseStartYear = 2026;
 
     /// <summary>
-    /// Gets the license year text for the footer.
+    /// Gets the copyright year text rendered by the footer.
     /// </summary>
     /// <remarks>
-    /// Returns a single year when the current year matches
-    /// <see cref="LicenseStartYear"/>; otherwise returns a year range.
+    /// A single year is returned when the current year is the license start
+    /// year. For subsequent years, the result contains the start and current
+    /// years as a range.
     /// </remarks>
     private static string YearLicense => DateTime.Now.Year == LicenseStartYear ? LicenseStartYear.ToString() : $"{LicenseStartYear} - {DateTime.Now.Year}";
 
     /// <summary>
-    /// Stores the current application name displayed in the footer.
+    /// Stores the configured application name displayed in the footer.
     /// </summary>
     private string? nomeApplicazione;
 
     /// <summary>
-    /// Tracks the options change subscription so it can be released
-    /// when the component is disposed.
+    /// Stores the subscription used to observe application option changes.
     /// </summary>
+    /// <remarks>
+    /// The subscription is disposed with the component to prevent callbacks
+    /// from reaching a component that is no longer rendered.
+    /// </remarks>
     private IDisposable? optionsChangeSubscription;
 
-    /// <summary>
-    /// Initializes the component state and subscribes to application
-    /// option changes.
-    /// </summary>
+    /// <inheritdoc />
     protected override void OnInitialized()
     {
         base.OnInitialized();
+
         nomeApplicazione = ApplicazioneOptions?.CurrentValue?.NomeApplicazione;
         optionsChangeSubscription = ApplicazioneOptions?.OnChange(options =>
         {
@@ -52,8 +54,12 @@ public partial class Footer : IDisposable
     }
 
     /// <summary>
-    /// Releases the options change subscription.
+    /// Releases the application options change subscription held by the component.
     /// </summary>
+    /// <remarks>
+    /// Disposing the subscription prevents future configuration callbacks after
+    /// the footer has been removed from the render tree.
+    /// </remarks>
     public void Dispose()
     {
         optionsChangeSubscription?.Dispose();

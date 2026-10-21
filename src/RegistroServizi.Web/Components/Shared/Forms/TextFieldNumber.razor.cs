@@ -75,6 +75,23 @@ public partial class TextFieldNumber<TValue>
     /// </summary>
     [Parameter] public bool IsRequired { get; set; } = false;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the field formats its value
+    /// as a currency amount.
+    /// </summary>
+    /// <remarks>
+    /// When enabled, the component uses <see cref="LocalizationCulture" /> to
+    /// determine the currency symbol, decimal separator, and number formatting.
+    /// </remarks>
     [Parameter] public bool IsCurrency { get; set; } = false;
+
+    /// <summary>
+    /// Gets or sets the culture used to format and parse localized numeric
+    /// and currency values.
+    /// </summary>
+    /// <remarks>
+    /// The default culture is <c>en-US</c>. Set this property when the field
+    /// must display values according to a different regional convention.
+    /// </remarks>
     [Parameter] public CultureInfo LocalizationCulture { get; set; } = CultureInfo.GetCultureInfo("en-US");
 }

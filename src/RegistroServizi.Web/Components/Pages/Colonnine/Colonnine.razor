@@ -1,0 +1,22 @@
+﻿@page "/colonnine"
+@rendermode InteractiveServer
+@inherits PageBaseHelper
+
+<TextPageTitle Title="TitleStations" SubTitle="@Localizer["SubTitleStations"]" />
+
+<MudPaper Class="pa-4 mb-4">
+    @if (isLoading || elements.Count == 0)
+    {
+        <ProgressNoData IsLoading="@isLoading" ElementsCount="@elements.Count" CountMessage="" />
+    }
+    else
+    {
+        <DataGridGeneric T="ColonninaDto"
+                         Items="@elements"
+                         ActionCallback="@(() => CreateItemAsync(Title))"
+                         ActionEditCallback="@((context) => EditItemAsync(Title, context.Id, context.NomeColonnina))"
+                         ActionDeleteCallback="@((context) => DeleteItemAsync(Title, context.Id, context.NomeColonnina))"
+                         Columns="@columnDefinition"
+                         LayoutWidths="@columnWidths" />
+    }
+</MudPaper>

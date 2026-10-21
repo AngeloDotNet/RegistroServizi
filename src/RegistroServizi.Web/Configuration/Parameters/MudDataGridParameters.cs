@@ -71,6 +71,18 @@ public static class MudDataGridParameters
     ];
 
     /// <summary>
+    /// Creates the column definitions used to render the charging stations grid, including localized headers for user-facing fields.
+    /// </summary>
+    /// <param name="localizer">Localizer used to resolve the translated column titles.</param>
+    /// <returns>A list of <see cref="DataGridColumnDefinition{ColonninaDto}" /> values defining the Id, charging station name, city, and province columns.</returns>
+    internal static List<DataGridColumnDefinition<ColonninaDto>> GetColonnineColumns(IStringLocalizer<SharedResource> localizer) => [
+        new DataGridColumnDefinition<ColonninaDto> { Property = x => x.Id, Title = "Id", IsHidden = true },
+        new DataGridColumnDefinition<ColonninaDto> { Property = x => x.NomeColonnina, Title = localizer["ChargingStation"] },
+        new DataGridColumnDefinition<ColonninaDto> { Property = x => x.Comune, Title = localizer["City"] },
+        new DataGridColumnDefinition<ColonninaDto> { Property = x => x.Provincia, Title = localizer["Province"] },
+    ];
+
+    /// <summary>
     /// Gets the standard numeric format specifier for euro currency values.
     /// </summary>
     /// <returns>

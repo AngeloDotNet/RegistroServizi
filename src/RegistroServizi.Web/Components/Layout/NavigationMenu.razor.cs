@@ -1,50 +1,63 @@
 ﻿namespace RegistroServizi.Web.Components.Layout;
 
 /// <summary>
-/// Navigation menu component that displays the application name and version
-/// and updates them when the application options change.
+/// Provides the application's primary navigation menu.
 /// </summary>
+/// <remarks>
+/// The component displays the configured application name and version and
+/// refreshes its rendered content when the corresponding
+/// <see cref="ApplicazioneOptions"/> values change.
+/// </remarks>
 public partial class NavigationMenu
 {
     /// <summary>
-    /// Gets the current application name shown in the navigation menu.
+    /// Stores the application name displayed in the navigation menu.
     /// </summary>
-    private string? _nomeApplicazione;
+    private string? nomeApplicazione;
 
     /// <summary>
-    /// Gets the current application version shown in the navigation menu.
+    /// Stores the application version displayed in the navigation menu.
     /// </summary>
-    private string? _versioneApplicazione;
+    private string? versioneApplicazione;
 
     /// <summary>
-    /// Holds the subscription to application option changes so it can be
-    /// disposed when the component is torn down.
+    /// Stores the subscription that monitors application option changes.
     /// </summary>
-    private IDisposable? _optionsChangeSubscription;
+    /// <remarks>
+    /// The subscription must be disposed when the component is removed to
+    /// prevent the options monitor from retaining a reference to the component.
+    /// </remarks>
+    private IDisposable? optionsChangeSubscription;
 
-    /// <summary>
-    /// Initializes the component state and subscribes to application option
-    /// changes so the menu reflects the latest application name and version.
-    /// </summary>
+    /// <inheritdoc />
+    /// <remarks>
+    /// The initial values are read from the current
+    /// <see cref="ApplicazioneOptions"/> instance. An options-change callback
+    /// updates the displayed values and schedules a component re-render so the
+    /// menu remains synchronized with the latest configuration.
+    /// </remarks>
     protected override void OnInitialized()
     {
-        _nomeApplicazione = ApplicazioneOptions.CurrentValue.NomeApplicazione;
-        _versioneApplicazione = ApplicazioneOptions.CurrentValue.VersioneApplicazione;
+        nomeApplicazione = ApplicazioneOptions.CurrentValue.NomeApplicazione;
+        versioneApplicazione = ApplicazioneOptions.CurrentValue.VersioneApplicazione;
 
-        _optionsChangeSubscription = ApplicazioneOptions.OnChange(options =>
+        optionsChangeSubscription = ApplicazioneOptions.OnChange(options =>
         {
-            _nomeApplicazione = options.NomeApplicazione;
-            _versioneApplicazione = options.VersioneApplicazione;
+            nomeApplicazione = options.NomeApplicazione;
+            versioneApplicazione = options.VersioneApplicazione;
             _ = InvokeAsync(StateHasChanged);
         });
     }
 
     /// <summary>
-    /// Releases the options change subscription to avoid retaining the component
-    /// after disposal.
+    /// Releases the application options subscription owned by the component.
     /// </summary>
+    /// <remarks>
+    /// Disposing the subscription prevents future option-change notifications
+    /// from targeting a component that is no longer rendered.
+    /// </remarks>
     public void Dispose()
     {
-        _optionsChangeSubscription?.Dispose();
+        optionsChangeSubscription?.Dispose();
     }
 }

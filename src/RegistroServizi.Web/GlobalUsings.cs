@@ -8,6 +8,7 @@ global using Microsoft.AspNetCore.Localization;
 global using Microsoft.Extensions.Localization;
 global using Microsoft.Extensions.Options;
 global using RegistroServizi.Application;
+global using RegistroServizi.Application.DTOs.Colonnina;
 global using RegistroServizi.Application.DTOs.Ospedale;
 global using RegistroServizi.Application.DTOs.PrezzoServizio;
 global using RegistroServizi.Application.DTOs.Ubicazione;

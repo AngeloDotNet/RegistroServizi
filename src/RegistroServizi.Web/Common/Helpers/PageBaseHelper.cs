@@ -14,17 +14,6 @@ namespace RegistroServizi.Web.Common.Helpers;
 /// </remarks>
 public class PageBaseHelper : ComponentBase
 {
-    /*
-    /// <summary>
-    /// Gets the provider used to retrieve the authentication state of the current user.
-    /// </summary>
-    /// <remarks>
-    /// Use this provider when a component needs to determine the current user's identity
-    /// or authorization state before rendering protected content.
-    /// </remarks>
-    [Inject] protected AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
-    */
-
     /// <summary>
     /// Gets the application configuration used to access registered settings and options.
     /// </summary>
@@ -69,17 +58,6 @@ public class PageBaseHelper : ComponentBase
     /// and interaction patterns across pages.
     /// </remarks>
     [Inject] protected DataGridHelper DataGridHelper { get; set; } = default!;
-
-    /*
-    /// <summary>
-    /// Gets the configured default options for MudBlazor data grids.
-    /// </summary>
-    /// <remarks>
-    /// The options provide shared grid behavior and presentation defaults so individual
-    /// pages only need to specify settings that differ from the application defaults.
-    /// </remarks>
-    [Inject] protected IOptions<MudBlazorDataGridOptions> DataGridOptions { get; set; } = default!;
-    */
 
     /// <summary>
     /// Gets or sets the injected service that provides user-related extension methods and helpers.

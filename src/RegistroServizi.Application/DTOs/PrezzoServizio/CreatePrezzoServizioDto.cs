@@ -10,11 +10,4 @@
 /// <param name="FermoMacchina">Costo applicato per il fermo macchina.</param>
 /// <param name="Accompagnatore">Costo opzionale per l'accompagnatore.</param>
 /// <param name="ScontoSocio">Sconto opzionale riservato al socio.</param>
-public record class CreatePrezzoServizioDto(
-    TipologiaServizio TipologiaServizio,
-    decimal CostoFisso,
-    decimal CostoKm,
-    decimal SecondoTrasportato,
-    decimal FermoMacchina,
-    decimal? Accompagnatore,
-    int? ScontoSocio);
+public record class CreatePrezzoServizioDto(TipologiaServizio TipologiaServizio, decimal CostoFisso, decimal CostoKm, decimal SecondoTrasportato, decimal FermoMacchina, decimal? Accompagnatore, int? ScontoSocio);

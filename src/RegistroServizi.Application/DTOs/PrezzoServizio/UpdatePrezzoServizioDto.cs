@@ -11,12 +11,4 @@
 /// <param name="FermoMacchina">The cost for vehicle idle time.</param>
 /// <param name="Accompagnatore">The optional additional cost for an accompanying person.</param>
 /// <param name="ScontoSocio">The optional discount percentage or amount reserved for members.</param>
-public record class UpdatePrezzoServizioDto(
-    Guid Id,
-    Guid TipologiaServizioId,
-    decimal CostoFisso,
-    decimal CostoKm,
-    decimal SecondoTrasportato,
-    decimal FermoMacchina,
-    decimal? Accompagnatore,
-    int? ScontoSocio);
+public record class UpdatePrezzoServizioDto(Guid Id, Guid TipologiaServizioId, decimal CostoFisso, decimal CostoKm, decimal SecondoTrasportato, decimal FermoMacchina, decimal? Accompagnatore, int? ScontoSocio);

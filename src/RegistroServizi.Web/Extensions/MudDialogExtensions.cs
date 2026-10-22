@@ -3,11 +3,11 @@
 namespace RegistroServizi.Web.Extensions;
 
 /// <summary>
-/// Provides helper methods for displaying item-operation dialogs through MudBlazor.
+/// Provides helper methods for opening MudBlazor item dialogs and interpreting their results.
 /// </summary>
 /// <remarks>
-/// The helper centralizes dialog creation for create, edit, and delete operations and
-/// reports whether the displayed dialog completed without being canceled.
+/// Dialog configuration is delegated to <see cref="MudDialogParameters" /> so that create,
+/// edit, and delete operations use consistent parameters and presentation options.
 /// </remarks>
 public static class MudDialogExtensions
 {
@@ -32,6 +32,30 @@ public static class MudDialogExtensions
     //    }
     //}
 
+    /// <summary>
+    /// Opens an item dialog for the requested action and reports whether the dialog completed successfully.
+    /// </summary>
+    /// <typeparam name="TDialog">The Blazor component type used to render the dialog.</typeparam>
+    /// <param name="dialogService">The MudBlazor service used to display the dialog.</param>
+    /// <param name="snackbar">The snackbar service available to the calling workflow.</param>
+    /// <param name="localizer">The localizer available to the calling workflow.</param>
+    /// <param name="loadingDataAsync">The asynchronous operation available for refreshing data after the dialog completes.</param>
+    /// <param name="invokeAsync">The dispatcher used to invoke UI work from the calling workflow.</param>
+    /// <param name="actionType">The item operation represented by the dialog.</param>
+    /// <param name="title">The title displayed by the dialog.</param>
+    /// <param name="id">The identifier of the item being edited or deleted.</param>
+    /// <param name="description">The explanatory text displayed by a delete dialog.</param>
+    /// <param name="confirmText">The text displayed on the confirmation button.</param>
+    /// <param name="cancelText">The text displayed on the cancel button.</param>
+    /// <param name="warningText">The warning text associated with the requested operation.</param>
+    /// <param name="deleteAction">
+    /// The asynchronous operation executed by the delete dialog when the user confirms deletion;
+    /// or <see langword="null" /> when no delete operation is required.
+    /// </param>
+    /// <returns>
+    /// A task whose result is <see langword="true" /> when the dialog completes without cancellation;
+    /// otherwise, <see langword="false" />.
+    /// </returns>
     public static async Task<bool> ExecuteItemDialogAsync<TDialog>(IDialogService dialogService, ISnackbar snackbar, IStringLocalizer localizer, Func<Task> loadingDataAsync,
         Func<Func<Task>, Task> invokeAsync, ItemActionType actionType, string title, Guid id, string description, string confirmText, string cancelText, string warningText,
         Func<Task>? deleteAction = null) where TDialog : IComponent
@@ -39,83 +63,25 @@ public static class MudDialogExtensions
         return await GenerateDialogItemAsync<TDialog>(dialogService, actionType, title, id, description, cancelText, confirmText, deleteAction);
     }
 
-    //public static async Task ExecuteItemDialogAsync<TDialog>(IDialogService dialogService, ISnackbar snackbar, IStringLocalizer localizer, Func<Task> reloadData, Func<Func<Task>, Task> invokeAsync,
-    //    ItemActionType actionType, string title, Guid id, string description, string confirmText, string cancelText, string warningText, Func<Task> deleteAction) where TDialog : IComponent
-    //{
-    //    var parameters = new DialogParameters {
-    //        {
-    //            nameof(DeleteDialog.Title), title
-    //        },
-    //        {
-    //            nameof(DeleteDialog.Description), description
-    //        },
-    //        {
-    //            nameof(DeleteDialog.BtnConfirmText), confirmText
-    //        },
-    //        {
-    //            nameof(DeleteDialog.BtnCancelText), cancelText
-    //        },
-    //        {
-    //            nameof(DeleteDialog.DeleteAction), deleteAction
-    //        }
-    //    };
-
-    //    var dialog = await dialogService.ShowAsync<TDialog>(string.Empty, parameters);
-    //    var result = await dialog.Result;
-
-    //    if (!result.Canceled)
-    //    {
-    //        await reloadData();
-    //    }
-    //}
-
     /// <summary>
-    /// Displays the dialog associated with the specified item operation.
+    /// Creates the parameters for the requested item action and opens the corresponding dialog.
     /// </summary>
-    /// <typeparam name="TDialog">
-    /// The Blazor component used to render the operation dialog.
-    /// </typeparam>
-    /// <param name="dialogService">
-    /// The service used to display the dialog.
-    /// </param>
-    /// <param name="actionType">
-    /// The item operation to perform.
-    /// </param>
-    /// <param name="title">
-    /// The title displayed by the dialog.
-    /// </param>
-    /// <param name="id">
-    /// The identifier of the item being edited or deleted. This value is ignored for create operations.
-    /// </param>
-    /// <param name="description">
-    /// The description displayed when confirming a delete operation.
-    /// </param>
-    /// <param name="cancelText">
-    /// The text displayed on the cancel button.
-    /// </param>
-    /// <param name="confirmText">
-    /// The text displayed on the confirmation button for delete operations.
+    /// <typeparam name="TDialog">The Blazor component type used to render the dialog.</typeparam>
+    /// <param name="dialogService">The MudBlazor service used to display the dialog.</param>
+    /// <param name="actionType">The item operation represented by the dialog.</param>
+    /// <param name="title">The title displayed by the dialog.</param>
+    /// <param name="id">The identifier of the item being edited or deleted.</param>
+    /// <param name="description">The explanatory text displayed by a delete dialog.</param>
+    /// <param name="cancelText">The text displayed on the cancel button.</param>
+    /// <param name="confirmText">The text displayed on the confirmation button.</param>
+    /// <param name="deleteAction">
+    /// The asynchronous operation executed by the delete dialog when the user confirms deletion;
+    /// or <see langword="null" /> when no delete operation is available.
     /// </param>
     /// <returns>
-    /// A task that represents the asynchronous dialog operation. The result is <see langword="true" />
-    /// when the dialog completes without being canceled; otherwise, <see langword="false" />.
+    /// A task whose result is <see langword="true" /> when a supported dialog completes without cancellation;
+    /// otherwise, <see langword="false" />.
     /// </returns>
-    /// <remarks>
-    /// Unsupported <paramref name="actionType" /> values do not display a dialog and return
-    /// <see langword="false" />.
-    /// </remarks>
-    //private static async Task<bool> GenerateDialogItemAsync<TDialog>(IDialogService dialogService, ItemActionType actionType, string title, Guid id, string description,
-    //    string cancelText, string confirmText) where TDialog : IComponent
-    //{
-    //    return actionType switch
-    //    {
-    //        ItemActionType.Create => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetCreateItemDialogParameters<TDialog>(title, cancelText)),
-    //        ItemActionType.Edit => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetEditItemDialogParameters<TDialog>(id, title, cancelText)),
-    //        ItemActionType.Delete => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetDeleteItemDialogParameters<TDialog>(id, title, description, cancelText, confirmText)),
-    //        _ => false,
-    //    };
-    //}
-
     private static async Task<bool> GenerateDialogItemAsync<TDialog>(IDialogService dialogService, ItemActionType actionType, string title, Guid id, string description, string cancelText,
         string confirmText, Func<Task>? deleteAction = null) where TDialog : IComponent
     {
@@ -129,20 +95,14 @@ public static class MudDialogExtensions
     }
 
     /// <summary>
-    /// Displays a dialog with the specified parameters and evaluates its result.
+    /// Displays a dialog with the supplied parameters and converts its result to a completion status.
     /// </summary>
-    /// <typeparam name="TDialog">
-    /// The Blazor component used to render the dialog.
-    /// </typeparam>
-    /// <param name="dialogService">
-    /// The service used to display the dialog.
-    /// </param>
-    /// <param name="parametersFactory">
-    /// A factory that creates the parameters required by the dialog.
-    /// </param>
+    /// <typeparam name="TDialog">The Blazor component type used to render the dialog.</typeparam>
+    /// <param name="dialogService">The MudBlazor service used to display the dialog.</param>
+    /// <param name="parametersFactory">The factory that creates the dialog parameters.</param>
     /// <returns>
-    /// A task that represents the asynchronous dialog operation. The result is <see langword="true" />
-    /// when the dialog result is available and was not canceled; otherwise, <see langword="false" />.
+    /// A task whose result is <see langword="true" /> when the dialog returns a non-canceled result;
+    /// otherwise, <see langword="false" />.
     /// </returns>
     private static async Task<bool> OpenDialogAndRefreshAsync<TDialog>(IDialogService dialogService, Func<DialogParameters> parametersFactory) where TDialog : IComponent
     {

@@ -11,26 +11,63 @@ namespace RegistroServizi.Web.Extensions;
 /// </remarks>
 public static class MudDialogExtensions
 {
-    public static async Task ExecuteItemDialogAsync<TDialog>(this IDialogService dialogService, ISnackbar snackbar, IStringLocalizer localizer, Func<Task> reloadAsync, Func<Action, Task> invokeAsync,
-        ItemActionType actionType, string title, Guid id, string description, string confirmText, string cancelText, string cancellationMessageKey) where TDialog : IComponent
+    //public static async Task ExecuteItemDialogAsync<TDialog>(this IDialogService dialogService, ISnackbar snackbar, IStringLocalizer localizer, Func<Task> reloadAsync, Func<Action, Task> invokeAsync,
+    //    ItemActionType actionType, string title, Guid id, string description, string confirmText, string cancelText, string cancellationMessageKey) where TDialog : IComponent
+    //{
+    //    ArgumentNullException.ThrowIfNull(dialogService);
+    //    ArgumentNullException.ThrowIfNull(snackbar);
+    //    ArgumentNullException.ThrowIfNull(localizer);
+    //    ArgumentNullException.ThrowIfNull(reloadAsync);
+    //    ArgumentNullException.ThrowIfNull(invokeAsync);
+
+    //    var result = await GenerateDialogItemAsync<TDialog>(dialogService, actionType, title, id, description, cancelText, confirmText);
+
+    //    if (result)
+    //    {
+    //        await reloadAsync();
+    //    }
+    //    else
+    //    {
+    //        await invokeAsync(() => snackbar.ShowNotifyInfo(localizer[cancellationMessageKey]));
+    //    }
+    //}
+
+    public static async Task<bool> ExecuteItemDialogAsync<TDialog>(IDialogService dialogService, ISnackbar snackbar, IStringLocalizer localizer, Func<Task> loadingDataAsync,
+        Func<Func<Task>, Task> invokeAsync, ItemActionType actionType, string title, Guid id, string description, string confirmText, string cancelText, string warningText,
+        Func<Task>? deleteAction = null) where TDialog : IComponent
     {
-        ArgumentNullException.ThrowIfNull(dialogService);
-        ArgumentNullException.ThrowIfNull(snackbar);
-        ArgumentNullException.ThrowIfNull(localizer);
-        ArgumentNullException.ThrowIfNull(reloadAsync);
-        ArgumentNullException.ThrowIfNull(invokeAsync);
-
-        var result = await GenerateDialogItemAsync<TDialog>(dialogService, actionType, title, id, description, cancelText, confirmText);
-
-        if (result)
-        {
-            await reloadAsync();
-        }
-        else
-        {
-            await invokeAsync(() => snackbar.ShowNotifyInfo(localizer[cancellationMessageKey]));
-        }
+        return await GenerateDialogItemAsync<TDialog>(dialogService, actionType, title, id, description, cancelText, confirmText, deleteAction);
     }
+
+    //public static async Task ExecuteItemDialogAsync<TDialog>(IDialogService dialogService, ISnackbar snackbar, IStringLocalizer localizer, Func<Task> reloadData, Func<Func<Task>, Task> invokeAsync,
+    //    ItemActionType actionType, string title, Guid id, string description, string confirmText, string cancelText, string warningText, Func<Task> deleteAction) where TDialog : IComponent
+    //{
+    //    var parameters = new DialogParameters {
+    //        {
+    //            nameof(DeleteDialog.Title), title
+    //        },
+    //        {
+    //            nameof(DeleteDialog.Description), description
+    //        },
+    //        {
+    //            nameof(DeleteDialog.BtnConfirmText), confirmText
+    //        },
+    //        {
+    //            nameof(DeleteDialog.BtnCancelText), cancelText
+    //        },
+    //        {
+    //            nameof(DeleteDialog.DeleteAction), deleteAction
+    //        }
+    //    };
+
+    //    var dialog = await dialogService.ShowAsync<TDialog>(string.Empty, parameters);
+    //    var result = await dialog.Result;
+
+    //    if (!result.Canceled)
+    //    {
+    //        await reloadData();
+    //    }
+    //}
 
     /// <summary>
     /// Displays the dialog associated with the specified item operation.
@@ -67,15 +104,27 @@ public static class MudDialogExtensions
     /// Unsupported <paramref name="actionType" /> values do not display a dialog and return
     /// <see langword="false" />.
     /// </remarks>
-    private static async Task<bool> GenerateDialogItemAsync<TDialog>(IDialogService dialogService, ItemActionType actionType, string title, Guid id, string description,
-        string cancelText, string confirmText) where TDialog : IComponent
+    //private static async Task<bool> GenerateDialogItemAsync<TDialog>(IDialogService dialogService, ItemActionType actionType, string title, Guid id, string description,
+    //    string cancelText, string confirmText) where TDialog : IComponent
+    //{
+    //    return actionType switch
+    //    {
+    //        ItemActionType.Create => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetCreateItemDialogParameters<TDialog>(title, cancelText)),
+    //        ItemActionType.Edit => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetEditItemDialogParameters<TDialog>(id, title, cancelText)),
+    //        ItemActionType.Delete => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetDeleteItemDialogParameters<TDialog>(id, title, description, cancelText, confirmText)),
+    //        _ => false,
+    //    };
+    //}
+
+    private static async Task<bool> GenerateDialogItemAsync<TDialog>(IDialogService dialogService, ItemActionType actionType, string title, Guid id, string description, string cancelText,
+        string confirmText, Func<Task>? deleteAction = null) where TDialog : IComponent
     {
         return actionType switch
         {
             ItemActionType.Create => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetCreateItemDialogParameters<TDialog>(title, cancelText)),
             ItemActionType.Edit => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetEditItemDialogParameters<TDialog>(id, title, cancelText)),
-            ItemActionType.Delete => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetDeleteItemDialogParameters<TDialog>(id, title, description, cancelText, confirmText)),
-            _ => false,
+            ItemActionType.Delete when deleteAction is not null => await OpenDialogAndRefreshAsync<TDialog>(dialogService, () => MudDialogParameters.GetDeleteItemDialogParameters(title, description, cancelText, confirmText, deleteAction)),
+            _ => false
         };
     }
 

@@ -1,4 +1,5 @@
 ﻿using MudBlazor;
+using RegistroServizi.Web.Components.Shared.Dialogs;
 
 namespace RegistroServizi.Web.Configuration.Parameters;
 
@@ -68,15 +69,28 @@ internal static class MudDialogParameters
     /// the item identifier, a default-colored cancel button, and an error-colored
     /// confirmation button to emphasize the destructive operation.
     /// </returns>
-    internal static DialogParameters<TParam> GetDeleteItemDialogParameters<TParam>(Guid editDialogId, string title, string description, string cancelText, string confirmText)
-        => new DialogParameters<TParam>
+    //internal static DialogParameters<TParam> GetDeleteItemDialogParameters<TParam>(Guid editDialogId, string title, string description, string cancelText, string confirmText)
+    //    => new DialogParameters<TParam>
+    //    {
+    //        { "EditDialogId", editDialogId },
+    //        { "Title", title },
+    //        { "Description", description },
+    //        { "BtnCancelText", cancelText },
+    //        { "BtnCancelColor", Color.Default },
+    //        { "BtnConfirmText", confirmText },
+    //        { "BtnConfirmColor", Color.Error }
+    //    };
+    public static DialogParameters GetDeleteItemDialogParameters(string title, string description, string cancelText, string confirmText, Func<Task> deleteAction)
+    {
+        return new DialogParameters
         {
-            { "EditDialogId", editDialogId },
-            { "Title", title },
-            { "Description", description },
-            { "BtnCancelText", cancelText },
-            { "BtnCancelColor", Color.Default },
-            { "BtnConfirmText", confirmText },
-            { "BtnConfirmColor", Color.Error }
+            [nameof(DeleteDialog.Title)] = title,
+            [nameof(DeleteDialog.Description)] = description,
+            [nameof(DeleteDialog.BtnCancelText)] = cancelText,
+            [nameof(DeleteDialog.BtnConfirmText)] = confirmText,
+            [nameof(DeleteDialog.DeleteAction)] = deleteAction,
+            [nameof(DeleteDialog.BtnCancelColor)] = Color.Default,
+            [nameof(DeleteDialog.BtnConfirmColor)] = Color.Error
         };
+    }
 }

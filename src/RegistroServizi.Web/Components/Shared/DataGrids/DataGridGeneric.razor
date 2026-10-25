@@ -66,7 +66,7 @@
                                     Variant="Variant.Filled"
                                     Disabled="@DisableDeleteButton"
                                     Color="@Color.Error">@Localizer["Delete"]</MudButton> *@
-                        <MudFab @onclick="() => ActionDeleteCallback.InvokeAsync(context.Item)" Size="Size.Small" Color="Color.Error" StartIcon="@MudblazorPresets.IconDelete" Disabled="@DisableEditButton" />
+                        <MudFab @onclick="() => ActionDeleteCallback.InvokeAsync(context.Item)" Size="Size.Small" Color="Color.Error" StartIcon="@MudblazorPresets.IconDelete" Disabled="@DisableDeleteButton" />
                     }
                 </MudStack>
             </CellTemplate>

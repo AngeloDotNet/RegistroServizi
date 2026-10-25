@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Web.Components.Pages.Colonnine;
+﻿using RegistroServizi.Web.Components.Shared.Dialogs;
+
+namespace RegistroServizi.Web.Components.Pages.Colonnine;
 
 public partial class Colonnine
 {
@@ -33,12 +35,20 @@ public partial class Colonnine
         });
     }
 
-    private async Task CreateItemAsync(string title) => await MudDialogExtensions.ExecuteItemDialogAsync<ColonninaEditDialog>(DialogService, Snackbar, Localizer,
-        LoadingDataAsync, InvokeAsync, ItemActionType.Create, title, Guid.Empty, string.Empty, string.Empty, DataGridHelper.CancelText, "CancelCreate");
+    //TODO: Implementare i metodi per la creazione e modifica delle colonnine, attualmente commentati in quanto non ancora implementati.
 
-    private async Task EditItemAsync(string title, Guid id, string description) => await MudDialogExtensions.ExecuteItemDialogAsync<ColonninaEditDialog>(DialogService, Snackbar,
-        Localizer, LoadingDataAsync, InvokeAsync, ItemActionType.Edit, title, id, description, string.Empty, DataGridHelper.CancelText, "CancelModify");
+    //private async Task CreateItemAsync(string title) => await MudDialogExtensions.ExecuteItemDialogAsync<ColonninaEditDialog>(DialogService, Snackbar, Localizer,
+    //    LoadingDataAsync, InvokeAsync, ItemActionType.Create, title, Guid.Empty, string.Empty, string.Empty, DataGridHelper.CancelText, "CancelCreate");
 
-    private async Task DeleteItemAsync(string title, Guid id, string description) => await MudDialogExtensions.ExecuteItemDialogAsync<ColonninaDeleteDialog>(DialogService, Snackbar,
-        Localizer, LoadingDataAsync, InvokeAsync, ItemActionType.Delete, title, id, description, DataGridHelper.ConfirmText, DataGridHelper.CancelText, "CancelDelete");
+    //private async Task EditItemAsync(string title, Guid id, string description) => await MudDialogExtensions.ExecuteItemDialogAsync<ColonninaEditDialog>(DialogService, Snackbar,
+    //    Localizer, LoadingDataAsync, InvokeAsync, ItemActionType.Edit, title, id, description, string.Empty, DataGridHelper.CancelText, "CancelModify");
+
+    //private async Task DeleteItemAsync(string title, Guid id, string description) => await MudDialogExtensions.ExecuteItemDialogAsync<ColonninaDeleteDialog>(DialogService, Snackbar,
+    //    Localizer, LoadingDataAsync, InvokeAsync, ItemActionType.Delete, title, id, description, DataGridHelper.ConfirmText, DataGridHelper.CancelText, "CancelDelete");
+
+    private async Task DeleteItemAsync(string title, Guid id, string description)
+    {
+        await MudDialogExtensions.ExecuteItemDialogAsync<DeleteDialog>(DialogService, Snackbar, Localizer, LoadingDataAsync, InvokeAsync, ItemActionType.Delete, title, id, description,
+            DataGridHelper.ConfirmText, DataGridHelper.CancelText, "CancelDelete", () => ColonninaService.DeleteColonninaAsync(id));
+    }
 }

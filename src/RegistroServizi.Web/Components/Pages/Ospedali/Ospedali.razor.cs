@@ -1,4 +1,6 @@
-﻿namespace RegistroServizi.Web.Components.Pages.Ospedali;
+﻿using RegistroServizi.Web.Components.Shared.Dialogs;
+
+namespace RegistroServizi.Web.Components.Pages.Ospedali;
 
 public partial class Ospedali
 {
@@ -39,6 +41,12 @@ public partial class Ospedali
     private async Task EditItemAsync(string title, Guid id, string description) => await MudDialogExtensions.ExecuteItemDialogAsync<OspedaleEditDialog>(DialogService, Snackbar,
         Localizer, LoadingDataAsync, InvokeAsync, ItemActionType.Edit, title, id, description, string.Empty, DataGridHelper.CancelText, "CancelModify");
 
-    private async Task DeleteItemAsync(string title, Guid id, string description) => await MudDialogExtensions.ExecuteItemDialogAsync<OspedaleDeleteDialog>(DialogService, Snackbar,
-        Localizer, LoadingDataAsync, InvokeAsync, ItemActionType.Delete, title, id, description, DataGridHelper.ConfirmText, DataGridHelper.CancelText, "CancelDelete");
+    //private async Task DeleteItemAsync(string title, Guid id, string description) => await MudDialogExtensions.ExecuteItemDialogAsync<OspedaleDeleteDialog>(DialogService, Snackbar,
+    //    Localizer, LoadingDataAsync, InvokeAsync, ItemActionType.Delete, title, id, description, DataGridHelper.ConfirmText, DataGridHelper.CancelText, "CancelDelete");
+
+    private async Task DeleteItemAsync(string title, Guid id, string description)
+    {
+        await MudDialogExtensions.ExecuteItemDialogAsync<DeleteDialog>(DialogService, Snackbar, Localizer, LoadingDataAsync, InvokeAsync, ItemActionType.Delete, title, id, description,
+            DataGridHelper.ConfirmText, DataGridHelper.CancelText, "CancelDelete", () => OspedaleService.DeleteOspedaleAsync(id));
+    }
 }
